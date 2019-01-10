@@ -15,7 +15,20 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.tomcat.maven</groupId>
+              <artifactId>tomcat7-maven-plugin</artifactId>
+              <version>2.2</version>
+              <configuration>
+                  <ignorePackaging>false</ignorePackaging>
+                    <username>admin</username>
+                    <password>password</password>
+              </configuration>
+          </plugin>
+      </plugins>
     <finalName>CS-Select</finalName>
   </build>
 </project>
