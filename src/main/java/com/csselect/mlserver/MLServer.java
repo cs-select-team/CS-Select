@@ -13,7 +13,7 @@ public interface MLServer {
 
     /**
      * Gets the ML-Servers version
-     * @return
+     * @return version
      */
     String getVersion();
 
