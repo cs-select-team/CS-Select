@@ -1,52 +1,51 @@
 package com.csselect.database;
 
 /**
- * Abstraction from the underlying database representation of a user
- * Loads and stores user related values
+ * Interface abstracting a {@link com.csselect.user.User} from its database representation
+ * Adapters are matched to their users unanimously by their IDs
  */
 public interface UserAdapter {
 
     /**
-     * Gets the users ID
-     * @return the users ID
+     * Gets the {@link com.csselect.user.User}s ID
+     * @return ID
      */
     int getID();
 
     /**
-     * Gets the users email-address
-     * @return the users email-address
+     * Gets the {@link com.csselect.user.User}s email
+     * @return email
      */
     String getEmail();
 
     /**
-     * Gets the users hashed password
-     * @return users hashed password
+     * Gets the {@link com.csselect.user.User}s hashed password
+     * @return hashed password
      */
     String getPasswordHash();
 
     /**
-     * Gets the users language specified by the languages langcode
-     * @return langcode of the users language
+     * Gets the {@link com.csselect.user.User}s language in form of a langcode
+     * @return langcode of users language
      */
     String getLanguage();
 
     /**
-     * Sets the users email
-     * @param email email-address to be set
+     * Sets the {@link com.csselect.user.User}s email-address
+     * @param email email-address to set
      */
     void setEmail(String email);
 
     /**
-     * Sets the users password hash and salt
-     * @param hash hash of users password
-     * @param salt salt used while encrypting the password
+     * Sets the {@link com.csselect.user.User}s password-hash and -salt
+     * @param hash hashed password
+     * @param salt salt used while hashing
      */
     void setPassword(String hash, String salt);
 
     /**
-     * Sets the users language
+     * Sets the {@link com.csselect.user.User}s language in form of a langcode
      * @param langCode langcode of users language
      */
     void setLanguage(String langCode);
-
 }
