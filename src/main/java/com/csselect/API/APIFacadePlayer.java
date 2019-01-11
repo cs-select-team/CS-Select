@@ -20,7 +20,7 @@ public class APIFacadePlayer extends APIFacadeUser {
     public Player getPlayer() {
         return player;
     }
-     public Game getGame() {
+     public Game getGame(int gameId) {
         return new Game();
      }
 
