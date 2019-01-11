@@ -14,7 +14,7 @@ public class MockConfiguration implements Configuration {
 
     @Override
     public String getMLServerURL() {
-        return "127.0.0.1";
+        return "127.0.0.1:8000";
     }
 
     @Override

@@ -29,7 +29,7 @@ public class ConfigurationTests {
 
     @Test
     public void testMLServerURL() {
-        testString("127.0.0.1", config.getMLServerURL());
+        testString("127.0.0.1:8000", config.getMLServerURL());
     }
 
     @Test
