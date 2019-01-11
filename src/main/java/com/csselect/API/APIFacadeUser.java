@@ -19,9 +19,12 @@ abstract public class APIFacadeUser {
      *
      * @param email Email of the user to login
      * @param password Password of the user to login
+     *
+     * @return true if login successfull, false if not
      */
-    public void login(String email, String password) {
-
+    public boolean login(String email, String password) {
+        if (email.equals("bendix.sonnenberg@gmx.de") && password.equals("1234")) return true;
+        return false;
     }
 
     /** logs out the current user from this {@link APIFacadeUser}
