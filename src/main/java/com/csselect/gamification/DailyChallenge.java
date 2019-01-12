@@ -24,6 +24,12 @@ public abstract class DailyChallenge {
     public abstract boolean checkFinished(PlayerStats stats);
 
     /**
+     * Resets the daily challenge, meaning setting the necessary attributes back to their
+     * default value.
+     */
+    public abstract void resetDaily();
+
+    /**
      * Gets the name of the daily challenge.
      * @return The name of the daily.
      */
@@ -45,6 +51,14 @@ public abstract class DailyChallenge {
      */
     public Date getDate() {
         return date;
+    }
+
+    /**
+     * Sets the date of the daily challenge to the specified date.
+     * @param currentDate The date to be set.
+     */
+    public void setDate(Date currentDate) {
+        date = currentDate;
     }
 
     /**
