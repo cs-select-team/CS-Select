@@ -9,19 +9,22 @@ import com.csselect.database.UserAdapter;
  * be displayed.
  */
 public abstract class User{
-    protected int id;
-    public UserAdapter dataBaseAdapter;
+    private UserAdapter databaseAdapter;
+
+
+    /**
+     * Standard constructor
+     */
+    User() {}
 
     /**
      * Constructor for an User object. The ID is set and a database adapter is set to allow communication with our
      * database (object of {@link UserAdapter}. The constructor will be called as soon as a user registers and logs in
      * or out. Which value the unique ID will have is determined by the {@link com.csselect.database.DatabaseAdapter}
-     * @param id The unique ID which identifies the user in our system
-     * @param dataBaseAdapter Interface for database communication
+     * @param databaseAdapter Interface for database communication
      */
-    User(int id, UserAdapter dataBaseAdapter) {
-        this.id = id;
-        this.dataBaseAdapter = dataBaseAdapter;
+    User(UserAdapter databaseAdapter) {
+        this.databaseAdapter = databaseAdapter;
     }
 
     /**
@@ -29,7 +32,7 @@ public abstract class User{
      * @return The unique ID which identifies the user in our system
      */
     public int getId() {
-        return this.id;
+        return this.databaseAdapter.getID();
     }
 
     /**
@@ -76,7 +79,7 @@ public abstract class User{
      * @param email New email to which the user ID will refer in our database.
      */
     public void changeEmail(String email) {
-        dataBaseAdapter.setEmail(email);
+        databaseAdapter.setEmail(email);
     }
 
     /**

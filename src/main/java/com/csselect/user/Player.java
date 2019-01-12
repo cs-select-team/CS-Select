@@ -11,12 +11,13 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Player extends User {
+    private PlayerAdapter databaseAdapter;
     private Collection<Game> games;
     private Gamification gamification;
     private Round activeRound;
 
-    Player(int id, PlayerAdapter databaseAdapter) {
-        super(id, databaseAdapter);
+    Player(PlayerAdapter databaseAdapter) {
+        this.databaseAdapter = databaseAdapter;
         this.games = new HashSet<>();
         this.activeRound = null;
     }

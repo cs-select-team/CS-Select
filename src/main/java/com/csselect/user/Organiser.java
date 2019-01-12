@@ -13,8 +13,7 @@ public class Organiser extends User {
     private GameCreator gameBuilder;
     private Collection<Game> games;
 
-    Organiser(int id, OrganiserAdapter databaseAdapter) {
-        super(id, databaseAdapter);
+    Organiser(OrganiserAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
         this.gameBuilder = new GameCreator();
         this.games = new HashSet<>();
