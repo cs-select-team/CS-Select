@@ -25,8 +25,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         return new LinkedList<>();
     }
 
-    public List<Pattern> setGameOption() {
-        return new LinkedList<>();
+    public void setGameOption(String option, String data ) {
+        
     }
 
     public void savePattern(String title) {

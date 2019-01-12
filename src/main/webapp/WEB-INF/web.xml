@@ -26,5 +26,14 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/login/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GameCreation</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.GameCreation</servlet-class>
+        <description>This servlet handles game creation</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GameCreation</servlet-name>
+        <url-pattern>/create/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

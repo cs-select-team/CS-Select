@@ -5,6 +5,7 @@ import com.csselect.user.User;
 @SuppressWarnings("WeakerAccess")
 abstract public class APIFacadeUser {
 
+    protected User user;
     /** Registers a new user.
      * This creates a new user in the database
      * the password and email are later required für login into the system with {@link APIFacadeUser#login(String, String)}

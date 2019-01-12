@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class APIFacadePlayer extends APIFacadeUser {
-    private Player player;
+    protected Player player;
     public void register(String email, String password, String param3) {
 
     }
