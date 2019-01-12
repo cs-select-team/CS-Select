@@ -4,6 +4,7 @@ import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,9 +27,12 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     }
 
     public void setGameOption(String option, String data ) {
-        
+
     }
 
+    public Collection<Pattern> getPatterns() {
+        return new LinkedList<>();
+    }
     public void savePattern(String title) {
 
     }

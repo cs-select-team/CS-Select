@@ -15,28 +15,37 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class Login extends Servlet {
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession().setAttribute("playerFacade", new APIFacadePlayer());
-    }
+
 
     @Override
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
-
+        if (req.getPathInfo().equals("/logout")) logout(resp);
     }
 
+    private void logout(HttpServletResponse resp) throws IOException{
+        if (isPlayer()) getPlayerFacade().logout();
+        else getOrganiserFacade().logout();
+
+        resp.sendError(HttpServletResponse.SC_ACCEPTED);
+    }
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError{
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String organiserSwitch = req.getParameter("organiser");
+        String email = getParameter("email", req);
+        String password = getParameter("password", req);
+        String organiserSwitch = getParameter("organiser", req);
 
         if(organiserSwitch.equals("on")) {
-            if (getOrganiserFacade().login(email, password)) resp.sendError(HttpServletResponse.SC_ACCEPTED);
+            if (getOrganiserFacade().login(email, password)) {
+                resp.sendError(HttpServletResponse.SC_ACCEPTED);
+                setPlayer(false);
+            }
             else resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         else {
-            if (getPlayerFacade().login(email, password)) resp.sendError(HttpServletResponse.SC_ACCEPTED);
+            if (getPlayerFacade().login(email, password)) {
+                setPlayer(true);
+                resp.sendError(HttpServletResponse.SC_ACCEPTED);
+            }
             else resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
