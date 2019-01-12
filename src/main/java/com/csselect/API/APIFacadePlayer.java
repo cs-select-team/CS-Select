@@ -14,7 +14,7 @@ import java.util.List;
 
 public class APIFacadePlayer extends APIFacadeUser {
     private Player player;
-    public void register(String email, String password, String param3) {
+    public void register(String[] args) {
 
     }
     public Player getPlayer() {

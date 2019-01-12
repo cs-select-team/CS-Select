@@ -6,13 +6,11 @@ import com.csselect.user.User;
 abstract public class APIFacadeUser {
 
     /** Registers a new user.
-     * This creates a new user in the database
-     * the password and email are later required für login into the system with {@link APIFacadeUser#login(String, String)}
-     * @param email Email of the new user
-     * @param password Password of the new user
-     * @param param3 exchangable third parameter for either username or master password
+     * This creates a new user in the database.
+     * Password and email are later required to log into the system with {@link APIFacadeUser#login(String, String)}
+     * @param args String array of arguments for registration
      */
-    abstract public void register(String email, String password, String param3);
+    abstract public void register(String[] args);
 
     /** logs in a user for this api. This is the first method that has to be called before any other methods start
      *  making sense.
