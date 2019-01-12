@@ -10,7 +10,7 @@ import java.util.List;
 
 public class APIFacadeOrganiser extends APIFacadeUser {
     private Organiser organiser;
-    public void register(String email, String password, String param3) {
+    public void register(String[] args) {
 
     }
 

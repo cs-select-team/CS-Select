@@ -22,11 +22,12 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     /** registers a new player
      *
-     * @param email Email of the new user
-     * @param password Password of the new user
-     * @param param3 username
+     * @param args array with arguments for this method
+     *              0: email
+     *              1: password
+     *              2: username
      */
-    public void register(String email, String password, String param3) {
+    public void register(String[] args) {
 
     }
 
