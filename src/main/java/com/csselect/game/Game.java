@@ -1,7 +1,12 @@
 package com.csselect.game;
 
-import java.util.Collection;
-
 public class Game {
 
+    public int getId() {
+        return 0;
+    }
+
+    public boolean isTerminated() {
+        return false;
+    }
 }
