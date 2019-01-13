@@ -1,5 +1,6 @@
 package com.csselect.API;
 
+import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.gamification.Achievement;
 import com.csselect.gamification.DailyChallenge;
@@ -73,9 +74,11 @@ public class APIFacadePlayer extends APIFacadeUser {
     /** starts a round in the game with gameId
      *
      * @param gameId game of which to start the round
+     *
+     * @return All the features that are to be displayed this round
      */
-     public void startRound(int gameId) {
-
+     public Collection<Feature> startRound(int gameId) {
+            return new LinkedList<Feature>();
      }
 
     /** plays the current round
@@ -83,8 +86,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param selected ids of the selected Features
      * @param useless ids of the features that are marked useless
      */
-     public void selectFeatures(Collection<Integer> selected, Collection<Integer> useless) {
-
+     public int selectFeatures(Collection<Integer> selected, Collection<Integer> useless) {
+        return 0;
      }
 
 

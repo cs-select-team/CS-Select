@@ -27,12 +27,12 @@
         <url-pattern>/login/*</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>GameCreation</servlet-name>
-        <servlet-class>com.csselect.API.httpAPI.GameCreation</servlet-class>
+        <servlet-name>GameManagement</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.GameManagement</servlet-class>
         <description>This servlet handles game creation</description>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GameCreation</servlet-name>
+        <servlet-name>GameManagement</servlet-name>
         <url-pattern>/create/*</url-pattern>
     </servlet-mapping>
 

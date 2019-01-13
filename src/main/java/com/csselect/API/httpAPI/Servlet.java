@@ -30,8 +30,8 @@ public abstract  class Servlet extends HttpServlet {
     }
 
     private boolean isPlayer;
-    protected APIFacadePlayer facadePlayer;
-    protected APIFacadeOrganiser facadeOrganiser;
+    private APIFacadePlayer facadePlayer;
+    private APIFacadeOrganiser facadeOrganiser;
 
     protected APIFacadePlayer getPlayerFacade() {
         if (facadePlayer == null)

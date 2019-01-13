@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GameCreation extends Servlet {
+/**
+ * only request from organisers in this class.
+ */
+public class GameManagment extends Servlet {
 
 
     @Override
@@ -34,9 +37,34 @@ public class GameCreation extends Servlet {
             case "/loadPattern":
                 loadPattern(req, resp);
                 break;
+            case "/invite":
+                invitePlayer(req, resp);
+                break;
+            case "/terminate":
+                terminate(req,resp);
+                break;
+            case "/delete":
+                delete(req, resp);
+                break;
                 default:
                     createGame(req, resp);
         }
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+        int gameId = Integer.parseInt(getParameter("gameId", req));
+        getOrganiserFacade().deleteGame(gameId);
+    }
+
+    private void terminate(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+        int gameId = Integer.parseInt(getParameter("gameId", req));
+        getOrganiserFacade().terminateGame(gameId);
+    }
+
+    private void invitePlayer(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+        String email = getParameter("email", req);
+        int gameId = Integer.parseInt(getParameter("gameId", req));
+        getOrganiserFacade().invitePlayer(email, gameId);
     }
 
     private void loadPattern(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException{
