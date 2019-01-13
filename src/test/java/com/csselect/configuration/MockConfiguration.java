@@ -35,7 +35,7 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public int getDatabaseport() {
+    public int getDatabasePort() {
         return 3306;
     }
 

@@ -63,7 +63,7 @@ public final class ApacheCommonsConfiguration implements Configuration {
     }
 
     @Override
-    public int getDatabaseport() {
+    public int getDatabasePort() {
         return configuration.getInt("database.port");
     }
 

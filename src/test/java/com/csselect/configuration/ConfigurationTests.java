@@ -42,7 +42,7 @@ public class ConfigurationTests {
 
     @Test
     public void testDatabasePort() {
-        Assert.assertEquals(3306, config.getDatabaseport());
+        Assert.assertEquals(3306, config.getDatabasePort());
     }
 
     @Test
