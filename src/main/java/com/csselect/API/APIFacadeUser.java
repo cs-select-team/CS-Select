@@ -64,7 +64,7 @@ abstract public class APIFacadeUser {
      * TODO das macht hier keinen Sinn, weil man muss ja angemeldet sein damit die Facade weiß welchem Nutzer das zu schicken ist.
      *
      */
-    public void recoverPassword() {
+    public void recoverPassword(String email) {
 
     }
 

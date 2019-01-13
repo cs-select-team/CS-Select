@@ -35,5 +35,14 @@
         <servlet-name>GameManagement</servlet-name>
         <url-pattern>/create/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Users</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Users</servlet-class>
+        <description>This servlet handles interaction with user object</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Users</servlet-name>
+        <url-pattern>/users/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

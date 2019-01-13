@@ -2,6 +2,8 @@ package com.csselect.API.httpAPI;
 
 import com.csselect.API.APIFacadeOrganiser;
 import com.csselect.API.APIFacadePlayer;
+import com.csselect.API.APIFacadeUser;
+import com.csselect.user.User;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -16,6 +18,10 @@ public abstract  class Servlet extends HttpServlet {
     public static final String IS_PLAYER = "player";
     protected HttpSession session;
 
+    private boolean isPlayer;
+    private APIFacadePlayer facadePlayer;
+    private APIFacadeOrganiser facadeOrganiser;
+
     /**
      *
      * @return true if the current session belongs to a player, false if organiser or not determined yet
@@ -29,9 +35,7 @@ public abstract  class Servlet extends HttpServlet {
         session.setAttribute(IS_PLAYER, isPlayer);
     }
 
-    private boolean isPlayer;
-    private APIFacadePlayer facadePlayer;
-    private APIFacadeOrganiser facadeOrganiser;
+
 
     protected APIFacadePlayer getPlayerFacade() {
         if (facadePlayer == null)
@@ -52,19 +56,25 @@ public abstract  class Servlet extends HttpServlet {
     }
 
     protected APIFacadeOrganiser getOrganiserFacade() {
-        if (facadeOrganiser == null)
+        if (facadeOrganiser == null) {
             facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
-        if (facadeOrganiser == null) createOrganiser();
+        }
+        if (facadeOrganiser == null) {
+            createOrganiser();
+        }
         return facadeOrganiser;
     }
 
 
-    private void setup (HttpServletRequest req, HttpServletResponse resp) {
+    private void setup(HttpServletRequest req, HttpServletResponse resp) {
         session = req.getSession();
         getOrganiserFacade();
         getPlayerFacade();
-        if (session.getAttribute(IS_PLAYER) == null) setPlayer(false);
-        else isPlayer = (boolean) session.getAttribute(IS_PLAYER);
+        if (session.getAttribute(IS_PLAYER) == null) {
+            setPlayer(false);
+        } else {
+            isPlayer = (boolean) session.getAttribute(IS_PLAYER);
+        }
     }
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -72,9 +82,8 @@ public abstract  class Servlet extends HttpServlet {
 
 
         try {
-            get(req,resp);
-        }
-        catch (HttpError e) {
+            get(req, resp);
+        } catch (HttpError e) {
             resp.sendError(e.getErrorCode());
         }
     }
@@ -85,24 +94,30 @@ public abstract  class Servlet extends HttpServlet {
         setup(req, resp);
 
         try {
-            post(req,resp);
-        }
-        catch (HttpError e) {
+            post(req, resp);
+        } catch (HttpError e) {
             resp.sendError(e.getErrorCode());
         }
     }
 
+    protected APIFacadeUser getUserFacade() {
+        if (isPlayer()) {
+            return getPlayerFacade();
+        } else {
+            return getOrganiserFacade();
+        }
+    }
     /*
     method to get parameters securely from request
      */
-    protected String getParameter(String name, HttpServletRequest req) throws HttpError{
+    protected String getParameter(String name, HttpServletRequest req) throws HttpError {
         if (req.getParameterMap().containsKey(name)) {
             return req.getParameter(name);
         }
         throw new HttpError(HttpServletResponse.SC_BAD_REQUEST);
 
     }
-    protected void returnAsJson(HttpServletResponse resp, Object o) throws IOException{
+    protected void returnAsJson(HttpServletResponse resp, Object o) throws IOException {
         String json = new Gson().toJson(o);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
