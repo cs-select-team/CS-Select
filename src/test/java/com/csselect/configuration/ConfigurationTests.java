@@ -18,9 +18,7 @@ public class ConfigurationTests {
     }
 
     @Test
-    public void loadingTest() {
-        Assert.assertNotNull(config);
-    }
+    public void loadingTest() { Assert.assertNotNull(config); }
 
     @Test
     public void testOrganiserPassword() {

@@ -51,7 +51,7 @@ public class PlayerStats implements Gamification {
         if (newStreak >= 5) {
             gamificationScore = gamificationScore * 2;
         } else if (newStreak >= 3) {
-            gamificationScore = gamificationScore + (int) Math.ceil(gamificationScore / 2);
+            gamificationScore = gamificationScore + gamificationScore / 2; // Nachkommastelle abgeschnitten
         }
 
         if (highestStreak < newStreak) {
