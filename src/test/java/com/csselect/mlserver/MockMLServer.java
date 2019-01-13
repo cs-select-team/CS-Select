@@ -2,6 +2,7 @@ package com.csselect.mlserver;
 
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
+import com.google.inject.Inject;
 
 import java.util.Collection;
 import java.util.Random;
@@ -13,7 +14,8 @@ public class MockMLServer implements MLServer {
 
     private Random random;
 
-    public MockMLServer() {
+    @Inject
+    MockMLServer() {
         this.random = new Random();
     }
 
