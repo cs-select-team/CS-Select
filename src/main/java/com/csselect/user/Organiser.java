@@ -38,7 +38,7 @@ public class Organiser extends User {
     }
 
     public void createGame() {
-
+        gameBuilder.doCreate();
     }
 
     public void invitePlayer(String playerEmail, Game game) {
@@ -46,7 +46,11 @@ public class Organiser extends User {
     }
 
     public void terminateGame(int gameId) {
-
+        games.forEach((Game element) -> {
+            if (element.getId() == gameId) {
+                element.setTerminated(true);
+            }
+        });
     }
 
     public void deleteGame(int gameId) {
