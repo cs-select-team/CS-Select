@@ -19,9 +19,10 @@ public interface MLServer {
 
     /**
      * Gets the {@link FeatureSet} specified by the given dataset name
+     * @param dataset dataset of which to get the FeatureSet
      * @return featureSet
      */
-    FeatureSet getFeatures();
+    FeatureSet getFeatures(String dataset);
 
     /**
      * Gets the score computed for the given {@link Feature}-Selection from the given dataset.
