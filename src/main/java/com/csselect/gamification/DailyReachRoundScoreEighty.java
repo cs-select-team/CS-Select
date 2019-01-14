@@ -22,6 +22,11 @@ public class DailyReachRoundScoreEighty extends DailyChallenge {
     @Override
     public boolean checkFinished(PlayerStats stats) {
         boolean finished = stats.getLastScore() >= 80;
+
+        if (finished) {
+            completed = true;
+        }
+
         return finished;
     }
 

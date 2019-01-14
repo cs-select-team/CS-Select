@@ -27,6 +27,11 @@ public class DailyReachScoreHundredFifty extends DailyChallenge {
         dailyScore += stats.getLastScore();
 
         boolean finished = dailyScore >= 150;
+
+        if (finished) {
+            completed = true;
+        }
+
         return finished;
     }
 

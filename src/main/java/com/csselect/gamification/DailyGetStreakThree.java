@@ -31,6 +31,11 @@ public class DailyGetStreakThree extends DailyChallenge {
         }
 
         boolean finished = dailyStreak >= 3;
+
+        if (finished) {
+            completed = true;
+        }
+
         return finished;
     }
 
