@@ -26,10 +26,6 @@ public class Pattern {
     }
 
     public GameOptions getGameOptions() {
-        try{
-            return (GameOptions) gameOptions.clone();
-        } catch (CloneNotSupportedException e) {
-            return null;
-        }
+        return (GameOptions) gameOptions.clone();
     }
 }

@@ -62,14 +62,18 @@ public class GameOptions implements  Cloneable{
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        GameOptions copyObject = (GameOptions) super.clone();
-        copyObject.setTitle(this.title);
-        copyObject.setDescription(this.description);
-        copyObject.setGamemode(this.gamemode);
-        copyObject.setInvitedEmails(this.invitedEmails);
-        copyObject.setNameFeatureDatabase(this.getNameFeatureDatabase());
-        copyObject.setTermination(this.termination);
-        return copyObject;
+    public Object clone() {
+        try {
+            GameOptions copyObject = (GameOptions) super.clone();
+            copyObject.setTitle(this.title);
+            copyObject.setDescription(this.description);
+            copyObject.setGamemode(this.gamemode);
+            copyObject.setInvitedEmails(this.invitedEmails);
+            copyObject.setNameFeatureDatabase(this.getNameFeatureDatabase());
+            copyObject.setTermination(this.termination);
+            return copyObject;
+        } catch (CloneNotSupportedException e) {
+            return this;
+        }
     }
 }
