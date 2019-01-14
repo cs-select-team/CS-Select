@@ -16,7 +16,7 @@ public abstract class User{
     /**
      * Standard constructor
      */
-    User() {}
+    public User() {}
 
     /**
      * Constructor for an User object. Database adapter is set to allow communication with our database
@@ -25,7 +25,7 @@ public abstract class User{
      * by the {@link com.csselect.database.DatabaseAdapter}
      * @param databaseAdapter Interface for database communication
      */
-    User(UserAdapter databaseAdapter) {
+    public User(UserAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
     }
 

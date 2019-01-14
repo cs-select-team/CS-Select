@@ -13,11 +13,11 @@ public class GameCreator {
     }
 
     public void loadPattern(Pattern pattern) {
-
+        this.gameOptions = pattern.getGameOptions();
     }
 
-    public void makePattern(String title) {
-
+    public Pattern makePattern(String title) {
+        return new Pattern(gameOptions, title);
     }
 
     public void doCreate() {

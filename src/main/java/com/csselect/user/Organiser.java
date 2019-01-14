@@ -27,7 +27,7 @@ public class Organiser extends User {
      * {@link com.csselect.database.DatabaseAdapter}
      * @param databaseAdapter Interface for database communication with organiser tables
      */
-    Organiser(OrganiserAdapter databaseAdapter) {
+    public Organiser(OrganiserAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
         this.gameBuilder = new GameCreator();
         this.games = new HashSet<>();
@@ -52,7 +52,8 @@ public class Organiser extends User {
      * @param title String which shall refer to pattern in our database
      */
     public void savePattern(String title) {
-
+        Pattern createdPattern = gameBuilder.makePattern(title);
+        databaseAdapter.addPattern(createdPattern);
     }
 
     /**
@@ -70,8 +71,7 @@ public class Organiser extends User {
      * @param pattern Settings (the organiser already chose and saved) the organiser wants to choose
      */
     public void loadPattern(Pattern pattern) {
-
-        databaseAdapter.addPattern(pattern);
+        gameBuilder.loadPattern(pattern);
     }
 
     /**
@@ -80,6 +80,7 @@ public class Organiser extends User {
      */
     public void createGame() {
         gameBuilder.doCreate();
+        updateActiveGames();
     }
 
     /**
@@ -93,7 +94,11 @@ public class Organiser extends User {
      * @param gameId Unique ID of the game in our system the organiser modified
      */
     public void invitePlayers(String[] playerEmails, int gameId) {
-
+        games.forEach((Game element) -> {
+            if (element.getId() == gameId) {
+                //TODO: Notify game
+            }
+        });
     }
 
     /**
@@ -109,6 +114,8 @@ public class Organiser extends User {
                 terminatedGames.add(element);
             }
         });
+        updateActiveGames();
+        updateTerminatedGames();
     }
 
     /**
@@ -118,6 +125,19 @@ public class Organiser extends User {
      * @param gameId Unique ID of the game that shall be deleted
      */
     public void deleteGame(int gameId) {
-        games.removeIf((Game element) -> element.isTerminated() && element.getId() == gameId);
+        terminatedGames.forEach((Game element) -> {
+            if (element.isTerminated() && element.getId() == gameId) {
+                terminatedGames.remove(element);
+            }
+        });
+        updateTerminatedGames();
+    }
+
+    private void updateActiveGames() {
+        this.games = databaseAdapter.getActiveGames();
+    }
+
+    private void updateTerminatedGames() {
+        this.terminatedGames = databaseAdapter.getTerminatedGames();
     }
 }

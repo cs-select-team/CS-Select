@@ -31,7 +31,7 @@ public class Player extends User {
      * {@link com.csselect.database.DatabaseAdapter}
      * @param databaseAdapter Interface for database communication with player tables
      */
-    Player(PlayerAdapter databaseAdapter) {
+    public Player(PlayerAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
         this.games = new HashSet<>();
         this.activeRound = null;
