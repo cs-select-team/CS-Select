@@ -73,7 +73,7 @@ public class GameOptions implements  Cloneable{
             copyObject.setTermination(this.termination);
             return copyObject;
         } catch (CloneNotSupportedException e) {
-            return this;
+            return null;
         }
     }
 }
