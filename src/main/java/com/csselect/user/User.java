@@ -92,6 +92,6 @@ public abstract class User{
      * @param langCode Code of language selected by the user
      */
     public void setLanguage(String langCode) {
-
+        databaseAdapter.setLanguage(langCode);
     }
 }
