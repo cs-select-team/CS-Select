@@ -5,6 +5,7 @@ import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
+import com.csselect.gamification.Leaderboard;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -52,7 +53,13 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
      */
     public void acceptInvite(int gameId) {
-
+        invitedGames.forEach((Game invited) -> {
+            if (invited.getId() == gameId) {
+                //TODO: Notify game
+                invitedGames.remove(invited);
+                games.add(invited);
+            }
+        });
     }
 
 
@@ -63,7 +70,12 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to but shall not be able to be played by him/her
      */
     public void declineInvite(int gameId) {
-
+        invitedGames.forEach((Game invited) -> {
+            if (invited.getId() == gameId) {
+                //TODO: Notify game
+                invitedGames.remove(invited);
+            }
+        });
     }
 
     /**
@@ -74,9 +86,7 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player wants to start a round of
      * @return Features to show in this round of the game
      */
-    public Collection<Feature> startRound(int gameId) {
-        return null;
-    }
+    public Collection<Feature> startRound(int gameId) { return null; }
 
     /**
      * If the player starts a round ({@link Round}), we want to remember which round the player is playing.
@@ -129,6 +139,6 @@ public class Player extends User {
      * @return List of Players in leaderboard's order
      */
     public List<Player> getLeaderboard() {
-        return null;
+        return Leaderboard.getInstance().getPlayers();
     }
 }
