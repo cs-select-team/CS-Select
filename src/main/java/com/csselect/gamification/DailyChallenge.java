@@ -9,11 +9,11 @@ import java.util.Date;
  */
 public abstract class DailyChallenge {
 
-    private String name;
-    private String description;
-    private Date date;
-    private boolean completed;
-    private int reward;
+    protected String name;
+    protected String description;
+    protected Date date;
+    protected boolean completed;
+    protected int reward;
 
     /**
      * This method is abstract and has to be implemented in all subclasses. This method
