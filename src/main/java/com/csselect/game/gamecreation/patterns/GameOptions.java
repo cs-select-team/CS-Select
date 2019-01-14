@@ -5,7 +5,7 @@ import com.csselect.game.Termination;
 
 import java.util.Collection;
 
-public class GameOptions {
+public class GameOptions implements  Cloneable{
     private String title;
     private String description;
     private String nameFeatureDatabase;
@@ -59,5 +59,17 @@ public class GameOptions {
 
     public void setInvitedEmails(Collection<String> invitedEmails) {
         this.invitedEmails = invitedEmails;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        GameOptions copyObject = (GameOptions) super.clone();
+        copyObject.setTitle(this.title);
+        copyObject.setDescription(this.description);
+        copyObject.setGamemode(this.gamemode);
+        copyObject.setInvitedEmails(this.invitedEmails);
+        copyObject.setNameFeatureDatabase(this.getNameFeatureDatabase());
+        copyObject.setTermination(this.termination);
+        return copyObject;
     }
 }

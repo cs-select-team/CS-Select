@@ -26,13 +26,10 @@ public class Pattern {
     }
 
     public GameOptions getGameOptions() {
-        GameOptions copyObject = new GameOptions();
-        copyObject.setTitle(gameOptions.getTitle());
-        copyObject.setDescription(gameOptions.getDescription());
-        copyObject.setGamemode(gameOptions.getGamemode());
-        copyObject.setInvitedEmails(gameOptions.getInvitedEmails());
-        copyObject.setNameFeatureDatabase(gameOptions.getNameFeatureDatabase());
-        copyObject.setTermination(gameOptions.getTermination());
-        return copyObject;
+        try{
+            return (GameOptions) gameOptions.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 }
