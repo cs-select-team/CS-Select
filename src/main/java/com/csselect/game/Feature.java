@@ -1,5 +1,7 @@
 package com.csselect.game;
 
+import java.awt.image.BufferedImage;
+
 public class Feature {
 
     private final int id;
@@ -17,26 +19,26 @@ public class Feature {
         return 0;
     }
 
-    public void setGermanName() {
+    public void setGermanName(String germanName) {
 
     }
 
-    public void setEnglishName() {
+    public void setEnglishName(String englishName) {
 
     }
-    public void setGermanDescription() {
-
-    }
-
-    public void setEnglishDescription() {
+    public void setGermanDescription(String germanDescription) {
 
     }
 
-    public void setTotalGraph() {
+    public void setEnglishDescription(String englishDescription) {
 
     }
 
-    public void setClassGraph() {
+    public void setTotalGraph(BufferedImage totalGraph) {
+
+    }
+
+    public void setClassGraph(BufferedImage classGraph) {
 
     }
 }
