@@ -2,6 +2,13 @@ package com.csselect.game;
 
 public class Feature {
 
+    private final int id;
+    private final String internalName;
+
+    public Feature(int id, String internalName) {
+        this.id = id;
+        this.internalName = internalName;
+    }
     /**
      * Gets the {@link Feature}s ID
      * @return id
