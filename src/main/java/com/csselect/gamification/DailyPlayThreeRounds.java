@@ -27,6 +27,11 @@ public class DailyPlayThreeRounds extends DailyChallenge {
         dailyRounds++;
 
         boolean finished = dailyRounds >= 3;
+
+        if (finished) {
+            completed = true;
+        }
+
         return finished;
     }
 

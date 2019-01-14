@@ -58,7 +58,15 @@ public class PlayerStats implements Gamification {
             highestStreak = newStreak;
         }
 
-        // Dailies checken
+        selectDaily();
+
+        if (!activeDaily.isCompleted()) {
+            boolean completed = activeDaily.checkFinished(this);
+
+            if (completed) {
+                gamificationScore += activeDaily.getReward();
+            }
+        }
 
         roundsPlayed += 1;
         this.score += gamificationScore;
@@ -154,4 +162,20 @@ public class PlayerStats implements Gamification {
         int commutedScore = (int) Math.ceil(score * 100);
         return commutedScore;
     }
+
+    /**
+     * Changes the current daily if it is still from another day. Otherwise the active daily stays
+     * the same.
+     */
+    private void selectDaily() {
+
+    }
+
+    /**
+     * Loads the available dailies and puts them into the list.
+     */
+    private void loadDailies() {
+
+    }
+
 }
