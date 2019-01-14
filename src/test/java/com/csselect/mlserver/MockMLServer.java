@@ -27,7 +27,7 @@ public class MockMLServer implements MLServer {
     //TODO Populate FeatureSet with Features when the needed classes are available
     @Override
     public FeatureSet getFeatures(String dataset) {
-        return new FeatureSet();
+        return new FeatureSet(dataset);
     }
 
     @Override

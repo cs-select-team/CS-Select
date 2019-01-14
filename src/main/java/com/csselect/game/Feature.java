@@ -16,7 +16,7 @@ public class Feature {
      * @return id
      */
     public int getID() {
-        return 0;
+        return id;
     }
 
     public void setGermanName(String germanName) {
