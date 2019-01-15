@@ -86,6 +86,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @param selected ids of the selected Features
      * @param useless ids of the features that are marked useless
+     *
+     * @return the score that the selection of the player has achieved
      */
      public int selectFeatures(Collection<Integer> selected, Collection<Integer> useless) {
         return 0;

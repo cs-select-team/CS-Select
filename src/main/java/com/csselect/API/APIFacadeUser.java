@@ -2,8 +2,12 @@ package com.csselect.API;
 
 import com.csselect.user.User;
 
+/**
+ * The facade for all calls to the system that are not specific to organisers or players
+ */
 @SuppressWarnings("WeakerAccess")
-abstract public class APIFacadeUser {
+
+public abstract class APIFacadeUser {
 
     protected User user;
     /** Registers a new user.
@@ -11,7 +15,7 @@ abstract public class APIFacadeUser {
      * Password and email are later required to log into the system with {@link APIFacadeUser#login(String, String)}
      * @param args String array of arguments for registration
      */
-    abstract public void register(String[] args);
+    public abstract void register(String[] args);
 
     /** logs in a user for this api. This is the first method that has to be called before any other methods start
      *  making sense.
@@ -22,7 +26,9 @@ abstract public class APIFacadeUser {
      * @return true if login successfull, false if not
      */
     public boolean login(String email, String password) {
-        if (email.equals("bendix.sonnenberg@gmx.de") && password.equals("1234")) return true;
+        if (email.equals("bendix.sonnenberg@gmx.de") && password.equals("1234")) {
+            return true;
+        }
         return false;
     }
 
@@ -58,9 +64,9 @@ abstract public class APIFacadeUser {
 
     }
 
-    /** sends an email to the email address of the current user to recover the password
-     * TODO das macht hier keinen Sinn, weil man muss ja angemeldet sein damit die Facade weiß welchem Nutzer das zu schicken ist.
+    /** sends an email to the email address of the user to recover the password
      *
+     * @param email email of the user that wants their account recovered
      */
     public void recoverPassword(String email) {
 
