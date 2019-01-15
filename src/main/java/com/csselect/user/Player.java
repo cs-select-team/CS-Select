@@ -21,6 +21,8 @@ public class Player extends User {
     private PlayerAdapter databaseAdapter;
     private Collection<Game> invitedGames;
     private Collection<Game> games;
+    private Collection<Game> terminatedGames;
+    private Collection<Feature> featuresToShow;
     private Gamification gamification;
     private Round activeRound;
 
@@ -33,7 +35,14 @@ public class Player extends User {
      */
     public Player(PlayerAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
-        this.games = new HashSet<>();
+        HashSet<Game> allGames = new HashSet<>(databaseAdapter.getGames());
+        allGames.forEach((Game game) -> {
+            if (!game.isTerminated()) {
+                this.games.add(game);
+            } else {
+                this.terminatedGames.add(game);
+            }
+        });
         this.activeRound = null;
     }
 
@@ -45,7 +54,7 @@ public class Player extends User {
     public void acceptInvite(int gameId) {
         invitedGames.forEach((Game invited) -> {
             if (invited.getId() == gameId) {
-                //TODO: Notify game
+                invited.acceptInvite(this, databaseAdapter.getEmail());
                 invitedGames.remove(invited);
                 games.add(invited);
             }
@@ -62,7 +71,7 @@ public class Player extends User {
     public void declineInvite(int gameId) {
         invitedGames.forEach((Game invited) -> {
             if (invited.getId() == gameId) {
-                //TODO: Notify game
+                invited.declineInvite(databaseAdapter.getEmail());
                 invitedGames.remove(invited);
             }
         });
@@ -76,7 +85,14 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player wants to start a round of
      * @return Features to show in this round of the game
      */
-    public Collection<Feature> startRound(int gameId) { return null; }
+    public Collection<Feature> startRound(int gameId) {
+        games.forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                featuresToShow = game.startRound(databaseAdapter.getID());
+            }
+        });
+        return featuresToShow;
+    }
 
     /**
      * If the player starts a round ({@link Round}), we want to remember which round the player is playing.
@@ -103,16 +119,16 @@ public class Player extends User {
      * @param uselessFeatures Features the player marked as unimportant
      */
     public void selectFeatures(Collection<Feature> selectedFeatures, Collection<Feature> uselessFeatures) {
-
+        activeRound.selectFeatures(selectedFeatures, uselessFeatures);
     }
 
     /**
      * It could be that in some rounds ({@link Round}) the features ({@link Feature}) are not suitable to make a good
      * decision. We provide a player the possibility to skip over a round.
-     * @param features Features the player selected in this round to be skipped
+     * @param uselessFeatures Features the player selected in this round to be skipped
      */
-    public void skipRound(Collection<Feature> features) {
-
+    public void skipRound(Collection<Feature> uselessFeatures) {
+        activeRound.skip(uselessFeatures);
     }
 
     /**

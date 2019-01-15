@@ -30,8 +30,8 @@ public class Organiser extends User {
     public Organiser(OrganiserAdapter databaseAdapter) {
         this.databaseAdapter = databaseAdapter;
         this.gameBuilder = new GameCreator();
-        this.games = new HashSet<>();
-        this.terminatedGames = new HashSet<>();
+        this.games = databaseAdapter.getActiveGames();
+        this.terminatedGames = databaseAdapter.getTerminatedGames();
     }
 
     /**
@@ -83,10 +83,10 @@ public class Organiser extends User {
      * @param playerEmails Emails invited to the game
      * @param gameId Unique ID of the game in our system the organiser modified
      */
-    public void invitePlayers(String[] playerEmails, int gameId) {
+    public void invitePlayers(Collection<String> playerEmails, int gameId) {
         games.forEach((Game element) -> {
             if (element.getId() == gameId) {
-                //TODO: Notify game
+                element.invitePlayers(playerEmails);
             }
         });
     }
