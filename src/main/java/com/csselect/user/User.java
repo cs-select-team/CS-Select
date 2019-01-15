@@ -3,10 +3,10 @@ package com.csselect.user;
 import com.csselect.database.UserAdapter;
 
 /**
- * This class represents an user in our system. All users, despite their role, have access to those methods and
- * must implement a register method. A standard user can log himself in/out and is allowed change his password as well
- * as his email which we store in our database. Additionally, he can set in which language the frontend should
- * be displayed.
+ * This class represents an user in our system. All users, despite their role, have access to those methods.
+ * A standard user can log himself in/out and is allowed change his password as well as his email which we store
+ * in our database.
+ * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public class User{
@@ -55,6 +55,10 @@ public class User{
         this.loggedIn = false;
     }
 
+    /**
+     * Getter for loggedIn attribute representing if the object shall be able to operate in our system
+     * @return boolean if this object is logged in
+     */
     public boolean isLoggedIn() {
         return loggedIn;
     }

@@ -35,16 +35,6 @@ public class Organiser extends User {
     }
 
     /**
-     * To register an organiser in our database, we need 3 Strings representing email, password and global password.
-     * @param args String array of arguments for registration (has to have length of 3 cells)
-     * @return If the organiser was successfully registered
-     **/
-    public boolean register(String[] args) {
-        assert args.length == 3;
-        return true;
-    }
-
-    /**
      * Whilst in the game creation interface (front-end), an organiser is able to select certain parameters for his game
      * ({@link Game} the created game will have. The organiser might want to select the same pattern in the future,
      * so he is able to save his chosen parameters. Therefore, we save this so called "pattern" ({@link Pattern} which

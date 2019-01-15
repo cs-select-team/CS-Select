@@ -38,16 +38,6 @@ public class Player extends User {
     }
 
     /**
-     * To register a player in our database, we need 3 Strings representing email, password and username.
-     * @param args String array of arguments for registration (has to have length of 3 cells)
-     * @return If the player was successfully registered
-     **/
-    public boolean register(String[] args) {
-        assert args.length == 3;
-        return false;
-    }
-
-    /**
      * If a player is invited to a game ({@link Game}), he has to accept said invitation before he is allowed to play it.
      * Game objects representing games the player is invited to are stored as an attribute (array) in the Player object.
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
