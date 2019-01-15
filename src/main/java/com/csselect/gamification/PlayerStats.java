@@ -38,7 +38,6 @@ public class PlayerStats implements Gamification {
     @Override
     public int finishRound(double score) {
         int commutedScore = commuteScore(score);
-
         lastScore = commutedScore;
 
         if (maxRoundScore < commutedScore) {
@@ -47,28 +46,14 @@ public class PlayerStats implements Gamification {
 
         streak.increaseStreak();
         int newStreak = streak.getCounter();
-
-        int gamificationScore = commutedScore;
-
-        if (newStreak >= 5) {
-            gamificationScore = gamificationScore * 2;
-        } else if (newStreak >= 3) {
-            gamificationScore = gamificationScore + gamificationScore / 2; // Nachkommastelle abgeschnitten
-        }
-
         if (highestStreak < newStreak) {
             highestStreak = newStreak;
         }
 
+        int gamificationScore = addStreakBonus(newStreak, commutedScore);
+
         selectDaily();
-
-        if (!activeDaily.isCompleted()) {
-            boolean completed = activeDaily.checkFinished(this);
-
-            if (completed) {
-                gamificationScore += activeDaily.getReward();
-            }
-        }
+        gamificationScore = addDailyBonus(activeDaily, gamificationScore);
 
         roundsPlayed += 1;
         this.score += gamificationScore;
@@ -164,6 +149,34 @@ public class PlayerStats implements Gamification {
 
         int commutedScore = (int) Math.ceil(score * 100);
         return commutedScore;
+    }
+
+    /**
+     * Calculates bonus points if the streak is high enough.
+     * @param currentStreak The current streak.
+     * @param oldScore The current score.
+     * @return The new score. If the streak is too low, the score stays the same.
+     */
+    private int addStreakBonus(int currentStreak, int oldScore) {
+        int newScore = oldScore;
+        if (currentStreak >= 5) {
+            newScore = newScore * 2;
+        } else if (currentStreak >= 3) {
+            newScore = newScore + newScore / 2;
+        }
+        return newScore;
+    }
+
+    private int addDailyBonus(DailyChallenge dailyToCheck, int oldScore) {
+        int newScore = oldScore;
+        if (!dailyToCheck.isCompleted()) {
+
+            if (dailyToCheck.checkFinished(this)) {
+                newScore += dailyToCheck.getReward();
+                dailiesCompleted++;
+            }
+        }
+        return newScore;
     }
 
     /**
