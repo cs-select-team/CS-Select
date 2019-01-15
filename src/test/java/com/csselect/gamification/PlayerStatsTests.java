@@ -36,7 +36,7 @@ public class PlayerStatsTests {
         // Assert.assertEquals(stats.finishRound(-0.4), 0);
     }
 
-    @Ignore("Outdate, because of dailies.")
+    @Ignore("Outdated, because of dailies.")
     @Test
     public void testFinishRoundWithStreak() {
         Assert.assertEquals(stats.finishRound(0.8), 80);
@@ -51,7 +51,7 @@ public class PlayerStatsTests {
 
     @Test
     public void testLastScore() {
-        Assert.assertEquals(stats.getRoundsPlayed(), 0);
+        Assert.assertEquals(stats.getLastScore(), 0);
         stats.finishRound(0.8);
         Assert.assertEquals(stats.getLastScore(), 80);
         stats.finishRound(0.44);
@@ -62,11 +62,13 @@ public class PlayerStatsTests {
 
     @Test
     public void testMaxRoundScore() {
-        Assert.assertEquals(stats.getRoundsPlayed(), 0);
+        Assert.assertEquals(stats.getMaxRoundScore(), 0);
         stats.finishRound(0.8);
         Assert.assertEquals(stats.getMaxRoundScore(), 80);
         stats.finishRound(0.44);
         Assert.assertEquals(stats.getMaxRoundScore(), 80);
+        stats.finishRound(0.9);
+        Assert.assertEquals(stats.getMaxRoundScore(), 90);
         stats.finishRound(0.9);
         Assert.assertEquals(stats.getMaxRoundScore(), 90);
     }
@@ -78,6 +80,10 @@ public class PlayerStatsTests {
         Assert.assertEquals(stats.getRoundsPlayed(), 1);
         stats.finishRound(0.44);
         Assert.assertEquals(stats.getRoundsPlayed(), 2);
+        stats.finishRound(0.92);
+        stats.finishRound(0.77);
+        stats.finishRound(0.47);
+        Assert.assertEquals(stats.getRoundsPlayed(), 5);
     }
 
     @Test
@@ -101,10 +107,17 @@ public class PlayerStatsTests {
     @Test
     public void testDailiesCompleted() {
         Assert.assertEquals(stats.getDailiesCompleted(), 0);
+        Assert.assertFalse(stats.getDaily().isCompleted());
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
         Assert.assertEquals(stats.getDailiesCompleted(), 1);
+        Assert.assertTrue(stats.getDaily().isCompleted());
+        stats.finishRound(0.2);
+        stats.finishRound(0.75);
+        Assert.assertEquals(stats.getDailiesCompleted(), 1);
+        Assert.assertTrue(stats.getDaily().isCompleted());
+
     }
 
     /**
@@ -112,6 +125,7 @@ public class PlayerStatsTests {
      */
     @Test
     public void testDailies() {
+        Assert.assertNotNull(stats.getDaily());
         Assert.assertEquals(stats.getDaily().getDate(), LocalDate.now());
     }
 }
