@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,7 +24,7 @@ public class PlayerStats implements Gamification {
     public PlayerStats() {
         this.streak = new Streak();
         this.activeDaily = null;
-        this.dailies = null;
+        this.dailies = new LinkedList<>();
         achievements = null;
         this.score = 0;
         this.roundsPlayed = 0;
@@ -168,7 +170,28 @@ public class PlayerStats implements Gamification {
      * the same.
      */
     private void selectDaily() {
+        if (activeDaily == null) {
+            activeDaily = chooseRandomDaily();
+            return;
+        }
 
+        LocalDate today = LocalDate.now();
+
+        if (!today.isEqual(activeDaily.getDate())) {
+            activeDaily = chooseRandomDaily();
+        }
+    }
+
+    /**
+     * Chooses a daily challenge randomly from the list of dailies and sets its date to today.
+     * @return The chosen daily.
+     */
+    private DailyChallenge chooseRandomDaily() {
+        int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
+        DailyChallenge newDaily = dailies.get(randomIndex);
+        newDaily.resetDaily();
+        newDaily.setDate(LocalDate.now());
+        return newDaily;
     }
 
     /**
