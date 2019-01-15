@@ -23,8 +23,8 @@ public class PlayerStats implements Gamification {
 
     public PlayerStats() {
         this.streak = new Streak();
-        this.activeDaily = null;
-        this.dailies = new LinkedList<>();
+        this.dailies = loadDailies();
+        this.activeDaily = chooseRandomDaily();
         achievements = null;
         this.score = 0;
         this.roundsPlayed = 0;
@@ -98,6 +98,7 @@ public class PlayerStats implements Gamification {
 
     @Override
     public DailyChallenge getDaily() {
+        selectDaily();
         return activeDaily;
     }
 
@@ -176,7 +177,6 @@ public class PlayerStats implements Gamification {
         }
 
         LocalDate today = LocalDate.now();
-
         if (!today.isEqual(activeDaily.getDate())) {
             activeDaily = chooseRandomDaily();
         }
@@ -197,8 +197,14 @@ public class PlayerStats implements Gamification {
     /**
      * Loads the available dailies and puts them into the list.
      */
-    private void loadDailies() {
-
+    private List<DailyChallenge> loadDailies() {
+        // Erstmal hartkodieren fürs Testen
+        List<DailyChallenge> allDailies = new LinkedList<>();
+        allDailies.add(new DailyGetStreakThree());
+        allDailies.add(new DailyPlayThreeRounds());
+        allDailies.add(new DailyReachRoundScoreEighty());
+        allDailies.add(new DailyReachScoreHundredFifty());
+        return allDailies;
     }
 
 }

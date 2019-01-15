@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 public class PlayerStatsTests {
 
     private PlayerStats stats;
@@ -34,6 +36,7 @@ public class PlayerStatsTests {
         // Assert.assertEquals(stats.finishRound(-0.4), 0);
     }
 
+    @Ignore("Outdate, because of dailies.")
     @Test
     public void testFinishRoundWithStreak() {
         Assert.assertEquals(stats.finishRound(0.8), 80);
@@ -93,5 +96,22 @@ public class PlayerStatsTests {
         Assert.assertEquals(stats.getHighestStreak(), 3);
         stats.finishRound(0.81);
         Assert.assertEquals(stats.getHighestStreak(), 4);
+    }
+
+    @Test
+    public void testDailiesCompleted() {
+        Assert.assertEquals(stats.getDailiesCompleted(), 0);
+        stats.finishRound(0.84);
+        stats.finishRound(0.2);
+        stats.finishRound(0.75);
+        Assert.assertEquals(stats.getDailiesCompleted(), 0);
+    }
+
+    /**
+     * Dailies are chosen randomly, difficult to test.
+     */
+    @Test
+    public void testDailies() {
+        Assert.assertEquals(stats.getDaily().getDate(), LocalDate.now());
     }
 }
