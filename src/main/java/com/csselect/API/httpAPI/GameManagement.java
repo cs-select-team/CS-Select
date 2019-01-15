@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * only request from organisers in this class.
  */
-public class GameManagment extends Servlet {
+public class GameManagement extends Servlet {
 
 
     @Override
