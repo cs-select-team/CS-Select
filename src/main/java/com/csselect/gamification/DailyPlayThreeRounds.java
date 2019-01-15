@@ -1,7 +1,5 @@
 package com.csselect.gamification;
 
-import java.util.Date;
-
 /**
  * A daily challenge that will be completed once a player plays three games
  * in one day.
@@ -16,7 +14,7 @@ public class DailyPlayThreeRounds extends DailyChallenge {
     public DailyPlayThreeRounds() {
         this.name = "";
         this.description = "";
-        this.date = new Date();
+        this.date = null;
         this.completed = false;
         this.reward = 50;
         this.dailyRounds = 0;
