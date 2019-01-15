@@ -1,8 +1,6 @@
 package com.csselect.API.httpAPI;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.google.gson.Gson;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,39 +13,34 @@ public class GameManagment extends Servlet {
 
     @Override
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
-        if (isPlayer()) throw new HttpError(HttpServletResponse.SC_FORBIDDEN);  // players are never allowed to create games
-        switch (req.getPathInfo()) {
-            case "/patterns":
-                getPatterns(req, resp);
-                break;
-
+        if (isPlayer()) {
+            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        }
+        if (req.getPathInfo().equals("/patterns")) {
+            getPatterns(req, resp);
         }
     }
 
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
-        if (isPlayer()) throw new HttpError(HttpServletResponse.SC_FORBIDDEN);   // players are never allowed to create games
-        switch (req.getPathInfo()) {
-            case "/setParam":
-                setParam(req, resp);
-                break;
-            case "/savePattern":
-                savePattern(req, resp);
-                break;
-            case "/loadPattern":
-                loadPattern(req, resp);
-                break;
-            case "/invite":
-                invitePlayer(req, resp);
-                break;
-            case "/terminate":
-                terminate(req,resp);
-                break;
-            case "/delete":
-                delete(req, resp);
-                break;
-                default:
-                    createGame(req, resp);
+        if (isPlayer()) {
+            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        }
+        String s = req.getPathInfo();
+        if ("/setParam".equals(s)) {
+            setParam(req, resp);
+        } else if ("/savePattern".equals(s)) {
+            savePattern(req, resp);
+        } else if ("/loadPattern".equals(s)) {
+            loadPattern(req, resp);
+        } else if ("/invite".equals(s)) {
+            invitePlayer(req, resp);
+        } else if ("/terminate".equals(s)) {
+            terminate(req, resp);
+        } else if ("/delete".equals(s)) {
+            delete(req, resp);
+        } else {
+            createGame(req, resp);
         }
     }
 
@@ -67,7 +60,7 @@ public class GameManagment extends Servlet {
         getOrganiserFacade().invitePlayer(email, gameId);
     }
 
-    private void loadPattern(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException{
+    private void loadPattern(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         Pattern p = new Gson().fromJson(getParameter("pattern", req), Pattern.class);
         getOrganiserFacade().loadPattern(p);
 
@@ -82,7 +75,7 @@ public class GameManagment extends Servlet {
         getOrganiserFacade().savePattern(getParameter("title", req));
     }
 
-    private void setParam(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException{
+    private void setParam(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         String option = getParameter("option", req);
         String data = getParameter("data", req);
 
@@ -90,9 +83,12 @@ public class GameManagment extends Servlet {
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
 
-    private void createGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException{
+    private void createGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        if (getOrganiserFacade().createGame()) resp.sendError(HttpServletResponse.SC_ACCEPTED);
-        else resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        if (getOrganiserFacade().createGame()) {
+            resp.sendError(HttpServletResponse.SC_ACCEPTED);
+        } else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }
