@@ -107,6 +107,9 @@ public abstract  class Servlet extends HttpServlet {
             return getOrganiserFacade();
         }
     }
+    protected boolean isSet(String name, HttpServletRequest req) {
+        return req.getParameterMap().containsKey(name);
+    }
     /*
     method to get parameters securely from request
      */

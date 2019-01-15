@@ -32,9 +32,8 @@ public class Login extends Servlet {
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError{
         String email = getParameter("email", req);
         String password = getParameter("password", req);
-        String organiserSwitch = getParameter("organiser", req);
 
-        if(organiserSwitch.equals("on")) {
+        if(isSet("organiser", req)) {
             if (getOrganiserFacade().login(email, password)) {
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
                 setPlayer(false);
