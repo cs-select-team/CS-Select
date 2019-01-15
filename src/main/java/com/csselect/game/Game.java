@@ -1,7 +1,17 @@
 package com.csselect.game;
 
-import java.util.Collection;
-
 public class Game {
+    private boolean terminated;
 
+    public int getId() {
+        return 0;
+    }
+
+    public boolean isTerminated() {
+        return false;
+    }
+
+    public void setTerminated(boolean value) {
+        this.terminated = value;
+    }
 }

@@ -1,11 +1,18 @@
 package com.csselect.configuration;
 
+import com.google.inject.Inject;
+
 import java.io.File;
 
 /**
  * Mock-Implementation of the {@link Configuration} interface
  */
 public class MockConfiguration implements Configuration {
+
+    @Inject
+    private MockConfiguration() {
+
+    }
 
     @Override
     public String getOrganiserPassword() {
@@ -28,7 +35,7 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public int getDatabaseport() {
+    public int getDatabasePort() {
         return 3306;
     }
 

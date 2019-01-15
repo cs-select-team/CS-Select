@@ -4,6 +4,7 @@ import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.gamification.Achievement;
 import com.csselect.gamification.DailyChallenge;
+import com.csselect.gamification.DailyGetStreakThree;
 import com.csselect.gamification.Streak;
 import com.csselect.user.Player;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * @author bendix
  */
 public class APIFacadePlayer extends APIFacadeUser {
-    protected Player player;
+
 
     /** registers a new player
      *
@@ -27,6 +28,9 @@ public class APIFacadePlayer extends APIFacadeUser {
      *              1: password
      *              2: username
      */
+
+    private Player player;
+
     public void register(String[] args) {
 
     }
@@ -123,7 +127,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return current daily challange
      */
      public DailyChallenge getDaily() {
-         return new DailyChallenge() {
+         return new DailyGetStreakThree() {
              @Override
              public int hashCode() {
                  return super.hashCode();

@@ -15,7 +15,9 @@ public abstract class APIFacadeUser {
      * Password and email are later required to log into the system with {@link APIFacadeUser#login(String, String)}
      * @param args String array of arguments for registration
      */
+
     public abstract void register(String[] args);
+
 
     /** logs in a user for this api. This is the first method that has to be called before any other methods start
      *  making sense.

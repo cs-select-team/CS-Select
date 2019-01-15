@@ -34,7 +34,7 @@ public interface Configuration {
      * Gets the port of the database-server
      * @return port of the database-server
      */
-    int getDatabaseport();
+    int getDatabasePort();
 
     /**
      * Gets the username of the database user to be used

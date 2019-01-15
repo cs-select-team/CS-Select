@@ -3,6 +3,7 @@ package com.csselect.mlserver;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -14,14 +15,17 @@ public interface MLServer {
     /**
      * Gets the ML-Servers version
      * @return version
+     * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
-    String getVersion();
+    String getVersion() throws IOException;
 
     /**
      * Gets the {@link FeatureSet} specified by the given dataset name
+     * @param dataset dataset of which to get the FeatureSet
      * @return featureSet
+     * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
-    FeatureSet getFeatures();
+    FeatureSet getFeatures(String dataset) throws IOException;
 
     /**
      * Gets the score computed for the given {@link Feature}-Selection from the given dataset.
@@ -31,6 +35,7 @@ public interface MLServer {
      * @param dataset dataset to which the feature selection belongs
      * @param selectedFeatures feature selection to be evaluated
      * @return score out of [0-1]
+     * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
-    double getScore(String dataset, Collection<Feature> selectedFeatures);
+    double getScore(String dataset, Collection<Feature> selectedFeatures) throws IOException;
 }

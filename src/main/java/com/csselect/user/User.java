@@ -7,29 +7,36 @@ import com.csselect.database.UserAdapter;
  * must implement a register method. A standard user can log himself in/out and is allowed change his password as well
  * as his email which we store in our database. Additionally, he can set in which language the frontend should
  * be displayed.
+
+ * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public abstract class User{
-    protected int id;
-    public UserAdapter dataBaseAdapter;
+    private UserAdapter databaseAdapter;
+
 
     /**
-     * Constructor for an User object. The ID is set and a database adapter is set to allow communication with our
-     * database (object of {@link UserAdapter}. The constructor will be called as soon as a user registers and logs in
-     * or out. Which value the unique ID will have is determined by the {@link com.csselect.database.DatabaseAdapter}
-     * @param id The unique ID which identifies the user in our system
-     * @param dataBaseAdapter Interface for database communication
+     * Standard constructor
      */
-    User(int id, UserAdapter dataBaseAdapter) {
-        this.id = id;
-        this.dataBaseAdapter = dataBaseAdapter;
+    User() {}
+
+    /**
+     * Constructor for an User object. Database adapter is set to allow communication with our database
+     * (object of {@link UserAdapter}). The constructor will be called as soon as a user registers or logs in.
+     * Which value the unique ID will have (registration) is determined
+     * by the {@link com.csselect.database.DatabaseAdapter}
+     * @param databaseAdapter Interface for database communication
+     */
+    User(UserAdapter databaseAdapter) {
+        this.databaseAdapter = databaseAdapter;
     }
 
     /**
-     * If during runtime the ID of a user object is needed, this method enables reading of the ID attribute
+     * If during runtime the ID of a user object is needed, this method enables reading of the ID
      * @return The unique ID which identifies the user in our system
      */
     public int getId() {
-        return this.id;
+        return this.databaseAdapter.getID();
+
     }
 
     /**
@@ -61,8 +68,10 @@ public abstract class User{
     }
 
     /**
-     * Changing an users's password means to call this method on an object with his/her ID. It is assured in our
-     * implementation that we can call this method only after the user correctly logged into our system.
+
+     * Changing an users's password means to call this method on an object with the according {@link UserAdapter}.
+     * It is assured in our implementation that we can call this method only after the user correctly logged
+     * into our system.
      * The password itself will be safely hashed and only this hashed version will be stored in the database.
      * @param password New password which will be set for object's ID in our database.
      */
@@ -71,12 +80,13 @@ public abstract class User{
     }
 
     /**
-     * Changing an users's email means to call this method on an object with his/her ID. It is assured in our
-     * implementation that we can call this method only after the user correctly logged into our system.
+     * Changing an users's email means to call this method on an object with the according {@link UserAdapter}.
+     * It is assured in our implementation that we can call this method only after the user correctly logged
+     * into our system.
      * @param email New email to which the user ID will refer in our database.
      */
     public void changeEmail(String email) {
-        dataBaseAdapter.setEmail(email);
+        databaseAdapter.setEmail(email);
     }
 
     /**
