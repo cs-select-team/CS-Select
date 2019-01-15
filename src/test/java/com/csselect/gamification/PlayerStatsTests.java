@@ -104,7 +104,7 @@ public class PlayerStatsTests {
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
-        Assert.assertEquals(stats.getDailiesCompleted(), 0);
+        Assert.assertEquals(stats.getDailiesCompleted(), 1);
     }
 
     /**
