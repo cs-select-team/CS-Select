@@ -4,4 +4,22 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+    <Resource auth="Container" mail.smtp.host="localhost" name="mail/Session" type="javax.mail.Session"/>
+    <resource-ref>
+        <description>
+            Resource reference to a factory for javax.mail.Session
+            instances that may be used for sending electronic mail
+            messages, preconfigured to connect to the appropriate
+            SMTP server.
+        </description>
+        <res-ref-name>mail/Session</res-ref-name>
+        <res-type>javax.mail.Session</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    <Context>
+    <Resource name="mail/Session" auth="Container"
+              type="javax.mail.Session"
+              mail.smtp.host="localhost"/>
+    </Context>
 </web-app>
