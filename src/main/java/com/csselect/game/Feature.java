@@ -19,6 +19,34 @@ public class Feature {
         return id;
     }
 
+    public String getInternalName() {
+        return "";
+    }
+
+    public String getGermanName() {
+        return "";
+    }
+
+    public String getEnglishName() {
+        return "";
+    }
+
+    public String getGermanDescription() {
+        return "";
+    }
+
+    public String getEnglishDescription() {
+        return "";
+    }
+
+    public BufferedImage getTotalGraph() {
+        return null;
+    }
+
+    public BufferedImage getClassGraph() {
+        return null;
+    }
+
     public void setGermanName(String germanName) {
 
     }
