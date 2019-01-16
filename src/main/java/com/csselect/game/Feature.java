@@ -11,6 +11,13 @@ public class Feature {
 
     private final int id;
     private final String internalName;
+    private String germanName;
+    private String englishName;
+    private String germanDescription;
+    private String englishDescription;
+    private BufferedImage totalGraph;
+    private BufferedImage classGraph;
+
 
     /**
      * Constructor for a feature object
@@ -34,7 +41,7 @@ public class Feature {
      * @return the internal name
      */
     public String getInternalName() {
-        return "";
+        return this.internalName;
     }
 
     /**
@@ -42,7 +49,7 @@ public class Feature {
      * @return the german name
      */
     public String getGermanName() {
-        return "";
+        return this.germanName;
     }
 
     /**
@@ -50,7 +57,7 @@ public class Feature {
      * @return the english name
      */
     public String getEnglishName() {
-        return "";
+        return this.englishName;
     }
 
     /**
@@ -58,7 +65,7 @@ public class Feature {
      * @return the german description
      */
     public String getGermanDescription() {
-        return "";
+        return this.germanDescription;
     }
 
     /**
@@ -66,7 +73,7 @@ public class Feature {
      * @return the english description
      */
     public String getEnglishDescription() {
-        return "";
+        return this.englishDescription;
     }
 
     /**
@@ -74,7 +81,7 @@ public class Feature {
      * @return the graph with the total data
      */
     public BufferedImage getTotalGraph() {
-        return null;
+        return this.totalGraph;
     }
 
     /**
@@ -82,7 +89,7 @@ public class Feature {
      * @return the graph with the data split into classes
      */
     public BufferedImage getClassGraph() {
-        return null;
+        return this.classGraph;
     }
 
     /**
@@ -90,7 +97,7 @@ public class Feature {
      * @param germanName the german name
      */
     public void setGermanName(String germanName) {
-
+        this.germanName = germanName;
     }
 
     /**
@@ -98,7 +105,7 @@ public class Feature {
      * @param englishName the english name
      */
     public void setEnglishName(String englishName) {
-
+        this.englishName = englishName;
     }
 
     /**
@@ -106,7 +113,7 @@ public class Feature {
      * @param germanDescription the german description
      */
     public void setGermanDescription(String germanDescription) {
-
+        this.germanDescription = germanDescription;
     }
 
     /**
@@ -114,7 +121,7 @@ public class Feature {
      * @param englishDescription the english description
      */
     public void setEnglishDescription(String englishDescription) {
-
+        this.englishDescription = englishDescription;
     }
 
     /**
@@ -122,7 +129,7 @@ public class Feature {
      * @param totalGraph the graph with the total data
      */
     public void setTotalGraph(BufferedImage totalGraph) {
-
+        this.totalGraph = totalGraph;
     }
 
     /**
@@ -130,6 +137,6 @@ public class Feature {
      * @param classGraph the graph with the data split into classes
      */
     public void setClassGraph(BufferedImage classGraph) {
-
+        this.classGraph = classGraph;
     }
 }

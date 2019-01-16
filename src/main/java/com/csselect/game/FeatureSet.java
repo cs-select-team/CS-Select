@@ -1,12 +1,15 @@
 package com.csselect.game;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The FeatureSet class represents a set of features {@link Feature} and has a unique String identifier
  */
 public class FeatureSet {
 
+    private final Set<Feature> features;
     private final String identifier;
 
     /**
@@ -14,7 +17,7 @@ public class FeatureSet {
      * @param identifier the unique String identifier
      */
     public FeatureSet(String identifier) {
-
+        this.features = new HashSet<>();
         this.identifier = identifier;
     }
 
@@ -23,15 +26,15 @@ public class FeatureSet {
      * @return the String identifier
      */
     public String getIdentifier() {
-        return "";
+        return "this.identifier";
     }
 
     /**
      * Getter for the features {@link Feature} belonging to the feature set
-     * @return the collection of features {@link Feature}
+     * @return the set of features {@link Feature}
      */
-    public Collection<Feature> getFeatures() {
-        return null;
+    public Set<Feature> getFeatures() {
+        return this.features;
     }
 
     /**
