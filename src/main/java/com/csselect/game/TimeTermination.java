@@ -8,12 +8,14 @@ import java.time.LocalDate;
  */
 public class TimeTermination extends Termination {
 
+    private final LocalDate date;
+
     /**
      * Constructor of a time termination object
      * @param date the time at which the game is to be terminated
      */
     public TimeTermination(LocalDate date){
-
+        this.date = date;
     }
 
     @Override

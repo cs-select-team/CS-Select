@@ -6,12 +6,13 @@ package com.csselect.game;
  */
 public class NumberOfRoundsTermination extends Termination {
 
+    private int number;
     /**
      * Constructor for a number of rounds termination object
      * @param number the number of rounds {@link Round} after that the game {@link Game} terminates
      */
     public NumberOfRoundsTermination(int number) {
-
+        this.number = number;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.csselect.game;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The TerminationComposite class is a concrete termination {@link Termination} cause that combines different
  * termination {@link Termination} causes into one object by using the composite design pattern. It contains termination
@@ -7,11 +10,13 @@ package com.csselect.game;
  */
 public class TerminationComposite extends Termination {
 
+    private Set<Termination> terminations;
+
     /**
      * Constructor of a termination composite object.
      */
     public TerminationComposite() {
-
+        this.terminations = new HashSet<>();
     }
 
     /**
