@@ -29,7 +29,7 @@ public class Game {
      * @param id the unigue numerical identifier of a game
      */
     public Game(int id) {
-
+        this.id = id;
     }
 
     /**
@@ -257,11 +257,6 @@ public class Game {
 
     }
 
-
-    // TODO löschen: Doppelt mit terminateGame
-    public void setTerminated(boolean value) {
-
-    }
 
 
 }

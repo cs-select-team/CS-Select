@@ -49,7 +49,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return game with id gameId
      */
      public Game getGame(int gameId) {
-        return new Game();
+        return new Game(0);
      }
 
     /** gets a list of all games in which the logged in player participates
