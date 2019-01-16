@@ -7,6 +7,7 @@ import com.csselect.database.UserAdapter;
  * must implement a register method. A standard user can log himself in/out and is allowed change his password as well
  * as his email which we store in our database. Additionally, he can set in which language the frontend should
  * be displayed.
+
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public abstract class User{
@@ -35,6 +36,7 @@ public abstract class User{
      */
     public int getId() {
         return this.databaseAdapter.getID();
+
     }
 
     /**
@@ -66,6 +68,7 @@ public abstract class User{
     }
 
     /**
+
      * Changing an users's password means to call this method on an object with the according {@link UserAdapter}.
      * It is assured in our implementation that we can call this method only after the user correctly logged
      * into our system.
