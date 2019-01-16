@@ -10,13 +10,24 @@ import com.csselect.user.Player;
 public class MatrixSelect extends Gamemode {
 
     /**
+     * The number of selections of features in the MatrixSelect game mode
+     */
+    public static final int numberOfSelections = 5;
+
+    private int numberOfFeatures;
+    private int minSelect;
+    private int maxSelect;
+
+    /**
      * Constructor for a matrix select object
      * @param numberOfFeatures the number of features {@link Feature} that are shown to the player {@link Player}
      * @param minSelect the minimum amount of features {@link Feature} the player {@link Player} has to select
      * @param maxSelect the maximum amount of features {@link Feature} the player {@link Player} has to select
      */
     public MatrixSelect(int numberOfFeatures, int minSelect, int maxSelect) {
-
+        this.numberOfFeatures = numberOfFeatures;
+        this.minSelect = minSelect;
+        this.maxSelect = maxSelect;
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.csselect.game;
 
 import com.csselect.user.Player;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The GamemodeComposite class represents a concrete game mode {@link Gamemode} that combines different game modes into
  * one object by using the composite pattern. It randomly creates a concrete round {@link Round} from the different
@@ -9,11 +12,13 @@ import com.csselect.user.Player;
  */
 public class GamemodeComposite extends Gamemode {
 
+    private Set<Gamemode> gamemodes;
+
     /**
      * Constructor for a game mode composite object
      */
     public GamemodeComposite() {
-
+        this.gamemodes = new HashSet<>();
     }
 
     /**
