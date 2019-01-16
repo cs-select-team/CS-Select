@@ -12,21 +12,32 @@ import java.util.Collection;
  */
 public abstract class Round {
 
-  //  /**
-  //   * Constructor to generalize constructing for all subclasses
-    //    * @param player the player {@link Player} who plays the round
-     //  * @param numberOfRound the number of the round
-  //   */
-  //  public Round(Player player, int numberOfRound) {
+    private LocalDate time;
+    private double quality;
+    private int points;
+    private final int numberOfRound;
+    private final Player player;
 
-  //  }
+    private Collection<Feature> uselessFeatures;
+    private Collection<Feature> chosenFeatures;
+    private Collection<Feature> shownFeatures;
+
+    /**
+     * Constructor to generalize constructing for all subclasses
+     * @param player the player {@link Player} who plays the round
+     * @param numberOfRound the number of the round
+     */
+    public Round(Player player, int numberOfRound) {
+        this.player = player;
+        this.numberOfRound = numberOfRound;
+    }
 
     /**
      * Getter for the features {@link Feature} shown to the player {@link Player}
      * @return the shown features {@link Feature}
      */
     public Collection<Feature> getShownFeatures() {
-        return null;
+        return this.shownFeatures;
     }
 
     /**
@@ -34,7 +45,7 @@ public abstract class Round {
      * @return the selected features {@link Feature}
      */
     public Collection<Feature> getChosenFeatures() {
-        return null;
+        return this.chosenFeatures;
     }
 
     /**
@@ -42,7 +53,7 @@ public abstract class Round {
      * @return the useless features {@link Feature}
      */
     public Collection<Feature> getUselessFeatures() {
-        return null;
+        return this.uselessFeatures;
     }
 
     /**
@@ -50,7 +61,7 @@ public abstract class Round {
      * @return the starting time
      */
     public LocalDate getTime() {
-        return null;
+        return this.time;
     }
 
     /**
@@ -58,7 +69,7 @@ public abstract class Round {
      * @return the quality of the round, double between 0 and 1
      */
     public double getQuality() {
-        return 0.0;
+        return this.quality;
     }
 
     /**
@@ -66,7 +77,7 @@ public abstract class Round {
      * @return the points achieved in this round
      */
     public int getPoints() {
-        return 0;
+        return this.points;
     }
 
     /**
@@ -74,7 +85,7 @@ public abstract class Round {
      * @return the number of the round
      */
     public int getNumberOfRound() {
-        return 0;
+        return this.numberOfRound;
     }
 
     /**
@@ -82,7 +93,7 @@ public abstract class Round {
      * @return the playing player {@link Player}
      */
     public Player getPlayer() {
-        return null;
+        return this.player;
     }
 
     /**

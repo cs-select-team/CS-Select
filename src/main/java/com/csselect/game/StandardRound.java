@@ -11,6 +11,10 @@ import java.util.Collection;
  */
 public class StandardRound extends Round {
 
+    private final int numberOfSelections;
+    private final int featuresPerSelection;
+    private final int minSelect;
+    private final int maxSelect;
     /**
      * Constructor for a standard round object
      * @param player the player {@link Player} who plays the round
@@ -21,7 +25,11 @@ public class StandardRound extends Round {
      * @param maxSelect the maximum number of features {@link Feature} to be selected per selection
      */
     public StandardRound(Player player, int numberOfRound, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
-
+        super(player, numberOfRound);
+        this.numberOfSelections = numberOfSelections;
+        this.featuresPerSelection = featuresPerSelection;
+        this.minSelect = minSelect;
+        this.maxSelect = maxSelect;
     }
 
     /**
@@ -29,7 +37,7 @@ public class StandardRound extends Round {
      * @return the number of selections
      */
     public int getNumberOfSelections() {
-        return 0;
+        return this.numberOfSelections;
     }
 
     /**
@@ -37,7 +45,7 @@ public class StandardRound extends Round {
      * @return the number of features {@link Feature} per selection
      */
     public int getFeaturesPerSelection() {
-        return 0;
+        return this.featuresPerSelection;
     }
 
     /**
@@ -45,7 +53,7 @@ public class StandardRound extends Round {
      * @return the minimum number of features {@link Feature} to be selected per selection
      */
     public int getMinSelect() {
-        return 0;
+        return this.minSelect;
     }
 
     /**
@@ -53,7 +61,7 @@ public class StandardRound extends Round {
      * @return the maximum number of features {@link Feature} to be selected per selection
      */
     public int getMaxSelect() {
-        return 0;
+        return this.maxSelect;
     }
 
     @Override
