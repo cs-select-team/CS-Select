@@ -1,5 +1,7 @@
 package com.csselect.game;
 
+import com.csselect.database.GameAdapter;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 
@@ -12,7 +14,15 @@ import java.util.List;
  */
 
 public class Game {
-    private boolean terminated;
+    private String title;
+    private String description;
+    private int id;
+    private String addressOrganiserDatabase;
+    private Termination termination;
+    private FeatureSet featureSet;
+    private GameAdapter database;
+    private MLServer mlserver;
+    private Gamemode gamemode;
 
     /**
      * Constructor for a game object.
@@ -27,7 +37,7 @@ public class Game {
      * @return the title of the fame
      */
     public String getTitle() {
-        return "";
+        return this.title;
     }
 
     /**
@@ -35,7 +45,7 @@ public class Game {
      * @return the description of the game
      */
     public String getDescription() {
-        return "";
+        return this.description;
     }
 
     /**
@@ -43,7 +53,7 @@ public class Game {
      * @return the number of started rounds {@link Round}
      */
     public int getNumberOfRounds() {
-        return 0;
+        return this.database.getNumberOfRounds();
     }
 
     /**
@@ -51,7 +61,7 @@ public class Game {
      * @return the numerical game identifier
      */
     public int getId() {
-        return 0;
+        return this.id;
     }
 
     /**
@@ -59,6 +69,13 @@ public class Game {
      * @return if the game is finished, return true, else false
      */
     public boolean isTerminated() {
+        if(this.database.isFinished()) {
+            return true;
+        }
+        if(this.termination.checkTermination()) {
+            this.database.setFinished();
+            return true;
+        }
         return false;
     }
 
@@ -67,6 +84,7 @@ public class Game {
      * @return the email-addresses of the players who are invited to the game but did not accept or decline yet
      */
     public Collection<String> getInvitedPlayers() {
+       // return this.database.getInvitedPlayers();
         return null;
     }
 
@@ -75,7 +93,7 @@ public class Game {
      * @return the address of the database
      */
     public String getAddressOrganiserDatabase() {
-        return "";
+        return this.addressOrganiserDatabase;
     }
 
     /**
@@ -83,7 +101,7 @@ public class Game {
      * @return a collection of the players {@link Player} who can play rounds {@link Round}
      */
     public Collection<Player> getPlayingPlayers() {
-        return null;
+        return this.database.getPlayingPlayers();
     }
 
     /**
@@ -91,7 +109,7 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        return null;
+        return this.termination;
     }
 
     /**
@@ -99,7 +117,7 @@ public class Game {
      * @return the feature set {@link FeatureSet}
      */
     public FeatureSet getFeatureSet() {
-        return null;
+        return this.featureSet;
     }
 
     /**
@@ -107,7 +125,7 @@ public class Game {
      * @return the game mode belonging to the game
      */
     public Gamemode getGamemode() {
-        return null;
+        return this.gamemode;
     }
 
     /**
@@ -115,15 +133,15 @@ public class Game {
      * @return the ml-server {@link MLServer}
      */
     public MLServer getMlserver() {
-        return null;
+        return this.mlserver;
     }
 
     /**
      * Getter for the rounds {@link Round} that are already finished
      * @return the finished rounds {@link Round}
      */
-    public List<Round> getRounds() {
-        return null;
+    public Collection<Round> getRounds() {
+        return this.database.getRounds();
     }
 
     /**
@@ -131,7 +149,7 @@ public class Game {
      * @param title the title of the game
      */
     public void setTitle(String title) {
-
+        this.title = title;
     }
 
     /**
@@ -139,7 +157,7 @@ public class Game {
      * @param description the description of the game
      */
     public void setDescription(String description) {
-
+        this.description = description;
     }
 
     /**
@@ -147,7 +165,7 @@ public class Game {
      * @param addressOrganiserDatabase the address of the database
      */
     public void setAddressOrganiserDatabase(String addressOrganiserDatabase) {
-
+        this.addressOrganiserDatabase = addressOrganiserDatabase;
     }
 
     /**
@@ -155,7 +173,7 @@ public class Game {
      * @param termination the termination {@link Termination} cause
      */
     public void setTermination(Termination termination) {
-
+        this.termination = termination;
     }
 
     /**
@@ -163,7 +181,7 @@ public class Game {
      * @param featureSet the feature set {@link FeatureSet}
      */
     public void setFeatureSet(FeatureSet featureSet) {
-
+        this.featureSet = featureSet;
     }
 
     /**
@@ -171,7 +189,7 @@ public class Game {
      * @param gamemode the game mode {@link Gamemode}
      */
     public void setGamemode(Gamemode gamemode) {
-
+        this.gamemode = gamemode;
     }
 
     /**
@@ -179,7 +197,7 @@ public class Game {
      * @param mlserver the ml-server
      */
     public void setMlserver(MLServer mlserver) {
-
+        this.mlserver = mlserver;
     }
 
     /**
@@ -240,9 +258,9 @@ public class Game {
     }
 
 
-    // Doppelt mit terminateGame
+    // TODO löschen: Doppelt mit terminateGame
     public void setTerminated(boolean value) {
-        this.terminated = value;
+
     }
 
 
