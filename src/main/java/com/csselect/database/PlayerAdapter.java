@@ -22,10 +22,4 @@ public interface PlayerAdapter extends UserAdapter {
      * @return PlayerStats
      */
     PlayerStats getPlayerStats();
-
-    /**
-     * Gets a {@link Collection} of all {@link Game}s the {@link com.csselect.user.Player} is or was participating in
-     * @return games
-     */
-    Collection<Game> getGames();
 }
