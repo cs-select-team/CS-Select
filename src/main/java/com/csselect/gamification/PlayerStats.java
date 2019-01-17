@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import com.csselect.database.PlayerStatsAdapter;
+
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
+    private PlayerStatsAdapter databaseAdapter;
     private Streak streak;
     private DailyChallenge activeDaily;
     private List<DailyChallenge> dailies;
@@ -20,6 +23,11 @@ public class PlayerStats implements Gamification {
     private int maxRoundScore;
     private int lastScore;
     private int highestStreak;
+
+    public PlayerStats(PlayerStatsAdapter databaseAdapter) {
+        this.databaseAdapter = databaseAdapter;
+        // TODO
+    }
 
     public PlayerStats() {
         this.streak = new Streak();
