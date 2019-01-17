@@ -8,7 +8,6 @@ import com.csselect.gamification.Gamification;
 import com.csselect.gamification.Leaderboard;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -18,12 +17,9 @@ import java.util.List;
  * their statistics, more precisely their score over time, their achievements and daily challenges.
  */
 public class Player extends User {
-    private PlayerAdapter databaseAdapter;
-    private Collection<Game> invitedGames;
-    private Collection<Game> games;
-    private Collection<Game> terminatedGames;
+    private PlayerAdapter playerAdapter;
     private Collection<Feature> featuresToShow;
-    private Gamification gamification;
+    private Game gameToReturn;
     private Round activeRound;
 
     /**
@@ -34,15 +30,7 @@ public class Player extends User {
      * @param databaseAdapter Interface for database communication with player tables
      */
     public Player(PlayerAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
-        HashSet<Game> allGames = new HashSet<>(databaseAdapter.getGames());
-        allGames.forEach((Game game) -> {
-            if (!game.isTerminated()) {
-                this.games.add(game);
-            } else {
-                this.terminatedGames.add(game);
-            }
-        });
+        this.playerAdapter = databaseAdapter;
         this.activeRound = null;
     }
 
@@ -52,13 +40,7 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
      */
     public void acceptInvite(int gameId) {
-        invitedGames.forEach((Game invited) -> {
-            if (invited.getId() == gameId) {
-                invited.acceptInvite(this, databaseAdapter.getEmail());
-                invitedGames.remove(invited);
-                games.add(invited);
-            }
-        });
+
     }
 
 
@@ -69,12 +51,7 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to but shall not be able to be played by him/her
      */
     public void declineInvite(int gameId) {
-        invitedGames.forEach((Game invited) -> {
-            if (invited.getId() == gameId) {
-                invited.declineInvite(databaseAdapter.getEmail());
-                invitedGames.remove(invited);
-            }
-        });
+
     }
 
     /**
@@ -86,9 +63,9 @@ public class Player extends User {
      * @return Features to show in this round of the game
      */
     public Collection<Feature> startRound(int gameId) {
-        games.forEach((Game game) -> {
+        playerAdapter.getActiveGames().forEach((Game game) -> {
             if (game.getId() == gameId) {
-                featuresToShow = game.startRound(databaseAdapter.getID());
+                featuresToShow = game.startRound(playerAdapter.getID());
             }
         });
         return featuresToShow;
@@ -118,8 +95,8 @@ public class Player extends User {
      * @param selectedFeatures Features the player has selected for this round
      * @param uselessFeatures Features the player marked as unimportant
      */
-    public void selectFeatures(Collection<Feature> selectedFeatures, Collection<Feature> uselessFeatures) {
-        activeRound.selectFeatures(selectedFeatures, uselessFeatures);
+    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+
     }
 
     /**
@@ -127,8 +104,8 @@ public class Player extends User {
      * decision. We provide a player the possibility to skip over a round.
      * @param uselessFeatures Features the player selected in this round to be skipped
      */
-    public void skipRound(Collection<Feature> uselessFeatures) {
-        activeRound.skip(uselessFeatures);
+    public void skipRound(int[] uselessFeatures) {
+
     }
 
     /**
@@ -136,7 +113,7 @@ public class Player extends User {
      * @return Gamification interface of the player
      */
     public Gamification getStats() {
-        return this.gamification;
+        return playerAdapter.getPlayerStats();
     }
 
     /**
@@ -146,5 +123,27 @@ public class Player extends User {
      */
     public List<Player> getLeaderboard() {
         return Leaderboard.getInstance().getPlayers();
+    }
+
+    /**
+     * Returns a game with given ID, but only if the player has accepted the invitation to this game before
+     * @param gameId Game ID
+     * @return Game object
+     */
+    public Game getGame(int gameId) {
+        playerAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                gameToReturn = game;
+            }
+        });
+        return gameToReturn;
+    }
+
+    /**
+     * Returns all active games the player is currently participating in
+     * @return Games which are played by player
+     */
+    public Collection<Game> getGames() {
+        return playerAdapter.getActiveGames();
     }
 }
