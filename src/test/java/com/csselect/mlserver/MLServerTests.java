@@ -1,24 +1,22 @@
 package com.csselect.mlserver;
 
-import com.csselect.CSSelectTestModule;
 import com.csselect.Injector;
+import com.csselect.TestClass;
 import com.csselect.configuration.Configuration;
 import com.csselect.game.Feature;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class MLServerTests {
+public class MLServerTests extends TestClass {
 
     private MLServer mlServer;
 
-    @Before
+    @Override
     public void setUp() {
-        Injector.useTestMode();
         Configuration config = Injector.getInjector().getInstance(Configuration.class);
         mlServer = new RESTMLServer(config);
     }

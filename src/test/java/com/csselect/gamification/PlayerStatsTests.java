@@ -1,18 +1,19 @@
 package com.csselect.gamification;
 
+import com.csselect.TestClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class PlayerStatsTests {
+public class PlayerStatsTests extends TestClass {
 
     private PlayerStats stats;
 
-    @Before
-    public void initialise() {
+
+    @Override
+    public void setUp() {
         stats = new PlayerStats();
     }
 

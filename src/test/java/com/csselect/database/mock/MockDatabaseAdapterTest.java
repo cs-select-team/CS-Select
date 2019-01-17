@@ -1,14 +1,14 @@
 package com.csselect.database.mock;
 
 import com.csselect.Injector;
+import com.csselect.TestClass;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public class MockDatabaseAdapterTest {
+public class MockDatabaseAdapterTest extends TestClass {
 
     private MockDatabaseAdapter mockDatabaseAdapter;
 
@@ -17,9 +17,8 @@ public class MockDatabaseAdapterTest {
     private static final String TEST_SALT = "salt";
     private static final String TEST_USERNAME = "tester";
 
-    @Before
+    @Override
     public void setUp() {
-        Injector.useTestMode();
         mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
     }
 

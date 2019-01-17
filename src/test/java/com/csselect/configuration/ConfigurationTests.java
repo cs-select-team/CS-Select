@@ -1,19 +1,19 @@
 package com.csselect.configuration;
 
+import com.csselect.TestClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 
-public class ConfigurationTests {
+public class ConfigurationTests extends TestClass {
 
     private Configuration config;
     private static final String TEST_PATH = System.getProperty("user.dir") + File.separator + "src"
             + File.separator + "test" + File.separator + "resources" + File.separator + "config.properties";
 
-    @Before
-    public void initialise() {
+    @Override
+    public void setUp() {
         config = new ApacheCommonsConfiguration(TEST_PATH);
     }
 
