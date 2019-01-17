@@ -19,7 +19,7 @@ public class MLServerTests {
 
     @Before
     public void setUp() {
-        Injector injector = Guice.createInjector(new CSSelectTestModule());
+        Injector injector = CSSelectTestModule.getInjector();
         Configuration config = injector.getInstance(Configuration.class);
         mlServer = new RESTMLServer(config);
     }
