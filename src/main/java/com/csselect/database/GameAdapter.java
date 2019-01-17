@@ -162,5 +162,5 @@ public interface GameAdapter {
      * Removes a {@link Collection} of email-addresses from the invited players
      * @param emails emails of the players to be removed
      */
-    void removeInivitedPlayers(Collection<String> emails);
+    void removeInvitedPlayers(Collection<String> emails);
 }
