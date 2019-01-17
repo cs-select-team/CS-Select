@@ -2,6 +2,7 @@ package com.csselect.gamification;
 
 import com.csselect.user.Player;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,11 +16,15 @@ public class Leaderboard {
     private static Leaderboard instance;
 
     private Leaderboard() {
-        // Singleton
+        this.players = new LinkedList<>();
+        setSortingStrategy(new SortScoreAllTime());
     }
 
     public static Leaderboard getInstance() {
-        return instance;
+        if (Leaderboard.instance == null) {
+            Leaderboard.instance = new Leaderboard();
+        }
+        return Leaderboard.instance;
     }
 
     /**
@@ -27,7 +32,7 @@ public class Leaderboard {
      * @param strategy The strategy to use.
      */
     public void setSortingStrategy(LeaderboardSortingStrategy strategy) {
-
+        this.strategy = strategy;
     }
 
     /**
@@ -35,7 +40,17 @@ public class Leaderboard {
      * @return The sorted list of players.
      */
     public List<Player> getPlayers() {
+        players = getPlayersFromDatabase();
+        strategy.sort(players);
         return players;
+    }
+
+    /**
+     * Gets the current list of all players from the database.
+     * @return The list of players.
+     */
+    private List<Player> getPlayersFromDatabase() {
+        return null;
     }
 
 }
