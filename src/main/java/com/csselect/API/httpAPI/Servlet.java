@@ -70,6 +70,7 @@ public abstract  class Servlet extends HttpServlet {
         session = req.getSession();
         getOrganiserFacade();
         getPlayerFacade();
+        session.setAttribute("lang", "de"); // TODO fit language to player wish
         if (session.getAttribute(IS_PLAYER) == null) {
             setPlayer(false);
         } else {

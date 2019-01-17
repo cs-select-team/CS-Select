@@ -1,4 +1,7 @@
-<!DOCTYPE>
+<!DOCTYPE html>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
+<%@ page isELIgnored="false"%>
 <html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -10,6 +13,8 @@
     <link rel="stylesheet" href="src/css/main.css" >
 </head>
 <body>
+<fmt:setLocale value = "${sessionScope.lang}"/>
+<fmt:bundle basename = "locale.Locale">
 <div class="container">
     <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -19,18 +24,18 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress" v-model="email">
-                            <small id="registerNew" class="form-text text-muted">Need an account? Start here</small>
+                            <small id="registerNew" class="form-text text-muted"><fmt:message key="registerPrompt"/></small>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password"><fmt:message key="password"/></label>
                             <input type="password" class="form-control" name="password" id="password"
                                    placeholder="Password" v-model="password">
                         </div>
                         <div class="custom-control custom-checkbox" id="organiserCheck">
                             <input type="checkbox" class="custom-control-input" name="organiser" id="organiser" v-model="organiser">
-                            <label class="custom-control-label" for="organiser">Organiser</label>
+                            <label class="custom-control-label" for="organiser"> <fmt:message key="organiser"/></label>
                         </div>
-                        <button type="submit" class="btn btn-primary" v-on:click="submit">Anmelden</button>
+                        <button type="submit" class="btn btn-primary" v-on:click="submit"><fmt:message key="login"/></button>
 
                     </form>
     </div>
@@ -38,5 +43,6 @@
 
 </div>
 <script src="src/js/login.js"></script>
+</fmt:bundle>
 </body>
 </html>
