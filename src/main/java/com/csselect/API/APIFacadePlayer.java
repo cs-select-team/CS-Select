@@ -35,6 +35,11 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     }
 
+    @Override
+    public boolean login(String email, String password) {
+        return true;
+    }
+
     /** getter for the player associated with this facade
      *
      * @return player

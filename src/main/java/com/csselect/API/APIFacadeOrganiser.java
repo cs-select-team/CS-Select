@@ -26,6 +26,11 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     }
 
+    @Override
+    public boolean login(String email, String password) {
+        return true;
+    }
+
     /** returns the logged in organiser that is assoziated with this object
      *
      * @return the organiser
