@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class Games extends Servlet {
     private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
 
         String uselessString = getParameter("useless", req);
-        Collection<Integer> useless = new Gson().fromJson(uselessString, Collection.class);
+        int[] useless = new Gson().fromJson(uselessString, (Type) int.class);
         getPlayerFacade().skipRound(useless);
     }
 
@@ -65,9 +66,9 @@ public class Games extends Servlet {
 
         String selectedString = getParameter("selected", req);
         String uselessString = getParameter("useless", req);
-        Collection<Integer> selected = new Gson().fromJson(selectedString, Collection.class);
-        Collection<Integer> useless = new Gson().fromJson(uselessString, Collection.class);
-        returnAsJson(resp, getPlayerFacade().selectFeatures(selected, useless));
+        int[] selected = new Gson().fromJson(selectedString, (Type) int.class);
+        int[] useless = new Gson().fromJson(uselessString, (Type) int.class);
+        getPlayerFacade().selectFeatures(selected, useless);
     }
 
     private void declineInvite(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
