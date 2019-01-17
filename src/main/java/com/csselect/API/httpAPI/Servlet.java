@@ -107,8 +107,14 @@ public abstract  class Servlet extends HttpServlet {
             return getOrganiserFacade();
         }
     }
-    protected boolean isSet(String name, HttpServletRequest req) {
-        return req.getParameterMap().containsKey(name);
+
+    protected boolean isSet(String name, HttpServletRequest req) throws HttpError {
+        if (req.getParameterMap().containsKey(name)) {
+            if (getParameter(name, req).equals("true")) {
+                return true;
+            }
+        }
+        return false;
     }
     /*
     method to get parameters securely from request

@@ -33,6 +33,26 @@ public class Login extends Servlet {
     }
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
+        if (req.getPathInfo() == null) {
+            login(req, resp);
+        } else if (req.getPathInfo().equals("register")) {
+            register(req, resp);
+        }
+    }
+
+    private void register(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+        String email = getParameter("email", req);
+        String password = getParameter("password", req);
+        if (isSet("organiser", req)) {
+            //
+        } else {
+            //
+        }
+        resp.sendError(HttpServletResponse.SC_OK);
+    }
+
+    private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
+
         String email = getParameter("email", req);
         String password = getParameter("password", req);
 
@@ -43,7 +63,7 @@ public class Login extends Servlet {
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
-            } else {
+        } else {
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
@@ -51,7 +71,7 @@ public class Login extends Servlet {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
 
-            }
+        }
 
 
     }

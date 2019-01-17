@@ -7,6 +7,7 @@ import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *
      * @return list of all active games that the logged in organiser has
      */
-    public List<Game> getActiveGames() {
-        return new LinkedList<>();
+    public Collection<Game> getActiveGames() {
+        return organiser.getActiveGames();
     }
 
     /** gets a list of all terminated games that the logged in organiser has
@@ -54,8 +55,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @return list of all terminated games that the logged in organiser has
      *
      */
-    public List<Game> getTerminatedGames() {
-        return new LinkedList<>();
+    public Collection<Game> getTerminatedGames() {
+        return organiser.getTerminatedGames();
     }
 
     /** sets options for the game that the organiser is currently creating
@@ -65,7 +66,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param data value
      */
     public void setGameOption(String option, String data) {
-
+        organiser.setGameOption(option, data);
     }
 
     /** gets all patterns, that this organiser has ever saved
@@ -108,8 +109,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param gameId id of the game to which to invite the player
      */
     public void invitePlayer(String playerEmail, int gameId) {
-        String playerEmails[] = new String[1];
-        playerEmails[0] = playerEmail;
+        Collection<String> playerEmails = new HashSet<String>();
+        playerEmails.add(playerEmail);
         organiser.invitePlayers(playerEmails, gameId);
     }
 
