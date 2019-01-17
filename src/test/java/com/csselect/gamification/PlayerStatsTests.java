@@ -117,7 +117,6 @@ public class PlayerStatsTests {
         stats.finishRound(0.75);
         Assert.assertEquals(stats.getDailiesCompleted(), 1);
         Assert.assertTrue(stats.getDaily().isCompleted());
-
     }
 
     /**
@@ -127,5 +126,18 @@ public class PlayerStatsTests {
     public void testDailies() {
         Assert.assertNotNull(stats.getDaily());
         Assert.assertEquals(stats.getDaily().getDate(), LocalDate.now());
+    }
+
+    @Test
+    public void testStreaks() {
+        Assert.assertEquals(stats.getStreak().getCounter(), 0);
+        stats.finishRound(0.2);
+        Assert.assertEquals(stats.getStreak().getCounter(), 1);
+        stats.finishRound(0.9);
+        Assert.assertEquals(stats.getStreak().getCounter(), 2);
+        stats.getStreak().setZero();
+        Assert.assertEquals(stats.getStreak().getCounter(), 0);
+        stats.finishRound(0.33);
+        Assert.assertEquals(stats.getStreak().getCounter(), 1);
     }
 }
