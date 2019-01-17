@@ -1,5 +1,7 @@
 package com.csselect.API;
 
+import com.csselect.CSSelectModule;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
@@ -28,7 +30,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     @Override
     public boolean login(String email, String password) {
-        return true;
+        return false;
     }
 
     /** returns the logged in organiser that is assoziated with this object
@@ -71,7 +73,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @return All patterns, that were ever saved with {@link APIFacadeOrganiser#savePattern(String)}
      */
     public Collection<Pattern> getPatterns() {
-        return new LinkedList<>();
+        return organiser.getPatterns();
     }
 
     /** saves the options that were saved for the current gamecreation as a new pattern
@@ -79,7 +81,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param title title under which to save this pattern. Has to be unique
      */
     public void savePattern(String title) {
-
+        organiser.savePattern(title);
     }
 
     /** loads the pattern parameter as setting for the current game
@@ -87,7 +89,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param pattern To be loaded
      */
     public void loadPattern(Pattern pattern) {
-
+        organiser.loadPattern(pattern);
     }
 
     /** ends gamecreation and uses the current settings to create a game
@@ -96,7 +98,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *          have been set
      */
     public boolean createGame() {
-        return false;
+        organiser.createGame();
+        return true;
     }
 
     /** invites a player to a game. gameId has to belong to a game that this organiser owns
@@ -105,7 +108,9 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param gameId id of the game to which to invite the player
      */
     public void invitePlayer(String playerEmail, int gameId) {
-
+        String playerEmails[] = new String[1];
+        playerEmails[0] = playerEmail;
+        organiser.invitePlayers(playerEmails, gameId);
     }
 
     /** ends a game that this organiser owns
@@ -113,7 +118,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param gameId id of the game that is to be terminated
      */
     public void terminateGame(int gameId) {
-
+        organiser.terminateGame(gameId);
     }
 
     /** deletes a game that this organiser owns. the game has to be terminated before, otherwise
@@ -122,7 +127,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param gameId id of the game that is to be deleted
      */
     public void deleteGame(int gameId) {
-
+        organiser.deleteGame(gameId);
     }
 
 }
