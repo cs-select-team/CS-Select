@@ -1,5 +1,6 @@
 package com.csselect.game.gamecreation;
 
+import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
@@ -20,7 +21,7 @@ public class GameCreator {
         return new Pattern(gameOptions, title);
     }
 
-    public void doCreate() {
-
+    public Game doCreate() {
+        return null;
     }
 }
