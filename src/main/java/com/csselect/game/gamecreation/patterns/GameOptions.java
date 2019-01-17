@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- *
+ *  This class represents the fields which an organiser {@link com.csselect.user.Organiser} can modify whilst in
+ *  gamecreation interface.
  */
 public class GameOptions implements  Cloneable{
     private String title;
