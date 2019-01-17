@@ -1,6 +1,6 @@
 package com.csselect.game;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * The TimeTermination class is a concrete termination {@link Termination} cause that
@@ -8,18 +8,26 @@ import java.time.LocalDate;
  */
 public class TimeTermination extends Termination {
 
-    private final LocalDate date;
+    private final LocalDateTime date;
 
     /**
      * Constructor of a time termination object
      * @param date the time at which the game is to be terminated
      */
-    public TimeTermination(LocalDate date){
+    public TimeTermination(LocalDateTime date){
         this.date = date;
     }
 
     @Override
     public boolean checkTermination() {
-        return false;
+        if (this.game == null) {
+            return false;
+        }
+        LocalDateTime currentTime = LocalDateTime.now();
+        boolean finished = currentTime.isAfter(this.date);
+        if(finished) {
+            this.game.terminateGame();
+        }
+        return finished;
     }
 }

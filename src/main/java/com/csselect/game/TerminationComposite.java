@@ -24,6 +24,11 @@ public class TerminationComposite extends Termination {
      * @return true if at least one termination cause {@link Termination} is reached, false else
      */
     public boolean checkTermination() {
+        for(Termination termination : this.terminations) {
+            if(termination.checkTermination()) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -32,7 +37,10 @@ public class TerminationComposite extends Termination {
      * @param termination the termination {@link Termination} cause to be added
      */
     public void add(Termination termination) {
-
+        if(termination == null) {
+            return;
+        }
+        this.terminations.add(termination);
     }
 
     /**
@@ -40,6 +48,6 @@ public class TerminationComposite extends Termination {
      * @param termination the termination {@link Termination} cause to be deleted
      */
     public void delete(Termination termination) {
-
+        this.terminations.remove(termination);
     }
 }

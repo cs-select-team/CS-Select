@@ -49,7 +49,7 @@ public class Game {
     }
 
     /**
-     * Getter for the number of rounds {@link Round} that were started already
+     * Getter for the number of rounds {@link Round} that were finished already
      * @return the number of started rounds {@link Round}
      */
     public int getNumberOfRounds() {
