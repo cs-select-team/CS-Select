@@ -29,6 +29,12 @@ public interface UserAdapter {
     String getPasswordHash();
 
     /**
+     * Gets the {@link com.csselect.user.User}s salt used while hashing
+     * @return salt used while hashing
+     */
+    String getPasswordSalt();
+
+    /**
      * Gets the {@link com.csselect.user.User}s language in form of a langcode
      * @return langcode of users language
      */

@@ -52,10 +52,10 @@ public interface GameAdapter {
     int getNumberOfRounds();
 
     /**
-     * Gets a {@link Collection} of all invited {@link Player}s
-     * @return players
+     * Gets a {@link Collection} of the email addresses of all invited {@link Player}s
+     * @return email addresses
      */
-    Collection<Player> getInvitedPlayers();
+    Collection<String> getInvitedPlayers();
 
     /**
      * Gets a {@link Collection} of all playing {@link Player}s
