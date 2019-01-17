@@ -99,7 +99,7 @@ public class Organiser extends User {
     public void terminateGame(int gameId) {
         games.forEach((Game element) -> {
             if (element.getId() == gameId) {
-                element.setTerminated(true);
+                element.terminateGame();
                 games.remove(element);
                 terminatedGames.add(element);
             }

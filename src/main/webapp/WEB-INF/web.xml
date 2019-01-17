@@ -3,5 +3,46 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-    <display-name>Archetype Created Web Application</display-name>
+    <display-name>CS-Select</display-name>
+    <description>This is an application to help with Feature Subset Selection</description>
+
+
+    <!-- Servlet mapping -->
+    <servlet>
+        <servlet-name>Games</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Games</servlet-class>
+        <description>This servlet handles all requests that deal with specific games</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Games</servlet-name>
+        <url-pattern>/games/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Login</servlet-class>
+        <description>This servlet handles login and logout actions</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GameManagement</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.GameManagement</servlet-class>
+        <description>This servlet handles game creation</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GameManagement</servlet-name>
+        <url-pattern>/create/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Users</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Users</servlet-class>
+        <description>This servlet handles interaction with user object</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Users</servlet-name>
+        <url-pattern>/users/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

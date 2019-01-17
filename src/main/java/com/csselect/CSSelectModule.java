@@ -1,15 +1,18 @@
 package com.csselect;
 
+import com.csselect.configuration.ApacheCommonsConfiguration;
 import com.csselect.configuration.Configuration;
-import com.csselect.configuration.MockConfiguration;
-import com.csselect.mlserver.MockMLServer;
 import com.csselect.mlserver.MLServer;
+import com.csselect.mlserver.RESTMLServer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
 
-public class CSSelectTestModule extends AbstractModule {
+/**
+ * This class manages which implementations should be injected by guice
+ */
+public class CSSelectModule extends AbstractModule {
 
     private static Injector injector = null;
 
@@ -19,14 +22,14 @@ public class CSSelectTestModule extends AbstractModule {
      */
     public static Injector getInjector() {
         if (injector == null) {
-            injector = Guice.createInjector(new CSSelectTestModule());
+            injector = Guice.createInjector(new CSSelectModule());
         }
         return injector;
     }
-
     @Override
     protected void configure() {
-        bind(Configuration.class).to(MockConfiguration.class).in(Scopes.SINGLETON);
-        bind(MLServer.class).to(MockMLServer.class).in(Scopes.SINGLETON);
+        bind(Configuration.class).to(ApacheCommonsConfiguration.class).in(Scopes.SINGLETON);
+        bind(MLServer.class).to(RESTMLServer.class).in(Scopes.SINGLETON);
+        //bind(DatabaseAdapter.class).to(MysqlDatabaseAdapter.class).in(Scopes.SINGLETON);
     }
 }
