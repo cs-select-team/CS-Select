@@ -22,31 +22,37 @@ public class Login extends Servlet {
         if (req.getPathInfo().equals("/logout")) logout(resp);
     }
 
-    private void logout(HttpServletResponse resp) throws IOException{
-        if (isPlayer()) getPlayerFacade().logout();
-        else getOrganiserFacade().logout();
+    private void logout(HttpServletResponse resp) throws IOException {
+        if (isPlayer()) {
+            getPlayerFacade().logout();
+        } else {
+            getOrganiserFacade().logout();
+        }
 
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
     @Override
-    public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError{
+    public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
         String email = getParameter("email", req);
         String password = getParameter("password", req);
 
-        if(isSet("organiser", req)) {
+        if (isSet("organiser", req)) {
             if (getOrganiserFacade().login(email, password)) {
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
                 setPlayer(false);
+            } else {
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
-            else resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-        else {
+            } else {
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
+            } else {
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
-            else resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        }
+
+            }
+
 
     }
 }
