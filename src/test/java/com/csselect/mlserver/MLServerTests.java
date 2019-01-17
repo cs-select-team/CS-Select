@@ -1,10 +1,9 @@
 package com.csselect.mlserver;
 
 import com.csselect.CSSelectTestModule;
+import com.csselect.Injector;
 import com.csselect.configuration.Configuration;
 import com.csselect.game.Feature;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +18,8 @@ public class MLServerTests {
 
     @Before
     public void setUp() {
-        Injector injector = CSSelectTestModule.getInjector();
-        Configuration config = injector.getInstance(Configuration.class);
+        Injector.useTestMode();
+        Configuration config = Injector.getInjector().getInstance(Configuration.class);
         mlServer = new RESTMLServer(config);
     }
 
