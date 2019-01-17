@@ -5,9 +5,9 @@ import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
+import com.csselect.gamification.Leaderboard;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -17,10 +17,9 @@ import java.util.List;
  * their statistics, more precisely their score over time, their achievements and daily challenges.
  */
 public class Player extends User {
-    private PlayerAdapter databaseAdapter;
-    private Collection<Game> invitedGames;
-    private Collection<Game> games;
-    private Gamification gamification;
+    private PlayerAdapter playerAdapter;
+    private Collection<Feature> featuresToShow;
+    private Game gameToReturn;
     private Round activeRound;
 
     /**
@@ -30,20 +29,9 @@ public class Player extends User {
      * {@link com.csselect.database.DatabaseAdapter}
      * @param databaseAdapter Interface for database communication with player tables
      */
-    Player(PlayerAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
-        this.games = new HashSet<>();
+    public Player(PlayerAdapter databaseAdapter) {
+        this.playerAdapter = databaseAdapter;
         this.activeRound = null;
-    }
-
-    /**
-     * To register a player in our database, we need 3 Strings representing email, password and username.
-     * @param args String array of arguments for registration (has to have length of 3 cells)
-     * @return If the player was successfully registered
-     **/
-    public boolean register(String[] args) {
-        assert args.length == 3;
-        return false;
     }
 
     /**
@@ -75,7 +63,12 @@ public class Player extends User {
      * @return Features to show in this round of the game
      */
     public Collection<Feature> startRound(int gameId) {
-        return null;
+        playerAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                featuresToShow = game.startRound(playerAdapter.getID());
+            }
+        });
+        return featuresToShow;
     }
 
     /**
@@ -102,16 +95,16 @@ public class Player extends User {
      * @param selectedFeatures Features the player has selected for this round
      * @param uselessFeatures Features the player marked as unimportant
      */
-    public void selectFeatures(Collection<Feature> selectedFeatures, Collection<Feature> uselessFeatures) {
+    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
 
     }
 
     /**
      * It could be that in some rounds ({@link Round}) the features ({@link Feature}) are not suitable to make a good
      * decision. We provide a player the possibility to skip over a round.
-     * @param features Features the player selected in this round to be skipped
+     * @param uselessFeatures Features the player selected in this round to be skipped
      */
-    public void skipRound(Collection<Feature> features) {
+    public void skipRound(int[] uselessFeatures) {
 
     }
 
@@ -120,7 +113,7 @@ public class Player extends User {
      * @return Gamification interface of the player
      */
     public Gamification getStats() {
-        return this.gamification;
+        return playerAdapter.getPlayerStats();
     }
 
     /**
@@ -129,6 +122,28 @@ public class Player extends User {
      * @return List of Players in leaderboard's order
      */
     public List<Player> getLeaderboard() {
-        return null;
+        return Leaderboard.getInstance().getPlayers();
+    }
+
+    /**
+     * Returns a game with given ID, but only if the player has accepted the invitation to this game before
+     * @param gameId Game ID
+     * @return Game object
+     */
+    public Game getGame(int gameId) {
+        playerAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                gameToReturn = game;
+            }
+        });
+        return gameToReturn;
+    }
+
+    /**
+     * Returns all active games the player is currently participating in
+     * @return Games which are played by player
+     */
+    public Collection<Game> getGames() {
+        return playerAdapter.getActiveGames();
     }
 }
