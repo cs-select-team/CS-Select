@@ -2,17 +2,22 @@ package com.csselect;
 
 import com.csselect.configuration.Configuration;
 import com.csselect.configuration.MockConfiguration;
+import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.mlserver.MockMLServer;
 import com.csselect.mlserver.MLServer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
+/**
+ * This class manages which implementations should be injected by guice while testing
+ */
 public class CSSelectTestModule extends AbstractModule {
 
     @Override
     protected void configure() {
         bind(Configuration.class).to(MockConfiguration.class).in(Scopes.SINGLETON);
         bind(MLServer.class).to(MockMLServer.class).in(Scopes.SINGLETON);
-        //bind(DatabaseAdapter.class).to(MockDatabaseAdapter.class).in(Scopes.SINGLETON);
+        bind(DatabaseAdapter.class).to(MockDatabaseAdapter.class).in(Scopes.SINGLETON);
     }
 }
