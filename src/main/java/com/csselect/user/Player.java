@@ -30,6 +30,7 @@ public class Player extends User {
      * @param databaseAdapter Interface for database communication with player tables
      */
     public Player(PlayerAdapter databaseAdapter) {
+        super(databaseAdapter);
         this.playerAdapter = databaseAdapter;
         this.activeRound = null;
     }
