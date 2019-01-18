@@ -28,6 +28,7 @@ public class Organiser extends User {
      * @param organiserAdapter Interface for database communication with organiser tables
      */
     public Organiser(OrganiserAdapter organiserAdapter) {
+        super(organiserAdapter);
         this.organiserAdapter = organiserAdapter;
         this.gameBuilder = new GameCreator();
     }
