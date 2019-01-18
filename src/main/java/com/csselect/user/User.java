@@ -9,7 +9,7 @@ import com.csselect.database.UserAdapter;
  * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
-public class User{
+public class User {
     private UserAdapter databaseAdapter;
     protected boolean loggedIn;
 
