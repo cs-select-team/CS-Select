@@ -16,7 +16,7 @@ import java.util.Collection;
  * for creating games.
  */
 public class Organiser extends User {
-    private static DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 
@@ -25,10 +25,10 @@ public class Organiser extends User {
      * (object of {@link OrganiserAdapter}. The constructor will be called as soon as an organiser registers
      * or logs in. Which value the unique ID will have (registration) is determined by the
      * {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication with organiser tables
+     * @param organiserAdapter Interface for database communication with organiser tables
      */
-    public Organiser(OrganiserAdapter databaseAdapter) {
-        this.organiserAdapter = databaseAdapter;
+    public Organiser(OrganiserAdapter organiserAdapter) {
+        this.organiserAdapter = organiserAdapter;
         this.gameBuilder = new GameCreator();
     }
 
@@ -68,7 +68,7 @@ public class Organiser extends User {
      */
     public void createGame() {
         Game game = gameBuilder.doCreate();
-        databaseAdapter.registerGame(this, game);
+        DATABASE_ADAPTER.registerGame(this, game);
     }
 
     /**
@@ -98,7 +98,6 @@ public class Organiser extends User {
         organiserAdapter.getActiveGames().forEach((Game game) -> {
             if (game.getId() == gameId) {
                 game.terminateGame();
-                databaseAdapter.removeGame(game);
             }
         });
     }
@@ -112,7 +111,7 @@ public class Organiser extends User {
     public void deleteGame(int gameId) {
         organiserAdapter.getTerminatedGames().forEach((Game game) -> {
             if (game.getId() == gameId && game.isTerminated()) {
-                databaseAdapter.removeGame(game);
+                DATABASE_ADAPTER.removeGame(game);
             }
         });
     }

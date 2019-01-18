@@ -27,10 +27,10 @@ public class Player extends User {
      * (object of {@link PlayerAdapter}. The constructor will be called as soon as a player registers or logs in.
      * Which value the unique ID will have (registration) is determined by the
      * {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication with player tables
+     * @param playerAdapter Interface for database communication with player tables
      */
-    public Player(PlayerAdapter databaseAdapter) {
-        this.playerAdapter = databaseAdapter;
+    public Player(PlayerAdapter playerAdapter) {
+        this.playerAdapter = playerAdapter;
         this.activeRound = null;
     }
 
