@@ -9,7 +9,7 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress" v-model="email">
-                            <small id="registerNew" class="form-text text-muted"><fmt:message key="registerPrompt"/></small>
+                            <small id="registerNew" class="form-text text-muted"><a href="register.jsp"><fmt:message key="registerPrompt"/></a></small>
                         </div>
                         <div class="form-group">
                             <label for="password"><fmt:message key="password"/></label>

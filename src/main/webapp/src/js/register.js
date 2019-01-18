@@ -5,7 +5,7 @@ var app1 = new Vue({
             password: '',
             passwordRepeat: '',
             organiser: 'player', // so that the player is the default option for registering
-            thirdParam: null
+            thirdParam: ''
         },
         methods: {
             submit: function(event) {

@@ -18,7 +18,7 @@
                             <input type="password" class="form-control" id="password"
                                    placeholder="<fmt:message key="passwordRepeat"/>" v-model="passwordRepeat">
                         </div>
-                        <div class="alert alert-danger" v-bind:class="{invisible: passwordRepeat == password }">
+                        <div class="alert alert-danger" v-bind:class="{collapse: passwordRepeat == password }">
                           <fmt:message key="passwordNoMatch"/>
                         </div>
                         <div class="form-check" id="organiserCheck">
