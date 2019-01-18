@@ -8,7 +8,8 @@ import com.csselect.user.User;
 public abstract class UserManagement {
     /**
      * For registration, it could be that for different types of users ({@link User} different parameters are needed.
-     * Therefore a String array representing said parameters is expected. In anything goes wrong, null shall be returned.
+     * Therefore a String array representing said parameters is expected. In anything goes wrong, null shall be
+     * returned.
      * Every manageable user is supposed to have a management class with this method.
      * @param parameters Registration parameters
      * @return {@link User} object
