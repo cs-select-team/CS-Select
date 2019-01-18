@@ -20,7 +20,7 @@
                             <input type="checkbox" class="custom-control-input" name="organiser" id="organiser" v-model="organiser">
                             <label class="custom-control-label" for="organiser"> <fmt:message key="organiser"/></label>
                         </div>
-                        <button type="submit" class="btn btn-primary" v-on:click="submit"><fmt:message key="login"/></button>
+                        <button type="submit" class="btn btn-primary" v-on:click="submit" :disabled="password == ''||email == ''"><fmt:message key="login"/></button>
 
                     </form>
     </div>
