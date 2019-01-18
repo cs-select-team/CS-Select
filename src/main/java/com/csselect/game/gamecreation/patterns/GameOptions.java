@@ -10,7 +10,7 @@ import java.util.HashSet;
  *  This class represents the fields which an organiser {@link com.csselect.user.Organiser} can modify whilst in
  *  gamecreation interface.
  */
-public class GameOptions implements  Cloneable{
+public class GameOptions implements  Cloneable {
     private String title;
     private String description;
     private String nameFeatureDatabase;
@@ -63,6 +63,7 @@ public class GameOptions implements  Cloneable{
 
     /**
      * Set String representing address of the database where the results shall be saved in
+     * @param nameFeatureDatabase Database address
      */
     public void setNameFeatureDatabase(String nameFeatureDatabase) {
         this.nameFeatureDatabase = nameFeatureDatabase;
@@ -78,6 +79,7 @@ public class GameOptions implements  Cloneable{
 
     /**
      * Set termination conditions
+     * @param termination {@link Termination} object
      */
     public void setTermination(Termination termination) {
         this.termination = termination;
@@ -93,6 +95,7 @@ public class GameOptions implements  Cloneable{
 
     /**
      * Get gamemode of game
+     * @param gamemode  {@link Gamemode} object
      */
     public void setGamemode(Gamemode gamemode) {
         this.gamemode = gamemode;
