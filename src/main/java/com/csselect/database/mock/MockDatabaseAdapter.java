@@ -5,6 +5,7 @@ import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
+import com.csselect.game.Round;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import com.google.inject.Inject;
@@ -214,5 +215,20 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     private Collection<Game> getTerminatedGames() {
         return gameMap.keySet().stream().filter(Game::isTerminated).collect(Collectors.toSet());
 
+    }
+
+    /**
+     * Gets all rounds the player has participated in
+     * @param adapter adapter of the player
+     * @return rounds
+     */
+    Collection<Round> getRounds(PlayerAdapter adapter) {
+        Collection<Round> rounds = new HashSet<>();
+        gameMap.keySet().forEach(game -> game.getRounds().forEach(round -> {
+            if (round.getPlayer().getId() == adapter.getID()) {
+                rounds.add(round);
+            }
+        }));
+        return rounds;
     }
 }

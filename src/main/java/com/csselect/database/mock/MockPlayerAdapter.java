@@ -4,6 +4,7 @@ import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
+import com.csselect.game.Round;
 import com.csselect.gamification.PlayerStats;
 
 import java.util.Collection;
@@ -41,6 +42,11 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
         Collection<Game> allGames = new HashSet<>(mockDatabaseAdapter.getActiveGames(this));
         allGames.addAll(mockDatabaseAdapter.getActiveGames(this));
         return allGames;
+    }
+
+    @Override
+    public Collection<Round> getRounds() {
+        return mockDatabaseAdapter.getRounds(this);
     }
 
     @Override
