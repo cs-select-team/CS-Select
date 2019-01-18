@@ -6,6 +6,7 @@ import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
@@ -15,7 +16,7 @@ import java.util.Collection;
  * This class represents an organiser in our system and is connected to an {@link GameCreator} object, which is there
  * for creating games.
  */
-public class Organiser extends User {
+public class Organiser extends User implements Comparable {
     private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
@@ -142,5 +143,16 @@ public class Organiser extends User {
      */
     public void setGameOption(String option, String data) {
 
+    }
+
+    /**
+     * Assuming an organiser only is compared to another organiser, this object is compared to another object
+     * @param o Object to compare (class organiser)
+     * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Organiser otherOrganiser = (Organiser) o;
+        return Integer.compare(organiserAdapter.getID(), otherOrganiser.getId());
     }
 }

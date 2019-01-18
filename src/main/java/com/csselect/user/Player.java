@@ -6,6 +6,7 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
 import com.csselect.gamification.Leaderboard;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * They are allowed to play games ({@link Game} organisers created and invited them to and see information about
  * their statistics, more precisely their score over time, their achievements and daily challenges.
  */
-public class Player extends User {
+public class Player extends User implements Comparable {
     private PlayerAdapter playerAdapter;
     private Collection<Feature> featuresToShow;
     private Game gameToReturn;
@@ -162,5 +163,16 @@ public class Player extends User {
      */
     public Collection<Round> getRounds() {
         return playerAdapter.getRounds();
+    }
+
+    /**
+     * Assuming a player only is compared to another player, this object is compared to another object
+     * @param o Object to compare (class player)
+     * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Player otherPlayer = (Player) o;
+        return Integer.compare(playerAdapter.getID(), otherPlayer.getId());
     }
 }

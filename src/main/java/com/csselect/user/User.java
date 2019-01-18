@@ -10,7 +10,7 @@ import com.csselect.database.UserAdapter;
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public class User {
-    private UserAdapter databaseAdapter;
+    private UserAdapter userAdapter;
     protected boolean loggedIn;
 
     /**
@@ -25,10 +25,10 @@ public class User {
      * (object of {@link UserAdapter}). The constructor will be called as soon as a user registers or logs in.
      * Which value the unique ID will have (registration) is determined
      * by the {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication
+     * @param userAdapter Interface for database communication
      */
-    public User(UserAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
+    public User(UserAdapter userAdapter) {
+        this.userAdapter = userAdapter;
     }
 
     /**
@@ -36,7 +36,7 @@ public class User {
      * @return The unique ID which identifies the user in our system
      */
     public int getId() {
-        return this.databaseAdapter.getID();
+        return this.userAdapter.getID();
     }
 
     /**
@@ -81,7 +81,7 @@ public class User {
      * @param email New email to which the user ID will refer in our database.
      */
     public void changeEmail(String email) {
-        databaseAdapter.setEmail(email);
+        userAdapter.setEmail(email);
     }
 
     /**
@@ -90,6 +90,6 @@ public class User {
      * @param langCode Code of language selected by the user
      */
     public void setLanguage(String langCode) {
-        databaseAdapter.setLanguage(langCode);
+        userAdapter.setLanguage(langCode);
     }
 }
