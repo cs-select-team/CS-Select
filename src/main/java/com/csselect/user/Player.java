@@ -148,6 +148,10 @@ public class Player extends User {
         return playerAdapter.getActiveGames();
     }
 
+    /**
+     * Returns all rounds the player participated so far
+     * @return Collection of {@link Round} objects
+     */
     public Collection<Round> getRounds() {
         return playerAdapter.getRounds();
     }
