@@ -113,8 +113,8 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         for (PlayerAdapter p : playerAdapterMap.values()) {
-            if (p.getEmail().equalsIgnoreCase(email)) {
-                return new Player(p);
+            if (p.getEmail().equalsIgnoreCase(email) || p.getUsername().equalsIgnoreCase(username)) {
+                return null;
             }
         }
         MockPlayerAdapter adapter = new MockPlayerAdapter(nextPlayerId);
@@ -130,7 +130,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     public Organiser createOrganiser(String email, String hash, String salt) {
         for (OrganiserAdapter o : organiserAdapterMap.values()) {
             if (o.getEmail().equalsIgnoreCase(email)) {
-                return new Organiser(o);
+                return null;
             }
         }
         OrganiserAdapter adapter = new MockOrganiserAdapter(nextOrganiserId);
