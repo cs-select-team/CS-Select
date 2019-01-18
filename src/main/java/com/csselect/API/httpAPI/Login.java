@@ -35,7 +35,7 @@ public class Login extends Servlet {
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
         if (req.getPathInfo() == null) {
             login(req, resp);
-        } else if (req.getPathInfo().equals("register")) {
+        } else if (req.getPathInfo().equals("/register")) {
             register(req, resp);
         }
     }
@@ -43,6 +43,7 @@ public class Login extends Servlet {
     private void register(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         String email = getParameter("email", req);
         String password = getParameter("password", req);
+        String thirdParam = getParameter("thirdParam", req);
         if (isSet("organiser", req)) {
             //
         } else {

@@ -1,8 +1,8 @@
 var app1 = new Vue({
     el: '#loginForm',
     data: {
-        email: 'email',
-        password: 'password',
+        email: '',
+        password: '',
         organiser: false,
         alert: true
     },

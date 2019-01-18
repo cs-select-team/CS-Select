@@ -6,7 +6,7 @@
     border-color: #EA5B10;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:disabled {
     background-color: #e87437;
     border-color: #e87437;
 }
@@ -14,4 +14,8 @@
 .form-control:focus {
     border-color: #cccccc;
     box-shadow: 0 0 0 .2rem #cccccc;
+}
+
+.fixed-height {
+    height: 70px;
 }
