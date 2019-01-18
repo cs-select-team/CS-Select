@@ -17,6 +17,11 @@ public class ConfigurationTests extends TestClass {
         config = new ApacheCommonsConfiguration(TEST_PATH);
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void loadingTest() { Assert.assertNotNull(config); }
 

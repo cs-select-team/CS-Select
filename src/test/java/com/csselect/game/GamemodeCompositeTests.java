@@ -17,6 +17,11 @@ public class GamemodeCompositeTests extends TestClass {
         this.gamemodeComposite = new GamemodeComposite();
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void addGamemodes() {
         MatrixSelect testMatrix = new MatrixSelect(5, 3, 4);

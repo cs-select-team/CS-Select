@@ -22,6 +22,11 @@ public class MockDatabaseAdapterTest extends TestClass {
         mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void testPlayerCreation() {
         Assert.assertNotNull(mockDatabaseAdapter);

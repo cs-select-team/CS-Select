@@ -17,6 +17,11 @@ public class PlayerStatsTests extends TestClass {
         stats = new PlayerStats();
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void loadingTest() {
         Assert.assertNotNull(stats);
