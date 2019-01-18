@@ -1,6 +1,6 @@
 package com.csselect.user;
 
-import com.csselect.CSSelectModule;
+import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
@@ -16,7 +16,7 @@ import java.util.Collection;
  * for creating games.
  */
 public class Organiser extends User {
-    private static DatabaseAdapter databaseAdapter = CSSelectModule.getInjector().getInstance(DatabaseAdapter.class);
+    private static DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 

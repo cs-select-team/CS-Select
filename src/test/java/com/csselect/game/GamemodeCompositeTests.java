@@ -1,20 +1,19 @@
 package com.csselect.game;
 
-import com.csselect.CSSelectTestModule;
+import com.csselect.Injector;
+import com.csselect.TestClass;
 import com.csselect.user.Player;
-import com.csselect.database.PlayerAdapter;
 import com.csselect.database.DatabaseAdapter;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public class GamemodeCompositeTests {
+public class GamemodeCompositeTests extends TestClass {
 
     private GamemodeComposite gamemodeComposite;
 
-    @Before
-    public void initialise() {
+    @Override
+    public void setUp() {
         this.gamemodeComposite = new GamemodeComposite();
     }
 
@@ -52,7 +51,7 @@ public class GamemodeCompositeTests {
 
     @Test
     public void createRoundOneGamemode() {
-        DatabaseAdapter adapter = CSSelectTestModule.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
 
         BinarySelect testBinary = new BinarySelect();
@@ -65,7 +64,7 @@ public class GamemodeCompositeTests {
 
     @Test
     public void createRoundTwoGamemodes() {
-        DatabaseAdapter adapter = CSSelectTestModule.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
 
         BinarySelect testBinary = new BinarySelect();

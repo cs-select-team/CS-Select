@@ -60,44 +60,43 @@ public interface PlayerStatsAdapter {
     int getHighestStreak();
 
     /**
-     * Gets the current streak of a player
+     * Sets the current streak of a player
      * @param streak Current streak
      */
     void setStreak(Streak streak);
 
     /**
-     * Gets the active daily challenge of a player for the current day
+     * Sets the active daily challenge of a player for the current day
      * @param daily The active daily challenge
      */
     void setDaily(DailyChallenge daily);
 
     /**
-     * Gets the current score of a player
+     * Sets the current score of a player
      * @param score Current score
      */
     void setScore(int score);
 
     /**
-     * Gets the amount of played rounds of the player
+     * Sets the amount of played rounds of the player
      * @param roundsPlayed The amount of played rounds of the player
      */
     void setRoundsPlayed(int roundsPlayed);
 
     /**
-     * Gets the amount of dailies that have been completed by the player
-     * @param dailiesCompleted The amount of dailies completed
+     * Executed when a daily is completed, increases dailyCompleted count by 1
      */
-    void setDailiesCompleted(int dailiesCompleted);
+    void dailyCompleted();
 
     /**
-     * Gets the maximum score achieved by the player in a single round. This
+     * Sets the maximum score achieved by the player in a single round. This
      * does not take into account any gamification mechanics
      * @param maxRoundScore The maximum score of the player
      */
     void setMaxRoundScore(int maxRoundScore);
 
     /**
-     * Gets the latest score of the player, meaning the points he received after
+     * Sets the latest score of the player, meaning the points he received after
      * having completed a round. This does not take into account any gamification
      * mechanics
      * @param lastScore The last score of the player
@@ -105,7 +104,7 @@ public interface PlayerStatsAdapter {
     void setLastScore(int lastScore);
 
     /**
-     * Gets the highest streak ever reached of the player
+     * Sets the highest streak ever reached of the player
      * @param highestStreak The highest streak of the player
      */
     void setHighestStreak(int highestStreak);

@@ -27,12 +27,7 @@ public abstract class APIFacadeUser {
      *
      * @return true if login successfull, false if not
      */
-    public boolean login(String email, String password) {
-        if (email.equals("bendix.sonnenberg@gmx.de") && password.equals("1234")) {
-            return true;
-        }
-        return false;
-    }
+    public abstract boolean login(String email, String password);
 
     /** logs out the current user from this {@link APIFacadeUser}
      * after calling logout this object will behave as if no user has been logged in

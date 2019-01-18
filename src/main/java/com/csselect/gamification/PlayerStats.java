@@ -1,5 +1,9 @@
 package com.csselect.gamification;
 
+import com.csselect.database.PlayerStatsAdapter;
+
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -8,6 +12,7 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
+    private PlayerStatsAdapter databaseAdapter;
     private Streak streak;
     private DailyChallenge activeDaily;
     private List<DailyChallenge> dailies;
@@ -19,10 +24,15 @@ public class PlayerStats implements Gamification {
     private int lastScore;
     private int highestStreak;
 
+    public PlayerStats(PlayerStatsAdapter databaseAdapter) {
+        this.databaseAdapter = databaseAdapter;
+        // TODO
+    }
+
     public PlayerStats() {
         this.streak = new Streak();
-        this.activeDaily = null;
-        this.dailies = null;
+        this.dailies = loadDailies();
+        this.activeDaily = chooseRandomDaily();
         achievements = null;
         this.score = 0;
         this.roundsPlayed = 0;
@@ -36,7 +46,6 @@ public class PlayerStats implements Gamification {
     @Override
     public int finishRound(double score) {
         int commutedScore = commuteScore(score);
-
         lastScore = commutedScore;
 
         if (maxRoundScore < commutedScore) {
@@ -45,20 +54,14 @@ public class PlayerStats implements Gamification {
 
         streak.increaseStreak();
         int newStreak = streak.getCounter();
-
-        int gamificationScore = commutedScore;
-
-        if (newStreak >= 5) {
-            gamificationScore = gamificationScore * 2;
-        } else if (newStreak >= 3) {
-            gamificationScore = gamificationScore + gamificationScore / 2; // Nachkommastelle abgeschnitten
-        }
-
         if (highestStreak < newStreak) {
             highestStreak = newStreak;
         }
 
-        // Dailies checken
+        int gamificationScore = addStreakBonus(newStreak, commutedScore);
+
+        selectDaily();
+        gamificationScore = addDailyBonus(activeDaily, gamificationScore);
 
         roundsPlayed += 1;
         this.score += gamificationScore;
@@ -88,6 +91,7 @@ public class PlayerStats implements Gamification {
 
     @Override
     public DailyChallenge getDaily() {
+        selectDaily();
         return activeDaily;
     }
 
@@ -154,4 +158,74 @@ public class PlayerStats implements Gamification {
         int commutedScore = (int) Math.ceil(score * 100);
         return commutedScore;
     }
+
+    /**
+     * Calculates bonus points if the streak is high enough.
+     * @param currentStreak The current streak.
+     * @param oldScore The current score.
+     * @return The new score. If the streak is too low, the score stays the same.
+     */
+    private int addStreakBonus(int currentStreak, int oldScore) {
+        int newScore = oldScore;
+        if (currentStreak >= 5) {
+            newScore = newScore * 2;
+        } else if (currentStreak >= 3) {
+            newScore = newScore + newScore / 2;
+        }
+        return newScore;
+    }
+
+    private int addDailyBonus(DailyChallenge dailyToCheck, int oldScore) {
+        int newScore = oldScore;
+        if (!dailyToCheck.isCompleted()) {
+
+            if (dailyToCheck.checkFinished(this)) {
+                newScore += dailyToCheck.getReward();
+                dailiesCompleted++;
+            }
+        }
+        return newScore;
+    }
+
+    /**
+     * Changes the current daily if it is still from another day. Otherwise the active daily stays
+     * the same.
+     */
+    private void selectDaily() {
+        if (activeDaily == null) {
+            activeDaily = chooseRandomDaily();
+            return;
+        }
+
+        LocalDate today = LocalDate.now();
+        if (!today.isEqual(activeDaily.getDate())) {
+            activeDaily = chooseRandomDaily();
+        }
+    }
+
+    /**
+     * Chooses a daily challenge randomly from the list of dailies and sets its date to today.
+     * @return The chosen daily.
+     */
+    private DailyChallenge chooseRandomDaily() {
+        int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
+        DailyChallenge newDaily = dailies.get(randomIndex);
+        newDaily.resetDaily();
+        newDaily.setDate(LocalDate.now());
+        return newDaily;
+    }
+
+    /**
+     * Loads the available dailies and puts them into the list.
+     */
+    private List<DailyChallenge> loadDailies() {
+        // Erstmal hartkodieren fürs Testen
+        List<DailyChallenge> allDailies = new LinkedList<>();
+        allDailies.add(new DailyGetStreakThree());
+        allDailies.add(new DailyPlayThreeRounds());
+        allDailies.add(new DailyReachRoundScoreEighty());
+        allDailies.add(new DailyReachScoreHundredFifty());
+        return allDailies;
+    }
+
 }

@@ -1,34 +1,30 @@
 package com.csselect.gamification;
 
 /**
- * A daily challenge that will be completed once a player reaches a streak
- * of 3 in one day.
+ * A daily challenge that will be completed once a player plays three games
+ * in one day.
  */
-public class DailyGetStreakThree extends DailyChallenge {
+public class DailyPlayThreeRounds extends DailyChallenge {
 
-    private int dailyStreak;
+    private int dailyRounds;
 
     /**
      * Creates a daily challenge by setting the necessary values.
      */
-    public DailyGetStreakThree() {
+    public DailyPlayThreeRounds() {
         this.name = "";
         this.description = "";
         this.date = null;
         this.completed = false;
         this.reward = 50;
-        this.dailyStreak = 0;
+        this.dailyRounds = 0;
     }
 
     @Override
     public boolean checkFinished(PlayerStats stats) {
-        if (stats.getStreak().getCounter() == 1) {
-            dailyStreak = 1;
-        } else {
-            dailyStreak++;
-        }
+        dailyRounds++;
 
-        boolean finished = dailyStreak >= 3;
+        boolean finished = dailyRounds >= 3;
 
         if (finished) {
             completed = true;
@@ -40,6 +36,6 @@ public class DailyGetStreakThree extends DailyChallenge {
     @Override
     public void resetDaily() {
         completed = false;
-        dailyStreak = 0;
+        dailyRounds = 0;
     }
 }

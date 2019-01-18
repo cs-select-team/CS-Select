@@ -4,12 +4,10 @@ import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.gamification.Achievement;
 import com.csselect.gamification.DailyChallenge;
-import com.csselect.gamification.DailyGetStreakThree;
 import com.csselect.gamification.Streak;
 import com.csselect.user.Player;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,6 +33,11 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     }
 
+    @Override
+    public boolean login(String email, String password) {
+        return true;
+    }
+
     /** getter for the player associated with this facade
      *
      * @return player
@@ -43,21 +46,21 @@ public class APIFacadePlayer extends APIFacadeUser {
         return player;
     }
 
-    /** gets the game with the given gameid
+    /** gets the game with the given gameid. The currently logged in player has to be a participant in the game
      *
      * @param gameId id of the game which to get
-     * @return game with id gameId
+     * @return game with id gameId or null if the player is not participant in the game
      */
      public Game getGame(int gameId) {
-        return new Game(0);
+        return player.getGame(gameId);
      }
 
     /** gets a list of all games in which the logged in player participates
      *
      * @return All games which this Player participates in
      */
-     public List<Game> getGames() {
-        return new LinkedList<>();
+     public Collection<Game> getGames() {
+        return player.getGames();
      }
 
     /** acceptInvite for a game to which the player has been invited
@@ -65,7 +68,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param gameId id of the game of which to accept the invite
      */
      public void acceptInvite(int gameId) {
-
+        player.acceptInvite(gameId);
      }
 
     /** declines the invite for a game
@@ -73,7 +76,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param gameId game of which to decline the invite
      */
      public void declineInvite(int gameId) {
-
+        player.declineInvite(gameId);
      }
 
     /** starts a round in the game with gameId
@@ -83,7 +86,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return All the features that are to be displayed this round
      */
      public Collection<Feature> startRound(int gameId) {
-            return new LinkedList<Feature>();
+         return player.startRound(gameId);
      }
 
     /** plays the current round
@@ -93,8 +96,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @return the score that the selection of the player has achieved
      */
-     public int selectFeatures(Collection<Integer> selected, Collection<Integer> useless) {
-        return 0;
+     public void selectFeatures(int[] selected, int[] useless) {
+        player.selectFeatures(selected, useless);
      }
 
 
@@ -102,8 +105,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @param features ids of the features that are to be marked useless
      */
-     public void skipRound(Collection<Integer> features) { // TODO besserer Parametername
-
+     public void skipRound(int[] features) { // TODO besserer Parametername
+        player.skipRound(features);
      }
 
     /** gets a list of all achievments and their state for this player
@@ -111,7 +114,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return list of all achievments and their state for this player
      */
      public List<Achievement> getAchievments() {
-         return new LinkedList<>();
+         return player.getStats().getAchievements();
      }
 
     /** gets a leaderboard (so an ordered list of players)
@@ -119,7 +122,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return leaderboard, first entrance has the most points
      */
      public List<Player> getLeaderboard() {
-         return new LinkedList<>();
+         return player.getLeaderboard();
      }
 
     /** gets the current daily challenge
@@ -127,12 +130,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return current daily challange
      */
      public DailyChallenge getDaily() {
-         return new DailyGetStreakThree() {
-             @Override
-             public int hashCode() {
-                 return super.hashCode();
-             }
-         };
+        return player.getStats().getDaily();
      }
 
     /** returns the current streak of this player
@@ -140,7 +138,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return streak of this player
      */
      public Streak getStreak() {
-         return new Streak();
+        return player.getStats().getStreak();
      }
 
     /** returns the absolute score of this player. This means the sum of all points he has ever received
@@ -148,7 +146,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @return score of this player
      */
      public int getScore() {
-         return 0;
+         return player.getStats().getScore();
      }
 
     /** gets all notifications that have to be shown to the player
