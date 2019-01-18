@@ -1,6 +1,6 @@
 package com.csselect.gamification;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Represents an abstract DailyChallenge. This is a task that a player
@@ -9,11 +9,11 @@ import java.util.Date;
  */
 public abstract class DailyChallenge {
 
-    private String name;
-    private String description;
-    private Date date;
-    private boolean completed;
-    private int reward;
+    protected String name;
+    protected String description;
+    protected LocalDate date;
+    protected boolean completed;
+    protected int reward;
 
     /**
      * This method is abstract and has to be implemented in all subclasses. This method
@@ -49,7 +49,7 @@ public abstract class DailyChallenge {
      * Gets the date of the daily challenge.
      * @return The date if the daily.
      */
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -57,7 +57,7 @@ public abstract class DailyChallenge {
      * Sets the date of the daily challenge to the specified date.
      * @param currentDate The date to be set.
      */
-    public void setDate(Date currentDate) {
+    public void setDate(LocalDate currentDate) {
         date = currentDate;
     }
 

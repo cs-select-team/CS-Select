@@ -1,6 +1,7 @@
 package com.csselect.database;
 
 import com.csselect.game.Game;
+import com.csselect.game.Round;
 import com.csselect.gamification.PlayerStats;
 
 import java.util.Collection;
@@ -24,8 +25,14 @@ public interface PlayerAdapter extends UserAdapter {
     PlayerStats getPlayerStats();
 
     /**
-     * Gets a {@link Collection} of all {@link Game}s the {@link com.csselect.user.Player} is or was participating in
-     * @return games
+     * Gets a {@link Collection} of all {@link Game}s the {@link com.csselect.user.Player} is invited to
+     * @return invited games
      */
-    Collection<Game> getGames();
+    Collection<Game> getInvitedGames();
+
+    /**
+     * Gets a {@link Collection} of all {@link Round}s a {@link com.csselect.user.Player} has played
+     * @return players rounds
+     */
+    Collection<Round> getRounds();
 }

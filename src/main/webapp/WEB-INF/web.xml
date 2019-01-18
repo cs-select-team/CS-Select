@@ -3,23 +3,46 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-    <display-name>Archetype Created Web Application</display-name>
-    <Resource auth="Container" mail.smtp.host="localhost" name="mail/Session" type="javax.mail.Session"/>
-    <resource-ref>
-        <description>
-            Resource reference to a factory for javax.mail.Session
-            instances that may be used for sending electronic mail
-            messages, preconfigured to connect to the appropriate
-            SMTP server.
-        </description>
-        <res-ref-name>mail/Session</res-ref-name>
-        <res-type>javax.mail.Session</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
-    <Context>
-    <Resource name="mail/Session" auth="Container"
-              type="javax.mail.Session"
-              mail.smtp.host="localhost"/>
-    </Context>
+    <display-name>CS-Select</display-name>
+    <description>This is an application to help with Feature Subset Selection</description>
+
+
+    <!-- Servlet mapping -->
+    <servlet>
+        <servlet-name>Games</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Games</servlet-class>
+        <description>This servlet handles all requests that deal with specific games</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Games</servlet-name>
+        <url-pattern>/games/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Login</servlet-class>
+        <description>This servlet handles login and logout actions</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GameManagement</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.GameManagement</servlet-class>
+        <description>This servlet handles game creation</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GameManagement</servlet-name>
+        <url-pattern>/create/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Users</servlet-name>
+        <servlet-class>com.csselect.API.httpAPI.Users</servlet-class>
+        <description>This servlet handles interaction with user object</description>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Users</servlet-name>
+        <url-pattern>/users/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

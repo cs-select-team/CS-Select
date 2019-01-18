@@ -3,20 +3,22 @@ package com.csselect.user;
 import com.csselect.database.UserAdapter;
 
 /**
- * This class represents an user in our system. All users, despite their role, have access to those methods and
- * must implement a register method. A standard user can log himself in/out and is allowed change his password as well
- * as his email which we store in our database. Additionally, he can set in which language the frontend should
- * be displayed.
+ * This class represents an user in our system. All users, despite their role, have access to those methods.
+ * A standard user can log himself in/out and is allowed change his password as well as his email which we store
+ * in our database.
+ * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
-public abstract class User{
+public class User {
     private UserAdapter databaseAdapter;
-
+    protected boolean loggedIn;
 
     /**
-     * Standard constructor
+     * Default constructor
      */
-    public User() {}
+    User() {
+        //does not do anything
+    }
 
     /**
      * Constructor for an User object. Database adapter is set to allow communication with our database
@@ -38,31 +40,27 @@ public abstract class User{
     }
 
     /**
-     * This method forces all of the inheriting classes to implement the register method. It could be that different
-     * users need a different amount of parameters, so we choose to set a string array as a parameter. If a new user
-     * type is added, the API has to take care that the correct amount of attributes are in the array. To prevent
-     * errors, add an assertion for the length of the array.
-     * @param args String array of arguments for registration
-     * @return If the user was successfully registered
+     * This method allows a user to log into our system. The API will call this function on an object stored in a user
+     * facade. Logging in and validation of the password is taken care of {@link com.csselect.API.APIFacadeUser} and
+     * {@link com.csselect.database.DatabaseAdapter}
      */
-    public abstract boolean register(String[] args);
-
-    /**
-     * This method allows a user to log into our system. After the {@link com.csselect.API.APIFacadeUser} gets an user
-     * object, it will be checked if the given password is correct before allowing any further interaction with this
-     * object.
-     * @param password Given password to be validated
-     * @return Boolean if the password is correct or not
-     */
-    public boolean login(String password) {
-        return false;
+    public void login() {
+        this.loggedIn = true;
     }
 
     /**
-     * This method is a placeholder if anything has to be done before an user logs out in future versions of the system
-     */
+     * Method to notify the object that the user is not logged in anymore
+     **/
     public void logout() {
+        this.loggedIn = false;
+    }
 
+    /**
+     * Getter for loggedIn attribute representing if the object shall be able to operate in our system
+     * @return boolean if this object is logged in
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 
     /**

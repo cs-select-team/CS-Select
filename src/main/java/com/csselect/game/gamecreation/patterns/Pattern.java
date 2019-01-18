@@ -25,14 +25,11 @@ public class Pattern {
         return title;
     }
 
+    /**
+     * Getter for game options. Creates a cloned object to not manipulate the old object.
+     * @return {@link GameOptions} object saved in Pattern
+     */
     public GameOptions getGameOptions() {
-        GameOptions copyObject = new GameOptions();
-        copyObject.setTitle(gameOptions.getTitle());
-        copyObject.setDescription(gameOptions.getDescription());
-        copyObject.setGamemode(gameOptions.getGamemode());
-        copyObject.setInvitedEmails(gameOptions.getInvitedEmails());
-        copyObject.setNameFeatureDatabase(gameOptions.getNameFeatureDatabase());
-        copyObject.setTermination(gameOptions.getTermination());
-        return copyObject;
+        return (GameOptions) gameOptions.clone();
     }
 }

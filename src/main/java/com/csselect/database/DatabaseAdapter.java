@@ -61,23 +61,53 @@ public interface DatabaseAdapter {
     int getNextGameID();
 
     /**
-     * Registers a new {@link Player} in the database
-     * @param email players email
-     * @param password players password
-     * @param username players username
+     * Gets the password hash of the {@link Player} with the given id
+     * @param id id of the player
+     * @return hashed password
      */
-    void registerPlayer(String email, String password, String username);
+    String getPlayerHash(int id);
 
     /**
-     * Registers a new {@link Organiser} in the database
+     * Gets the salt used while hashing the {@link Player}s password
+     * @param id id of the player
+     * @return salt
+     */
+    String getPlayerSalt(int id);
+
+    /**
+     * Gets the password hash of the {@link Organiser} with the given id
+     * @param id id of the organiser
+     * @return hashed password
+     */
+    String getOrganiserHash(int id);
+
+    /**
+     * Gets the salt used while hashing the {@link Organiser}s password
+     * @param id id of the organiser
+     * @return salt
+     */
+    String getOrganiserSalt(int id);
+
+    /**
+     * Creates a new {@link Player} in the database
      *
-     * If the given organiser-password is not correct, no organiser will be registered
+     * @param email players email
+     * @param hash players hashed password
+     * @param salt salt used while hashing
+     * @param username players username
+     * @return the created player, null if a player with the same email or password already exists
+     */
+    Player createPlayer(String email, String hash, String salt, String username);
+
+    /**
+     * Creates a new {@link Organiser} in the database
      *
      * @param email organisers email
-     * @param password organisers password
-     * @param givenOrganiserPassword organiser-password given by the user attempting to register
+     * @param hash organisers hashed password
+     * @param salt salt used while hashing
+     * @return the created organiser, null if an organiser with the same email alredy exists
      */
-    void registerOrganiser(String email, String password, String givenOrganiserPassword);
+    Organiser createOrganiser(String email, String hash, String salt);
 
     /**
      * Registers a new {@link Game} attributed to the given {@link Organiser}

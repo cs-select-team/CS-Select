@@ -1,5 +1,9 @@
 package com.csselect.database;
 
+import com.csselect.game.Game;
+
+import java.util.Collection;
+
 /**
  * Interface abstracting a {@link com.csselect.user.User} from its database representation
  * Adapters are matched to their users unanimously by their IDs
@@ -25,6 +29,12 @@ public interface UserAdapter {
     String getPasswordHash();
 
     /**
+     * Gets the {@link com.csselect.user.User}s salt used while hashing
+     * @return salt used while hashing
+     */
+    String getPasswordSalt();
+
+    /**
      * Gets the {@link com.csselect.user.User}s language in form of a langcode
      * @return langcode of users language
      */
@@ -48,4 +58,18 @@ public interface UserAdapter {
      * @param langCode langcode of users language
      */
     void setLanguage(String langCode);
+
+
+    /**
+     * Gets a {@link Collection} of all active {@link Game}s the {@link com.csselect.user.User} owns or participates in
+     * @return active games
+     */
+    Collection<Game> getActiveGames();
+
+    /**
+     * Gets a {@link Collection} of all terminated {@link Game}s the {@link com.csselect.user.User} owns or
+     * participates in
+     * @return terminated games
+     */
+    Collection<Game> getTerminatedGames();
 }

@@ -52,10 +52,10 @@ public interface GameAdapter {
     int getNumberOfRounds();
 
     /**
-     * Gets a {@link Collection} of all invited {@link Player}s
-     * @return players
+     * Gets a {@link Collection} of the email addresses of all invited {@link Player}s
+     * @return email addresses
      */
-    Collection<Player> getInvitedPlayers();
+    Collection<String> getInvitedPlayers();
 
     /**
      * Gets a {@link Collection} of all playing {@link Player}s
@@ -162,5 +162,5 @@ public interface GameAdapter {
      * Removes a {@link Collection} of email-addresses from the invited players
      * @param emails emails of the players to be removed
      */
-    void removeInivitedPlayers(Collection<String> emails);
+    void removeInvitedPlayers(Collection<String> emails);
 }

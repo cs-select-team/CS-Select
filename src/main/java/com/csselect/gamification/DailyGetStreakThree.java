@@ -6,20 +6,40 @@ package com.csselect.gamification;
  */
 public class DailyGetStreakThree extends DailyChallenge {
 
+    private int dailyStreak;
+
     /**
      * Creates a daily challenge by setting the necessary values.
      */
     public DailyGetStreakThree() {
-
+        this.name = "";
+        this.description = "";
+        this.date = null;
+        this.completed = false;
+        this.reward = 50;
+        this.dailyStreak = 0;
     }
 
     @Override
     public boolean checkFinished(PlayerStats stats) {
-        return false;
+        if (stats.getStreak().getCounter() == 1) {
+            dailyStreak = 1;
+        } else {
+            dailyStreak++;
+        }
+
+        boolean finished = dailyStreak >= 3;
+
+        if (finished) {
+            completed = true;
+        }
+
+        return finished;
     }
 
     @Override
     public void resetDaily() {
-
+        completed = false;
+        dailyStreak = 0;
     }
 }
