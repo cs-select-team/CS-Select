@@ -29,7 +29,7 @@ public class MockDatabaseAdapterTest extends TestClass {
         Assert.assertNotNull(player);
         player = mockDatabaseAdapter.getPlayer(TEST_EMAIL);
         Assert.assertNotNull(player);
-        Assert.assertEquals(player.getId(), 0);
+        Assert.assertEquals(0, player.getId());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class MockDatabaseAdapterTest extends TestClass {
         Assert.assertNotNull(organiser);
         organiser = mockDatabaseAdapter.getOrganiser(TEST_EMAIL);
         Assert.assertNotNull(organiser);
-        Assert.assertEquals(organiser.getId(), 0);
+        Assert.assertEquals(0, organiser.getId());
     }
 
 }

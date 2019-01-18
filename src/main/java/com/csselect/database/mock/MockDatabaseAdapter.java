@@ -132,7 +132,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
                 return new Organiser(o);
             }
         }
-        OrganiserAdapter adapter = new MockOrganiserAdapter(nextPlayerId);
+        OrganiserAdapter adapter = new MockOrganiserAdapter(nextOrganiserId);
         adapter.setEmail(email);
         adapter.setPassword(hash, salt);
         organiserAdapterMap.put(nextOrganiserId, adapter);
@@ -144,6 +144,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     public void registerGame(Organiser organiser, Game game) {
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
+            nextGameId++;
         }
     }
 
