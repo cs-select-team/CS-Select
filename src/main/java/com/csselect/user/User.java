@@ -92,4 +92,9 @@ public class User {
     public void setLanguage(String langCode) {
         userAdapter.setLanguage(langCode);
     }
+
+    @Override
+    public int hashCode() {
+        return userAdapter.getID();
+    }
 }
