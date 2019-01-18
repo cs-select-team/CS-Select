@@ -147,4 +147,8 @@ public class Player extends User {
     public Collection<Game> getGames() {
         return playerAdapter.getActiveGames();
     }
+
+    public Collection<Round> getRounds() {
+        return playerAdapter.getRounds();
+    }
 }
