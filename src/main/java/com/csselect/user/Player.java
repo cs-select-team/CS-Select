@@ -41,7 +41,11 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
      */
     public void acceptInvite(int gameId) {
-
+        playerAdapter.getInvitedGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.acceptInvite(this, playerAdapter.getEmail());
+            }
+        });
     }
 
 
@@ -52,7 +56,11 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to but shall not be able to be played by him/her
      */
     public void declineInvite(int gameId) {
-
+        playerAdapter.getInvitedGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.declineInvite(playerAdapter.getEmail());
+            }
+        });
     }
 
     /**
@@ -97,7 +105,7 @@ public class Player extends User {
      * @param uselessFeatures Features the player marked as unimportant
      */
     public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
-
+        activeRound.selectFeatures(selectedFeatures, uselessFeatures);
     }
 
     /**
@@ -106,7 +114,7 @@ public class Player extends User {
      * @param uselessFeatures Features the player selected in this round to be skipped
      */
     public void skipRound(int[] uselessFeatures) {
-
+        activeRound.skip(uselessFeatures);
     }
 
     /**
