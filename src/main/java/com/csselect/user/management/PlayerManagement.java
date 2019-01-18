@@ -8,8 +8,8 @@ import com.csselect.user.management.safety.Encrypter;
 /**
  * {@link UserManagement} class for {@link Player}
  */
-public class PlayerManagement extends UserManagement {
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+public final class PlayerManagement extends UserManagement {
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
 
     @Override
     public Player register(String[] parameters) {
@@ -31,8 +31,9 @@ public class PlayerManagement extends UserManagement {
         Player player = DATABASE_ADAPTER.getPlayer(email);
         String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
         String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
-        password += salt;
-        String encryptedPassword = Encrypter.encrypt(password);
+        String concatenated = password + salt;
+
+        String encryptedPassword = Encrypter.encrypt(concatenated);
         if (encryptedPassword.equals(savedEncryptedPassword)) {
             player.login();
             return player;

@@ -10,7 +10,7 @@ import com.csselect.user.management.safety.Encrypter;
  * {@link UserManagement} class for {@link Organiser}
  */
 public class OrganiserManagement extends UserManagement {
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
 
     @Override
     public Organiser register(String[] parameters) {
@@ -37,9 +37,9 @@ public class OrganiserManagement extends UserManagement {
         Organiser organiser = DATABASE_ADAPTER.getOrganiser(email);
         String savedEncryptedPassword = DATABASE_ADAPTER.getOrganiserHash(organiser.getId());
         String salt = DATABASE_ADAPTER.getOrganiserSalt(organiser.getId());
-        password += salt;
+        String concatenated = password + salt;
 
-        String encryptedPassword = Encrypter.encrypt(password);
+        String encryptedPassword = Encrypter.encrypt(concatenated);
         if (encryptedPassword.equals(savedEncryptedPassword)) {
             organiser.login();
             return organiser;
