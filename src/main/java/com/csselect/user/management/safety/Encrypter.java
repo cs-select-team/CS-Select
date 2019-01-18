@@ -9,10 +9,17 @@ import java.security.NoSuchAlgorithmException;
  * This class is there to encrypt Strings using an specified algorithm and provide a method to get an
  * randomised String ("Salt") for safety measures.
  */
-public class Encrypter {
-    private final static String ALGORITHM = "SHA-256";
-    private final static int MIN_SALT_LENGTH = 40;
-    private final static int MAX_SALT_LENGTH = 70;
+public final class Encrypter {
+    private static final String ALGORITHM = "SHA-256";
+    private static final int MIN_SALT_LENGTH = 40;
+    private static final int MAX_SALT_LENGTH = 70;
+
+    /**
+     * Help classes should not have a public constructor
+     */
+    private Encrypter() {
+
+    }
 
     /**
      * Generates a random alphanumeric String with a specified length

@@ -110,9 +110,7 @@ public abstract  class Servlet extends HttpServlet {
 
     protected boolean isSet(String name, HttpServletRequest req) throws HttpError {
         if (req.getParameterMap().containsKey(name)) {
-            if (getParameter(name, req).equals("true")) {
-                return true;
-            }
+            return getParameter(name, req).equals("true");
         }
         return false;
     }
