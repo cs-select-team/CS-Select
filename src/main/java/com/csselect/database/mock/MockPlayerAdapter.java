@@ -3,11 +3,13 @@ package com.csselect.database.mock;
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerAdapter;
+import com.csselect.database.PlayerStatsAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.PlayerStats;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -17,6 +19,7 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
 
     private String username;
     private final MockDatabaseAdapter mockDatabaseAdapter;
+    private static final HashMap<Integer, PlayerStatsAdapter> playerStatsAdapters = new HashMap<>();
 
     /**
      * Creates a new {@link MockPlayerAdapter} with the given id
@@ -34,7 +37,13 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
 
     @Override
     public PlayerStats getPlayerStats() {
-        return null;
+        if (playerStatsAdapters.containsKey(this.getID())) {
+            return new PlayerStats(playerStatsAdapters.get(this.getID()));
+        } else {
+            PlayerStatsAdapter adapter = new MockPlayerStatsAdapter();
+            playerStatsAdapters.put(this.getID(), adapter);
+            return new PlayerStats(adapter);
+        }
     }
 
     @Override
