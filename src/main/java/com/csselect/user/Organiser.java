@@ -155,4 +155,16 @@ public class Organiser extends User implements Comparable {
         Organiser otherOrganiser = (Organiser) o;
         return Integer.compare(organiserAdapter.getID(), otherOrganiser.getId());
     }
+
+    @Override
+    public boolean equals(@NotNull Object o) {
+        if (!(o instanceof Organiser)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Organiser otherOrganiser = (Organiser) o;
+        return organiserAdapter.getID() == otherOrganiser.getId();
+    }
 }

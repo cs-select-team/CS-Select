@@ -175,4 +175,16 @@ public class Player extends User implements Comparable {
         Player otherPlayer = (Player) o;
         return Integer.compare(playerAdapter.getID(), otherPlayer.getId());
     }
+
+    @Override
+    public boolean equals(@NotNull Object o) {
+        if (!(o instanceof Player)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Player otherPlayer = (Player) o;
+        return playerAdapter.getID() == otherPlayer.getId();
+    }
 }
