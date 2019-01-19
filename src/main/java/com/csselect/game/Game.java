@@ -212,12 +212,12 @@ public class Game {
     /**
      * Gives a player {@link Player} who was invited before the right to start rounds, adds him to the collection
      * playingPlayers
-     * @param player the player-object {@link Player} of the player who accepted the invite
+     * @param playerID the ID {@link Player} of the player who accepted the invite
      * @param email the email-address of the player who accepted the invite
      * @return true if successful, false if the player was not invited or has already accepted or the game is
      * terminated already
      */
-    public boolean acceptInvite(Player player, String email) {
+    public boolean acceptInvite(int playerID, String email) {
         return false;
     }
 
