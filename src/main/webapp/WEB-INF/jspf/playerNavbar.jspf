@@ -6,7 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="navbar-nav">
-          <a class="nav-item nav-link" href="#"><fmt:message key="newGame"/></a>
+          <a class="nav-item nav-link" href="#"><fmt:message key="settings"/></a>
           <a class="nav-item nav-link" href="#"><fmt:message key="logout"/></a>
         </div>
   </div>
