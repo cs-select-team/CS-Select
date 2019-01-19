@@ -26,7 +26,7 @@ public class FeatureSet {
      * @return the String identifier
      */
     public String getIdentifier() {
-        return "this.identifier";
+        return this.identifier;
     }
 
     /**
@@ -38,10 +38,20 @@ public class FeatureSet {
     }
 
     /**
-     * Adds a feature {@link Feature} to the feature set
+     * Adds a feature {@link Feature} to the feature set, checks if feature is null or already in the FeatureSet
      * @param feature the feature {@link  Feature} to be added
      */
     public void addFeature(Feature feature) {
+        if(feature == null) {
+            return;
+        }
 
+        for(Feature feat : this.features) {
+            if(feat.getID() == feature.getID()) {
+                return;
+            }
+        }
+
+        this.features.add(feature);
     }
 }

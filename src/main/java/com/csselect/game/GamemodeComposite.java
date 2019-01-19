@@ -2,8 +2,8 @@ package com.csselect.game;
 
 import com.csselect.user.Player;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The GamemodeComposite class represents a concrete game mode {@link Gamemode} that combines different game modes into
@@ -12,13 +12,13 @@ import java.util.Set;
  */
 public class GamemodeComposite extends Gamemode {
 
-    private Set<Gamemode> gamemodes;
+    private List<Gamemode> gamemodes;
 
     /**
      * Constructor for a game mode composite object
      */
     public GamemodeComposite() {
-        this.gamemodes = new HashSet<>();
+        this.gamemodes = new ArrayList<>();
     }
 
     /**
@@ -29,7 +29,15 @@ public class GamemodeComposite extends Gamemode {
      * @return the randomly created round {@link Round}
      */
     public Round createRound(Player player, int number) {
-        return null;
+        if(player == null || this.gamemodes.size() == 0) {
+            return null;
+        }
+
+        int numberOfGamemodes = this.gamemodes.size();
+
+        int randomMode = (int) (Math.random() * numberOfGamemodes);
+
+        return this.gamemodes.get(randomMode).createRound(player, number);
     }
 
     /**
@@ -37,7 +45,10 @@ public class GamemodeComposite extends Gamemode {
      * @param gamemode the game mode {@link Gamemode} to be added
      */
     public void add(Gamemode gamemode) {
-
+        if(gamemode == null || this.gamemodes.contains(gamemode)) {
+            return;
+        }
+        this.gamemodes.add(gamemode);
     }
 
     /**
@@ -45,6 +56,14 @@ public class GamemodeComposite extends Gamemode {
      * @param gamemode the game mode {@link Gamemode} to be deleted
      */
     public void delete(Gamemode gamemode) {
+            this.gamemodes.remove(gamemode);
+    }
 
+    /**
+     * Getter for the contained game modes
+     * @return the game modes contained by the composite
+     */
+    public List<Gamemode> getGamemodes() {
+        return this.gamemodes;
     }
 }

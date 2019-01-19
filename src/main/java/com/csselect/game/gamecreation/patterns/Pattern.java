@@ -12,7 +12,8 @@ public class Pattern {
      * @param gameOptions Object of GameOption representing options of a game (e.g Title, mode, ...)
      * @param title How the pattern is gonna be named
      */
-    Pattern(GameOptions gameOptions, String title) {
+    public Pattern(GameOptions gameOptions, String title) {
+        this.title = title;
         this.gameOptions = gameOptions;
     }
 
@@ -24,9 +25,11 @@ public class Pattern {
         return title;
     }
 
+    /**
+     * Getter for game options. Creates a cloned object to not manipulate the old object.
+     * @return {@link GameOptions} object saved in Pattern
+     */
     public GameOptions getGameOptions() {
-        GameOptions copyObject = new GameOptions();
-        //TODO: Call setters
-        return copyObject;
+        return (GameOptions) gameOptions.clone();
     }
 }

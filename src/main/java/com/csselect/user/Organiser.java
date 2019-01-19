@@ -1,12 +1,14 @@
 package com.csselect.user;
 
+import com.csselect.Injector;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * The organiser is an user in our system which is able to create games, decide in which database the result shall be
@@ -14,34 +16,22 @@ import java.util.HashSet;
  * This class represents an organiser in our system and is connected to an {@link GameCreator} object, which is there
  * for creating games.
  */
-public class Organiser extends User {
-    private OrganiserAdapter databaseAdapter;
+public class Organiser extends User implements Comparable {
+    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
-    private Collection<Game> games;
-    private Collection<Game> terminatedGames;
 
     /**
      * Constructor for an Organiser object. Database adapter is set to allow communication with our database
      * (object of {@link OrganiserAdapter}. The constructor will be called as soon as an organiser registers
      * or logs in. Which value the unique ID will have (registration) is determined by the
      * {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication with organiser tables
+     * @param organiserAdapter Interface for database communication with organiser tables
      */
-    Organiser(OrganiserAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
+    public Organiser(OrganiserAdapter organiserAdapter) {
+        super(organiserAdapter);
+        this.organiserAdapter = organiserAdapter;
         this.gameBuilder = new GameCreator();
-        this.games = new HashSet<>();
-        this.terminatedGames = new HashSet<>();
-    }
-
-    /**
-     * To register an organiser in our database, we need 3 Strings representing email, password and global password.
-     * @param args String array of arguments for registration (has to have length of 3 cells)
-     * @return If the organiser was successfully registered
-     **/
-    public boolean register(String[] args) {
-        assert args.length == 3;
-        return true;
     }
 
     /**
@@ -52,7 +42,8 @@ public class Organiser extends User {
      * @param title String which shall refer to pattern in our database
      */
     public void savePattern(String title) {
-
+        Pattern createdPattern = gameBuilder.makePattern(title);
+        organiserAdapter.addPattern(createdPattern);
     }
 
     /**
@@ -61,7 +52,7 @@ public class Organiser extends User {
      * @return All Pattern objects saved for this organiser
      */
     public Collection<Pattern> getPatterns() {
-        return databaseAdapter.getPatterns();
+        return organiserAdapter.getPatterns();
     }
 
     /**
@@ -70,8 +61,7 @@ public class Organiser extends User {
      * @param pattern Settings (the organiser already chose and saved) the organiser wants to choose
      */
     public void loadPattern(Pattern pattern) {
-
-        databaseAdapter.addPattern(pattern);
+        gameBuilder.loadPattern(pattern);
     }
 
     /**
@@ -79,7 +69,8 @@ public class Organiser extends User {
      * We just call according method on {@link GameCreator}.
      */
     public void createGame() {
-        gameBuilder.doCreate();
+        Game game = gameBuilder.doCreate();
+        DATABASE_ADAPTER.registerGame(this, game);
     }
 
     /**
@@ -92,8 +83,12 @@ public class Organiser extends User {
      * @param playerEmails Emails invited to the game
      * @param gameId Unique ID of the game in our system the organiser modified
      */
-    public void invitePlayers(String[] playerEmails, int gameId) {
-
+    public void invitePlayers(Collection<String> playerEmails, int gameId) {
+        organiserAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.invitePlayers(playerEmails);
+            }
+        });
     }
 
     /**
@@ -102,11 +97,9 @@ public class Organiser extends User {
      * @param gameId Unique ID of the game that shall be terminated
      */
     public void terminateGame(int gameId) {
-        games.forEach((Game element) -> {
-            if (element.getId() == gameId) {
-                element.terminateGame();
-                games.remove(element);
-                terminatedGames.add(element);
+        organiserAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.terminateGame();
             }
         });
     }
@@ -118,6 +111,60 @@ public class Organiser extends User {
      * @param gameId Unique ID of the game that shall be deleted
      */
     public void deleteGame(int gameId) {
-        games.removeIf((Game element) -> element.isTerminated() && element.getId() == gameId);
+        organiserAdapter.getTerminatedGames().forEach((Game game) -> {
+            if (game.getId() == gameId && game.isTerminated()) {
+                DATABASE_ADAPTER.removeGame(game);
+            }
+        });
+    }
+
+    /**
+     * Get all non-terminated games from our database the organiser created
+     * @return Games which are not terminated and belong to the organiser
+     */
+    public Collection<Game> getActiveGames() {
+        return organiserAdapter.getActiveGames();
+    }
+
+    /**
+     * Get all games from our database the organiser once created
+     * @return Games which are terminated and belong to the organiser
+     */
+    public Collection<Game> getTerminatedGames() {
+        return organiserAdapter.getTerminatedGames();
+    }
+
+    /**
+     * Sets options for the game that the organiser is currently creating
+     * if there is no game being created right now, this will start the process
+     *
+     * @param option name of the option
+     * @param data value
+     */
+    public void setGameOption(String option, String data) {
+
+    }
+
+    /**
+     * Assuming an organiser only is compared to another organiser, this object is compared to another object
+     * @param o Object to compare (class organiser)
+     * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Organiser otherOrganiser = (Organiser) o;
+        return Integer.compare(organiserAdapter.getID(), otherOrganiser.getId());
+    }
+
+    @Override
+    public boolean equals(@NotNull Object o) {
+        if (!(o instanceof Organiser)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Organiser otherOrganiser = (Organiser) o;
+        return organiserAdapter.getID() == otherOrganiser.getId();
     }
 }

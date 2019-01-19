@@ -5,9 +5,10 @@ import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
+import com.csselect.gamification.Leaderboard;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -16,11 +17,10 @@ import java.util.List;
  * They are allowed to play games ({@link Game} organisers created and invited them to and see information about
  * their statistics, more precisely their score over time, their achievements and daily challenges.
  */
-public class Player extends User {
-    private PlayerAdapter databaseAdapter;
-    private Collection<Game> invitedGames;
-    private Collection<Game> games;
-    private Gamification gamification;
+public class Player extends User implements Comparable {
+    private PlayerAdapter playerAdapter;
+    private Collection<Feature> featuresToShow;
+    private Game gameToReturn;
     private Round activeRound;
 
     /**
@@ -28,22 +28,12 @@ public class Player extends User {
      * (object of {@link PlayerAdapter}. The constructor will be called as soon as a player registers or logs in.
      * Which value the unique ID will have (registration) is determined by the
      * {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication with player tables
+     * @param playerAdapter Interface for database communication with player tables
      */
-    Player(PlayerAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
-        this.games = new HashSet<>();
+    public Player(PlayerAdapter playerAdapter) {
+        super(playerAdapter);
+        this.playerAdapter = playerAdapter;
         this.activeRound = null;
-    }
-
-    /**
-     * To register a player in our database, we need 3 Strings representing email, password and username.
-     * @param args String array of arguments for registration (has to have length of 3 cells)
-     * @return If the player was successfully registered
-     **/
-    public boolean register(String[] args) {
-        assert args.length == 3;
-        return false;
     }
 
     /**
@@ -52,7 +42,11 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
      */
     public void acceptInvite(int gameId) {
-
+        playerAdapter.getInvitedGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.acceptInvite(this, playerAdapter.getEmail());
+            }
+        });
     }
 
 
@@ -63,7 +57,11 @@ public class Player extends User {
      * @param gameId Unique ID of the game the player is invited to but shall not be able to be played by him/her
      */
     public void declineInvite(int gameId) {
-
+        playerAdapter.getInvitedGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                game.declineInvite(playerAdapter.getEmail());
+            }
+        });
     }
 
     /**
@@ -75,7 +73,12 @@ public class Player extends User {
      * @return Features to show in this round of the game
      */
     public Collection<Feature> startRound(int gameId) {
-        return null;
+        playerAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                featuresToShow = game.startRound(playerAdapter.getID());
+            }
+        });
+        return featuresToShow;
     }
 
     /**
@@ -102,17 +105,17 @@ public class Player extends User {
      * @param selectedFeatures Features the player has selected for this round
      * @param uselessFeatures Features the player marked as unimportant
      */
-    public void selectFeatures(Collection<Feature> selectedFeatures, Collection<Feature> uselessFeatures) {
-
+    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        activeRound.selectFeatures(selectedFeatures, uselessFeatures);
     }
 
     /**
      * It could be that in some rounds ({@link Round}) the features ({@link Feature}) are not suitable to make a good
      * decision. We provide a player the possibility to skip over a round.
-     * @param features Features the player selected in this round to be skipped
+     * @param uselessFeatures Features the player selected in this round to be skipped
      */
-    public void skipRound(Collection<Feature> features) {
-
+    public void skipRound(int[] uselessFeatures) {
+        activeRound.skip(uselessFeatures);
     }
 
     /**
@@ -120,7 +123,7 @@ public class Player extends User {
      * @return Gamification interface of the player
      */
     public Gamification getStats() {
-        return this.gamification;
+        return playerAdapter.getPlayerStats();
     }
 
     /**
@@ -129,6 +132,59 @@ public class Player extends User {
      * @return List of Players in leaderboard's order
      */
     public List<Player> getLeaderboard() {
-        return null;
+        return Leaderboard.getInstance().getPlayers();
+    }
+
+    /**
+     * Returns a game with given ID, but only if the player has accepted the invitation to this game before
+     * @param gameId Game ID
+     * @return Game object
+     */
+    public Game getGame(int gameId) {
+        playerAdapter.getActiveGames().forEach((Game game) -> {
+            if (game.getId() == gameId) {
+                gameToReturn = game;
+            }
+        });
+        return gameToReturn;
+    }
+
+    /**
+     * Returns all active games the player is currently participating in
+     * @return Games which are played by player
+     */
+    public Collection<Game> getGames() {
+        return playerAdapter.getActiveGames();
+    }
+
+    /**
+     * Returns all rounds the player participated so far
+     * @return Collection of {@link Round} objects
+     */
+    public Collection<Round> getRounds() {
+        return playerAdapter.getRounds();
+    }
+
+    /**
+     * Assuming a player only is compared to another player, this object is compared to another object
+     * @param o Object to compare (class player)
+     * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Player otherPlayer = (Player) o;
+        return Integer.compare(playerAdapter.getID(), otherPlayer.getId());
+    }
+
+    @Override
+    public boolean equals(@NotNull Object o) {
+        if (!(o instanceof Player)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Player otherPlayer = (Player) o;
+        return playerAdapter.getID() == otherPlayer.getId();
     }
 }

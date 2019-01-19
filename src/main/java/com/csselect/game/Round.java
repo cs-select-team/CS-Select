@@ -107,18 +107,18 @@ public abstract class Round {
 
     /**
      * Ends the round without a selection of features {@link Feature} from the player {@link Player}
-     * @param uselessFeatures the features {@link Feature} marked by the player {@link Player} to be useless
+     * @param uselessFeatures the IDs of the features {@link Feature} marked by the player {@link Player} to be useless
      */
-    public void skip(Collection<Feature> uselessFeatures) {
+    public void skip(int[] uselessFeatures) {
 
     }
 
     /**
      * Ends the round, calculates the score and the points of the round and adds it to the game {@link Game}
-     * @param selectedFeatures the features {@link Feature} selected by the player {@link Player}
-     * @param uselessFeatures the features {@link Feature} marked by the player {@link Player} to be useless
+     * @param selectedFeatures the IDs of the features {@link Feature} selected by the player {@link Player}
+     * @param uselessFeatures the IDs of the features {@link Feature} marked by the player {@link Player} to be useless
      */
-    public void selectFeatures(Collection<Feature> selectedFeatures, Collection<Feature> uselessFeatures) {
+    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
 
     }
 
