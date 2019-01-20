@@ -14,7 +14,8 @@ public abstract class LeaderboardSortingStrategy {
      * Sorts the list of players. Every subclass has to implement this method in order to sort the list
      * in the given way.
      * @param players The list of players to sort.
+     * @return The sorted list of players.
      */
-    protected abstract void sort(List<Player> players);
+    protected abstract List<Player> sort(List<Player> players);
 
 }

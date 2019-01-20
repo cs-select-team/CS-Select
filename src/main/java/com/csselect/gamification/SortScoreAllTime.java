@@ -13,8 +13,9 @@ import java.util.List;
 public class SortScoreAllTime extends LeaderboardSortingStrategy {
 
     @Override
-    protected void sort(List<Player> players) {
+    protected List<Player> sort(List<Player> players) {
         Collections.sort(players, Comparator.comparing(p -> p.getStats().getScore()));
+        return players;
     }
 }
 

@@ -44,8 +44,7 @@ public class Leaderboard {
      */
     public List<Player> getPlayers() {
         players = getPlayersFromDatabase();
-        strategy.sort(players);
-        return players;
+        return strategy.sort(players);
     }
 
     /**
