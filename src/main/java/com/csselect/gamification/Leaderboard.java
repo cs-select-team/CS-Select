@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import com.csselect.Injector;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Player;
 
 import java.util.LinkedList;
@@ -11,13 +13,14 @@ import java.util.List;
  */
 public class Leaderboard {
 
+    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private List<Player> players;
     private LeaderboardSortingStrategy strategy;
     private static Leaderboard instance;
 
     private Leaderboard() {
         this.players = new LinkedList<>();
-        setSortingStrategy(new SortScoreAllTime());
+        setSortingStrategy(new SortScoreLastWeek());
     }
 
     public static Leaderboard getInstance() {
@@ -50,7 +53,7 @@ public class Leaderboard {
      * @return The list of players.
      */
     private List<Player> getPlayersFromDatabase() {
-        return null;
+        return new LinkedList<>(DATABASE_ADAPTER.getPlayers());
     }
 
 }
