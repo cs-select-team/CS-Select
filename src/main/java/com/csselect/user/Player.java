@@ -37,14 +37,14 @@ public class Player extends User implements Comparable {
     }
 
     /**
-     * If a player is invited to a game ({@link Game}), he has to accept said invitation before he is allowed to play it.
+     * If a player is invited to a {@link Game}, he has to accept said invitation before he is allowed to play it.
      * Game objects representing games the player is invited to are stored as an attribute (array) in the Player object.
      * @param gameId Unique ID of the game the player is invited to and shall be played by him/her
      */
     public void acceptInvite(int gameId) {
         playerAdapter.getInvitedGames().forEach((Game game) -> {
             if (game.getId() == gameId) {
-                game.acceptInvite(this, playerAdapter.getEmail());
+                game.acceptInvite(this.getId(), playerAdapter.getEmail());
             }
         });
     }
