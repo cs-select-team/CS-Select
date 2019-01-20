@@ -17,7 +17,7 @@ import java.util.Collection;
  * for creating games.
  */
 public class Organiser extends User implements Comparable {
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 

@@ -5,10 +5,14 @@ import com.google.inject.Guice;
 /**
  * Class used for retrieving the guice injector
  */
-public class Injector {
+public final class Injector {
 
     private static com.google.inject.Injector injector = null;
     private static boolean testMode;
+
+    private Injector() {
+        //Utility classes shouldn't be instantiated
+    }
 
     /**
      * Returns the guice {@link com.google.inject.Injector} to receive instances from

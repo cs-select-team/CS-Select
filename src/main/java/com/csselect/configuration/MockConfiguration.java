@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Mock-Implementation of the {@link Configuration} interface
  */
-public class MockConfiguration implements Configuration {
+public final class MockConfiguration implements Configuration {
 
     @Inject
     private MockConfiguration() {

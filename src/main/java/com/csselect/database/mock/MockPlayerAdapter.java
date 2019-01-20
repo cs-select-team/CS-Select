@@ -19,7 +19,7 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
 
     private String username;
     private final MockDatabaseAdapter mockDatabaseAdapter;
-    private static final HashMap<Integer, PlayerStatsAdapter> playerStatsAdapters = new HashMap<>();
+    private static final HashMap<Integer, PlayerStatsAdapter> PLAYERSTATS_ADAPTERS = new HashMap<>();
 
     /**
      * Creates a new {@link MockPlayerAdapter} with the given id
@@ -37,11 +37,11 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
 
     @Override
     public PlayerStats getPlayerStats() {
-        if (playerStatsAdapters.containsKey(this.getID())) {
-            return new PlayerStats(playerStatsAdapters.get(this.getID()));
+        if (PLAYERSTATS_ADAPTERS.containsKey(this.getID())) {
+            return new PlayerStats(PLAYERSTATS_ADAPTERS.get(this.getID()));
         } else {
             PlayerStatsAdapter adapter = new MockPlayerStatsAdapter();
-            playerStatsAdapters.put(this.getID(), adapter);
+            PLAYERSTATS_ADAPTERS.put(this.getID(), adapter);
             return new PlayerStats(adapter);
         }
     }
