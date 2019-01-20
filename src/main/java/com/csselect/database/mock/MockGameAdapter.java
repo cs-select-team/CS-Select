@@ -167,6 +167,11 @@ public class MockGameAdapter implements GameAdapter {
     }
 
     @Override
+    public void addPlayingPlayer(int id) {
+        playingPlayers.add(Injector.getInjector().getInstance(DatabaseAdapter.class).getPlayer(id));
+    }
+
+    @Override
     public void removeInvitedPlayers(Collection<String> emails) {
         invitedPlayers.removeAll(emails);
     }

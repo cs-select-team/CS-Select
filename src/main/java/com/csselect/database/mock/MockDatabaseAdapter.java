@@ -68,6 +68,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
+    public Player getPlayer(int id) {
+        return new Player(playerAdapterMap.get(id));
+    }
+
+    @Override
     public Organiser getOrganiser(String email) {
         OrganiserAdapter adapter = organiserAdapterMap.values().stream().filter(p -> p.getEmail().equals(email))
                 .findFirst().orElse(null);

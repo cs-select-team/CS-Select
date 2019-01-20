@@ -42,6 +42,13 @@ public interface DatabaseAdapter {
     Player getPlayer(String email);
 
     /**
+     * Gets the {@link Player} with the given id
+     * @param id players id
+     * @return player
+     */
+    Player getPlayer(int id);
+
+    /**
      * Gets the {@link Organiser} with the given email-address
      * @param email organisers email
      * @return organiser
