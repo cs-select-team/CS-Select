@@ -168,6 +168,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        dataSources.put(databaseName, source);
         return source;
     }
 }
