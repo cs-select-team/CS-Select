@@ -32,6 +32,14 @@ public class Leaderboard {
     }
 
     /**
+     * Gets the current sorting strategy.
+     * @return The current sorting strategy.
+     */
+    public LeaderboardSortingStrategy getStrategy() {
+        return strategy;
+    }
+
+    /**
      * Sets the strategy that is supposed to be used to sort the list of players.
      * @param strategy The strategy to use.
      */
