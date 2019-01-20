@@ -1,5 +1,6 @@
 package com.csselect.database.mysql;
 
+import com.csselect.configuration.Configuration;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
@@ -7,13 +8,48 @@ import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import com.google.inject.Inject;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import org.intellij.lang.annotations.Language;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Mysql-Implementation of the {@link DatabaseAdapter} Interface
  */
 public class MysqlDatabaseAdapter implements DatabaseAdapter {
+
+    private static final String PRODUCT_DATABASE_NAME = "CS_SELECT";
+    private static final String ORGANISER_TABLE_NAME = "ORGANISERS";
+    private static final String PLAYER_TABLE_NAME = "PLAYERS";
+    private static final String GAMES_TABLE_NAME = "GAMES";
+    private static final String PATTERN_TABLE_NAME = "PATTERNS";
+
+    private final String hostname;
+    private final int port;
+    private final String username;
+    private final String password;
+    private final Map<String, MysqlDataSource> dataSources;
+
+    /**
+     * Creates a new MysqlDatabaseAdapter
+     * @param configuration configuration to use
+     */
+    @Inject
+    MysqlDatabaseAdapter(Configuration configuration) {
+        this.hostname = configuration.getDatabaseHostname();
+        this.port = configuration.getDatabasePort();
+        this.username = configuration.getDatabaseUsername();
+        this.password = configuration.getDatabasePassword();
+        this.dataSources = new HashMap<>();
+        this.dataSources.put(PRODUCT_DATABASE_NAME, createDataSource(PRODUCT_DATABASE_NAME));
+    }
 
     @Override
     public PlayerAdapter getPlayerAdapter(int id) {
@@ -93,5 +129,45 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public void removeGame(Game game) {
 
+    }
+
+    /**
+     * Executes the given Mysql-query on the main database
+     * @param query query to execute
+     * @return ResultSet of the operation
+     * @throws SQLException Thrown when there is an error executing the given statement
+     */
+    ResultSet executeMysqlQuery(@Language("sql") String query) throws SQLException {
+        return executeMysqlQuery(query, PRODUCT_DATABASE_NAME);
+    }
+
+    /**
+     * Executes the given Mysql-query on the given database
+     * @param query query to execute
+     * @param databaseName database to execute the query on
+     * @return ResultSet of the operation
+     * @throws SQLException Thrown when there is an error executing the given statement
+     */
+    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName) throws SQLException {
+        MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        return statement.executeQuery(query);
+    }
+
+    private MysqlDataSource createDataSource(String databaseName) {
+        MysqlDataSource source = new MysqlDataSource();
+        source.setServerName(hostname);
+        source.setPort(port);
+        source.setUser(username);
+        source.setPassword(password);
+        source.setDatabaseName(databaseName);
+        try {
+            source.setServerTimezone("CET");
+            source.setCreateDatabaseIfNotExist(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return source;
     }
 }
