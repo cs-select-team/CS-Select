@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 public class SortScoreLastWeek extends LeaderboardSortingStrategy {
 
     @Override
-    protected List<Player> sort(List<Player> players) {
-        Map<Player, List<Round>> roundsLastWeek = new HashMap<>();
-        Map<Player, Integer> scoreLastWeek = new HashMap<>();
+    protected Map<Player, Integer> sort(List<Player> players) {
+        Map<Player, List<Round>> roundsLastWeek = new LinkedHashMap<>();
+        Map<Player, Integer> scoreLastWeek = new LinkedHashMap<>();
 
         players.stream().forEach(p -> roundsLastWeek.put(p, p.getRounds().stream()
                 .filter(r -> r.getTime().isAfter(LocalDate.now().minusDays(7))).collect(Collectors.toList())));
@@ -32,7 +32,7 @@ public class SortScoreLastWeek extends LeaderboardSortingStrategy {
                 .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e1));
 
-        List<Player> sortedList = new LinkedList<>(sortedMap.keySet());
-        return sortedList;
+        // List<Player> sortedList = new LinkedList<>(sortedMap.keySet());
+        return sortedMap;
     }
 }

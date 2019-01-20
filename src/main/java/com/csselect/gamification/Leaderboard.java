@@ -6,6 +6,7 @@ import com.csselect.user.Player;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a leaderboard and consists of a list of players.
@@ -42,7 +43,7 @@ public class Leaderboard {
      * Gets the sorted list of players.
      * @return The sorted list of players.
      */
-    public List<Player> getPlayers() {
+    public Map<Player, Integer> getPlayers() {
         players = getPlayersFromDatabase();
         return strategy.sort(players);
     }
