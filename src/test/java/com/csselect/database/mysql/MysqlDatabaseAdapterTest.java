@@ -3,7 +3,6 @@ package com.csselect.database.mysql;
 import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.configuration.Configuration;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +21,11 @@ public class MysqlDatabaseAdapterTest extends TestClass {
 
     @Override
     public void reset() {
-
+        try {
+            mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
