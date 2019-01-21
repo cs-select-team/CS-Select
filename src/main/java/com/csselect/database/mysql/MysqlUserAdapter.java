@@ -32,27 +32,27 @@ public abstract class MysqlUserAdapter implements UserAdapter {
 
     @Override
     public String getEmail() {
-        return getString("EMAIL");
+        return getString("email");
     }
 
     @Override
     public String getPasswordHash() {
-        return getString("HASH");
+        return getString("hash");
     }
 
     @Override
     public String getPasswordSalt() {
-        return getString("SALT");
+        return getString("salt");
     }
 
     @Override
     public String getLanguage() {
-        return getString("LANGUAGE");
+        return getString("language");
     }
 
     @Override
     public void setEmail(String email) {
-        setString("EMAIL", email);
+        setString("email", email);
     }
 
     @Override
@@ -67,7 +67,7 @@ public abstract class MysqlUserAdapter implements UserAdapter {
 
     @Override
     public void setLanguage(String langCode) {
-        setString("LANGUAGE", langCode);
+        setString("language", langCode);
     }
 
     @Override
