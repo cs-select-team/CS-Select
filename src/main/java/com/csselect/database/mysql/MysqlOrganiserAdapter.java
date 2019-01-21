@@ -5,6 +5,7 @@ import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.gamecreation.patterns.Pattern;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 /**
@@ -19,8 +20,17 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
      *
      * @param id id of the adapter
      */
-    public MysqlOrganiserAdapter(int id) {
+    MysqlOrganiserAdapter(int id) {
         super(id);
+    }
+
+    /**
+     * Creates a new {@link MysqlDatabaseAdapter} with the next available id
+     * @throws SQLException Thrown if an error occurs while communicating with the database server
+     */
+    MysqlOrganiserAdapter() throws SQLException {
+        super(DATABASE_ADAPTER.getNextIdOfTable("organisers"));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers () VALUES ();");
     }
 
     @Override
@@ -35,6 +45,6 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     @Override
     String getTableName() {
-        return "ORGANISERS";
+        return "organisers";
     }
 }

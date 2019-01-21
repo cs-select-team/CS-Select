@@ -7,6 +7,7 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.PlayerStats;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 /**
@@ -19,12 +20,21 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
 
     /**
-     * Creates a new {@link MysqlUserAdapter} with the given id
+     * Creates a new {@link MysqlPlayerAdapter} with the given id
      *
      * @param id id of the adapter
      */
-    public MysqlPlayerAdapter(int id) {
+    MysqlPlayerAdapter(int id) {
         super(id);
+    }
+
+    /**
+     * Creates a new {@link MysqlPlayerAdapter} with the next available id
+     * @throws SQLException Thrown if an error occurs while communicating with the database
+     */
+    MysqlPlayerAdapter() throws SQLException {
+        super(DATABASE_ADAPTER.getNextIdOfTable("players"));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players () VALUES ();");
     }
 
     @Override
@@ -59,6 +69,6 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     String getTableName() {
-        return "PLAYERS";
+        return "players";
     }
 }
