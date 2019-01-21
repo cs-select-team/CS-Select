@@ -158,6 +158,30 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         return resultSet;
     }
 
+    /**
+     * Executes the given Mysql-Update on the main database
+     * @param update update query to execute
+     * @throws SQLException Thrown when there is an error executing the given statement
+     */
+    void executeMysqlUpdate(@Language("sql") String update) throws SQLException {
+        executeMysqlUpdate(update, PRODUCT_DATABASE_NAME);
+    }
+
+    /**
+     * Executes the given Mysql-Update on the given database
+     * @param update update query to execute
+     * @param databaseName database to execute the query on
+     * @throws SQLException Thrown when there is an error executing the given statement
+     */
+    void executeMysqlUpdate(@Language("sql") String update, String databaseName) throws SQLException {
+        MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
+        Connection connection = dataSource.getConnection();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(update);
+        statement.close();
+        connection.close();
+    }
+
     private MysqlDataSource createDataSource(String databaseName) {
         MysqlDataSource source = new MysqlDataSource();
         source.setServerName(hostname);
