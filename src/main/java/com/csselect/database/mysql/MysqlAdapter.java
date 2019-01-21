@@ -92,6 +92,30 @@ public abstract class MysqlAdapter {
     }
 
     /**
+     * Sets an int on the given columnlabel
+     * @param columnLabel columnlabel to set the int on
+     * @param value int to set
+     */
+    void setInt(String columnLabel, int value) {
+        setString(columnLabel, "" + value);
+    }
+
+    /**
+     * Increments an int on the given columnlabel
+     * @param columnLabel columnlabel to increment
+     */
+    void incrementValue(String columnLabel) {
+        try {
+            @Language("sql")
+            String query = "UPDATE " + getTableName()
+                    + " SET " + columnLabel + " = " + columnLabel + " + 1 WHERE (id='" + id + "');";
+            DATABASE_ADAPTER.executeMysqlUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Returns the table name used by the queries in the adapter
      * @return tablename
      */
