@@ -31,7 +31,7 @@ public class Organiser extends User implements Comparable {
     public Organiser(OrganiserAdapter organiserAdapter) {
         super(organiserAdapter);
         this.organiserAdapter = organiserAdapter;
-        this.gameBuilder = new GameCreator();
+        this.gameBuilder = new GameCreator(this);
     }
 
     /**
@@ -70,7 +70,6 @@ public class Organiser extends User implements Comparable {
      */
     public void createGame() {
         Game game = gameBuilder.doCreate();
-        DATABASE_ADAPTER.registerGame(this, game);
     }
 
     /**

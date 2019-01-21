@@ -1,8 +1,12 @@
 package com.csselect.game.gamecreation;
 
+import com.csselect.Injector;
+import com.csselect.database.DatabaseAdapter;
+import com.csselect.email.EmailSender;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import com.csselect.mlserver.MLServer;
 import com.csselect.user.Organiser;
 
 /**
@@ -11,7 +15,17 @@ import com.csselect.user.Organiser;
  * GameCreator is used by an {@link Organiser} object to load settings he already chose or create a new game object.
  */
 public class GameCreator {
+    private Organiser organiser;
     private GameOptions gameOptions;
+
+    /**
+     * Public constructor for a GameCreator object
+     * @param organiser {@link Organiser} object to which this GameCreator instance belongs to
+     */
+    public GameCreator(Organiser organiser) {
+        this.organiser = organiser;
+        this.gameOptions = new GameOptions();
+    }
 
     /**
      * Getter for the {@link GameOptions} attribute
@@ -52,6 +66,20 @@ public class GameCreator {
      * @return New {@link Game} object
      */
     public Game doCreate() {
+        DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        int gameId = databaseAdapter.getNextGameID();
+        Game game = new Game(gameId);
+        game.setTitle(gameOptions.getTitle());
+        game.setDescription(gameOptions.getDescription());
+        game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
+        game.setTermination(gameOptions.getTermination());
+        game.setGamemode(gameOptions.getGamemode());
+        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        databaseAdapter.registerGame(organiser, game);
+        game.invitePlayers(gameOptions.getInvitedEmails());
+        for (String mail : gameOptions.getInvitedEmails()) {
+            EmailSender.sendEmail("me", mail, "Hello", "txt");
+        }
         return null;
     }
 }
