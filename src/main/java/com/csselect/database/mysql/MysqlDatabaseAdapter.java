@@ -152,7 +152,10 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         Connection connection = dataSource.getConnection();
         Statement statement = connection.createStatement();
-        return statement.executeQuery(query);
+        ResultSet resultSet = statement.executeQuery(query);
+        statement.close();
+        connection.close();
+        return resultSet;
     }
 
     private MysqlDataSource createDataSource(String databaseName) {
