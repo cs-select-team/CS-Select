@@ -88,7 +88,9 @@ public abstract class MysqlUserAdapter implements UserAdapter {
         try {
             ResultSet resultSet = getRow();
             resultSet.next();
-            return resultSet.getString(columnLabel);
+            String res = resultSet.getString(columnLabel);
+            resultSet.close();
+            return res;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -97,7 +99,7 @@ public abstract class MysqlUserAdapter implements UserAdapter {
 
     private void setString(String columnLabel, String value) {
         try {
-            DATABASE_ADAPTER.executeMysqlQuery("UPDATE " + getTableName() + " SET " + columnLabel + " = " + value + " WHERE ID IS" + id);
+            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName() + " SET " + columnLabel + " = " + value + " WHERE id IS " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
