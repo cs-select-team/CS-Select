@@ -45,6 +45,15 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         this.password = configuration.getDatabasePassword();
         this.dataSources = new HashMap<>();
         this.dataSources.put(PRODUCT_DATABASE_NAME, createDataSource(PRODUCT_DATABASE_NAME));
+        try {
+            executeMysqlUpdate(Query.CREATE_PLAYER_TABLE);
+            executeMysqlUpdate(Query.CREATE_ORGANISER_TABLE);
+            executeMysqlUpdate(Query.CREATE_GAME_TABLE);
+            executeMysqlUpdate(Query.CREATE_PATTERN_TABLE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     @Override
@@ -149,8 +158,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         Connection connection = dataSource.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        statement.close();
-        connection.close();
         return resultSet;
     }
 
