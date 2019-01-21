@@ -4,6 +4,7 @@ import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.UserAdapter;
 import com.csselect.game.Game;
+import org.intellij.lang.annotations.Language;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +23,10 @@ public abstract class MysqlUserAdapter implements UserAdapter {
      * Creates a new {@link MysqlUserAdapter} with the given id
      * @param id id of the adapter
      */
-    public MysqlUserAdapter(int id) {
+    MysqlUserAdapter(int id) {
         this.id = id;
     }
+
     @Override
     public int getID() {
         return id;
@@ -58,8 +60,8 @@ public abstract class MysqlUserAdapter implements UserAdapter {
     @Override
     public void setPassword(String hash, String salt) {
         try {
-            DATABASE_ADAPTER.executeMysqlQuery("UPDATE " + getTableName() + " SET hash = " + hash + ", salt = " + salt
-                    + " WHERE id IS " + id);
+            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
+                    + " SET hash='" + hash + "', salt='" + salt + "' WHERE (id='" + id + "');");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,7 +83,7 @@ public abstract class MysqlUserAdapter implements UserAdapter {
     }
 
     private ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE ID IS " + id);
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (ID='" + id + "');");
     }
 
     /**
@@ -109,8 +111,10 @@ public abstract class MysqlUserAdapter implements UserAdapter {
      */
     void setString(String columnLabel, String value) {
         try {
-            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName() + " SET " + columnLabel + " = " + value
-                    + " WHERE id IS " + id);
+            @Language("sql")
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = '" + value
+                    + "' WHERE (id='" + id + "');";
+            DATABASE_ADAPTER.executeMysqlUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
