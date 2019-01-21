@@ -29,7 +29,17 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     public String getUsername() {
-        return null;
+        return getString("username");
+    }
+
+    /**
+     * Sets {@link com.csselect.user.Player}s username
+     * As usernames should be unique this method is only available in package to prevent foreign classes from calling it
+     *
+     * @param username username to set
+     */
+    void setUsername(String username) {
+        setString("username", username);
     }
 
     @Override
@@ -49,6 +59,6 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     String getTableName() {
-        return null;
+        return "PLAYERS";
     }
 }
