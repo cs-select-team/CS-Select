@@ -58,8 +58,8 @@ public abstract class MysqlUserAdapter implements UserAdapter {
     @Override
     public void setPassword(String hash, String salt) {
         try {
-            DATABASE_ADAPTER.executeMysqlQuery("UPDATE " + getTableName() + " SET HASH = " + hash + ", SALT = " + salt
-                    + " WHERE ID IS" + id);
+            DATABASE_ADAPTER.executeMysqlQuery("UPDATE " + getTableName() + " SET hash = " + hash + ", salt = " + salt
+                    + " WHERE id IS " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,7 +99,8 @@ public abstract class MysqlUserAdapter implements UserAdapter {
 
     private void setString(String columnLabel, String value) {
         try {
-            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName() + " SET " + columnLabel + " = " + value + " WHERE id IS " + id);
+            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName() + " SET " + columnLabel + " = " + value
+                    + " WHERE id IS " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
