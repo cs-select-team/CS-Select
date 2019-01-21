@@ -9,6 +9,7 @@ public final class Injector {
 
     private static com.google.inject.Injector injector = null;
     private static boolean testMode;
+    private static boolean mysqlTestMode;
 
     private Injector() {
         //Utility classes shouldn't be instantiated
@@ -22,6 +23,8 @@ public final class Injector {
         if (injector == null) {
             if (testMode) {
                 injector = Guice.createInjector(new CSSelectTestModule());
+            } else if (mysqlTestMode) {
+                injector = Guice.createInjector(new CSSelectMysqlTestModule());
             } else {
                 injector = Guice.createInjector(new CSSelectModule());
             }
@@ -37,11 +40,20 @@ public final class Injector {
     }
 
     /**
+     * This method tells the injector to use the Module for testing the Mysql-database-implementation
+     */
+    static void useMysqlTestMode() {
+        mysqlTestMode = true;
+    }
+
+    /**
      * This method resets the injector for the next test case, only works if testmode == true
      */
     static void resetInjector() {
         if (testMode) {
             injector = null;
+            testMode = false;
+            mysqlTestMode = false;
         }
     }
 }
