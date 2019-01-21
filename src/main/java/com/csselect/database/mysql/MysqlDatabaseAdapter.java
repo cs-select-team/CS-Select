@@ -50,6 +50,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             executeMysqlUpdate(Query.CREATE_ORGANISER_TABLE);
             executeMysqlUpdate(Query.CREATE_GAME_TABLE);
             executeMysqlUpdate(Query.CREATE_PATTERN_TABLE);
+            executeMysqlUpdate(Query.CREATE_PLAYERSTATS_TABLE);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(1);

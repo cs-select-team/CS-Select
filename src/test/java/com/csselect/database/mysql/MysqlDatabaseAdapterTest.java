@@ -46,6 +46,7 @@ public class MysqlDatabaseAdapterTest extends TestClass {
         Assert.assertTrue(mysqlDatabaseAdapter.executeMysqlQuery("SHOW TABLES LIKE 'players'").next());
         Assert.assertTrue(mysqlDatabaseAdapter.executeMysqlQuery("SHOW TABLES LIKE 'games'").next());
         Assert.assertTrue(mysqlDatabaseAdapter.executeMysqlQuery("SHOW TABLES LIKE 'patterns'").next());
+        Assert.assertTrue(mysqlDatabaseAdapter.executeMysqlQuery("SHOW TABLES LIKE 'playerstats'").next());
     }
 
     private void validateTimezone(ResultSet resultSet) throws SQLException {

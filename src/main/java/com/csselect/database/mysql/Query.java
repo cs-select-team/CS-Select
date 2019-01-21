@@ -50,6 +50,18 @@ final class Query {
             + "termination VARCHAR(255),"
             + "gamemode VARCHAR(40),"
             + "invitedPlayers VARCHAR(255));";
+    @Language("sql")
+    static final String CREATE_PLAYERSTATS_TABLE
+            = "CREATE TABLE IF NOT EXISTS playerstats("
+            + "id INT PRIMARY KEY ,"
+            + "INDEX player_ind (id),"
+            + "FOREIGN KEY (id) REFERENCES players(id) ON DELETE CASCADE,"
+            + "score INT,"
+            + "roundsPlayer INT,"
+            + "dailiesCompleted INT,"
+            + "maxRoundsScore INT,"
+            + "lastScore INT,"
+            + "highestStreak INT);";
 
     private Query() {
         //Utility-classes shouldn't be instantiated
