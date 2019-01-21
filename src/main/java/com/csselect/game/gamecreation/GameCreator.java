@@ -104,7 +104,8 @@ public class GameCreator {
         databaseAdapter.registerGame(organiser, game);
         game.invitePlayers(gameOptions.getInvitedEmails());
         for (String mail : gameOptions.getInvitedEmails()) {
-            EmailSender.sendEmail("me", mail, "Hello", "txt");
+            EmailSender.sendEmail(mail, "CS:Select Invitation",
+                    "Your knowledge is needed in a CS:Select game. Log in and check your notifications!");
         }
         return null;
     }
