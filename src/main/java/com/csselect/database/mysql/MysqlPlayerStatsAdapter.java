@@ -19,69 +19,72 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
      * Creates a new {@link MysqlPlayerStatsAdapter}
      *
      * @param id id of the adapter
+     * @throws SQLException Thrown if an error occurs while communicating with the database
      */
-    MysqlPlayerStatsAdapter(int id) {
+    MysqlPlayerStatsAdapter(int id) throws SQLException {
         super(id);
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO playerstats (id) VALUES (" + id + ")"
+                + "ON DUPLICATE KEY UPDATE id = id;");
     }
 
     @Override
     public int getScore() {
-        return 0;
+        return getInt("score");
     }
 
     @Override
     public int getRoundsPlayed() {
-        return 0;
+        return getInt("roundsPlayed");
     }
 
     @Override
     public int getDailiesCompleted() {
-        return 0;
+        return getInt("dailiesCompleted");
     }
 
     @Override
     public int getMaxRoundScore() {
-        return 0;
+        return getInt("maxRoundScore");
     }
 
     @Override
     public int getLastScore() {
-        return 0;
+        return getInt("lastScore");
     }
 
     @Override
     public int getHighestStreak() {
-        return 0;
+        return getInt("highestStreak");
     }
 
     @Override
     public void setScore(int score) {
-
+        setInt("score", score);
     }
 
     @Override
     public void setRoundsPlayed(int roundsPlayed) {
-
+        setInt("roundsPlayed", roundsPlayed);
     }
 
     @Override
     public void dailyCompleted() {
-
+        incrementValue("dailiesCompleted");
     }
 
     @Override
     public void setMaxRoundScore(int maxRoundScore) {
-
+        setInt("maxRoundScore", maxRoundScore);
     }
 
     @Override
     public void setLastScore(int lastScore) {
-
+        setInt("lastScore", lastScore);
     }
 
     @Override
     public void setHighestStreak(int highestStreak) {
-
+        setInt("highestStreak", highestStreak);
     }
 
     @Override
