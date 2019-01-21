@@ -74,6 +74,24 @@ public abstract class MysqlAdapter {
     }
 
     /**
+     * Gets an int from the given columnLabel
+     * @param columnLabel columnlabel to get the int from
+     * @return retrieved int, -1 if an error occurs
+     */
+    int getInt(String columnLabel) {
+        try {
+            ResultSet resultSet = getRow();
+            resultSet.next();
+            int res = resultSet.getInt(columnLabel);
+            resultSet.close();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    /**
      * Returns the table name used by the queries in the adapter
      * @return tablename
      */
