@@ -18,7 +18,6 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
 
-
     /**
      * Creates a new {@link MysqlPlayerAdapter} with the given id
      *

@@ -4,7 +4,6 @@ import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.UserAdapter;
 import com.csselect.game.Game;
-import org.intellij.lang.annotations.Language;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +12,8 @@ import java.util.Collection;
 /**
  * Mysql-Implementation of the {@link UserAdapter} Interface
  */
-public abstract class MysqlUserAdapter implements UserAdapter {
+public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapter {
 
-    private final int id;
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInjector()
             .getInstance(DatabaseAdapter.class);
 
@@ -24,51 +22,46 @@ public abstract class MysqlUserAdapter implements UserAdapter {
      * @param id id of the adapter
      */
     MysqlUserAdapter(int id) {
-        this.id = id;
+        super(id);
     }
 
     @Override
-    public int getID() {
-        return id;
-    }
-
-    @Override
-    public String getEmail() {
+    public final String getEmail() {
         return getString("email");
     }
 
     @Override
-    public String getPasswordHash() {
+    public final String getPasswordHash() {
         return getString("hash");
     }
 
     @Override
-    public String getPasswordSalt() {
+    public final String getPasswordSalt() {
         return getString("salt");
     }
 
     @Override
-    public String getLanguage() {
+    public final String getLanguage() {
         return getString("language");
     }
 
     @Override
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         setString("email", email);
     }
 
     @Override
-    public void setPassword(String hash, String salt) {
+    public final void setPassword(String hash, String salt) {
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
-                    + " SET hash='" + hash + "', salt='" + salt + "' WHERE (id='" + id + "');");
+                    + " SET hash='" + hash + "', salt='" + salt + "' WHERE (id='" + getID() + "');");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void setLanguage(String langCode) {
+    public final void setLanguage(String langCode) {
         setString("language", langCode);
     }
 
@@ -82,47 +75,8 @@ public abstract class MysqlUserAdapter implements UserAdapter {
         return null;
     }
 
-    private ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (ID='" + id + "');");
+    @Override
+    final ResultSet getRow() throws SQLException {
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (ID='" + getID() + "');");
     }
-
-    /**
-     * Gets a String from the given columnlabel
-     * @param columnLabel columnlabel to get the string from
-     * @return retrieved string
-     */
-    String getString(String columnLabel) {
-        try {
-            ResultSet resultSet = getRow();
-            resultSet.next();
-            String res = resultSet.getString(columnLabel);
-            resultSet.close();
-            return res;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Sets a String on the given columnlabel
-     * @param columnLabel columnlabel to set the String on
-     * @param value string to set
-     */
-    void setString(String columnLabel, String value) {
-        try {
-            @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = '" + value
-                    + "' WHERE (id='" + id + "');";
-            DATABASE_ADAPTER.executeMysqlUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Returns the table name used by the queries in the adapter
-     * @return tablename
-     */
-    abstract String getTableName();
 }

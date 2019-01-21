@@ -15,6 +15,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+
     /**
      * Creates a new {@link MysqlOrganiserAdapter} with the given id
      *

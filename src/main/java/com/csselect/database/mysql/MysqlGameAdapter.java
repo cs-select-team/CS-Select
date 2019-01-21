@@ -1,5 +1,7 @@
 package com.csselect.database.mysql;
 
+import com.csselect.Injector;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
@@ -8,16 +10,38 @@ import com.csselect.game.Termination;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 
 /**
  * Mysql-Implementation of the {@link GameAdapter} Interface
  */
-public class MysqlGameAdapter implements GameAdapter {
+public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
+
+    private static final MysqlDatabaseAdapter DATABASE_ADAPTER
+            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+
+    /**
+     * Creates a new {@link MysqlGameAdapter} with the given id
+     * @param id adapters id
+     */
+    MysqlGameAdapter(int id) {
+        super(id);
+    }
+
+    /**
+     * Creates a new {@link MysqlGameAdapter} with the next available id
+     * @throws SQLException Thrown if an error occurs while communicating with the database
+     */
+    MysqlGameAdapter() throws SQLException {
+        super(DATABASE_ADAPTER.getNextGameID());
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games () VALUES ();");
+    }
 
     @Override
     public int getID() {
-        return 0;
+        return super.getID();
     }
 
     @Override
@@ -143,5 +167,15 @@ public class MysqlGameAdapter implements GameAdapter {
     @Override
     public void removeInvitedPlayers(Collection<String> emails) {
 
+    }
+
+    @Override
+    ResultSet getRow() throws SQLException {
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM games WHERE (ID='" + getID() + "');");
+    }
+
+    @Override
+    String getTableName() {
+        return "games";
     }
 }
