@@ -51,6 +51,7 @@ final class Query {
             + "termination VARCHAR(255),"
             + "gamemode VARCHAR(40),"
             + "invitedPlayers VARCHAR(255));";
+
     @Language("sql")
     static final String CREATE_PLAYERSTATS_TABLE
             = "CREATE TABLE IF NOT EXISTS playerstats("
@@ -63,6 +64,18 @@ final class Query {
             + "maxRoundsScore INT,"
             + "lastScore INT,"
             + "highestStreak INT);";
+
+    @Language("sql")
+    static final String CREATE_ROUNDS_TABLE
+            = "CREATE TABLE IF NOT EXISTS rounds("
+            + "id INT AUTO_INCREMENT PRIMARY KEY,"
+            + "player_id INT,"
+            + "time DATETIME,"
+            + "quality DOUBLE,"
+            + "points INT,"
+            + "uselessFeatures VARCHAR(255),"
+            + "chosenFeatures VARCHAR(255),"
+            + "shownFeatures VARCHAR(255));";
 
     private Query() {
         //Utility-classes shouldn't be instantiated
