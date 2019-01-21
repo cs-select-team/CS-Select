@@ -3,8 +3,6 @@ package com.csselect.database.mysql;
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerStatsAdapter;
-import com.csselect.gamification.DailyChallenge;
-import com.csselect.gamification.Streak;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,16 +22,6 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
      */
     MysqlPlayerStatsAdapter(int id) {
         super(id);
-    }
-
-    @Override
-    public Streak getStreak() {
-        return null;
-    }
-
-    @Override
-    public DailyChallenge getDaily() {
-        return null;
     }
 
     @Override
@@ -64,16 +52,6 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
     @Override
     public int getHighestStreak() {
         return 0;
-    }
-
-    @Override
-    public void setStreak(Streak streak) {
-
-    }
-
-    @Override
-    public void setDaily(DailyChallenge daily) {
-
     }
 
     @Override
