@@ -26,10 +26,6 @@ import java.util.Map;
 public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     private static final String PRODUCT_DATABASE_NAME = "CS_SELECT";
-    private static final String ORGANISER_TABLE_NAME = "ORGANISERS";
-    private static final String PLAYER_TABLE_NAME = "PLAYERS";
-    private static final String GAMES_TABLE_NAME = "GAMES";
-    private static final String PATTERN_TABLE_NAME = "PATTERNS";
 
     private final String hostname;
     private final int port;
