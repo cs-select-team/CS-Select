@@ -7,7 +7,13 @@ import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.mlserver.MLServer;
+import com.csselect.parser.GamemodeParser;
+import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * This class is a builder class for a game {@link Game} object. An organiser is able to create a game, so in order to
@@ -40,8 +46,29 @@ public class GameCreator {
      * @param option Option of {@link GameOptions} which are set
      * @param data Value of the option
      */
-    public void setOption(String option, String data) {
-
+    public void setOption(String option, String[] data) {
+        switch(option) {
+            case "title":
+                gameOptions.setTitle(data[0]);
+                break;
+            case "description":
+                gameOptions.setDescription(data[0]);
+                break;
+            case "addressOrganiserDatabase":
+                gameOptions.setResultDatabaseAddress(data[0]);
+                break;
+            case "termination":
+                gameOptions.setTermination(TerminationParser.getTermination(data));
+                break;
+            case "gamemode":
+                gameOptions.setGamemode(GamemodeParser.getGamemode(data));
+                break;
+            case "player":
+                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(data)));
+                break;
+            default:
+                break;
+        }
     }
 
     /**
