@@ -12,7 +12,6 @@ import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 
 /**
