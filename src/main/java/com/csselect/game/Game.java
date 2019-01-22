@@ -1,7 +1,6 @@
 package com.csselect.game;
 
 import com.csselect.database.GameAdapter;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 
@@ -73,7 +72,7 @@ public class Game {
             return true;
         }
         if(this.termination.checkTermination()) {
-            this.database.setFinished();
+            this.terminateGame();
             return true;
         }
         return false;
@@ -84,8 +83,7 @@ public class Game {
      * @return the email-addresses of the players who are invited to the game but did not accept or decline yet
      */
     public Collection<String> getInvitedPlayers() {
-       // return this.database.getInvitedPlayers();
-        return null;
+        return this.database.getInvitedPlayers();
     }
 
     /**
@@ -246,7 +244,13 @@ public class Game {
      * @return true if successful, false if game was already terminated
      */
     public boolean terminateGame() {
-        return false;
+
+        if (this.database.isFinished()) {
+            return false;
+        }
+
+        this.database.setFinished();
+        return true;
     }
 
     /**
@@ -254,9 +258,9 @@ public class Game {
      * @param round the finished round
      */
     public void addFinishedRound(Round round) {
-
+        this.database.addRound(round);
+        this.isTerminated();
     }
-
 
 
 }

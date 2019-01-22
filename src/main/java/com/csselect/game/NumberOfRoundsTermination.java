@@ -17,10 +17,6 @@ public class NumberOfRoundsTermination extends Termination {
 
     @Override
     public boolean checkTermination() {
-        boolean finished = (this.number >= this.game.getNumberOfRounds());
-        if(finished) {
-            this.game.terminateGame();
-        }
-        return finished;
+        return this.number >= this.game.getNumberOfRounds();
     }
 }

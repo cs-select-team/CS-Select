@@ -24,10 +24,6 @@ public class TimeTermination extends Termination {
             return false;
         }
         LocalDateTime currentTime = LocalDateTime.now();
-        boolean finished = currentTime.isAfter(this.date);
-        if(finished) {
-            this.game.terminateGame();
-        }
-        return finished;
+        return currentTime.isAfter(this.date);
     }
 }
