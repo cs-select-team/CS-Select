@@ -2,6 +2,7 @@ package com.csselect.game;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * The TerminationComposite class is a concrete termination {@link Termination} cause that combines different
@@ -49,5 +50,12 @@ public class TerminationComposite extends Termination {
      */
     public void delete(Termination termination) {
         this.terminations.remove(termination);
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(",");
+        terminations.forEach(t -> joiner.add(t.toString()));
+        return joiner.toString();
     }
 }

@@ -6,8 +6,11 @@ import com.csselect.database.GameAdapter;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
+import com.csselect.game.NumberOfRoundsTermination;
 import com.csselect.game.Round;
 import com.csselect.game.Termination;
+import com.csselect.game.TerminationComposite;
+import com.csselect.game.TimeTermination;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import com.csselect.utils.FeatureSetUtils;
@@ -15,6 +18,8 @@ import com.csselect.utils.FeatureSetUtils;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.StringJoiner;
@@ -141,7 +146,18 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Termination getTermination() {
-        return null;
+        String[] terminations = getString("termination").split(",");
+        TerminationComposite termination = new TerminationComposite();
+        for (String t : terminations) {
+            if (t.startsWith("time")) {
+                termination.add(new TimeTermination(LocalDateTime.ofEpochSecond(
+                        Long.parseLong(t.replace("time:", "")), 0, ZoneOffset.UTC)));
+            } else if (t.startsWith("rounds")) {
+                termination.add(
+                        new NumberOfRoundsTermination(Integer.parseInt(t.replace("rounds:", ""))));
+            }
+        }
+        return termination;
     }
 
     @Override
@@ -151,6 +167,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void setTermination(Termination termination) {
+        setString("termination", termination.toString());
 
     }
 
