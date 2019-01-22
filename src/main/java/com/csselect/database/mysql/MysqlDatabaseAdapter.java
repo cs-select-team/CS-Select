@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Mysql-Implementation of the {@link DatabaseAdapter} Interface
@@ -270,6 +271,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     @Override
     public void removeGame(Game game) {
+        gameMap.remove(game);
         try {
             executeMysqlUpdate("DELETE FROM games WHERE (id='" + game.getId() + "');");
         } catch (SQLException e) {
