@@ -77,6 +77,14 @@ final class Query {
             + "chosenFeatures VARCHAR(255),"
             + "shownFeatures VARCHAR(255));";
 
+    @Language("sql")
+    static final String CREATE_GAMES_PLAYERS_TABLE
+            = "CREATE TABLE IF NOT EXISTS players("
+            + "email VARCHAR(255) PRIMARY KEY,"
+            + "invited BOOLEAN);";
+
+
+
     private Query() {
         //Utility-classes shouldn't be instantiated
     }
