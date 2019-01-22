@@ -25,7 +25,9 @@ public class OrganiserManagement extends UserManagement {
             password += salt;
             String encryptedPassword = Encrypter.encrypt(password);
             Organiser organiser = DATABASE_ADAPTER.createOrganiser(email, encryptedPassword, salt);
-            organiser.login();
+            if (organiser != null) {
+                organiser.login();
+            }
             return organiser;
         } else {
             return null;
@@ -35,12 +37,14 @@ public class OrganiserManagement extends UserManagement {
     @Override
     public Organiser login(String email, String password) {
         Organiser organiser = DATABASE_ADAPTER.getOrganiser(email);
+        if (organiser == null) {
+            return null; //email not found
+        }
         String savedEncryptedPassword = DATABASE_ADAPTER.getOrganiserHash(organiser.getId());
         String salt = DATABASE_ADAPTER.getOrganiserSalt(organiser.getId());
         String concatenated = password + salt;
 
-        String encryptedPassword = Encrypter.encrypt(concatenated);
-        if (encryptedPassword.equals(savedEncryptedPassword)) {
+        if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
             organiser.login();
             return organiser;
         } else {

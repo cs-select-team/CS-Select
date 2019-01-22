@@ -22,19 +22,23 @@ public final class PlayerManagement extends UserManagement {
         password += salt;
         String encryptedPassword = Encrypter.encrypt(password);
         Player player = DATABASE_ADAPTER.createPlayer(email, encryptedPassword, salt, username);
-        player.login();
+        if (player != null) {
+            player.login();
+        }
         return player;
     }
 
     @Override
     public Player login(String email, String password) {
         Player player = DATABASE_ADAPTER.getPlayer(email);
+        if (player == null) {
+            return null; //email not found
+        }
         String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
         String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
         String concatenated = password + salt;
 
-        String encryptedPassword = Encrypter.encrypt(concatenated);
-        if (encryptedPassword.equals(savedEncryptedPassword)) {
+        if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
             player.login();
             return player;
         } else {

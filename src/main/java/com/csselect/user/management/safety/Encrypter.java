@@ -44,4 +44,15 @@ public final class Encrypter {
         encryption.update(word.getBytes());
         return new String(encryption.digest());
     }
+
+    /**
+     * Compares if a String equals a hash. Therefore, we encrypt the String and compare it to the Hash
+     * @param word String which is not hashed
+     * @param hash Hash to compare String to
+     * @return If hashed value of word equals Hash
+     */
+    public static boolean compareStringToHash(String word, String hash) {
+        String encrypted = encrypt(word);
+        return encrypted.equals(hash);
+    }
 }
