@@ -3,6 +3,7 @@ package com.csselect.database.mysql;
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
+import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 
 import java.sql.SQLException;
@@ -47,5 +48,15 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
     @Override
     String getTableName() {
         return "organisers";
+    }
+
+    @Override
+    public Collection<Game> getActiveGames() {
+        return DATABASE_ADAPTER.getActiveGames(this);
+    }
+
+    @Override
+    public Collection<Game> getTerminatedGames() {
+        return DATABASE_ADAPTER.getTerminatedGames(this);
     }
 }

@@ -358,4 +358,67 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             return set.getInt("id") + 1;
         }
     }
+
+    /**
+     * Gets the active games the given {@link PlayerAdapter} participates in or is invited to
+     * @param adapter adapter to get games for
+     * @return active games
+     */
+    Collection<Game> getActiveGames(PlayerAdapter adapter) {
+        return getActiveGames().stream().filter(game ->
+                game.getPlayingPlayers().stream().anyMatch(player -> player.getId() == adapter.getID())
+                        || game.getInvitedPlayers().contains(adapter.getEmail()))
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Gets the terminated games the given {@link PlayerAdapter} participates in or is invited to
+     * @param adapter adapter to get games for
+     * @return terminated games
+     */
+    Collection<Game> getTerminatedGames(PlayerAdapter adapter) {
+        return getTerminatedGames().stream().filter(game ->
+                game.getPlayingPlayers().stream().anyMatch(player -> player.getId() == adapter.getID())
+                        || game.getInvitedPlayers().contains(adapter.getEmail()))
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Gets the active games owned by the given {@link OrganiserAdapter}
+     * @param adapter adapter to get games for
+     * @return active games
+     */
+    Collection<Game> getActiveGames(OrganiserAdapter adapter) {
+        Collection<Game> games = new HashSet<>();
+        gameMap.forEach((game, organiser) -> {
+            if (organiser.getId() == adapter.getID() && !game.isTerminated()) {
+                games.add(game);
+            }
+        });
+        return games;
+    }
+
+    /**
+     * Gets the terminated games owned by the given {@link OrganiserAdapter}
+     * @param adapter adapter to get games for
+     * @return terminated games
+     */
+    Collection<Game> getTerminatedGames(OrganiserAdapter adapter) {
+        Collection<Game> games = new HashSet<>();
+        gameMap.forEach((game, organiser) -> {
+            if (organiser.getId() == adapter.getID() && game.isTerminated()) {
+                games.add(game);
+            }
+        });
+        return games;
+    }
+
+    private Collection<Game> getActiveGames() {
+        return gameMap.keySet().stream().filter(game -> !game.isTerminated()).collect(Collectors.toSet());
+    }
+
+    private Collection<Game> getTerminatedGames() {
+        return gameMap.keySet().stream().filter(Game::isTerminated).collect(Collectors.toSet());
+
+    }
 }

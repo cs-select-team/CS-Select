@@ -3,11 +3,8 @@ package com.csselect.database.mysql;
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.UserAdapter;
-import com.csselect.game.Game;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 
 /**
  * Mysql-Implementation of the {@link UserAdapter} Interface
@@ -63,16 +60,6 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     @Override
     public final void setLanguage(String langCode) {
         setString("language", langCode);
-    }
-
-    @Override
-    public Collection<Game> getActiveGames() {
-        return null;
-    }
-
-    @Override
-    public Collection<Game> getTerminatedGames() {
-        return null;
     }
 
     @Override

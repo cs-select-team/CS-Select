@@ -9,6 +9,7 @@ import com.csselect.gamification.PlayerStats;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Mysql-Implementation of the {@link PlayerAdapter} Interface
@@ -53,12 +54,19 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     public PlayerStats getPlayerStats() {
-        return null;
+        try {
+            return new PlayerStats(new MysqlPlayerStatsAdapter(getID()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Collection<Game> getInvitedGames() {
-        return null;
+        Collection<Game> allGames = new HashSet<>(DATABASE_ADAPTER.getActiveGames(this));
+        allGames.addAll(DATABASE_ADAPTER.getActiveGames(this));
+        return allGames;
     }
 
     @Override
@@ -69,5 +77,15 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     @Override
     String getTableName() {
         return "players";
+    }
+
+    @Override
+    public Collection<Game> getActiveGames() {
+        return DATABASE_ADAPTER.getActiveGames(this);
+    }
+
+    @Override
+    public Collection<Game> getTerminatedGames() {
+        return DATABASE_ADAPTER.getTerminatedGames(this);
     }
 }
