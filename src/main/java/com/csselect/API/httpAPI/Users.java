@@ -3,6 +3,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * handles requests to /users
+ */
 public class Users extends Servlet {
 
     @Override
@@ -80,9 +83,9 @@ public class Users extends Servlet {
     }
 
     private void getLeaderboard(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
-        if (!isPlayer()) {
-            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
-        }
+        //if (!isPlayer()) {
+        //    throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        //}
         returnAsJson(resp, getPlayerFacade().getLeaderboard());
     }
 
@@ -111,8 +114,7 @@ public class Users extends Servlet {
     private void getUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (isPlayer()) {
             returnAsJson(resp, getPlayerFacade().getPlayer());
-        }
-        else {
+        } else {
             returnAsJson(resp, getOrganiserFacade().getOrganiser());
         }
     }

@@ -1,6 +1,9 @@
 package com.csselect.API.httpAPI;
 import com.csselect.API.APIFacadePlayer;
+import com.csselect.game.Game;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,7 +94,18 @@ public class Games extends Servlet {
 
     private void getGames(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        returnAsJson(resp, getPlayerFacade().getGames());
+        Collection<Game> games = getPlayerFacade().getGames();
+        JsonArray json = new JsonArray();
+        for (Game game:games) {
+
+            JsonObject jsonObject = new JsonObject();
+
+            jsonObject.addProperty("id", game.getId());
+            jsonObject.addProperty("title", game.getTitle());
+            jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
+            json.add(jsonObject);
+        }
+        returnAsJson(resp, json.toString());
     }
 
 

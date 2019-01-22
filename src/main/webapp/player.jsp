@@ -9,8 +9,25 @@
     <div class="col-sm-4">
         Statistiken
     </div>
-    <div class="col-sm-5">
-        Leaderboard
+    <div class="col-sm-5 h-100 overflow-auto" id="leaderboard">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><fmt:message key="username"/></th>
+                    <th><fmt:message key="points"/></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr is="leaderboard-element" v-for="player in playerList"
+                             v-bind:key="player.place"
+                             v-bind:place="player.place"
+                             v-bind:username="player.username"
+                             v-bind:points="player.points">
+                </tr>
+
+            </tbody>
+        </table>
     </div>
 </div>
 <div class="row h-50">
