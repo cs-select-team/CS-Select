@@ -4,6 +4,7 @@ import com.csselect.user.Player;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The Round class represents a round that is played by a player {@link Player}, belongs to a game {@link Game} and
@@ -12,11 +13,12 @@ import java.util.Collection;
  */
 public abstract class Round {
 
-    private LocalDate time;
-    private double quality;
-    private int points;
-    private final int numberOfRound;
-    private final Player player;
+    protected LocalDate time;
+    protected double quality;
+    protected int points;
+    protected final int numberOfRound;
+    protected final Player player;
+    protected Game game;
 
     private Collection<Feature> uselessFeatures;
     private Collection<Feature> chosenFeatures;
@@ -126,5 +128,5 @@ public abstract class Round {
      * Provides the features {@link Feature} that are to be shown to the player {@link Player}
      * @return collection of features {@link Feature} that are to be shown
      */
-    public abstract Collection<Feature> provideFeatures();
+    public abstract List<Feature> provideFeatures();
 }

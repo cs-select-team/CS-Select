@@ -2,7 +2,7 @@ package com.csselect.game;
 
 import com.csselect.user.Player;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * The StandardRound class represents all concrete rounds {@link Round} that are only different in the number
@@ -65,7 +65,19 @@ public class StandardRound extends Round {
     }
 
     @Override
-    public Collection<Feature> provideFeatures() {
-        return null;
+    public List<Feature> provideFeatures() {
+        Set<Feature> featureSet = this.game.getFeatureSet().getFeatures();
+        List<Feature> featureList = new ArrayList<>(featureSet);
+        List<Feature> providedFeatures = new ArrayList<>();
+        for(int i = 0; i < this.numberOfSelections; i++) {
+            for (int j = 0; j < this.featuresPerSelection; j++) {
+                List<Feature> featureListThisSelection = new ArrayList<>(featureList);
+                int randomFeature = (int) (Math.random() * featureListThisSelection.size());
+                Feature feature = featureListThisSelection.get(randomFeature);
+                providedFeatures.add(feature);
+                featureListThisSelection.remove(feature);
+            }
+        }
+        return providedFeatures;
     }
 }
