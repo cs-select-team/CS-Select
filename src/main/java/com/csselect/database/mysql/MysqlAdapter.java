@@ -116,6 +116,33 @@ public abstract class MysqlAdapter {
     }
 
     /**
+     * Sets a boolean on the given columnlabel
+     * @param columnLabel colunlabel to set
+     * @param value boolean to set
+     */
+    void setBoolean(String columnLabel, boolean value) {
+        setString(columnLabel, "" + value);
+    }
+
+    /**
+     * Gets a boolean value saved at the given columnlabel
+     * @param columnLabel columnlabel to load from
+     * @return retrieved boolean
+     */
+    boolean getBoolean(String columnLabel) {
+        try {
+            ResultSet resultSet = getRow();
+            resultSet.next();
+            boolean res = resultSet.getBoolean(columnLabel);
+            resultSet.close();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Returns the table name used by the queries in the adapter
      * @return tablename
      */
