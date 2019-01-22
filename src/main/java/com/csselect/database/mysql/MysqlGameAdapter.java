@@ -138,7 +138,17 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Collection<Round> getRounds() {
-        return null;
+        Collection<Round> rounds = new HashSet<>();
+        try {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM rounds", databaseName);
+            while (set.next()) {
+                rounds.add(getGamemode().createRound(new Player(new MysqlPlayerAdapter(
+                        set.getInt("player_id"))), set.getInt("id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rounds;
     }
 
     @Override
@@ -170,7 +180,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Organiser getOrganiser() {
-        return null;
+        return new Organiser(new MysqlOrganiserAdapter(getInt("organiser_id")));
     }
 
     @Override
