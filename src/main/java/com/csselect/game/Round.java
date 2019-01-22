@@ -38,6 +38,10 @@ public abstract class Round {
         this.shownFeatures = new ArrayList<>();
     }
 
+    /**
+     * Setter for the game to which a round belongs
+     * @param game the game of the round
+     */
     protected void setGame(Game game) {
         this.game = game;
     }
@@ -140,8 +144,7 @@ public abstract class Round {
         String identifier = this.game.getFeatureSet().getIdentifier();
         try {
             this.quality = this.game.getMlserver().getScore(identifier, this.chosenFeatures);
-        }
-        catch(java.io.IOException e) {
+        } catch (java.io.IOException e) {
             e.printStackTrace();
         }
 

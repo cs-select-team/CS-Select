@@ -32,7 +32,7 @@ public class MatrixSelect extends Gamemode {
 
     @Override
     public StandardRound createRound(Player player) {
-        if(player == null) {
+        if (player == null) {
             return null;
         }
 

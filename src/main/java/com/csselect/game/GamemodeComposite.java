@@ -28,7 +28,7 @@ public class GamemodeComposite extends Gamemode {
      * @return the randomly created round {@link Round}
      */
     public Round createRound(Player player) {
-        if(player == null || this.gamemodes.size() == 0) {
+        if (player == null || this.gamemodes.size() == 0) {
             return null;
         }
 
@@ -44,7 +44,7 @@ public class GamemodeComposite extends Gamemode {
      * @param gamemode the game mode {@link Gamemode} to be added
      */
     public void add(Gamemode gamemode) {
-        if(gamemode == null || this.gamemodes.contains(gamemode)) {
+        if (gamemode == null || this.gamemodes.contains(gamemode)) {
             return;
         }
         this.gamemodes.add(gamemode);

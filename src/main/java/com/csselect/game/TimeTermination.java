@@ -14,7 +14,7 @@ public class TimeTermination extends Termination {
      * Constructor of a time termination object
      * @param date the time at which the game is to be terminated
      */
-    public TimeTermination(LocalDateTime date){
+    public TimeTermination(LocalDateTime date) {
         this.date = date;
     }
 

@@ -31,7 +31,8 @@ public class Game {
      */
     public Game(int id) {
         this.id = id;
-        this.database = this.getGameAdapter();
+        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        this.database =  adapter.getGameAdapter(this.id);
     }
 
     /**
@@ -71,10 +72,10 @@ public class Game {
      * @return if the game is finished, return true, else false
      */
     public boolean isTerminated() {
-        if(this.database.isFinished()) {
+        if (this.database.isFinished()) {
             return true;
         }
-        if(this.termination.checkTermination()) {
+        if (this.termination.checkTermination()) {
             this.terminateGame();
             return true;
         }
@@ -216,7 +217,7 @@ public class Game {
         boolean alreadyIn = false;
         for (String invPlayerEmail : invitedPlayers) {
             for (String newPlayerEmail : playerEmails) {
-                if(invPlayerEmail.equals(newPlayerEmail)) {
+                if (invPlayerEmail.equals(newPlayerEmail)) {
                     alreadyIn = true;
                 }
             }
@@ -248,7 +249,7 @@ public class Game {
             }
         }
 
-        if(!isInvited) {
+        if (!isInvited) {
             return false;
         }
 
@@ -340,10 +341,6 @@ public class Game {
         return false;
     }
 
-    private GameAdapter getGameAdapter() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
-        return adapter.getGameAdapter(this.id);
-    }
 
 
 }
