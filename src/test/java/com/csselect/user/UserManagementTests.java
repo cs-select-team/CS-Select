@@ -9,13 +9,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class UserManagementTests extends TestClass {
-    PlayerManagement pm;
-    Player darth;
-    Player luke;
-    OrganiserManagement om;
-    Organiser harry;
-    Organiser voldemort;
-    String globalPassword;
+    private PlayerManagement pm;
+    private Player darth;
+    private Player luke;
+    private OrganiserManagement om;
+    private Organiser harry;
+    private Organiser voldemort;
+    private String globalPassword;
 
     @Override
     public void setUp() {
