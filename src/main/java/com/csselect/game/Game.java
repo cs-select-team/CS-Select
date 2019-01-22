@@ -1,12 +1,13 @@
 package com.csselect.game;
 
+import com.csselect.Injector;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * The Game class represents a game, manages invited and playing players, the information the organiser specified
@@ -30,6 +31,7 @@ public class Game {
      */
     public Game(int id) {
         this.id = id;
+        this.database = this.getGameAdapter();
     }
 
     /**
@@ -283,6 +285,10 @@ public class Game {
      * if the player is not allowed to start rounds or the game is terminated already
      */
     public Collection<Feature> startRound(int playerID) {
+        if (this.isTerminated()) {
+            return null;
+        }
+
         Collection<Player> players = this.database.getPlayingPlayers();
         Player playingPlayer = null;
         for (Player player : players) {
@@ -332,6 +338,11 @@ public class Game {
         }
 
         return false;
+    }
+
+    private GameAdapter getGameAdapter() {
+        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        return adapter.getGameAdapter(this.id);
     }
 
 
