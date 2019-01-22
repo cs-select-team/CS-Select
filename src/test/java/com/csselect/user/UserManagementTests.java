@@ -49,6 +49,7 @@ public class UserManagementTests extends TestClass {
         Assert.assertTrue(luke.getRounds().isEmpty());
 
         testLoginExistingPlayer();
+        testIllegalLoginAsOrganiser();
         testLoginPlayerAfterChangingEmail();
     }
 
@@ -147,6 +148,8 @@ public class UserManagementTests extends TestClass {
         harry = om.register(args2);
         Assert.assertNotNull(harry);
         Assert.assertNotSame(harry, voldemort);
+
+        testLoginExistingOrganiser();
     }
 
     @Test
@@ -168,6 +171,17 @@ public class UserManagementTests extends TestClass {
         Assert.assertNull(harry);
     }
 
+    @Test
+    public void testIllegalOrganiserPasswordRegistration() {
+        String[] args = new String[3];
+        args[0] = "voldi4@csselect.com";
+        args[1] = "#ElDeRsTaB!#";
+        args[2] = "";
+
+        voldemort = om.register(args);
+        Assert.assertNull(voldemort);
+    }
+
     private void testLoginExistingPlayer() {
         luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
         Assert.assertNotNull(luke);
@@ -182,6 +196,7 @@ public class UserManagementTests extends TestClass {
         Assert.assertNull(luke);
         luke = pm.login("skywalker@csselect.com", "Nein!11!!1");
         Assert.assertNotNull(luke);
+        luke.changeEmail("skywalker1@csselect.com");
     }
 
     private void testLoginPlayerAfterChangingPassword() {
@@ -192,5 +207,47 @@ public class UserManagementTests extends TestClass {
         Assert.assertNull(darth);
         darth = pm.login("vader1@csselect.com", "IchBinEchtDeinVater1968");
         Assert.assertNotNull(darth);
+        darth.changePassword("IchBinDeinVater1968");
+    }
+
+    private void testLoginExistingOrganiser() {
+        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNotNull(harry);
+        Assert.assertTrue(harry.isLoggedIn());
+
+        testIllegalLoginAsPlayer();
+        testLoginOrganiserAfterChangingEmail();
+        testLoginOrganiserAfterChangingPassword();
+    }
+
+    private void testLoginOrganiserAfterChangingEmail() {
+        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNotNull(harry);
+        harry.changeEmail("harry@csselect.com");
+        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNull(harry);
+        harry = om.login("harry@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNotNull(harry);
+        harry.changeEmail("harry1@csselect.com");
+    }
+
+    private void testLoginOrganiserAfterChangingPassword() {
+        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNotNull(harry);
+        harry.changePassword("#LumosMaxima!#");
+        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        Assert.assertNull(harry);
+        harry = om.login("harry1@csselect.com", "#LumosMaxima!#");
+        Assert.assertNotNull(harry);
+        harry.changePassword("#FiniteIncantatem!#");
+    }
+
+    private void testIllegalLoginAsOrganiser() {
+        harry = om.login("skywalker1@csselect.com", "Nein!11!!1");
+        Assert.assertNull(harry);
+    }
+
+    private void testIllegalLoginAsPlayer() {
+        darth = pm.login("harry1@csselect.com", "#FiniteIncantatem!#");
     }
 }
