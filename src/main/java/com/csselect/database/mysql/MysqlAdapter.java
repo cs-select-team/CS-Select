@@ -47,10 +47,14 @@ public abstract class MysqlAdapter {
     String getString(String columnLabel) {
         try {
             ResultSet resultSet = getRow();
-            resultSet.next();
-            String res = resultSet.getString(columnLabel);
-            resultSet.close();
-            return res;
+            if (resultSet.next()) {
+                String res = resultSet.getString(columnLabel);
+                resultSet.close();
+                return res;
+            } else {
+                return null;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -81,10 +85,13 @@ public abstract class MysqlAdapter {
     int getInt(String columnLabel) {
         try {
             ResultSet resultSet = getRow();
-            resultSet.next();
-            int res = resultSet.getInt(columnLabel);
-            resultSet.close();
-            return res;
+            if (resultSet.next()) {
+                int res = resultSet.getInt(columnLabel);
+                resultSet.close();
+                return res;
+            } else {
+                return -1;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
@@ -121,7 +128,7 @@ public abstract class MysqlAdapter {
      * @param value boolean to set
      */
     void setBoolean(String columnLabel, boolean value) {
-        setString(columnLabel, "" + value);
+        setString(columnLabel, "" + (value ? "" + 1 : "" + 0));
     }
 
     /**
@@ -132,10 +139,13 @@ public abstract class MysqlAdapter {
     boolean getBoolean(String columnLabel) {
         try {
             ResultSet resultSet = getRow();
-            resultSet.next();
-            boolean res = resultSet.getBoolean(columnLabel);
-            resultSet.close();
-            return res;
+            if (resultSet.next()) {
+                boolean res = resultSet.getBoolean(columnLabel);
+                resultSet.close();
+                return res;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
