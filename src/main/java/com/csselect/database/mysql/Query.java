@@ -61,9 +61,9 @@ final class Query {
             + "INDEX player_ind (id),"
             + "FOREIGN KEY (id) REFERENCES players(id) ON DELETE CASCADE,"
             + "score INT,"
-            + "roundsPlayer INT,"
+            + "roundsPlayed INT,"
             + "dailiesCompleted INT,"
-            + "maxRoundsScore INT,"
+            + "maxRoundScore INT,"
             + "lastScore INT,"
             + "highestStreak INT);";
 
