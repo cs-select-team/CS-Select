@@ -43,4 +43,9 @@ public class BinarySelect extends Gamemode {
 
         return new StandardRound(player, number, NUMBER_OF_SELECTIONS, FEATURES_PER_SELECTION, MIN_SELECT, MAX_SELECT);
     }
+
+    @Override
+    public String toString() {
+        return "BinarySelect";
+    }
 }

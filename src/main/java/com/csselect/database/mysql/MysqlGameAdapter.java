@@ -3,9 +3,11 @@ package com.csselect.database.mysql;
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
+import com.csselect.game.BinarySelect;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
+import com.csselect.game.MatrixSelect;
 import com.csselect.game.NumberOfRoundsTermination;
 import com.csselect.game.Round;
 import com.csselect.game.Termination;
@@ -141,7 +143,13 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Gamemode getGamemode() {
-        return null;
+        String gamemode = getString("gamemode");
+        if (gamemode.startsWith("BinarySelect")) {
+            return new BinarySelect();
+        } else {
+            String[] args = gamemode.split(",");
+            return new MatrixSelect(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        }
     }
 
     @Override
@@ -205,7 +213,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void setGamemode(Gamemode gamemode) {
-
+        setString("gamemode", gamemode.toString());
     }
 
     @Override
