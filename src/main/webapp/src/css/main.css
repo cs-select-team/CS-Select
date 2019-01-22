@@ -19,7 +19,9 @@
 .fixed-height {
     height: 70px;
 }
-
+.top-buffer {
+    margin-top:20px;
+}
 body {
     height: 100vh;
 }

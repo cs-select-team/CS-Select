@@ -6,8 +6,8 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="navbar-nav">
-          <a class="nav-item nav-link" href="#"><fmt:message key="settings"/></a>
-          <a class="nav-item nav-link" href="#"><fmt:message key="logout"/></a>
+          <a class="nav-item nav-link" href="settings.jsp"><fmt:message key="settings"/></a>
+          <a class="nav-item nav-link" href="login/logout"><fmt:message key="logout"/></a>
         </div>
   </div>
 </nav>

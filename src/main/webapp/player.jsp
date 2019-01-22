@@ -6,8 +6,9 @@
     <div class="col-sm-3">
         Übersicht
     </div>
-    <div class="col-sm-4">
-        Statistiken
+    <div class="col-sm-4" id="stats">
+        <stats-display v-bind:username="username"
+                      v-bind:points="points"></stats-display>
     </div>
     <div class="col-sm-5 h-100 overflow-auto" id="leaderboard">
         <table class="table">
@@ -30,20 +31,26 @@
         </table>
     </div>
 </div>
+    <div class="top-buffer"></div>
 <div class="row h-50">
-    <div class="col-sm-7" id="games">
-        <div class="card">
+    <div class="col-sm-7 h-100 overflow-auto" id="games">
             <game-display
                     v-for="game in listOfGames"
                     v-bind:game="game"
-                    v-bind:key="game.key"
+                    v-bind:key="game.gameId"
                      v-bind:play="'<fmt:message key="play"/>'">
 
             </game-display>
-        </div>
     </div>
-    <div class="col-sm-5">
-        Einladungen
+    <div class="col-sm-5 h-100" id="invites">
+        <div class="overflow-auto h-100">
+            <invite-element v-for="invite in listOfInvites"
+                            v-bind:key="invite.gameId"
+                            v-bind:game-id="invite.gameId"
+                            v-bind:title="invite.title">
+
+            </invite-element>
+        </div>
     </div>
 
 </div>
