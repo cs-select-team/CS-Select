@@ -14,6 +14,7 @@ final class Query {
             + "hash VARCHAR(40),"
             + "salt VARCHAR(40),"
             + "email VARCHAR(255),"
+            + "language VARCHAR(40),"
             + "username VARCHAR(40));";
 
     @Language("sql")
@@ -22,7 +23,8 @@ final class Query {
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "hash VARCHAR(40),"
             + "salt VARCHAR(40),"
-            + "email VARCHAR(255));";
+            + "email VARCHAR(255),"
+            + "language VARCHAR(40));";
 
     @Language("sql")
     static final String CREATE_GAME_TABLE
@@ -82,8 +84,6 @@ final class Query {
             = "CREATE TABLE IF NOT EXISTS players("
             + "email VARCHAR(255) PRIMARY KEY,"
             + "invited BOOLEAN);";
-
-
 
     private Query() {
         //Utility-classes shouldn't be instantiated
