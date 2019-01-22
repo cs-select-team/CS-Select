@@ -112,10 +112,19 @@ public abstract class MysqlAdapter {
      * @param columnLabel columnlabel to increment
      */
     void incrementValue(String columnLabel) {
+        addInt(columnLabel, 1);
+    }
+
+    /**
+     * Adds the given int to the int at the given columnlabel
+     * @param columnLabel columnlabel to add the int to
+     * @param value value to add
+     */
+    void addInt(String columnLabel, int value) {
         try {
             @Language("sql")
             String query = "UPDATE " + getTableName()
-                    + " SET " + columnLabel + " = " + columnLabel + " + 1 WHERE (id='" + id + "');";
+                    + " SET " + columnLabel + " = " + columnLabel + " + " + value + " WHERE (id='" + id + "');";
             DATABASE_ADAPTER.executeMysqlUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
