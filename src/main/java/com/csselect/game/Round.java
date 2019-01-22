@@ -2,7 +2,8 @@ package com.csselect.game;
 
 import com.csselect.user.Player;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,16 +14,16 @@ import java.util.List;
  */
 public abstract class Round {
 
-    protected LocalDate time;
+    protected LocalDateTime time;
     protected double quality;
     protected int points;
     protected final int numberOfRound;
     protected final Player player;
     protected Game game;
 
-    private Collection<Feature> uselessFeatures;
-    private Collection<Feature> chosenFeatures;
-    private Collection<Feature> shownFeatures;
+    protected Collection<Feature> uselessFeatures;
+    protected Collection<Feature> chosenFeatures;
+    protected Collection<Feature> shownFeatures;
 
     /**
      * Constructor to generalize constructing for all subclasses
@@ -32,6 +33,16 @@ public abstract class Round {
     public Round(Player player, int numberOfRound) {
         this.player = player;
         this.numberOfRound = numberOfRound;
+
+        this.time = LocalDateTime.now();
+
+        this.uselessFeatures = new ArrayList<>();
+        this.chosenFeatures = new ArrayList<>();
+        this.shownFeatures = new ArrayList<>();
+    }
+
+    protected void setGame(Game game) {
+        this.game = game;
     }
 
     /**
@@ -62,7 +73,7 @@ public abstract class Round {
      * Getter for the time the round was started
      * @return the starting time
      */
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return this.time;
     }
 
@@ -103,8 +114,10 @@ public abstract class Round {
      * player {@link Player} and returns these.
      * @return the features {@link Feature} that are to be shown to the player {@link Player}
      */
-    public Collection<Feature> start() {
-        return null;
+    public List<Feature> start() {
+        List<Feature> features = this.provideFeatures();
+        this.shownFeatures = features;
+        return features;
     }
 
     /**
@@ -112,7 +125,9 @@ public abstract class Round {
      * @param uselessFeatures the IDs of the features {@link Feature} marked by the player {@link Player} to be useless
      */
     public void skip(int[] uselessFeatures) {
-
+        this.addUselessFeatures(uselessFeatures);
+        this.player.getStats().skipRound();
+        this.game.addFinishedRound(this);
     }
 
     /**
@@ -121,7 +136,28 @@ public abstract class Round {
      * @param uselessFeatures the IDs of the features {@link Feature} marked by the player {@link Player} to be useless
      */
     public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        this.addUselessFeatures(uselessFeatures);
 
+        ArrayList<Feature> features = new ArrayList<>(this.game.getFeatureSet().getFeatures());
+        for (int id : selectedFeatures) {
+            for (Feature feature : features) {
+                if (feature.getID() == id) {
+                    this.chosenFeatures.add(feature);
+                }
+            }
+        }
+
+        String identifier = this.game.getFeatureSet().getIdentifier();
+        try {
+            this.quality = this.game.getMlserver().getScore(identifier, this.chosenFeatures);
+        }
+        catch(java.io.IOException e) {
+            e.printStackTrace();
+        }
+
+        this.points = this.player.getStats().finishRound(this.quality);
+
+        this.game.addFinishedRound(this);
     }
 
     /**
@@ -129,4 +165,16 @@ public abstract class Round {
      * @return collection of features {@link Feature} that are to be shown
      */
     public abstract List<Feature> provideFeatures();
+
+    private void addUselessFeatures(int[] uselessFeatures) {
+        ArrayList<Feature> features = new ArrayList<>(this.game.getFeatureSet().getFeatures());
+        for (int id : uselessFeatures) {
+            for (Feature feature : features) {
+                if (feature.getID() == id) {
+                    this.uselessFeatures.add(feature);
+                }
+            }
+        }
+    }
+
 }
