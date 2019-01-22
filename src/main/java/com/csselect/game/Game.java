@@ -4,6 +4,7 @@ import com.csselect.database.GameAdapter;
 import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -204,7 +205,23 @@ public class Game {
      * @return true if successful, false if a player was already invited or playing or the game is terminated already
      */
     public boolean invitePlayers(Collection<String> playerEmails) {
-        return false;
+        if (this.isTerminated()) {
+            return false;
+        }
+
+        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
+
+        boolean alreadyIn = false;
+        for (String invPlayerEmail : invitedPlayers) {
+            for (String newPlayerEmail : playerEmails) {
+                if(invPlayerEmail.equals(newPlayerEmail)) {
+                    alreadyIn = true;
+                }
+            }
+        }
+
+        this.database.addInvitedPlayers(playerEmails);
+        return alreadyIn;
     }
 
     /**
@@ -216,7 +233,26 @@ public class Game {
      * terminated already
      */
     public boolean acceptInvite(int playerID, String email) {
-        return false;
+        if (this.isTerminated()) {
+            return false;
+        }
+
+        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
+
+        boolean isInvited = false;
+        for (String invPlayerEmail : invitedPlayers) {
+            if (invPlayerEmail.equals(email)) {
+                isInvited = true;
+            }
+        }
+
+        if(!isInvited) {
+            return false;
+        }
+
+        this.database.addPlayingPlayer(playerID);
+
+        return true;
     }
 
     /**
@@ -225,7 +261,18 @@ public class Game {
      * @return true if successful, false if the player had no invite or the game is terminated already
      */
     public boolean declineInvite(String email) {
-        return false;
+        if (this.isTerminated()) {
+            return false;
+        }
+
+        if (!this.checkInvitedPlayers(email)) {
+            return false;
+        }
+
+        Collection<String> invitedPlayer = new ArrayList<>();
+        invitedPlayer.add(email);
+        this.database.removeInvitedPlayers(invitedPlayer);
+        return true;
     }
 
     /**
@@ -260,6 +307,18 @@ public class Game {
     public void addFinishedRound(Round round) {
         this.database.addRound(round);
         this.isTerminated();
+    }
+
+    private boolean checkInvitedPlayers(String email) {
+        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
+
+        for (String invPlayerEmail : invitedPlayers) {
+            if (invPlayerEmail.equals(email)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
