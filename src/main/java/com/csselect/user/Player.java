@@ -9,7 +9,7 @@ import com.csselect.gamification.Leaderboard;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 
 /**
  * The player is a user with specified possibilities of interaction with our system. This class represents a player in
@@ -131,7 +131,7 @@ public class Player extends User implements Comparable {
      * sorted list of Player objects which shall be rendered by the front-end of the system.
      * @return List of Players in leaderboard's order
      */
-    public List<Player> getLeaderboard() {
+    public Map<Player, Integer> getLeaderboard() {
         return Leaderboard.getInstance().getPlayers();
     }
 
