@@ -25,7 +25,9 @@ public class OrganiserManagement extends UserManagement {
             password += salt;
             String encryptedPassword = Encrypter.encrypt(password);
             Organiser organiser = DATABASE_ADAPTER.createOrganiser(email, encryptedPassword, salt);
-            organiser.login();
+            if (organiser != null) {
+                organiser.login();
+            }
             return organiser;
         } else {
             return null;

@@ -22,7 +22,9 @@ public final class PlayerManagement extends UserManagement {
         password += salt;
         String encryptedPassword = Encrypter.encrypt(password);
         Player player = DATABASE_ADAPTER.createPlayer(email, encryptedPassword, salt, username);
-        player.login();
+        if (player != null) {
+            player.login();
+        }
         return player;
     }
 
