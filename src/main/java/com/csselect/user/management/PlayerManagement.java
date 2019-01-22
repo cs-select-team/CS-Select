@@ -31,12 +31,14 @@ public final class PlayerManagement extends UserManagement {
     @Override
     public Player login(String email, String password) {
         Player player = DATABASE_ADAPTER.getPlayer(email);
+        if (player == null) {
+            return null; //email not found
+        }
         String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
         String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
         String concatenated = password + salt;
 
-        String encryptedPassword = Encrypter.encrypt(concatenated);
-        if (encryptedPassword.equals(savedEncryptedPassword)) {
+        if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
             player.login();
             return player;
         } else {
