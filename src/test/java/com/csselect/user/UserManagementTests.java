@@ -47,6 +47,9 @@ public class UserManagementTests extends TestClass {
         Assert.assertNotNull(luke.getStats());
         Assert.assertNull(luke.getActiveRound());
         Assert.assertTrue(luke.getRounds().isEmpty());
+
+        testLoginExistingPlayer();
+        testLoginPlayerAfterChangingEmail();
     }
 
     @Test
@@ -66,6 +69,8 @@ public class UserManagementTests extends TestClass {
         luke = pm.register(args2);
         Assert.assertNotNull(luke);
         Assert.assertNotSame(darth, luke);
+
+        testLoginPlayerAfterChangingPassword();
     }
 
     @Test
@@ -161,5 +166,31 @@ public class UserManagementTests extends TestClass {
 
         Assert.assertNotNull(voldemort);
         Assert.assertNull(harry);
+    }
+
+    private void testLoginExistingPlayer() {
+        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
+        Assert.assertNotNull(luke);
+        Assert.assertTrue(luke.isLoggedIn());
+    }
+
+    private void testLoginPlayerAfterChangingEmail() {
+        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
+        Assert.assertNotNull(luke);
+        luke.changeEmail("skywalker@csselect.com");
+        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
+        Assert.assertNull(luke);
+        luke = pm.login("skywalker@csselect.com", "Nein!11!!1");
+        Assert.assertNotNull(luke);
+    }
+
+    private void testLoginPlayerAfterChangingPassword() {
+        darth = pm.login("vader1@csselect.com", "IchBinDeinVater1968");
+        Assert.assertNotNull(darth);
+        darth.changePassword("IchBinEchtDeinVater1968");
+        darth = pm.login("vader1@csselect.com", "IchBinDeinVater1968");
+        Assert.assertNull(darth);
+        darth = pm.login("vader1@csselect.com", "IchBinEchtDeinVater1968");
+        Assert.assertNotNull(darth);
     }
 }
