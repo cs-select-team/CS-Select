@@ -283,7 +283,20 @@ public class Game {
      * if the player is not allowed to start rounds or the game is terminated already
      */
     public Collection<Feature> startRound(int playerID) {
-        return null;
+        Collection<Player> players = this.database.getPlayingPlayers();
+        Player playingPlayer = null;
+        for (Player player : players) {
+            if (player.getId() == playerID) {
+                playingPlayer = player;
+            }
+        }
+        if (playingPlayer == null) {
+            return null;
+        }
+
+        Round round = this.gamemode.createRound(playingPlayer);
+        round.setGame(this);
+        return round.start();
     }
 
     /**

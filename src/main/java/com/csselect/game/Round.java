@@ -17,7 +17,6 @@ public abstract class Round {
     protected LocalDateTime time;
     protected double quality;
     protected int points;
-    protected final int numberOfRound;
     protected final Player player;
     protected Game game;
 
@@ -28,11 +27,9 @@ public abstract class Round {
     /**
      * Constructor to generalize constructing for all subclasses
      * @param player the player {@link Player} who plays the round
-     * @param numberOfRound the number of the round
      */
-    public Round(Player player, int numberOfRound) {
+    public Round(Player player) {
         this.player = player;
-        this.numberOfRound = numberOfRound;
 
         this.time = LocalDateTime.now();
 
@@ -93,13 +90,6 @@ public abstract class Round {
         return this.points;
     }
 
-    /**
-     * Getter for the number the round
-     * @return the number of the round
-     */
-    public int getNumberOfRound() {
-        return this.numberOfRound;
-    }
 
     /**
      * Getter for the player {@link Player} who plays the round

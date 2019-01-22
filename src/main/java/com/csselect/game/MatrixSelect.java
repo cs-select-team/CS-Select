@@ -31,11 +31,11 @@ public class MatrixSelect extends Gamemode {
     }
 
     @Override
-    public StandardRound createRound(Player player, int number) {
+    public StandardRound createRound(Player player) {
         if(player == null) {
             return null;
         }
 
-        return new StandardRound(player, number, NUMBER_OF_SELECTIONS, this.numberOfFeatures, this.minSelect, this.maxSelect);
+        return new StandardRound(player, NUMBER_OF_SELECTIONS, this.numberOfFeatures, this.minSelect, this.maxSelect);
     }
 }

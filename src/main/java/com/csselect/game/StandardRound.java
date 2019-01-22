@@ -18,14 +18,13 @@ public class StandardRound extends Round {
     /**
      * Constructor for a standard round object
      * @param player the player {@link Player} who plays the round
-     * @param numberOfRound the number of the round
      * @param numberOfSelections the number of selections per round
      * @param featuresPerSelection the number of features {@link Feature} per selection
      * @param minSelect the minimum number of features {@link Feature} to be selected per selection
      * @param maxSelect the maximum number of features {@link Feature} to be selected per selection
      */
-    public StandardRound(Player player, int numberOfRound, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
-        super(player, numberOfRound);
+    public StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
+        super(player);
         this.numberOfSelections = numberOfSelections;
         this.featuresPerSelection = featuresPerSelection;
         this.minSelect = minSelect;
