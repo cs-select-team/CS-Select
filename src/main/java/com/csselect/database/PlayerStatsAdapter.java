@@ -48,13 +48,12 @@ public interface PlayerStatsAdapter {
      * Sets the current score of a player
      * @param score Current score
      */
-    void setScore(int score);
+    void addScore(int score);
 
     /**
      * Sets the amount of played rounds of the player
-     * @param roundsPlayed The amount of played rounds of the player
      */
-    void setRoundsPlayed(int roundsPlayed);
+    void roundPlayed();
 
     /**
      * Executed when a daily is completed, increases dailyCompleted count by 1

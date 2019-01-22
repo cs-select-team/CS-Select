@@ -23,8 +23,9 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
      */
     MysqlPlayerStatsAdapter(int id) throws SQLException {
         super(id);
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO playerstats (id) VALUES (" + id + ")"
-                + "ON DUPLICATE KEY UPDATE id = id;");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO playerstats "
+                + "(id,score,roundsPlayed,dailiesCompleted,maxRoundScore,lastScore,highestStreak) "
+                + "VALUES (" + id + ",0,0,0,0,0,0) ON DUPLICATE KEY UPDATE id = id;");
     }
 
     @Override
@@ -58,13 +59,13 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
     }
 
     @Override
-    public void setScore(int score) {
-        setInt("score", score);
+    public void addScore(int score) {
+        addInt("score", score);
     }
 
     @Override
-    public void setRoundsPlayed(int roundsPlayed) {
-        setInt("roundsPlayed", roundsPlayed);
+    public void roundPlayed() {
+        incrementValue("roundsPlayed");
     }
 
     @Override

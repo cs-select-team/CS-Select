@@ -45,13 +45,13 @@ public class MockPlayerStatsAdapter implements PlayerStatsAdapter {
     }
 
     @Override
-    public void setScore(int score) {
-        this.score = score;
+    public void addScore(int score) {
+        this.score = this.score + score;
     }
 
     @Override
-    public void setRoundsPlayed(int roundsPlayed) {
-        this.roundsPlayed = roundsPlayed;
+    public void roundPlayed() {
+        this.roundsPlayed++;
     }
 
     @Override
