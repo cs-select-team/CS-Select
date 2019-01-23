@@ -24,6 +24,8 @@ public abstract class Round {
     protected Collection<Feature> chosenFeatures;
     protected Collection<Feature> shownFeatures;
 
+    protected List<Feature> features;
+
     /**
      * Constructor to generalize constructing for all subclasses
      * @param player the player {@link Player} who plays the round
@@ -44,6 +46,7 @@ public abstract class Round {
      */
     protected void setGame(Game game) {
         this.game = game;
+        this.features = new ArrayList<>(game.getFeatureSet().getFeatures());
     }
 
     /**
@@ -128,13 +131,13 @@ public abstract class Round {
      * Ends the round, calculates the score and the points of the round and adds it to the game {@link Game}
      * @param selectedFeatures the IDs of the features {@link Feature} selected by the player {@link Player}
      * @param uselessFeatures the IDs of the features {@link Feature} marked by the player {@link Player} to be useless
+     * @return returns the points earned in this round
      */
-    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+    public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
         this.addUselessFeatures(uselessFeatures);
 
-        ArrayList<Feature> features = new ArrayList<>(this.game.getFeatureSet().getFeatures());
         for (int id : selectedFeatures) {
-            for (Feature feature : features) {
+            for (Feature feature : this.features) {
                 if (feature.getID() == id) {
                     this.chosenFeatures.add(feature);
                 }
@@ -151,6 +154,8 @@ public abstract class Round {
         this.points = this.player.getStats().finishRound(this.quality);
 
         this.game.addFinishedRound(this);
+
+        return this.points;
     }
 
     /**
@@ -160,9 +165,8 @@ public abstract class Round {
     public abstract List<Feature> provideFeatures();
 
     private void addUselessFeatures(int[] uselessFeatures) {
-        ArrayList<Feature> features = new ArrayList<>(this.game.getFeatureSet().getFeatures());
         for (int id : uselessFeatures) {
-            for (Feature feature : features) {
+            for (Feature feature : this.features) {
                 if (feature.getID() == id) {
                     this.uselessFeatures.add(feature);
                 }

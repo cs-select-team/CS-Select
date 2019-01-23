@@ -4,7 +4,6 @@ import com.csselect.user.Player;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * The StandardRound class represents all concrete rounds {@link Round} that are only different in the number
@@ -67,12 +66,11 @@ public class StandardRound extends Round {
 
     @Override
     public List<Feature> provideFeatures() {
-        Set<Feature> featureSet = this.game.getFeatureSet().getFeatures();
-        List<Feature> featureList = new ArrayList<>(featureSet);
         List<Feature> providedFeatures = new ArrayList<>();
         for (int i = 0; i < this.numberOfSelections; i++) {
+            List<Feature> featureListThisSelection = new ArrayList<>(this.features);
             for (int j = 0; j < this.featuresPerSelection; j++) {
-                List<Feature> featureListThisSelection = new ArrayList<>(featureList);
+
 
                 int randomFeature = (int) (Math.random() * featureListThisSelection.size());
 
@@ -82,5 +80,14 @@ public class StandardRound extends Round {
             }
         }
         return providedFeatures;
+    }
+
+    @Override
+    public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        if (this.minSelect > selectedFeatures.length || this.maxSelect < selectedFeatures.length) {
+            return -1;
+        }
+
+        return super.selectFeatures(selectedFeatures, uselessFeatures);
     }
 }
