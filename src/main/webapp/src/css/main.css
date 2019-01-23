@@ -22,6 +22,15 @@
 .top-buffer {
     margin-top:20px;
 }
+.title {
+    background-color: #6c757d;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 3px;
+    text-align: center;
+    color: white;
+}
 body {
     height: 100vh;
 }
