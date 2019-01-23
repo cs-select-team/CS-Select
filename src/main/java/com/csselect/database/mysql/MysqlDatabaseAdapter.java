@@ -430,6 +430,16 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     private Collection<Game> getTerminatedGames() {
         return gameMap.keySet().stream().filter(Game::isTerminated).collect(Collectors.toSet());
+    }
 
+    /**
+     * Gets all games a player is associated with
+     * @param playerId players id
+     * @return games
+     */
+    Collection<Game> getGames(int playerId) {
+        return gameMap.keySet().stream().filter(game ->
+                game.getPlayingPlayers().stream().anyMatch(player -> player.getId() == playerId))
+                .collect(Collectors.toSet());
     }
 }

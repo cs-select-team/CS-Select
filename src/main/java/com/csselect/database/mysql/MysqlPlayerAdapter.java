@@ -76,7 +76,11 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     public Collection<Round> getRounds() {
-        return null;
+        Collection<Round> rounds = new HashSet<>();
+        DATABASE_ADAPTER.getGames(getID()).forEach(
+                game -> game.getRounds().stream().filter(round -> round.getPlayer().getId() == getID())
+                        .forEach(rounds::add));
+        return rounds;
     }
 
     @Override
