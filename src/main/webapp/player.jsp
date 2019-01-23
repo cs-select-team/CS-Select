@@ -2,7 +2,7 @@
 <fmt:bundle basename = "locale.Locale">
 <div class="container h-100">
 <%@ include file="WEB-INF/jspf/playerNavbar.jspf" %>
-<div class="row h-50">
+<div class="row">
     <div class="col-md-3">
         Übersicht
     </div>
@@ -32,7 +32,7 @@
     </div>
 </div>
     <div class="top-buffer"></div>
-<div class="row h-50">
+<div class="row">
     <div class="col-md-7 h-100 overflow-auto" id="games">
             <game-display
                     v-for="game in listOfGames"
