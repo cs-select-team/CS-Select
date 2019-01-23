@@ -41,6 +41,6 @@ public class MatrixSelect extends Gamemode {
 
     @Override
     public String toString() {
-        return "MatrixSelect," + numberOfFeatures + "," + minSelect + "," + maxSelect;
+        return "matrixSelect," + numberOfFeatures + "," + minSelect + "," + maxSelect;
     }
 }

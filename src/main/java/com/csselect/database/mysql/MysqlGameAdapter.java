@@ -154,11 +154,13 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public Gamemode getGamemode() {
         String gamemode = getString("gamemode");
-        if (gamemode.startsWith("BinarySelect")) {
+        if (gamemode.startsWith("binarySelect")) {
             return new BinarySelect();
-        } else {
+        } else if (gamemode.startsWith("matrixSelect")) {
             String[] args = gamemode.split(",");
             return new MatrixSelect(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        } else {
+            return null;
         }
     }
 
@@ -180,7 +182,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Organiser getOrganiser() {
-        return new Organiser(new MysqlOrganiserAdapter(getInt("organiser_id")));
+        return new Organiser(new MysqlOrganiserAdapter(getInt("organiserId")));
     }
 
     @Override
@@ -228,7 +230,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void setOrganiser(Organiser organiser) {
-        setInt("organiser_id", organiser.getId());
+        setInt("organiserId", organiser.getId());
     }
 
     @Override

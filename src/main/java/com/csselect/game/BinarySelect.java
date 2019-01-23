@@ -46,6 +46,6 @@ public class BinarySelect extends Gamemode {
 
     @Override
     public String toString() {
-        return "BinarySelect";
+        return "binarySelect";
     }
 }

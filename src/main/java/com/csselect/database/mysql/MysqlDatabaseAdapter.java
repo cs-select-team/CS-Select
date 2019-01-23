@@ -261,7 +261,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             try {
-                executeMysqlUpdate("UPDATE organiser_id SET " + organiser.getId() + " FROM games WHERE"
+                executeMysqlUpdate("UPDATE organiserId SET " + organiser.getId() + " FROM games WHERE"
                         + " (id=" + game.getId() + ");");
             } catch (SQLException e) {
                 e.printStackTrace();
