@@ -9,7 +9,7 @@ import com.csselect.user.management.safety.Encrypter;
 /**
  * {@link UserManagement} class for {@link Organiser}
  */
-public class OrganiserManagement extends UserManagement {
+public final class OrganiserManagement extends UserManagement {
     private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
 
     @Override
