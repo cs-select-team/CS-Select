@@ -64,12 +64,12 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
     }
 
     @Override
-    public void roundPlayed() {
+    public void playRound() {
         incrementValue("roundsPlayed");
     }
 
     @Override
-    public void dailyCompleted() {
+    public void completeDaily() {
         incrementValue("dailiesCompleted");
     }
 

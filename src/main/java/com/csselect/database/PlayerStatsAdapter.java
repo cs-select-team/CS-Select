@@ -51,14 +51,14 @@ public interface PlayerStatsAdapter {
     void addScore(int score);
 
     /**
-     * Sets the amount of played rounds of the player
+     * Increases the count of played rounds
      */
-    void roundPlayed();
+    void playRound();
 
     /**
      * Executed when a daily is completed, increases dailyCompleted count by 1
      */
-    void dailyCompleted();
+    void completeDaily();
 
     /**
      * Sets the maximum score achieved by the player in a single round. This

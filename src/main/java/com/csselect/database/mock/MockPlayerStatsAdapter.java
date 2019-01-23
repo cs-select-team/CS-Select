@@ -50,12 +50,12 @@ public class MockPlayerStatsAdapter implements PlayerStatsAdapter {
     }
 
     @Override
-    public void roundPlayed() {
+    public void playRound() {
         this.roundsPlayed++;
     }
 
     @Override
-    public void dailyCompleted() {
+    public void completeDaily() {
         this.dailiesCompleted++;
     }
 
