@@ -16,7 +16,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -212,7 +211,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=" + email + ");");
+            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
             if (set.next()) {
                 return null;
             }
@@ -223,7 +222,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         }
         MysqlPlayerAdapter adapter;
         try {
-            adapter = new MysqlPlayerAdapter();
+            adapter = new MysqlPlayerAdapter(username, email, hash, salt);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -237,7 +236,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Organiser createOrganiser(String email, String hash, String salt) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email=" + email + ");");
+            ResultSet set
+                    = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);", new StringParam(email));
             if (set.next()) {
                 return null;
             }
@@ -248,13 +248,11 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         }
         MysqlOrganiserAdapter adapter;
         try {
-            adapter = new MysqlOrganiserAdapter();
+            adapter = new MysqlOrganiserAdapter(email, hash, salt);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-        adapter.setEmail(email);
-        adapter.setPassword(hash, salt);
         return new Organiser(adapter);
     }
 
@@ -300,7 +298,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @return ResultSet of the operation
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params) throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params)
+            throws SQLException {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);

@@ -28,11 +28,15 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     /**
      * Creates a new {@link MysqlDatabaseAdapter} with the next available id
+     * @param email organisers email
+     * @param hash organisers password hash
+     * @param salt organisers password salt
      * @throws SQLException Thrown if an error occurs while communicating with the database server
      */
-    MysqlOrganiserAdapter() throws SQLException {
+    MysqlOrganiserAdapter(String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable("organisers"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers () VALUES ();");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers (email,'hash',salt) VALUES (?,?,?);",
+                new StringParam(email), new StringParam(hash), new StringParam(salt));
     }
 
     @Override

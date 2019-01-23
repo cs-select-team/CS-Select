@@ -30,11 +30,16 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     /**
      * Creates a new {@link MysqlPlayerAdapter} with the next available id
+     * @param username players username
+     * @param email players email
+     * @param hash players password hash
+     * @param salt players password salt
      * @throws SQLException Thrown if an error occurs while communicating with the database
      */
-    MysqlPlayerAdapter() throws SQLException {
+    MysqlPlayerAdapter(String username, String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable("players"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players () VALUES ();");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (username,email,hash,salt) VALUES (?,?,?,?);",
+                new StringParam(username), new StringParam(email), new StringParam(hash), new StringParam(salt));
     }
 
     @Override
