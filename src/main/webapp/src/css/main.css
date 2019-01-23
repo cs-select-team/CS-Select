@@ -10,6 +10,9 @@
     background-color: #e87437;
     border-color: #e87437;
 }
+.btn-space {
+    margin-right: 5px;
+}
 
 .form-control:focus {
     border-color: #cccccc;
