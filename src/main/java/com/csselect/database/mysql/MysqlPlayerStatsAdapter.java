@@ -90,7 +90,7 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
 
     @Override
     final ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (ID='" + getID() + "');");
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (id=" + getID() + ");");
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,7 +81,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player getPlayer(String email) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email='" + email + "');");
+            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
             return getPlayer(set);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,7 +113,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Organiser getOrganiser(String email) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email='" + email + "');");
+            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);",
+                    new StringParam(email));
             if (set.next()) {
                 Organiser o = new Organiser(new MysqlOrganiserAdapter(set.getInt("id")));
                 set.close();
@@ -154,7 +156,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getPlayerHash(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM players WHERE (id='" + id + "');");
+            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM players WHERE (id=" + id + ");");
             set.next();
             String hash = set.getString("hash");
             set.close();
@@ -168,7 +170,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getPlayerSalt(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM players WHERE (id='" + id + "');");
+            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM players WHERE (id=" + id + ");");
             set.next();
             String salt = set.getString("salt");
             set.close();
@@ -182,7 +184,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getOrganiserHash(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM organisers WHERE (id='" + id + "');");
+            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM organisers WHERE (id=" + id + ");");
             set.next();
             String hash = set.getString("hash");
             set.close();
@@ -196,7 +198,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getOrganiserSalt(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM organisers WHERE (id='" + id + "');");
+            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM organisers WHERE (id=" + id + ");");
             set.next();
             String salt = set.getString("salt");
             set.close();
@@ -210,7 +212,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email='" + email + "');");
+            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=" + email + ");");
             if (set.next()) {
                 return null;
             }
@@ -235,7 +237,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Organiser createOrganiser(String email, String hash, String salt) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email='" + email + "');");
+            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email=" + email + ");");
             if (set.next()) {
                 return null;
             }
@@ -262,7 +264,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             gameMap.put(game, organiser);
             try {
                 executeMysqlUpdate("UPDATE organiser_id SET " + organiser.getId() + " FROM games WHERE"
-                        + " (id='" + game.getId() + "');");
+                        + " (id=" + game.getId() + ");");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -273,7 +275,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public void removeGame(Game game) {
         gameMap.remove(game);
         try {
-            executeMysqlUpdate("DELETE FROM games WHERE (id='" + game.getId() + "');");
+            executeMysqlUpdate("DELETE FROM games WHERE (id=" + game.getId() + ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -282,46 +284,56 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     /**
      * Executes the given Mysql-query on the main database
      * @param query query to execute
+     * @param params params to execute the query with
      * @return ResultSet of the operation
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query) throws SQLException {
-        return executeMysqlQuery(query, PRODUCT_DATABASE_NAME);
+    ResultSet executeMysqlQuery(@Language("sql") String query, Param... params) throws SQLException {
+        return executeMysqlQuery(query, PRODUCT_DATABASE_NAME, params);
     }
 
     /**
      * Executes the given Mysql-query on the given database
-     * @param query query to execute
+     * @param query prepared-statement query to execute
      * @param databaseName database to execute the query on
+     * @param params parameters to execute the query with
      * @return ResultSet of the operation
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName) throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params) throws SQLException {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
+        PreparedStatement statement = connection.prepareStatement(query);
+        for (int i = 0; i < params.length; i++) {
+            params[i].apply(statement, i);
+        }
         return statement.executeQuery(query);
     }
 
     /**
      * Executes the given Mysql-Update on the main database
      * @param update update query to execute
+     * @param params params to execute the query with
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    void executeMysqlUpdate(@Language("sql") String update) throws SQLException {
-        executeMysqlUpdate(update, PRODUCT_DATABASE_NAME);
+    void executeMysqlUpdate(@Language("sql") String update, Param... params) throws SQLException {
+        executeMysqlUpdate(update, PRODUCT_DATABASE_NAME, params);
     }
 
     /**
      * Executes the given Mysql-Update on the given database
-     * @param update update query to execute
+     * @param update prepared-statement update to execute
      * @param databaseName database to execute the query on
+     * @param params params to execute the query with
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    void executeMysqlUpdate(@Language("sql") String update, String databaseName) throws SQLException {
+    void executeMysqlUpdate(@Language("sql") String update, String databaseName, Param... params) throws SQLException {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
+        PreparedStatement statement = connection.prepareStatement(update);
+        for (int i = 0; i < params.length; i++) {
+            params[i].apply(statement, i);
+        }
         statement.executeUpdate(update);
         statement.close();
         connection.close();

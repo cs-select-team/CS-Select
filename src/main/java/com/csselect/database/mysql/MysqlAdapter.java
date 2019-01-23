@@ -69,9 +69,8 @@ public abstract class MysqlAdapter {
     void setString(String columnLabel, String value) {
         try {
             @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = '" + value
-                    + "' WHERE (id='" + id + "');";
-            DATABASE_ADAPTER.executeMysqlUpdate(query);
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +103,13 @@ public abstract class MysqlAdapter {
      * @param value int to set
      */
     void setInt(String columnLabel, int value) {
-        setString(columnLabel, "" + value);
+        try {
+            @Language("sql")
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -124,8 +129,8 @@ public abstract class MysqlAdapter {
         try {
             @Language("sql")
             String query = "UPDATE " + getTableName()
-                    + " SET " + columnLabel + " = " + columnLabel + " + " + value + " WHERE (id='" + id + "');";
-            DATABASE_ADAPTER.executeMysqlUpdate(query);
+                    + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (id=" + id + ");";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,7 +142,13 @@ public abstract class MysqlAdapter {
      * @param value boolean to set
      */
     void setBoolean(String columnLabel, boolean value) {
-        setString(columnLabel, "" + (value ? "" + 1 : "" + 0));
+        try {
+            @Language("sql")
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
