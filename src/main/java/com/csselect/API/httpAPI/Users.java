@@ -58,6 +58,7 @@ public class Users extends Servlet {
 
     private void setLanguage(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
         getUserFacade().setLanguage(getParameter("lang", req));
+        session.setAttribute("lang", getParameter("lang", req));
     }
 
     private void recoverPassword(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
