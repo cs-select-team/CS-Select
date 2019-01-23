@@ -40,6 +40,11 @@ public class TerminationComposite extends Termination {
         if (termination == null) {
             return;
         }
+
+        if (!(this.game == null)) {
+            termination.setGame(this.game);
+        }
+
         this.terminations.add(termination);
     }
 
@@ -49,5 +54,13 @@ public class TerminationComposite extends Termination {
      */
     public void delete(Termination termination) {
         this.terminations.remove(termination);
+    }
+
+    @Override
+    public void setGame(Game game) {
+        this.game = game;
+        for (Termination termination : this.terminations) {
+            termination.setGame(game);
+        }
     }
 }
