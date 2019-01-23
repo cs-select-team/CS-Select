@@ -47,7 +47,7 @@ public final class Injector {
     }
 
     /**
-     * This method resets the injector for the next test case, only works if testmode == true
+     * This method resets the injector for the next test case, only works if testmode or mysqltestmode == true
      */
     static void resetInjector() {
         if (testMode || mysqlTestMode) {
