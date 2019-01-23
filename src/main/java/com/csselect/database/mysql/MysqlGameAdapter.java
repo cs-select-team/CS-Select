@@ -54,11 +54,6 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     }
 
     @Override
-    public int getID() {
-        return super.getID();
-    }
-
-    @Override
     public String getTitle() {
         return getString("title");
     }
