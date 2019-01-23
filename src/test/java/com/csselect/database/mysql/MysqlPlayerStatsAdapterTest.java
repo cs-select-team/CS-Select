@@ -48,13 +48,13 @@ public class MysqlPlayerStatsAdapterTest extends MysqlTestClass {
 
     @Test
     public void testRoundsPlayed() {
-        adapter.roundPlayed();
+        adapter.playRound();
         Assert.assertEquals(1, adapter.getRoundsPlayed());
     }
 
     @Test
     public void testDailiesCompleted() {
-        adapter.dailyCompleted();
+        adapter.completeDaily();
         Assert.assertEquals(1, adapter.getDailiesCompleted());
     }
 
