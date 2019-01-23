@@ -304,9 +304,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         for (int i = 0; i < params.length; i++) {
-            params[i].apply(statement, i);
+            params[i].apply(statement, i + 1);
         }
-        return statement.executeQuery(query);
+        return statement.executeQuery();
     }
 
     /**
@@ -331,9 +331,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         Connection connection = dataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(update);
         for (int i = 0; i < params.length; i++) {
-            params[i].apply(statement, i);
+            params[i].apply(statement, i + 1);
         }
-        statement.executeUpdate(update);
+        statement.executeUpdate();
         statement.close();
         connection.close();
     }

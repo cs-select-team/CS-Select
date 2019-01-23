@@ -283,7 +283,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         String values = joiner.toString();
         try {
             DATABASE_ADAPTER.executeMysqlUpdate(
-                    "REPLACE INTO players (email,invited) VALUES " + values + ";", databaseName);
+                    "REPLACE INTO players (email,invited) VALUES " + values + ";", databaseName, params);
         } catch (SQLException e) {
             e.printStackTrace();
         }
