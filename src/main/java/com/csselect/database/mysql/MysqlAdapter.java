@@ -2,10 +2,19 @@ package com.csselect.database.mysql;
 
 import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.game.BinarySelect;
+import com.csselect.game.Gamemode;
+import com.csselect.game.MatrixSelect;
+import com.csselect.game.NumberOfRoundsTermination;
+import com.csselect.game.Termination;
+import com.csselect.game.TerminationComposite;
+import com.csselect.game.TimeTermination;
 import org.intellij.lang.annotations.Language;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * Abstract superclass for mysql-adapters that provides basic mysql getters and setters
@@ -138,7 +147,7 @@ public abstract class MysqlAdapter {
 
     /**
      * Sets a boolean on the given columnlabel
-     * @param columnLabel colunlabel to set
+     * @param columnLabel columnlabel to set
      * @param value boolean to set
      */
     void setBoolean(String columnLabel, boolean value) {
@@ -177,4 +186,40 @@ public abstract class MysqlAdapter {
      * @return tablename
      */
     abstract String getTableName();
+
+    /**
+     * Parses a database saved {@link Gamemode} into a gamemode object
+     * @param gamemode gamemode string to parse
+     * @return created gamemode
+     */
+    Gamemode parseGamemode(String gamemode) {
+        if (gamemode.startsWith("binarySelect")) {
+            return new BinarySelect();
+        } else if (gamemode.startsWith("matrixSelect")) {
+            String[] args = gamemode.split(",");
+            return new MatrixSelect(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Parses a database saved {@link Termination} into a termination object
+     * @param termination termination string to parse
+     * @return created termination
+     */
+    Termination parseTermination(String termination) {
+        String[] terminations = termination.split(",");
+        TerminationComposite term = new TerminationComposite();
+        for (String t : terminations) {
+            if (t.startsWith("time")) {
+                term.add(new TimeTermination(LocalDateTime.ofEpochSecond(
+                        Long.parseLong(t.replace("time:", "")), 0, ZoneOffset.UTC)));
+            } else if (t.startsWith("rounds")) {
+                term.add(
+                        new NumberOfRoundsTermination(Integer.parseInt(t.replace("rounds:", ""))));
+            }
+        }
+        return term;
+    }
 }

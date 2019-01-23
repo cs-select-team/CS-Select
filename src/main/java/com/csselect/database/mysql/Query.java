@@ -48,6 +48,7 @@ final class Query {
             + "INDEX organiser_ind (organiserId),"
             + "FOREIGN KEY (organiserId) REFERENCES organisers(id) ON DELETE CASCADE,"
             + "title VARCHAR(40),"
+            + "gameTitle VARCHAR(40),"
             + "description VARCHAR(255),"
             + "databasename VARCHAR(40),"
             + "termination VARCHAR(255),"

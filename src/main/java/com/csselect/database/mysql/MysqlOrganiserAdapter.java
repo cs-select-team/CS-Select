@@ -4,10 +4,14 @@ import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
+import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.StringJoiner;
 
 /**
  * Mysql-Implementation of the {@link OrganiserAdapter} Interface
@@ -41,12 +45,43 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     @Override
     public Collection<Pattern> getPatterns() {
-        return null;
+        Collection<Pattern> patterns = new HashSet<>();
+        try {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
+                    "SELECT * FROM patterns WHERE organiserId=" + getID() + ";");
+            while (set.next()) {
+                GameOptions options = new GameOptions();
+                options.setTitle(set.getString("gameTitle"));
+                options.setDescription(set.getString("description"));
+                options.setNameFeatureDatabase(set.getString("database"));
+                options.setTermination(parseTermination(set.getString("termination")));
+                options.setGamemode(parseGamemode(set.getString("gamemode")));
+                patterns.add(new Pattern(options, set.getString("title")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patterns;
     }
 
     @Override
     public void addPattern(Pattern pattern) {
+        GameOptions gameOptions = pattern.getGameOptions();
+        StringJoiner joiner = new StringJoiner(",");
+        gameOptions.getInvitedEmails().forEach(joiner::add);
+        String emails = joiner.toString();
+        try {
+            DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO patterns"
+                    + "(organiserId,title,gameTitle,description,databasename,termination,gamemode,invitedPlayers)"
+                    + " VALUES (?,?,?,?,?,?,?,?)", new IntParam(getID()), new StringParam(pattern.getTitle()),
+                    new StringParam(gameOptions.getTitle()), new StringParam(gameOptions.getDescription()),
+                    new StringParam(gameOptions.getNameFeatureDatabase()),
+                    new StringParam(gameOptions.getTermination().toString()),
+                    new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
