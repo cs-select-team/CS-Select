@@ -1,4 +1,6 @@
 package com.csselect.API.httpAPI;
+import com.google.gson.JsonObject;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -113,7 +115,11 @@ public class Users extends Servlet {
 
     private void getUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (isPlayer()) {
-            returnAsJson(resp, getPlayerFacade().getPlayer());
+            JsonObject json = new JsonObject();
+            json.addProperty("username", "Benidx"); // TODO add username
+            json.addProperty("points", 1000 );// TODO getPlayerFacade().getPlayer().getStats().getScore()
+            returnJson(resp, json);
+            //returnAsJson(resp, getPlayerFacade().getPlayer());
         } else {
             returnAsJson(resp, getOrganiserFacade().getOrganiser());
         }

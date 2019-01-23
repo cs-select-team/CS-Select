@@ -5,6 +5,8 @@ import com.csselect.API.APIFacadePlayer;
 import com.csselect.API.APIFacadeUser;
 import com.csselect.user.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -132,6 +134,12 @@ public abstract  class Servlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json);
+        resp.getWriter().close();
+    }
+    protected void returnJson(HttpServletResponse resp, JsonElement json) throws IOException {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json.toString());
         resp.getWriter().close();
     }
     public abstract void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException;

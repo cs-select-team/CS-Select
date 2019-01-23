@@ -105,7 +105,7 @@ public class Games extends Servlet {
             jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
             json.add(jsonObject);
         }
-        returnAsJson(resp, json.toString());
+        returnJson(resp, json);
     }
 
 
