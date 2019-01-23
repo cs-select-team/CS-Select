@@ -74,7 +74,7 @@ public class Player extends User implements Comparable {
      */
     public Collection<Feature> startRound(int gameId) {
         playerAdapter.getActiveGames().forEach((Game game) -> {
-            if (game.getId() == gameId) {
+            if (game.getId() == gameId && !game.isTerminated()) {
                 featuresToShow = game.startRound(playerAdapter.getID());
             }
         });
