@@ -19,4 +19,9 @@ public class NumberOfRoundsTermination extends Termination {
     public boolean checkTermination() {
         return this.number <= this.game.getNumberOfRounds();
     }
+    
+    @Override
+    public String toString() {
+        return "rounds:" + number;
+    }
 }

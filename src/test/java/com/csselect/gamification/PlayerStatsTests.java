@@ -1,6 +1,8 @@
 package com.csselect.gamification;
 
 import com.csselect.TestClass;
+import com.csselect.database.PlayerStatsAdapter;
+import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,12 +11,15 @@ import java.time.LocalDate;
 
 public class PlayerStatsTests extends TestClass {
 
+    private PlayerStatsAdapter playerStatsAdapter;
     private PlayerStats stats;
+
 
 
     @Override
     public void setUp() {
-        stats = new PlayerStats();
+        playerStatsAdapter = new MockPlayerStatsAdapter();
+        stats = new PlayerStats(playerStatsAdapter);
     }
 
     @Override
@@ -25,21 +30,6 @@ public class PlayerStatsTests extends TestClass {
     @Test
     public void loadingTest() {
         Assert.assertNotNull(stats);
-    }
-
-    @Ignore("Not ready yet.")
-    @Test
-    public void testFinishRoundWithoutGamification() {
-        Assert.assertEquals(stats.finishRound(0.2), 10);
-        Assert.assertEquals(stats.finishRound(0.44), 22);
-        // Assert.assertEquals(stats.finishRound(0.50), 25);
-        // Assert.assertEquals(stats.finishRound(0.51), 51);
-        // Assert.assertEquals(stats.finishRound(0.8), 80);
-        // Assert.assertEquals(stats.finishRound(0.99), 99);
-        // Assert.assertEquals(stats.finishRound(1), 100);
-        // Assert.assertEquals(stats.finishRound(1.01), 0);
-        // Assert.assertEquals(stats.finishRound(0), 0);
-        // Assert.assertEquals(stats.finishRound(-0.4), 0);
     }
 
     @Ignore("Outdated, because of dailies.")

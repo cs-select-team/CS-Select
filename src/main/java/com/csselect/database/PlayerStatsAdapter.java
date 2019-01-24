@@ -1,24 +1,9 @@
 package com.csselect.database;
 
-import com.csselect.gamification.DailyChallenge;
-import com.csselect.gamification.Streak;
-
 /**
  * Interface abstracting a {@link com.csselect.gamification.PlayerStats} object from its database representation
  */
 public interface PlayerStatsAdapter {
-
-    /**
-     * Gets the current streak of a player
-     * @return Current streak
-     */
-    Streak getStreak();
-
-    /**
-     * Gets the active daily challenge of a player for the current day
-     * @return The active daily challenge
-     */
-    DailyChallenge getDaily();
 
     /**
      * Gets the current score of a player
@@ -60,33 +45,20 @@ public interface PlayerStatsAdapter {
     int getHighestStreak();
 
     /**
-     * Sets the current streak of a player
-     * @param streak Current streak
-     */
-    void setStreak(Streak streak);
-
-    /**
-     * Sets the active daily challenge of a player for the current day
-     * @param daily The active daily challenge
-     */
-    void setDaily(DailyChallenge daily);
-
-    /**
      * Sets the current score of a player
      * @param score Current score
      */
-    void setScore(int score);
+    void addScore(int score);
 
     /**
-     * Sets the amount of played rounds of the player
-     * @param roundsPlayed The amount of played rounds of the player
+     * Increases the count of played rounds
      */
-    void setRoundsPlayed(int roundsPlayed);
+    void playRound();
 
     /**
      * Executed when a daily is completed, increases dailyCompleted count by 1
      */
-    void dailyCompleted();
+    void completeDaily();
 
     /**
      * Sets the maximum score achieved by the player in a single round. This

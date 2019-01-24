@@ -10,6 +10,7 @@ import com.csselect.user.management.PlayerManagement;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * API facade for player specific calls
@@ -153,7 +154,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @return leaderboard, first entrance has the most points
      */
-     public List<Player> getLeaderboard() {
+     public Map<Player, Integer> getLeaderboard() {
          return player.getLeaderboard();
      }
 

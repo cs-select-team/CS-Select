@@ -38,4 +38,9 @@ public class MatrixSelect extends Gamemode {
 
         return new StandardRound(player, NUMBER_OF_SELECTIONS, this.numberOfFeatures, this.minSelect, this.maxSelect);
     }
+  
+    @Override
+    public String toString() {
+        return "matrixSelect," + numberOfFeatures + "," + minSelect + "," + maxSelect;
+    }
 }

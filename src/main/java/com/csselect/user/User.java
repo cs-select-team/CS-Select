@@ -96,6 +96,14 @@ public class User {
         userAdapter.setLanguage(langCode);
     }
 
+    /**
+     * Returns language code of language selected by the user
+     * @return String representing lang code
+     */
+    public String getLanguage() {
+        return userAdapter.getLanguage();
+    }
+
     @Override
     public int hashCode() {
         return userAdapter.getID();
