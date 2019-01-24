@@ -82,8 +82,10 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         try {
             set = DATABASE_ADAPTER.executeMysqlQuery("SELECT MAX(id) AS id FROM rounds;", getDatabaseName());
             if (!set.next()) {
+                set.close();
                 return 0;
             } else {
+                set.close();
                 return set.getInt("id");
             }
         } catch (SQLException e) {
@@ -133,6 +135,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 rounds.add(getGamemode().createRound(new Player(new MysqlPlayerAdapter(
                         set.getInt("player_id")))));
             }
+            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,7 +160,6 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public void setTermination(Termination termination) {
         setString("termination", termination.toString());
-
     }
 
     @Override

@@ -105,6 +105,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             set.close();
             return p;
         } else {
+            set.close();
             return null;
         }
     }
@@ -119,6 +120,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 set.close();
                 return o;
             } else {
+                set.close();
                 return null;
             }
         } catch (SQLException e) {
@@ -156,8 +158,12 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public String getPlayerHash(int id) {
         try {
             ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM players WHERE (id=" + id + ");");
-            set.next();
-            String hash = set.getString("hash");
+            String hash;
+            if (set.next()) {
+                hash = set.getString("hash");
+            } else {
+                hash = null;
+            }
             set.close();
             return hash;
         } catch (SQLException e) {
@@ -170,8 +176,12 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public String getPlayerSalt(int id) {
         try {
             ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM players WHERE (id=" + id + ");");
-            set.next();
-            String salt = set.getString("salt");
+            String salt;
+            if (set.next()) {
+                salt = set.getString("salt");
+            } else {
+                salt = null;
+            }
             set.close();
             return salt;
         } catch (SQLException e) {
@@ -184,8 +194,12 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public String getOrganiserHash(int id) {
         try {
             ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM organisers WHERE (id=" + id + ");");
-            set.next();
-            String hash = set.getString("hash");
+            String hash;
+            if (set.next()) {
+                hash = set.getString("hash");
+            } else {
+                hash = null;
+            }
             set.close();
             return hash;
         } catch (SQLException e) {
@@ -198,8 +212,12 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public String getOrganiserSalt(int id) {
         try {
             ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM organisers WHERE (id=" + id + ");");
-            set.next();
-            String salt = set.getString("salt");
+            String salt;
+            if (set.next()) {
+                salt = set.getString("salt");
+            } else {
+                salt = null;
+            }
             set.close();
             return salt;
         } catch (SQLException e) {
@@ -213,6 +231,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         try {
             ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
             if (set.next()) {
+                set.close();
                 return null;
             }
             set.close();
@@ -239,6 +258,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set
                     = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);", new StringParam(email));
             if (set.next()) {
+                set.close();
                 return null;
             }
             set.close();
@@ -364,9 +384,12 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     int getNextIdOfTable(String tableName) throws SQLException {
         ResultSet set = executeMysqlQuery("SELECT MAX(id) AS id FROM " + tableName + ";");
         if (!set.next()) {
+            set.close();
             return 1;
         } else {
-            return set.getInt("id") + 1;
+            int tmp = set.getInt("id") + 1;
+            set.close();
+            return tmp;
         }
     }
 
