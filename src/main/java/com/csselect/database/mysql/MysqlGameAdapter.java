@@ -85,8 +85,9 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 set.close();
                 return 0;
             } else {
+                int tmp = set.getInt("id");
                 set.close();
-                return set.getInt("id");
+                return tmp;
             }
         } catch (SQLException e) {
             e.printStackTrace();
