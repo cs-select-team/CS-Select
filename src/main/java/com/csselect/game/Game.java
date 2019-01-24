@@ -205,26 +205,13 @@ public class Game {
     /**
      * Adds invited the email-addresses of invited players to the collection invitedPlayers
      * @param playerEmails the collection of email-addresses of invited players
-     * @return true if successful, false if a player was already invited or playing or the game is terminated already
      */
-    public boolean invitePlayers(Collection<String> playerEmails) {
+    public void invitePlayers(Collection<String> playerEmails) {
         if (this.isTerminated()) {
-            return false;
+            return;
         }
-
-        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
-
-        boolean alreadyIn = false;
-        for (String invPlayerEmail : invitedPlayers) {
-            for (String newPlayerEmail : playerEmails) {
-                if (invPlayerEmail.equals(newPlayerEmail)) {
-                    alreadyIn = true;
-                }
-            }
-        }
-
+        
         this.database.addInvitedPlayers(playerEmails);
-        return alreadyIn;
     }
 
     /**
@@ -232,12 +219,10 @@ public class Game {
      * playingPlayers
      * @param playerID the ID {@link Player} of the player who accepted the invite
      * @param email the email-address of the player who accepted the invite
-     * @return true if successful, false if the player was not invited or has already accepted or the game is
-     * terminated already
      */
-    public boolean acceptInvite(int playerID, String email) {
+    public void acceptInvite(int playerID, String email) {
         if (this.isTerminated()) {
-            return false;
+            return;
         }
 
         Collection<String> invitedPlayers = this.database.getInvitedPlayers();
@@ -250,32 +235,28 @@ public class Game {
         }
 
         if (!isInvited) {
-            return false;
+            return;
         }
 
         this.database.addPlayingPlayer(playerID);
-
-        return true;
     }
 
     /**
      * Deletes the email-address from the collection invitedPlayers when a player declines an invite
      * @param email the email-address of the declining player
-     * @return true if successful, false if the player had no invite or the game is terminated already
      */
-    public boolean declineInvite(String email) {
+    public void declineInvite(String email) {
         if (this.isTerminated()) {
-            return false;
+            return;
         }
 
         if (!this.checkInvitedPlayers(email)) {
-            return false;
+            return;
         }
 
         Collection<String> invitedPlayer = new ArrayList<>();
         invitedPlayer.add(email);
         this.database.removeInvitedPlayers(invitedPlayer);
-        return true;
     }
 
     /**
@@ -308,23 +289,21 @@ public class Game {
 
     /**
      * Terminates the game, sets terminated to true and adjusts the game status in the database
-     * @return true if successful, false if game was already terminated
      */
-    public boolean terminateGame() {
+    public void terminateGame() {
 
         if (this.database.isFinished()) {
-            return false;
+            return;
         }
 
         this.database.setFinished();
-        return true;
     }
 
     /**
      * Adds a finished round to the system and causes the round to be stored in the database
      * @param round the finished round
      */
-    public void addFinishedRound(Round round) {
+    void addFinishedRound(Round round) {
         this.database.addRound(round);
         this.isTerminated();
     }

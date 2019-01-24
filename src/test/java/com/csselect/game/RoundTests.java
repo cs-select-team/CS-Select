@@ -55,7 +55,7 @@ public class RoundTests extends TestClass {
 
     @Test @Ignore
     public void featureSelectedAndUseless() {
-        int[] feature = new int[]{1};
+        int[] feature = new int[]{1, 2};
         round.selectFeatures(feature, feature);
         Assert.assertEquals(round.getUselessFeatures().size(), 1);
         Assert.assertTrue(round.getPoints() > 0);
