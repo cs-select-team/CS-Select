@@ -23,4 +23,9 @@ public class NumberOfRoundsTermination extends Termination {
         }
         return finished;
     }
+
+    @Override
+    public String toString() {
+        return "rounds:" + number;
+    }
 }

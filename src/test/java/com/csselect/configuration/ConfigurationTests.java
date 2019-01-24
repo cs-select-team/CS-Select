@@ -36,6 +36,11 @@ public class ConfigurationTests extends TestClass {
     }
 
     @Test
+    public void testTimezone() {
+        testString("CET", config.getTimezone());
+    }
+
+    @Test
     public void testDatabaseType() {
         testString("mysql", config.getDatabaseType());
     }

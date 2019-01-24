@@ -21,7 +21,7 @@ public class Pattern {
      * This method returns the String representing the title of the pattern
      * @return Name of the pattern
      */
-    public String getString() {
+    public String getTitle() {
         return title;
     }
 

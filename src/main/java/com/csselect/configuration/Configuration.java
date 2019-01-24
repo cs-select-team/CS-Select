@@ -19,6 +19,12 @@ public interface Configuration {
     String getMLServerURL();
 
     /**
+     * Gets the timezone used for connecting to the database server
+     * @return timezone
+     */
+    String getTimezone();
+
+    /**
      * Gets the type of database used
      * @return database type
      */

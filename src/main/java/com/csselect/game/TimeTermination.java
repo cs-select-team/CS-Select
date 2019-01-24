@@ -1,6 +1,7 @@
 package com.csselect.game;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * The TimeTermination class is a concrete termination {@link Termination} cause that
@@ -29,5 +30,10 @@ public class TimeTermination extends Termination {
             this.game.terminateGame();
         }
         return finished;
+    }
+
+    @Override
+    public String toString() {
+        return "time:" + date.toEpochSecond(ZoneOffset.UTC);
     }
 }

@@ -53,6 +53,11 @@ public final class ApacheCommonsConfiguration implements Configuration {
     }
 
     @Override
+    public String getTimezone() {
+        return configuration.getString("timezone");
+    }
+
+    @Override
     public String getDatabaseType() {
         return configuration.getString("database.type");
     }
