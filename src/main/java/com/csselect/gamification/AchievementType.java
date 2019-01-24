@@ -9,56 +9,124 @@ public enum AchievementType {
     PLAY_ROUND_ONE {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getRoundsPlayed() >= 1) {
+                return AchievementState.FINISHED;
+            }
+            return AchievementState.SHOWN;
         }
     },
 
     PLAY_ROUND_FIVE {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getRoundsPlayed() >= 5) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getRoundsPlayed() >= 1) {
+                return AchievementState.SHOWN;
+            }
+
+            return AchievementState.CONCEALED;
         }
     },
 
     PLAY_ROUND_TEN  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getRoundsPlayed() >= 10) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getRoundsPlayed() >= 5) {
+                return AchievementState.SHOWN;
+            }
+
+            if (stats.getRoundsPlayed() >= 1) {
+                return AchievementState.CONCEALED;
+            }
+
+            return AchievementState.INVISIBLE;
         }
     },
 
     PLAY_ROUND_FOURTYTWO  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getRoundsPlayed() >= 42) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getRoundsPlayed() >= 10) {
+                return AchievementState.SHOWN;
+            }
+
+            if (stats.getRoundsPlayed() >= 5) {
+                return AchievementState.CONCEALED;
+            }
+
+            return AchievementState.INVISIBLE;
         }
     },
 
     PLAY_ROUND_HUNDRED  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getRoundsPlayed() >= 100) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getRoundsPlayed() >= 42) {
+                return AchievementState.SHOWN;
+            }
+
+            if (stats.getRoundsPlayed() >= 10) {
+                return AchievementState.CONCEALED;
+            }
+
+            return AchievementState.INVISIBLE;
         }
     },
 
     STREAK_TWO  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getHighestStreak() >= 2) {
+                return AchievementState.FINISHED;
+            }
+            return AchievementState.SHOWN;
         }
     },
 
     STREAK_FIVE  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getHighestStreak() >= 5) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getHighestStreak() >= 2) {
+                return AchievementState.SHOWN;
+            }
+            return AchievementState.CONCEALED;
         }
     },
 
     STREAK_TEN  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
-            return null;
+            if (stats.getHighestStreak() >= 10) {
+                return AchievementState.FINISHED;
+            }
+
+            if (stats.getHighestStreak() >= 5) {
+                return AchievementState.SHOWN;
+            }
+
+            if (stats.getHighestStreak() >= 2) {
+                return AchievementState.CONCEALED;
+            }
+            return AchievementState.INVISIBLE;
         }
     },
 
@@ -146,7 +214,7 @@ public enum AchievementType {
         }
     },
 
-    ROUND_SCPRE_NINETY  {
+    ROUND_SCORE_NINETY  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
             return null;
@@ -154,8 +222,8 @@ public enum AchievementType {
     };
 
     public final Achievement checkProgress(PlayerStats stats) {
-        AchievementState s = getState(stats);
-        return new Achievement(s, this);
+        AchievementState state = getState(stats);
+        return new Achievement(state, this);
     }
 
     protected abstract AchievementState getState(PlayerStats stats);
