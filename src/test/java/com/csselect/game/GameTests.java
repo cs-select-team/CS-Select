@@ -4,6 +4,7 @@ import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.mlserver.MLServer;
+import com.csselect.user.Player;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -132,24 +133,26 @@ public class GameTests extends TestClass {
 
     @Test
     public void createRound() {
-        this.addPlayer1();
-        Collection<Feature> features = game.startRound(0);
+        Player player = this.addPlayer1();
+        Collection<Feature> features = game.startRound(player);
         Assert.assertNotNull(features);
         Assert.assertEquals(10, features.size());
     }
 
     @Test
     public void createMatrixRound() {
-        this.addPlayer1();
+        Player player = this.addPlayer1();
         game.setGamemode(new MatrixSelect(8, 3, 5));
-        Collection<Feature> features = game.startRound(0);
+        Collection<Feature> features = game.startRound(player);
         Assert.assertNotNull(features);
         Assert.assertEquals(8, features.size());
     }
 
     @Test
     public void createRoundWrongPlayer() {
-        Collection<Feature> features = game.startRound(0);
+        DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        Player player = database.createPlayer("emai", "has", "sal", "usernam");
+        Collection<Feature> features = game.startRound(player);
         Assert.assertNull(features);
     }
 
@@ -166,38 +169,42 @@ public class GameTests extends TestClass {
     @Test
     public void numberOfRounds() {
         Assert.assertEquals(0, game.getNumberOfRounds());
-        addPlayer1();
-        game.startRound(0);
-        game.startRound(0);
+        Player player = addPlayer1();
+        game.startRound(player);
+        game.startRound(player);
         Assert.assertEquals(0, game.getNumberOfRounds());
         Round round = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round);
         Assert.assertEquals(1, game.getNumberOfRounds());
     }
 
-    private void addPlayer1() {
-        invitePlayer1();
+    private Player addPlayer1() {
+        Player player = invitePlayer1();
         game.acceptInvite(0, "email");
+        return player;
     }
 
-    private void addPlayer2() {
-        invitePlayer2();
+    private Player addPlayer2() {
+        Player player = invitePlayer2();
         game.acceptInvite(1, "emai");
+        return player;
     }
 
-    private void invitePlayer1() {
+    private Player invitePlayer1() {
         DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
-        database.createPlayer("email", "hash", "salt", "username");
+        Player player = database.createPlayer("email", "hash", "salt", "username");
         Collection<String> emails = new ArrayList<>();
         emails.add("email");
         game.invitePlayers(emails);
+        return player;
     }
 
-    private void invitePlayer2() {
+    private Player invitePlayer2() {
         DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
-        database.createPlayer("emai", "has", "sal", "usernam");
+        Player player = database.createPlayer("emai", "has", "sal", "usernam");
         Collection<String> emails = new ArrayList<>();
         emails.add("emai");
         game.invitePlayers(emails);
+        return player;
     }
 }

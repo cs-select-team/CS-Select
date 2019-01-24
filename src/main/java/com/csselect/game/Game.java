@@ -262,29 +262,27 @@ public class Game {
     /**
      * Starts a round {@link Round} for a player {@link Player} who is allowed to do that, lets the gamemode
      * {@link Gamemode} create a round {@link Round} object and starts it
-     * @param playerID the id of the player {@link Player} who starts the round {@link Round}
+     * @param player the player {@link Player} who starts the round {@link Round}
      * @return the collection of features {@link Feature} the round.start {@link Round} returns if successful, null
      * if the player is not allowed to start rounds or the game is terminated already
      */
-    public Collection<Feature> startRound(int playerID) {
-        if (this.isTerminated()) {
+    public Collection<Feature> startRound(Player player) {
+        if (this.isTerminated() || player == null) {
             return null;
         }
 
         Collection<Player> players = this.database.getPlayingPlayers();
-        Player playingPlayer = null;
-        for (Player player : players) {
-            if (player.getId() == playerID) {
-                playingPlayer = player;
+        for (Player compPlayer : players) {
+            if (player.getId() == compPlayer.getId()) {
+                Round round = this.gamemode.createRound(player);
+                round.setGame(this);
+                return round.start();
             }
         }
-        if (playingPlayer == null) {
-            return null;
-        }
 
-        Round round = this.gamemode.createRound(playingPlayer);
-        round.setGame(this);
-        return round.start();
+        return null;
+
+
     }
 
     /**
