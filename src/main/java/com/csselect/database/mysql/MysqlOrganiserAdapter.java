@@ -53,7 +53,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));
                 options.setDescription(set.getString("description"));
-                options.setNameFeatureDatabase(set.getString("database"));
+                options.setResultDatabaseAddress(set.getString("database"));
                 options.setTermination(parseTermination(set.getString("termination")));
                 options.setGamemode(parseGamemode(set.getString("gamemode")));
                 patterns.add(new Pattern(options, set.getString("title")));
@@ -75,7 +75,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                     + "(organiserId,title,gameTitle,description,databasename,termination,gamemode,invitedPlayers)"
                     + " VALUES (?,?,?,?,?,?,?,?)", new IntParam(getID()), new StringParam(pattern.getTitle()),
                     new StringParam(gameOptions.getTitle()), new StringParam(gameOptions.getDescription()),
-                    new StringParam(gameOptions.getNameFeatureDatabase()),
+                    new StringParam(gameOptions.getResultDatabaseAddress()),
                     new StringParam(gameOptions.getTermination().toString()),
                     new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
 
