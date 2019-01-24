@@ -114,7 +114,9 @@ public abstract class Round {
     public List<Feature> start() {
         List<Feature> features = this.provideFeatures();
         this.shownFeatures = features;
+        this.player.setActiveRound(this);
         return features;
+
     }
 
     /**
@@ -125,6 +127,7 @@ public abstract class Round {
         this.addUselessFeatures(uselessFeatures);
         this.player.getStats().skipRound();
         this.game.addFinishedRound(this);
+        this.player.setActiveRound(null);
     }
 
     /**
@@ -154,6 +157,7 @@ public abstract class Round {
         this.points = this.player.getStats().finishRound(this.quality);
 
         this.game.addFinishedRound(this);
+        this.player.setActiveRound(null);
 
         return this.points;
     }
