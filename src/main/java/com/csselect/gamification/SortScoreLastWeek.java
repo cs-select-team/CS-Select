@@ -18,7 +18,7 @@ public class SortScoreLastWeek extends LeaderboardSortingStrategy {
         Map<Player, Integer> scoreLastWeek = new LinkedHashMap<>();
 
         players.stream().forEach(p -> roundsLastWeek.put(p, p.getRounds().stream()
-                .filter(r -> r.getTime().isAfter(LocalDate.now().minusDays(7))).collect(Collectors.toList())));
+                .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusDays(7))).collect(Collectors.toList())));
 
 
         for (Map.Entry<Player, List<Round>> entry : roundsLastWeek.entrySet()) {
