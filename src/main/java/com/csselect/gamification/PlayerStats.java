@@ -3,6 +3,7 @@ package com.csselect.gamification;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ public class PlayerStats implements Gamification {
     private Streak streak;
     private DailyChallenge activeDaily;
     private List<DailyChallenge> dailies;
-    private static List<Achievement> achievements;
     private int score;
     private int roundsPlayed;
     private int dailiesCompleted;
@@ -33,7 +33,6 @@ public class PlayerStats implements Gamification {
         this.streak = new Streak();
         this.dailies = loadDailies();
         this.activeDaily = chooseRandomDaily();
-        achievements = null;
         this.score = 0;
         this.roundsPlayed = 0;
         this.dailiesCompleted = 0;
@@ -81,6 +80,11 @@ public class PlayerStats implements Gamification {
 
     @Override
     public List<Achievement> getAchievements() {
+        List<AchievementType> achievementTypes = Arrays.asList(AchievementType.values());
+        List<Achievement> achievements = new LinkedList<>();
+        for (AchievementType type : achievementTypes) {
+            achievements.add(type.checkProgress(this));
+        }
         return achievements;
     }
 
