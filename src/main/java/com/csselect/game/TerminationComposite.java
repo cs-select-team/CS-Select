@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class TerminationComposite extends Termination {
 
-    private Set<Termination> terminations;
+    private final Set<Termination> terminations;
 
     /**
      * Constructor of a termination composite object.

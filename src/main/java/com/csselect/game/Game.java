@@ -17,11 +17,11 @@ import java.util.Collection;
 public class Game {
     private String title;
     private String description;
-    private int id;
+    private final int id;
     private String addressOrganiserDatabase;
     private Termination termination;
     private FeatureSet featureSet;
-    private GameAdapter database;
+    private final GameAdapter database;
     private MLServer mlserver;
     private Gamemode gamemode;
 
@@ -210,7 +210,7 @@ public class Game {
         if (this.isTerminated()) {
             return;
         }
-        
+
         this.database.addInvitedPlayers(playerEmails);
     }
 

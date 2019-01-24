@@ -14,14 +14,14 @@ import java.util.List;
  */
 public abstract class Round {
 
-    protected LocalDateTime time;
+    protected final LocalDateTime time;
     protected double quality;
     protected int points;
     protected final Player player;
     protected Game game;
 
-    protected Collection<Feature> uselessFeatures;
-    protected Collection<Feature> chosenFeatures;
+    protected final Collection<Feature> uselessFeatures;
+    protected final Collection<Feature> chosenFeatures;
     protected Collection<Feature> shownFeatures;
 
     protected List<Feature> features;
@@ -37,7 +37,6 @@ public abstract class Round {
 
         this.uselessFeatures = new ArrayList<>();
         this.chosenFeatures = new ArrayList<>();
-        this.shownFeatures = new ArrayList<>();
     }
 
     /**

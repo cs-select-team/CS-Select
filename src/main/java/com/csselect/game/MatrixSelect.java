@@ -14,9 +14,9 @@ public class MatrixSelect extends Gamemode {
      */
     public static final int NUMBER_OF_SELECTIONS = 1;
 
-    private int numberOfFeatures;
-    private int minSelect;
-    private int maxSelect;
+    private final int numberOfFeatures;
+    private final int minSelect;
+    private final int maxSelect;
 
     /**
      * Constructor for a matrix select object

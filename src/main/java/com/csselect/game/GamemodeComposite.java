@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class GamemodeComposite extends Gamemode {
 
-    private List<Gamemode> gamemodes;
+    private final List<Gamemode> gamemodes;
 
     /**
      * Constructor for a game mode composite object
