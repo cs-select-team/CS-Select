@@ -3,7 +3,7 @@ package com.csselect.game;
 import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.database.DatabaseAdapter;
-import com.csselect.mlserver.MockMLServer;
+import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class RoundTests extends TestClass {
             features.addFeature(new Feature(i, "a"));
         }
         game.setFeatureSet(features);
-        // game.setMlserver(new MockMLServer());
+        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
         round.setGame(game);
     }
 
