@@ -40,6 +40,9 @@ public class Game {
      * @return the title of the fame
      */
     public String getTitle() {
+        if (title == null) {
+            title = database.getTitle();
+        }
         return this.title;
     }
 
@@ -48,6 +51,9 @@ public class Game {
      * @return the description of the game
      */
     public String getDescription() {
+        if (description == null) {
+            description = database.getDescription();
+        }
         return this.description;
     }
 
@@ -95,11 +101,14 @@ public class Game {
      * @return the address of the database
      */
     public String getAddressOrganiserDatabase() {
+        if (addressOrganiserDatabase == null) {
+            addressOrganiserDatabase = database.getDatabaseName();
+        }
         return this.addressOrganiserDatabase;
     }
 
     /**
-     * Getter for the players {@link Player} who accepted an invite and are allowed to start and play rounds {@link Round}
+     * Getter for the {@link Player}s who accepted an invite and are allowed to start and play {@link Round}s
      * @return a collection of the players {@link Player} who can play rounds {@link Round}
      */
     public Collection<Player> getPlayingPlayers() {
@@ -111,7 +120,7 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        return this.termination;
+        return database.getTermination();
     }
 
     /**
@@ -127,7 +136,7 @@ public class Game {
      * @return the game mode belonging to the game
      */
     public Gamemode getGamemode() {
-        return this.gamemode;
+        return database.getGamemode();
     }
 
     /**
@@ -152,6 +161,7 @@ public class Game {
      */
     public void setTitle(String title) {
         this.title = title;
+        database.setTitle(title);
     }
 
     /**
@@ -160,6 +170,7 @@ public class Game {
      */
     public void setDescription(String description) {
         this.description = description;
+        database.setDescription(description);
     }
 
     /**
@@ -168,6 +179,7 @@ public class Game {
      */
     public void setAddressOrganiserDatabase(String addressOrganiserDatabase) {
         this.addressOrganiserDatabase = addressOrganiserDatabase;
+        database.setDatabase(addressOrganiserDatabase);
     }
 
     /**
@@ -176,6 +188,7 @@ public class Game {
      */
     public void setTermination(Termination termination) {
         this.termination = termination;
+        database.setTermination(termination);
     }
 
     /**
@@ -184,6 +197,7 @@ public class Game {
      */
     public void setFeatureSet(FeatureSet featureSet) {
         this.featureSet = featureSet;
+        database.setFeatures(featureSet);
     }
 
     /**
@@ -192,6 +206,7 @@ public class Game {
      */
     public void setGamemode(Gamemode gamemode) {
         this.gamemode = gamemode;
+        database.setGamemode(gamemode);
     }
 
     /**
