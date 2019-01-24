@@ -52,7 +52,9 @@ public class RESTMLServer implements MLServer {
 
     @Override
     public FeatureSet getFeatures(String dataset) throws IOException {
-        writeDataset(dataset);
+        if (!datasetExists(dataset)) {
+            writeDataset(dataset);
+        }
         return FeatureSetUtils.loadFeatureSet(dataset);
     }
 
@@ -89,5 +91,10 @@ public class RESTMLServer implements MLServer {
         }
         zipFile.close();
         tmpZipFile.delete();
+    }
+
+    private boolean datasetExists(String dataset) {
+        File dataSetFolder = new File(homeDir + File.separator + dataset);
+        return dataSetFolder.exists();
     }
 }
