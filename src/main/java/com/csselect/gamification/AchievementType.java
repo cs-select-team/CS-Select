@@ -6,4 +6,153 @@ package com.csselect.gamification;
  */
 public enum AchievementType {
 
+    PLAY_ONE_ROUND {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    PLAY_FIVE_ROUND {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    PLAY_TEN_ROUND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    PLAY_FOURTYTWO_ROUND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    PLAY_HUNDRED_ROUND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    STREAK_TWO  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    STREAK_FIVE  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    STREAK_TEN  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    DAILY_ONE  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    DAILY_THREE  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    DAILY_SEVEN  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_HUNDRED  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_TWOHUNDREDFIFTY  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_FIVEHUNDRED  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_THOUSAND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_TWOTHOUSAND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    TOTAL_SCORE_FIVETHOUSAND  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    ROUND_SCORE_SIXTY  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    ROUND_SCORE_SEVENTY  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    ROUND_SCORE_EIGHTY  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    },
+
+    ROUND_SCPRE_NINETY  {
+        @Override
+        public Achievement checkProgress(PlayerStats stats) {
+            return null;
+        }
+    };
+
+    public abstract Achievement checkProgress(PlayerStats stats);
+
 }
