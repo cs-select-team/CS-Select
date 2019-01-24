@@ -36,12 +36,12 @@ public class BinarySelect extends Gamemode {
     }
 
     @Override
-    public StandardRound createRound(Player player, int number) {
-        if(player == null) {
+    public StandardRound createRound(Player player) {
+        if (player == null) {
             return null;
         }
 
-        return new StandardRound(player, number, NUMBER_OF_SELECTIONS, FEATURES_PER_SELECTION, MIN_SELECT, MAX_SELECT);
+        return new StandardRound(player, NUMBER_OF_SELECTIONS, FEATURES_PER_SELECTION, MIN_SELECT, MAX_SELECT);
     }
 
     @Override

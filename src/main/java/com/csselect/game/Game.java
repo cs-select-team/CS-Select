@@ -1,12 +1,13 @@
 package com.csselect.game;
 
-import com.csselect.database.GameAdapter;
+import com.csselect.Injector;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.GameAdapter;
 import com.csselect.mlserver.MLServer;
 import com.csselect.user.Player;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * The Game class represents a game, manages invited and playing players, the information the organiser specified
@@ -16,11 +17,11 @@ import java.util.List;
 public class Game {
     private String title;
     private String description;
-    private int id;
+    private final int id;
     private String addressOrganiserDatabase;
     private Termination termination;
     private FeatureSet featureSet;
-    private GameAdapter database;
+    private final GameAdapter database;
     private MLServer mlserver;
     private Gamemode gamemode;
 
@@ -30,6 +31,8 @@ public class Game {
      */
     public Game(int id) {
         this.id = id;
+        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        this.database =  adapter.getGameAdapter(this.id);
     }
 
     /**
@@ -69,11 +72,11 @@ public class Game {
      * @return if the game is finished, return true, else false
      */
     public boolean isTerminated() {
-        if(this.database.isFinished()) {
+        if (this.database.isFinished()) {
             return true;
         }
-        if(this.termination.checkTermination()) {
-            this.database.setFinished();
+        if (this.termination.checkTermination()) {
+            this.terminateGame();
             return true;
         }
         return false;
@@ -84,8 +87,7 @@ public class Game {
      * @return the email-addresses of the players who are invited to the game but did not accept or decline yet
      */
     public Collection<String> getInvitedPlayers() {
-       // return this.database.getInvitedPlayers();
-        return null;
+        return this.database.getInvitedPlayers();
     }
 
     /**
@@ -203,10 +205,13 @@ public class Game {
     /**
      * Adds invited the email-addresses of invited players to the collection invitedPlayers
      * @param playerEmails the collection of email-addresses of invited players
-     * @return true if successful, false if a player was already invited or playing or the game is terminated already
      */
-    public boolean invitePlayers(Collection<String> playerEmails) {
-        return false;
+    public void invitePlayers(Collection<String> playerEmails) {
+        if (this.isTerminated()) {
+            return;
+        }
+
+        this.database.addInvitedPlayers(playerEmails);
     }
 
     /**
@@ -214,20 +219,44 @@ public class Game {
      * playingPlayers
      * @param playerID the ID {@link Player} of the player who accepted the invite
      * @param email the email-address of the player who accepted the invite
-     * @return true if successful, false if the player was not invited or has already accepted or the game is
-     * terminated already
      */
-    public boolean acceptInvite(int playerID, String email) {
-        return false;
+    public void acceptInvite(int playerID, String email) {
+        if (this.isTerminated()) {
+            return;
+        }
+
+        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
+
+        boolean isInvited = false;
+        for (String invPlayerEmail : invitedPlayers) {
+            if (invPlayerEmail.equals(email)) {
+                isInvited = true;
+            }
+        }
+
+        if (!isInvited) {
+            return;
+        }
+
+        this.database.addPlayingPlayer(playerID);
     }
 
     /**
      * Deletes the email-address from the collection invitedPlayers when a player declines an invite
      * @param email the email-address of the declining player
-     * @return true if successful, false if the player had no invite or the game is terminated already
      */
-    public boolean declineInvite(String email) {
-        return false;
+    public void declineInvite(String email) {
+        if (this.isTerminated()) {
+            return;
+        }
+
+        if (!this.checkInvitedPlayers(email)) {
+            return;
+        }
+
+        Collection<String> invitedPlayer = new ArrayList<>();
+        invitedPlayer.add(email);
+        this.database.removeInvitedPlayers(invitedPlayer);
     }
 
     /**
@@ -238,23 +267,57 @@ public class Game {
      * if the player is not allowed to start rounds or the game is terminated already
      */
     public Collection<Feature> startRound(int playerID) {
-        return null;
+        if (this.isTerminated()) {
+            return null;
+        }
+
+        Collection<Player> players = this.database.getPlayingPlayers();
+        Player playingPlayer = null;
+        for (Player player : players) {
+            if (player.getId() == playerID) {
+                playingPlayer = player;
+            }
+        }
+        if (playingPlayer == null) {
+            return null;
+        }
+
+        Round round = this.gamemode.createRound(playingPlayer);
+        round.setGame(this);
+        return round.start();
     }
 
     /**
      * Terminates the game, sets terminated to true and adjusts the game status in the database
-     * @return true if successful, false if game was already terminated
      */
-    public boolean terminateGame() {
-        return false;
+    public void terminateGame() {
+
+        if (this.database.isFinished()) {
+            return;
+        }
+
+        this.database.setFinished();
     }
 
     /**
      * Adds a finished round to the system and causes the round to be stored in the database
      * @param round the finished round
      */
-    public void addFinishedRound(Round round) {
+    void addFinishedRound(Round round) {
+        this.database.addRound(round);
+        this.isTerminated();
+    }
 
+    private boolean checkInvitedPlayers(String email) {
+        Collection<String> invitedPlayers = this.database.getInvitedPlayers();
+
+        for (String invPlayerEmail : invitedPlayers) {
+            if (invPlayerEmail.equals(email)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

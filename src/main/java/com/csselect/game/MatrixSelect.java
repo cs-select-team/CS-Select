@@ -12,11 +12,11 @@ public class MatrixSelect extends Gamemode {
     /**
      * The number of selections of features in the MatrixSelect game mode
      */
-    public static final int NUMBER_OF_SELECTIONS = 5;
+    public static final int NUMBER_OF_SELECTIONS = 1;
 
-    private int numberOfFeatures;
-    private int minSelect;
-    private int maxSelect;
+    private final int numberOfFeatures;
+    private final int minSelect;
+    private final int maxSelect;
 
     /**
      * Constructor for a matrix select object
@@ -31,14 +31,14 @@ public class MatrixSelect extends Gamemode {
     }
 
     @Override
-    public StandardRound createRound(Player player, int number) {
-        if(player == null) {
+    public StandardRound createRound(Player player) {
+        if (player == null) {
             return null;
         }
 
-        return new StandardRound(player, number, NUMBER_OF_SELECTIONS, this.numberOfFeatures, this.minSelect, this.maxSelect);
+        return new StandardRound(player, NUMBER_OF_SELECTIONS, this.numberOfFeatures, this.minSelect, this.maxSelect);
     }
-
+  
     @Override
     public String toString() {
         return "matrixSelect," + numberOfFeatures + "," + minSelect + "," + maxSelect;

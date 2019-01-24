@@ -63,7 +63,7 @@ public class GamemodeCompositeTests extends TestClass {
 
         this.gamemodeComposite.add(testBinary);
 
-        Assert.assertNotNull(this.gamemodeComposite.createRound(player, 0));
+        Assert.assertNotNull(this.gamemodeComposite.createRound(player));
 
     }
 
@@ -78,7 +78,7 @@ public class GamemodeCompositeTests extends TestClass {
         this.gamemodeComposite.add(testBinary);
         this.gamemodeComposite.add(testBinaryB);
 
-        Assert.assertNotNull(this.gamemodeComposite.createRound(player, 0));
+        Assert.assertNotNull(this.gamemodeComposite.createRound(player));
 
     }
 

@@ -6,7 +6,7 @@ package com.csselect.game;
  */
 public class NumberOfRoundsTermination extends Termination {
 
-    private int number;
+    private final int number;
     /**
      * Constructor for a number of rounds termination object
      * @param number the number of rounds {@link Round} after that the game {@link Game} terminates
@@ -17,13 +17,9 @@ public class NumberOfRoundsTermination extends Termination {
 
     @Override
     public boolean checkTermination() {
-        boolean finished = (this.number >= this.game.getNumberOfRounds());
-        if(finished) {
-            this.game.terminateGame();
-        }
-        return finished;
+        return this.number <= this.game.getNumberOfRounds();
     }
-
+    
     @Override
     public String toString() {
         return "rounds:" + number;

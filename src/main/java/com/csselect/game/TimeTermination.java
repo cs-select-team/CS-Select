@@ -15,7 +15,7 @@ public class TimeTermination extends Termination {
      * Constructor of a time termination object
      * @param date the time at which the game is to be terminated
      */
-    public TimeTermination(LocalDateTime date){
+    public TimeTermination(LocalDateTime date) {
         this.date = date;
     }
 
@@ -25,13 +25,9 @@ public class TimeTermination extends Termination {
             return false;
         }
         LocalDateTime currentTime = LocalDateTime.now();
-        boolean finished = currentTime.isAfter(this.date);
-        if(finished) {
-            this.game.terminateGame();
-        }
-        return finished;
+        return currentTime.isAfter(this.date);
     }
-
+    
     @Override
     public String toString() {
         return "time:" + date.toEpochSecond(ZoneOffset.UTC);

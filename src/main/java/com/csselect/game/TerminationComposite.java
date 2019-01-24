@@ -11,7 +11,7 @@ import java.util.StringJoiner;
  */
 public class TerminationComposite extends Termination {
 
-    private Set<Termination> terminations;
+    private final Set<Termination> terminations;
 
     /**
      * Constructor of a termination composite object.
@@ -25,8 +25,8 @@ public class TerminationComposite extends Termination {
      * @return true if at least one termination cause {@link Termination} is reached, false else
      */
     public boolean checkTermination() {
-        for(Termination termination : this.terminations) {
-            if(termination.checkTermination()) {
+        for (Termination termination : this.terminations) {
+            if (termination.checkTermination()) {
                 return true;
             }
         }
@@ -38,9 +38,14 @@ public class TerminationComposite extends Termination {
      * @param termination the termination {@link Termination} cause to be added
      */
     public void add(Termination termination) {
-        if(termination == null) {
+        if (termination == null) {
             return;
         }
+
+        if (!(this.game == null)) {
+            termination.setGame(this.game);
+        }
+
         this.terminations.add(termination);
     }
 
@@ -52,6 +57,14 @@ public class TerminationComposite extends Termination {
         this.terminations.remove(termination);
     }
 
+    @Override
+    public void setGame(Game game) {
+        this.game = game;
+        for (Termination termination : this.terminations) {
+            termination.setGame(game);
+        }
+    }
+    
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(",");
