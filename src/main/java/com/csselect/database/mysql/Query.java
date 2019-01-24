@@ -38,6 +38,7 @@ final class Query {
             + "databasename VARCHAR(40),"
             + "isTerminated BOOLEAN,"
             + "dataset VARCHAR(255),"
+            + "termination VARCHAR(255),"
             + "gamemode VARCHAR(40));";
 
     @Language("sql")
