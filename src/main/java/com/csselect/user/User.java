@@ -1,6 +1,7 @@
 package com.csselect.user;
 
 import com.csselect.database.UserAdapter;
+import com.csselect.user.management.safety.Encrypter;
 
 /**
  * This class represents an user in our system. All users, despite their role, have access to those methods.
@@ -71,7 +72,9 @@ public class User {
      * @param password New password which will be set for object's ID in our database.
      */
     public void changePassword(String password) {
-
+        String salt = Encrypter.getRandomSalt();
+        String concatenated = password + salt;
+        userAdapter.setPassword(Encrypter.encrypt(concatenated), salt);
     }
 
     /**
@@ -91,6 +94,14 @@ public class User {
      */
     public void setLanguage(String langCode) {
         userAdapter.setLanguage(langCode);
+    }
+
+    /**
+     * Returns language code of language selected by the user
+     * @return String representing lang code
+     */
+    public String getLanguage() {
+        return userAdapter.getLanguage();
     }
 
     @Override

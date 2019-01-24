@@ -1,12 +1,9 @@
 package com.csselect.email;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
-
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 
 /**
  * Class handling the sending of emails
@@ -23,20 +20,24 @@ public final class EmailSender {
      * @param header the emails header
      * @param message the emails message
      */
-    public static void sendEmail(String sender, String recipient, String header, String message) {
-        Properties p = new Properties();
-        Session s = javax.mail.Session.getInstance(p);
-        MimeMessage mime = new javax.mail.internet.MimeMessage(s);
+    public static void sendEmail(String recipient, String header, String message) {
+        Email email = new SimpleEmail();
+        email.setStartTLSRequired(true);
+        email.setHostName("mail.gmx.net");
+        email.setSslSmtpPort("465");
+        email.setAuthenticator(new DefaultAuthenticator("csselect@gmx.de", "PSEWs2018/19"));
+        email.setSSLOnConnect(true);
         try {
-            javax.mail.internet.InternetAddress from = new InternetAddress(sender, sender);
-            mime.setFrom(from);
-            mime.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-            mime.addRecipient(Message.RecipientType.CC, new InternetAddress(sender));
-            mime.setSubject(header);
-            mime.setText(message);
-            Transport.send(mime);
-        } catch (Exception e) {
-            System.out.println("Email failure: " + e.toString());
+            email.getMailSession().getProperties().put("mail.smtp.auth", "true");
+            email.getMailSession().getProperties().put("mail.smtp.**ssl.enable", "true");
+            email.getMailSession().getProperties().put("mail.smtp.**ssl.required", "true");
+            email.setFrom("csselect@gmx.de");
+            email.setSubject(header);
+            email.setMsg(message);
+            email.addTo(recipient);
+            email.send();
+        } catch (EmailException e) {
+            e.printStackTrace();
         }
     }
 }
