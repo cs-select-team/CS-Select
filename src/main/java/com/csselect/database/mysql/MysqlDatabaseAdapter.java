@@ -36,6 +36,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private final Map<String, MysqlDataSource> dataSources;
 
     private final Map<Game, Organiser> gameMap;
+    private final Map<Integer, GameAdapter> gameAdapterMap;
 
     /**
      * Creates a new MysqlDatabaseAdapter
@@ -44,6 +45,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Inject
     MysqlDatabaseAdapter(Configuration configuration) {
         gameMap = new HashMap<>();
+        gameAdapterMap = new HashMap<>();
         this.hostname = configuration.getDatabaseHostname();
         this.port = configuration.getDatabasePort();
         this.username = configuration.getDatabaseUsername();
@@ -74,7 +76,20 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     @Override
     public GameAdapter getGameAdapter(int id) {
-        return new MysqlGameAdapter(id);
+        if (gameAdapterMap.containsKey(id)) {
+            return gameAdapterMap.get(id);
+        } else if (id < getNextGameID()) {
+            MysqlGameAdapter adapter = new MysqlGameAdapter(id);
+            gameAdapterMap.put(id, adapter);
+            return new MysqlGameAdapter(id);
+        } else {
+            try {
+                return new MysqlGameAdapter();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     @Override
