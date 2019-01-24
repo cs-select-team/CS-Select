@@ -6,35 +6,35 @@ package com.csselect.gamification;
  */
 public enum AchievementType {
 
-    PLAY_ONE_ROUND {
+    PLAY_ROUND_ONE {
         @Override
         public Achievement checkProgress(PlayerStats stats) {
             return null;
         }
     },
 
-    PLAY_FIVE_ROUND {
+    PLAY_ROUND_FIVE {
         @Override
         public Achievement checkProgress(PlayerStats stats) {
             return null;
         }
     },
 
-    PLAY_TEN_ROUND  {
+    PLAY_ROUND_TEN  {
         @Override
         public Achievement checkProgress(PlayerStats stats) {
             return null;
         }
     },
 
-    PLAY_FOURTYTWO_ROUND  {
+    PLAY_ROUND_FOURTYTWO  {
         @Override
         public Achievement checkProgress(PlayerStats stats) {
             return null;
         }
     },
 
-    PLAY_HUNDRED_ROUND  {
+    PLAY_ROUND_HUNDRED  {
         @Override
         public Achievement checkProgress(PlayerStats stats) {
             return null;
