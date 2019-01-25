@@ -188,6 +188,7 @@ public class Game {
      */
     public void setTermination(Termination termination) {
         this.termination = termination;
+        termination.setGame(this);
         database.setTermination(termination);
     }
 
