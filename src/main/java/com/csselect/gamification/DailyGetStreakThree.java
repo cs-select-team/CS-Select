@@ -8,14 +8,16 @@ import java.time.LocalDate;
  */
 public class DailyGetStreakThree extends DailyChallenge {
 
+    private final static String GERMAN_NAME = "Spiele drei Runden am Stück.";
+    private final static String ENGLISH_NAME = "Play three rounds in a row.";
     private int dailyStreak;
 
     /**
      * Creates a daily challenge by setting the necessary values.
      */
     public DailyGetStreakThree() {
-        this.name = "";
-        this.description = "";
+        this.germanName = GERMAN_NAME;
+        this.englishName = ENGLISH_NAME;
         this.date = null;
         this.completed = false;
         this.reward = 50;
@@ -23,8 +25,6 @@ public class DailyGetStreakThree extends DailyChallenge {
     }
 
     public DailyGetStreakThree(LocalDate date, boolean completed, int dailyStreak) {
-        this.name = "";
-        this.description = "";
         this.date = date;
         this.completed = completed;
         this.reward = 50;

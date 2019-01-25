@@ -9,11 +9,11 @@ import java.time.LocalDate;
  */
 public abstract class DailyChallenge {
 
-    protected String name;
-    protected String description;
-    protected LocalDate date;
-    protected boolean completed;
-    protected int reward;
+    String germanName;
+    String englishName;
+    LocalDate date;
+    boolean completed;
+    int reward;
 
     /**
      * This method is abstract and has to be implemented in all subclasses. This method
@@ -30,19 +30,19 @@ public abstract class DailyChallenge {
     public abstract void resetDaily();
 
     /**
-     * Gets the name of the daily challenge.
+     * Gets the German name of the daily challenge.
      * @return The name of the daily.
      */
-    public String getName() {
-        return name;
+    public String getGermanName() {
+        return germanName;
     }
 
     /**
-     * Gets the description of what a player has to do to complete the daily challenge.
-     * @return The description of the daily.
+     * Gets the English name of the daily challenge.
+     * @return The name of the daily.
      */
-    public String getDescription() {
-        return description;
+    public String getEnglishName() {
+        return englishName;
     }
 
     /**
