@@ -84,7 +84,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             return new MysqlGameAdapter(id);
         } else {
             try {
-                return new MysqlGameAdapter();
+                MysqlGameAdapter adapter = new MysqlGameAdapter();
+                gameAdapterMap.put(id, adapter);
+                return adapter;
             } catch (SQLException e) {
                 e.printStackTrace();
                 return null;
