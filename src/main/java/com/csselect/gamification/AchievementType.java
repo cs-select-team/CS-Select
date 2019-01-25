@@ -7,6 +7,9 @@ package com.csselect.gamification;
  */
 public enum AchievementType {
 
+    /**
+     * This type of achievement is completed after having played one round.
+     */
     PLAY_ROUND_ONE {
         private final static String GERMAN_NAME = "Die allererste Runde!";
         private final static String GERMAN_DESCRIPTION = "Spiele eine Runde.";
@@ -42,6 +45,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having played five rounds.
+     */
     PLAY_ROUND_FIVE {
         private final static String GERMAN_NAME = "Fünf!";
         private final static String GERMAN_DESCRIPTION = "Spiele fünf Runden.";
@@ -82,6 +88,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having played ten rounds.
+     */
     PLAY_ROUND_TEN  {
         private final static String GERMAN_NAME = "Treuer Mitspieler!";
         private final static String GERMAN_DESCRIPTION = "Spiele zehn Runden.";
@@ -126,7 +135,10 @@ public enum AchievementType {
         }
     },
 
-    PLAY_ROUND_FOURTYTWO  {
+    /**
+     * This type of achievement is completed after having played 42 rounds.
+     */
+    PLAY_ROUND_FORTYTWO  {
         private final static String GERMAN_NAME = "Die Antwort auf alles!";
         private final static String GERMAN_DESCRIPTION = "Spiele 42 Runden.";
         private final static String ENGLISH_NAME = "The answer to everything!";
@@ -170,6 +182,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having played 100 rounds.
+     */
     PLAY_ROUND_HUNDRED  {
         private final static String GERMAN_NAME = "Es hört nie auf!";
         private final static String GERMAN_DESCRIPTION = "Spiele 100 Runden.";
@@ -214,6 +229,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a streak of two.
+     */
     STREAK_TWO  {
         private final static String GERMAN_NAME = "Zwei am Stück!";
         private final static String GERMAN_DESCRIPTION = "Spiele zwei Runden in Folge.";
@@ -249,6 +267,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a streak of five.
+     */
     STREAK_FIVE  {
         private final static String GERMAN_NAME = "Alle guten Dinge sind fünf!";
         private final static String GERMAN_DESCRIPTION = "Spiele fünf Runden in Folge.";
@@ -288,6 +309,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a streak of ten.
+     */
     STREAK_TEN  {
         private final static String GERMAN_NAME = "Niemals aufhören!";
         private final static String GERMAN_DESCRIPTION = "Spiele zehn Runden in Folge.";
@@ -331,6 +355,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having completed one daily challenge.
+     */
     DAILY_ONE  {
         private final static String GERMAN_NAME = "Tägliche Aufgabe!";
         private final static String GERMAN_DESCRIPTION = "Schließe eine Daily-Challenge ab.";
@@ -366,6 +393,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having completed three daily challenges.
+     */
     DAILY_THREE  {
         private final static String GERMAN_NAME = "Daily-Challenge Veteran!";
         private final static String GERMAN_DESCRIPTION = "Schließe drei Daily-Challenges ab.";
@@ -405,6 +435,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having completed seven daily challenges.
+     */
     DAILY_SEVEN  {
         private final static String GERMAN_NAME = "Daily-Challenge Meister!";
         private final static String GERMAN_DESCRIPTION = "Schließe sieben Daily-Challenges ab.";
@@ -448,6 +481,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 100.
+     */
     TOTAL_SCORE_HUNDRED  {
         private final static String GERMAN_NAME = "100 Punkte!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 100 Punkten.";
@@ -483,6 +519,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 250.
+     */
     TOTAL_SCORE_TWOHUNDREDFIFTY  {
         private final static String GERMAN_NAME = "Mehr Punkte!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 250 Punkten.";
@@ -522,6 +561,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 500.
+     */
     TOTAL_SCORE_FIVEHUNDRED  {
         private final static String GERMAN_NAME = "Punktesammler!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 500 Punkten.";
@@ -565,6 +607,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 1000.
+     */
     TOTAL_SCORE_THOUSAND  {
         private final static String GERMAN_NAME = "Ich mag dieses Spiel!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 1000 Punkten.";
@@ -608,6 +653,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 2000.
+     */
     TOTAL_SCORE_TWOTHOUSAND  {
         private final static String GERMAN_NAME = "Ich höre nie auf!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 2000 Punkten.";
@@ -651,6 +699,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a total score of 5000.
+     */
     TOTAL_SCORE_FIVETHOUSAND  {
         private final static String GERMAN_NAME = "CS:Select Koryphäe!";
         private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 5000 Punkten.";
@@ -694,7 +745,9 @@ public enum AchievementType {
         }
     },
 
-
+    /**
+     * This type of achievement is completed after having reached a round score of 60.
+     */
     ROUND_SCORE_SIXTY  {
         private final static String GERMAN_NAME = "Nicht schlecht!";
         private final static String GERMAN_DESCRIPTION = "Erreiche 60 Punkte nach einer einzelnen Runde.";
@@ -730,6 +783,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a round score of 70.
+     */
     ROUND_SCORE_SEVENTY  {
         private final static String GERMAN_NAME = "Gute Auswahl!";
         private final static String GERMAN_DESCRIPTION = "Erreiche 70 Punkte nach einer einzelnen Runde.";
@@ -769,6 +825,9 @@ public enum AchievementType {
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a round score of 80.
+     */
     ROUND_SCORE_EIGHTY  {
         private final static String GERMAN_NAME = "Profi!";
         private final static String GERMAN_DESCRIPTION = "Erreiche 80 Punkte nach einer einzelnen Runde.";
@@ -793,25 +852,28 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
+    /**
+     * This type of achievement is completed after having reached a round score of 90.
+     */
     ROUND_SCORE_NINETY  {
         private final static String GERMAN_NAME = "Fachexperte!";
         private final static String GERMAN_DESCRIPTION = "Erreiche 90 Punkte nach einer einzelnen Runde.";
