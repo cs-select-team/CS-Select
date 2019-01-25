@@ -215,6 +215,11 @@ public enum AchievementType {
     },
 
     STREAK_TWO  {
+        private final static String GERMAN_NAME = "Zwei am Stück!";
+        private final static String GERMAN_DESCRIPTION = "Spiele zwei Runden in Folge.";
+        private final static String ENGLISH_NAME = "Two in a row!";
+        private final static String ENGLISH_DESCRIPTION = "Play two rounds in a row.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getHighestStreak() >= 2) {
@@ -225,26 +230,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     STREAK_FIVE  {
+        private final static String GERMAN_NAME = "Alle guten Dinge sind fünf!";
+        private final static String GERMAN_DESCRIPTION = "Spiele fünf Runden in Folge.";
+        private final static String ENGLISH_NAME = "All good things come in fives!";
+        private final static String ENGLISH_DESCRIPTION = "Play five rounds in a row.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getHighestStreak() >= 5) {
@@ -259,26 +269,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     STREAK_TEN  {
+        private final static String GERMAN_NAME = "Niemals aufhören!";
+        private final static String GERMAN_DESCRIPTION = "Spiele zehn Runden in Folge.";
+        private final static String ENGLISH_NAME = "Never stop!";
+        private final static String ENGLISH_DESCRIPTION = "Play ten rounds in a row.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getHighestStreak() >= 10) {
@@ -297,26 +312,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     DAILY_ONE  {
+        private final static String GERMAN_NAME = "Tägliche Aufgabe!";
+        private final static String GERMAN_DESCRIPTION = "Schließe eine Daily-Challenge ab.";
+        private final static String ENGLISH_NAME = "Daily task!";
+        private final static String ENGLISH_DESCRIPTION = "Complete one daily challenge.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getDailiesCompleted() >= 1) {
@@ -327,26 +347,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     DAILY_THREE  {
+        private final static String GERMAN_NAME = "Daily-Challenge Veteran!";
+        private final static String GERMAN_DESCRIPTION = "Schließe drei Daily-Challenges ab.";
+        private final static String ENGLISH_NAME = "Daily challenge veteran!";
+        private final static String ENGLISH_DESCRIPTION = "Complete three daily challenges.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getDailiesCompleted() >= 3) {
@@ -361,26 +386,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     DAILY_SEVEN  {
+        private final static String GERMAN_NAME = "Daily-Challenge Meister!";
+        private final static String GERMAN_DESCRIPTION = "Schließe sieben Daily-Challenges ab.";
+        private final static String ENGLISH_NAME = "Daily challenge master!";
+        private final static String ENGLISH_DESCRIPTION = "Complete seven daily challenges.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getDailiesCompleted() >= 7) {
@@ -399,26 +429,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_HUNDRED  {
+        private final static String GERMAN_NAME = "100 Punkte!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 100 Punkten.";
+        private final static String ENGLISH_NAME = "100 points!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 100 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 100) {
@@ -429,26 +464,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_TWOHUNDREDFIFTY  {
+        private final static String GERMAN_NAME = "Mehr Punkte!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 250 Punkten.";
+        private final static String ENGLISH_NAME = "More points!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 250 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 250) {
@@ -463,26 +503,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_FIVEHUNDRED  {
+        private final static String GERMAN_NAME = "Punktesammler!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 500 Punkten.";
+        private final static String ENGLISH_NAME = "Points collector!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 500 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 500) {
@@ -501,26 +546,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_THOUSAND  {
+        private final static String GERMAN_NAME = "Ich mag dieses Spiel!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 1000 Punkten.";
+        private final static String ENGLISH_NAME = "I like this game!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 1000 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 1000) {
@@ -539,26 +589,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_TWOTHOUSAND  {
+        private final static String GERMAN_NAME = "Ich höre nie auf!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 2000 Punkten.";
+        private final static String ENGLISH_NAME = "I will not stop!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 2000 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 2000) {
@@ -577,26 +632,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     TOTAL_SCORE_FIVETHOUSAND  {
+        private final static String GERMAN_NAME = "CS:Select Koryphäe!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 5000 Punkten.";
+        private final static String ENGLISH_NAME = "CS:Select luminary!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a total of 5000 points.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 5000) {
@@ -615,26 +675,32 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
+
     ROUND_SCORE_SIXTY  {
+        private final static String GERMAN_NAME = "Nicht schlecht!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche 60 Punkte nach einer einzelnen Runde.";
+        private final static String ENGLISH_NAME = "Not bad!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a score of 60 after a single round.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getMaxRoundScore() >= 60) {
@@ -645,26 +711,31 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     ROUND_SCORE_SEVENTY  {
+        private final static String GERMAN_NAME = "Gute Auswahl!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche 70 Punkte nach einer einzelnen Runde.";
+        private final static String ENGLISH_NAME = "Good choice!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a score of 70 after a single round.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getMaxRoundScore() >= 70) {
@@ -679,27 +750,30 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     },
 
     ROUND_SCORE_EIGHTY  {
-        private final static String GERMAN_NAME = "B";
+        private final static String GERMAN_NAME = "Profi!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche 80 Punkte nach einer einzelnen Runde.";
+        private final static String ENGLISH_NAME = "Pro!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a score of 80 after a single round.";
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -739,6 +813,11 @@ public enum AchievementType {
     },
 
     ROUND_SCORE_NINETY  {
+        private final static String GERMAN_NAME = "Fachexperte!";
+        private final static String GERMAN_DESCRIPTION = "Erreiche 90 Punkte nach einer einzelnen Runde.";
+        private final static String ENGLISH_NAME = "Domain expert!";
+        private final static String ENGLISH_DESCRIPTION = "Reach a score of 90 after a single round.";
+
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getMaxRoundScore() >= 90) {
@@ -757,22 +836,22 @@ public enum AchievementType {
 
         @Override
         public String getGermanName() {
-            return null;
+            return GERMAN_NAME;
         }
 
         @Override
         public String getGermanDescription() {
-            return null;
+            return GERMAN_DESCRIPTION;
         }
 
         @Override
         public String getEnglishName() {
-            return null;
+            return ENGLISH_NAME;
         }
 
         @Override
         public String getEnglishDescription() {
-            return null;
+            return ENGLISH_DESCRIPTION;
         }
     };
 
