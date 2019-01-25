@@ -11,8 +11,8 @@ final class Query {
     static final String CREATE_PLAYER_TABLE
             = "CREATE TABLE IF NOT EXISTS players("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
-            + "hash VARCHAR(40),"
-            + "salt VARCHAR(40),"
+            + "hash VARCHAR(255),"
+            + "salt VARCHAR(255),"
             + "email VARCHAR(255),"
             + "language VARCHAR(40),"
             + "username VARCHAR(40));";
@@ -21,8 +21,8 @@ final class Query {
     static final String CREATE_ORGANISER_TABLE
             = "CREATE TABLE IF NOT EXISTS organisers("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
-            + "hash VARCHAR(40),"
-            + "salt VARCHAR(40),"
+            + "hash VARCHAR(255),"
+            + "salt VARCHAR(255),"
             + "email VARCHAR(255),"
             + "language VARCHAR(40));";
 
