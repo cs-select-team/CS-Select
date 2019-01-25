@@ -28,6 +28,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
 
     private String databaseName;
+    private String title;
+    private String description;
 
     /**
      * Creates a new {@link MysqlGameAdapter} with the given id
@@ -48,12 +50,19 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public String getTitle() {
-        return getString("title");
+        if (title == null) {
+            title = getString("title");
+        }
+        return title;
+
     }
 
     @Override
     public String getDescription() {
-        return getString("description");
+        if (description == null) {
+            description = getString("description");
+        }
+        return description;
     }
 
     @Override
