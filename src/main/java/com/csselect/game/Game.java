@@ -334,6 +334,19 @@ public class Game {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof Game)) {
+            return false;
+        } else {
+            return this.id == ((Game) o).id;
+        }
+    }
 
-
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
