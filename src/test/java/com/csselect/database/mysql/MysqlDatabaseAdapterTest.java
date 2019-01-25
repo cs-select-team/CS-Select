@@ -5,15 +5,22 @@ import com.csselect.MysqlTestClass;
 import com.csselect.configuration.Configuration;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
+import com.csselect.game.BinarySelect;
+import com.csselect.game.Game;
+import com.csselect.game.NumberOfRoundsTermination;
+import com.csselect.mlserver.MLServer;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import com.csselect.utils.FeatureSetUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
@@ -25,6 +32,9 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
     private static final String TEST_SALT = "salt";
     private static final String TEST_USERNAME = "tester";
     private static final String TEST_USERNAME2 = "tester2";
+    private static final String TEST_TITLE ="title";
+    private static final String TEST_DESC = "description";
+    private static final String TEST_DB = "db";
 
     @Override
     public void setUp() {
@@ -133,5 +143,37 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         Assert.assertEquals(TEST_SALT, mysqlDatabaseAdapter.getPlayerSalt(player.getId()));
         Assert.assertEquals(TEST_HASH, mysqlDatabaseAdapter.getOrganiserHash(organiser.getId()));
         Assert.assertEquals(TEST_SALT, mysqlDatabaseAdapter.getOrganiserSalt(organiser.getId()));
+    }
+
+    @Test
+    public void testGameCreation() throws IOException {
+        Game game = createGame();
+        Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
+        Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_HASH, TEST_SALT, TEST_USERNAME);
+        Collection<String> invitedEmails = new HashSet<>();
+        Collection<String> expectedInvitedPlayers = new HashSet<>();
+        invitedEmails.add(TEST_EMAIL);
+        invitedEmails.add(TEST_EMAIL2);
+        expectedInvitedPlayers.add(TEST_EMAIL2);
+        mysqlDatabaseAdapter.registerGame(organiser, game);
+        game.invitePlayers(invitedEmails);
+        game.acceptInvite(player.getId(), TEST_EMAIL);
+        Assert.assertEquals(expectedInvitedPlayers, game.getInvitedPlayers());
+        Assert.assertEquals(1, game.getPlayingPlayers().size());
+        Assert.assertTrue(game.getPlayingPlayers().contains(player));
+        Game sameGame = new Game(1);
+        Assert.assertEquals(game, sameGame);
+    }
+
+    private Game createGame() throws IOException {
+        Game game = new Game(1);
+        game.setGamemode(new BinarySelect());
+        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        game.setTitle(TEST_TITLE);
+        game.setDescription(TEST_DESC);
+        game.setAddressOrganiserDatabase(TEST_DB);
+        game.setFeatureSet(FeatureSetUtils.loadFeatureSet("populationGender"));
+        game.setTermination(new NumberOfRoundsTermination(5));
+        return game;
     }
 }
