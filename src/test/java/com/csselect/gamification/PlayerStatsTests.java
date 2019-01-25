@@ -1,20 +1,22 @@
 package com.csselect.gamification;
 
 import com.csselect.TestClass;
+import com.csselect.database.PlayerStatsAdapter;
+import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class PlayerStatsTests extends TestClass {
 
+    private PlayerStatsAdapter playerStatsAdapter;
     private PlayerStats stats;
-
 
     @Override
     public void setUp() {
-        stats = new PlayerStats();
+        playerStatsAdapter = new MockPlayerStatsAdapter();
+        stats = new PlayerStats(playerStatsAdapter);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.8);
         Assert.assertEquals(1, stats.getRoundsPlayed());
         stats.finishRound(0.44);
-        Assert.assertEquals(2, stats.getRoundsPlayed());
+        Assert.assertEquals(stats.getRoundsPlayed(), 2);
         stats.finishRound(0.92);
         stats.finishRound(0.77);
         stats.finishRound(0.47);

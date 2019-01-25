@@ -13,48 +13,31 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
-    private PlayerStatsAdapter databaseAdapter;
+    private PlayerStatsAdapter playerStatsAdapter;
     private Streak streak;
     private DailyChallenge activeDaily;
     private List<DailyChallenge> dailies;
-    private int score;
-    private int roundsPlayed;
-    private int dailiesCompleted;
-    private int maxRoundScore;
-    private int lastScore;
-    private int highestStreak;
 
     public PlayerStats(PlayerStatsAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
-        // TODO
-    }
-
-    public PlayerStats() {
+        this.playerStatsAdapter = databaseAdapter;
         this.streak = new Streak();
         this.dailies = loadDailies();
         this.activeDaily = chooseRandomDaily();
-        this.score = 0;
-        this.roundsPlayed = 0;
-        this.dailiesCompleted = 0;
-        this.maxRoundScore = 0;
-        this.lastScore = 0;
-        this.highestStreak = 0;
     }
-
 
     @Override
     public int finishRound(double score) {
         int commutedScore = commuteScore(score);
-        lastScore = commutedScore;
+        playerStatsAdapter.setLastScore(commutedScore);
 
-        if (maxRoundScore < commutedScore) {
-            maxRoundScore = commutedScore;
+        if (playerStatsAdapter.getMaxRoundScore() < commutedScore) {
+            playerStatsAdapter.setMaxRoundScore(commutedScore);
         }
 
         streak.increaseStreak();
         int newStreak = streak.getCounter();
-        if (highestStreak < newStreak) {
-            highestStreak = newStreak;
+        if (playerStatsAdapter.getHighestStreak() < newStreak) {
+            playerStatsAdapter.setHighestStreak(newStreak);
         }
 
         int gamificationScore = addStreakBonus(newStreak, commutedScore);
@@ -62,8 +45,8 @@ public class PlayerStats implements Gamification {
         selectDaily();
         gamificationScore = addDailyBonus(activeDaily, gamificationScore);
 
-        roundsPlayed += 1;
-        this.score += gamificationScore;
+        playerStatsAdapter.playRound();
+        playerStatsAdapter.addScore(gamificationScore);
 
         return gamificationScore;
     }
@@ -75,7 +58,7 @@ public class PlayerStats implements Gamification {
 
     @Override
     public int getScore() {
-        return score;
+        return playerStatsAdapter.getScore();
     }
 
     @Override
@@ -104,7 +87,7 @@ public class PlayerStats implements Gamification {
      * @return The amount of played rounds of the player.
      */
     public int getRoundsPlayed() {
-        return roundsPlayed;
+        return playerStatsAdapter.getRoundsPlayed();
     }
 
     /**
@@ -112,7 +95,7 @@ public class PlayerStats implements Gamification {
      * @return The amount of dailies completed.
      */
     public int getDailiesCompleted() {
-        return dailiesCompleted;
+        return playerStatsAdapter.getDailiesCompleted();
     }
 
     /**
@@ -121,7 +104,7 @@ public class PlayerStats implements Gamification {
      * @return The maximum score of the player.
      */
     public int getMaxRoundScore() {
-        return maxRoundScore;
+        return playerStatsAdapter.getMaxRoundScore();
     }
 
     /**
@@ -131,7 +114,7 @@ public class PlayerStats implements Gamification {
      * @return The last score of the player.
      */
     public int getLastScore() {
-        return lastScore;
+        return playerStatsAdapter.getLastScore();
     }
 
     /**
@@ -139,7 +122,7 @@ public class PlayerStats implements Gamification {
      * @return The highest streak of the player.
      */
     public int getHighestStreak() {
-        return highestStreak;
+        return playerStatsAdapter.getHighestStreak();
     }
 
     /**
@@ -155,12 +138,10 @@ public class PlayerStats implements Gamification {
         }
 
         if (score <= 0.5) {
-            int lowScore = (int) Math.ceil(score * 50);
-            return lowScore;
+            return (int) Math.ceil(score * 50);
         }
 
-        int commutedScore = (int) Math.ceil(score * 100);
-        return commutedScore;
+        return (int) Math.ceil(score * 100);
     }
 
     /**
@@ -185,7 +166,7 @@ public class PlayerStats implements Gamification {
 
             if (dailyToCheck.checkFinished(this)) {
                 newScore += dailyToCheck.getReward();
-                dailiesCompleted++;
+                playerStatsAdapter.completeDaily();
             }
         }
         return newScore;
@@ -223,7 +204,6 @@ public class PlayerStats implements Gamification {
      * Loads the available dailies and puts them into the list.
      */
     private List<DailyChallenge> loadDailies() {
-        // Erstmal hartkodieren fürs Testen
         List<DailyChallenge> allDailies = new LinkedList<>();
         allDailies.add(new DailyGetStreakThree());
         allDailies.add(new DailyPlayThreeRounds());

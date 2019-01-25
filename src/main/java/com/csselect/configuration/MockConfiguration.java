@@ -25,6 +25,11 @@ public final class MockConfiguration implements Configuration {
     }
 
     @Override
+    public String getTimezone() {
+        return "CET";
+    }
+
+    @Override
     public String getDatabaseType() {
         return "mysql";
     }

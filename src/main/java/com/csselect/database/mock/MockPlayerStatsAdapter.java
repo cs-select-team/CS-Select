@@ -1,32 +1,18 @@
 package com.csselect.database.mock;
 
 import com.csselect.database.PlayerStatsAdapter;
-import com.csselect.gamification.DailyChallenge;
-import com.csselect.gamification.Streak;
 
 /**
  * Mock-Implementation of the {@link PlayerStatsAdapter} Interface
  */
 public class MockPlayerStatsAdapter implements PlayerStatsAdapter {
 
-    private Streak streak;
-    private DailyChallenge dailyChallenge;
     private int score;
     private int roundsPlayed;
     private int dailiesCompleted;
     private int maxRoundScore;
     private int lastScore;
     private int highestStreak;
-
-    @Override
-    public Streak getStreak() {
-        return streak;
-    }
-
-    @Override
-    public DailyChallenge getDaily() {
-        return dailyChallenge;
-    }
 
     @Override
     public int getScore() {
@@ -59,27 +45,17 @@ public class MockPlayerStatsAdapter implements PlayerStatsAdapter {
     }
 
     @Override
-    public void setStreak(Streak streak) {
-        this.streak = streak;
+    public void addScore(int score) {
+        this.score = this.score + score;
     }
 
     @Override
-    public void setDaily(DailyChallenge daily) {
-        this.dailyChallenge = daily;
+    public void playRound() {
+        this.roundsPlayed++;
     }
 
     @Override
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    @Override
-    public void setRoundsPlayed(int roundsPlayed) {
-        this.roundsPlayed = roundsPlayed;
-    }
-
-    @Override
-    public void dailyCompleted() {
+    public void completeDaily() {
         this.dailiesCompleted++;
     }
 
