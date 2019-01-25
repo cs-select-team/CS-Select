@@ -6,8 +6,6 @@ package com.csselect.gamification;
  */
 public class Achievement {
 
-    private String name;
-    private String description;
     private AchievementState state;
     private AchievementType type;
 
@@ -16,25 +14,9 @@ public class Achievement {
      * @param state the current state of the achievement for the player.
      * @param type The type of the achievement.
      */
-    public Achievement(AchievementState state, AchievementType type) {
+    Achievement(AchievementState state, AchievementType type) {
         this.state = state;
         this.type = type;
-    }
-
-    /**
-     * Gets the name of the achievement.
-     * @return The name of the achievement.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets the description of the achievement.
-     * @return The description of the achievement.
-     */
-    public String getDescription() {
-        return description;
     }
 
     /**

@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class PlayerStatsTests extends TestClass {
 
@@ -126,6 +127,12 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertNotNull(stats.getAchievements());
         Assert.assertFalse(stats.getAchievements().isEmpty());
         Assert.assertEquals(21, stats.getAchievements().size());
+        List<Achievement> ach = stats.getAchievements();
+        Assert.assertEquals("Die allererste Runde!",ach.get(0).getType().getGermanName());
+        Assert.assertEquals("Fünf!", ach.get(1).getType().getGermanName());
+        Assert.assertEquals("Die allererste Runde!",ach.get(0).getType().getGermanName());
+        Assert.assertEquals("The very first round!",ach.get(0).getType().getEnglishName());
+        Assert.assertEquals("Play five rounds.",ach.get(1).getType().getEnglishDescription());
     }
 
     @Test
@@ -144,4 +151,6 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.6);
         Assert.assertEquals(70, stats.getScore());
     }
+
+
 }
