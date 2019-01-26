@@ -4,7 +4,7 @@
         <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
         <div class="container">
             <div class="row">
-                <div class="col-6" id="games">
+                <div class="col-md-8 col-sm-12 col-xs-12" id="games">
                     <div class="container h-10 title">
                         <fmt:message key="activeGames"/>
                     </div>

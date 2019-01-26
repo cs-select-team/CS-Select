@@ -3,7 +3,7 @@ Vue.component('active-games-display', {
     template: '<div class="container">' +
         '       <div class="container">' +
         '           <div class="row">' +
-        '               <div class="col"><div>{{ game.title }}</div>' +
+        '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
@@ -21,7 +21,7 @@ Vue.component('terminated-games-display', {
     template: '<div class="container">' +
         '       <div class="container">' +
         '           <div class="row">' +
-        '               <div class="col"><div>{{ game.title }}</div>' +
+        '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
