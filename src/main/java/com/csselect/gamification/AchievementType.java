@@ -2,19 +2,17 @@ package com.csselect.gamification;
 
 /**
  * An enumeration for all the existing achievements. Every instance
- * has to implement the method getState as well as the names and description
- * getters for the languages.
+ * has to implement the method getState.
  */
 public enum AchievementType {
 
     /**
      * This type of achievement is completed after having played one round.
      */
-    PLAY_ROUND_ONE {
-        private final static String GERMAN_NAME = "Die allererste Runde!";
-        private final static String GERMAN_DESCRIPTION = "Spiele eine Runde.";
-        private final static String ENGLISH_NAME = "The very first round!";
-        private final static String ENGLISH_DESCRIPTION = "Play one round.";
+    PLAY_ROUND_ONE("Die allererste Runde!",
+            "Spiele eine Runde.",
+            "The very first round!",
+            "Play one round.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -23,36 +21,15 @@ public enum AchievementType {
             }
             return AchievementState.SHOWN;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having played five rounds.
      */
-    PLAY_ROUND_FIVE {
-        private final static String GERMAN_NAME = "Fünf!";
-        private final static String GERMAN_DESCRIPTION = "Spiele fünf Runden.";
-        private final static String ENGLISH_NAME = "Five!";
-        private final static String ENGLISH_DESCRIPTION = "Play five rounds.";
+    PLAY_ROUND_FIVE("Fünf!",
+            "Spiele fünf Runden.",
+            "Five!",
+            "Play five rounds.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -66,36 +43,15 @@ public enum AchievementType {
 
             return AchievementState.CONCEALED;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having played ten rounds.
      */
-    PLAY_ROUND_TEN  {
-        private final static String GERMAN_NAME = "Treuer Mitspieler!";
-        private final static String GERMAN_DESCRIPTION = "Spiele zehn Runden.";
-        private final static String ENGLISH_NAME = "Loyal player!";
-        private final static String ENGLISH_DESCRIPTION = "Play ten rounds.";
+    PLAY_ROUND_TEN("Treuer Mitspieler!",
+            "Spiele zehn Runden.",
+            "Loyal player!",
+            "Play ten rounds.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -113,36 +69,15 @@ public enum AchievementType {
 
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having played 42 rounds.
      */
-    PLAY_ROUND_FORTYTWO  {
-        private final static String GERMAN_NAME = "Die Antwort auf alles!";
-        private final static String GERMAN_DESCRIPTION = "Spiele 42 Runden.";
-        private final static String ENGLISH_NAME = "The answer to everything!";
-        private final static String ENGLISH_DESCRIPTION = "Play 42 rounds.";
+    PLAY_ROUND_FORTYTWO("Die Antwort auf alles!",
+            "Spiele 42 Runden.",
+            "The answer to everything!",
+            "Play 42 rounds.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -160,36 +95,15 @@ public enum AchievementType {
 
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having played 100 rounds.
      */
-    PLAY_ROUND_HUNDRED  {
-        private final static String GERMAN_NAME = "Es hört nie auf!";
-        private final static String GERMAN_DESCRIPTION = "Spiele 100 Runden.";
-        private final static String ENGLISH_NAME = "Never ending!";
-        private final static String ENGLISH_DESCRIPTION = "Play 100 rounds.";
+    PLAY_ROUND_HUNDRED("Es hört nie auf!",
+            "Spiele 100 Runden.",
+            "Never ending!",
+            "Play 100 rounds.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -207,36 +121,15 @@ public enum AchievementType {
 
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a streak of two.
      */
-    STREAK_TWO  {
-        private final static String GERMAN_NAME = "Zwei am Stück!";
-        private final static String GERMAN_DESCRIPTION = "Spiele zwei Runden in Folge.";
-        private final static String ENGLISH_NAME = "Two in a row!";
-        private final static String ENGLISH_DESCRIPTION = "Play two rounds in a row.";
+    STREAK_TWO("Zwei am Stück!",
+            "Spiele zwei Runden in Folge.",
+            "Two in a row!",
+            "Play two rounds in a row.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -245,36 +138,15 @@ public enum AchievementType {
             }
             return AchievementState.SHOWN;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a streak of five.
      */
-    STREAK_FIVE  {
-        private final static String GERMAN_NAME = "Alle guten Dinge sind fünf!";
-        private final static String GERMAN_DESCRIPTION = "Spiele fünf Runden in Folge.";
-        private final static String ENGLISH_NAME = "All good things come in fives!";
-        private final static String ENGLISH_DESCRIPTION = "Play five rounds in a row.";
+    STREAK_FIVE ("Alle guten Dinge sind fünf!",
+            "Alle guten Dinge sind fünf!",
+            "All good things come in fives!",
+            "Play five rounds in a row.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -287,36 +159,15 @@ public enum AchievementType {
             }
             return AchievementState.CONCEALED;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a streak of ten.
      */
-    STREAK_TEN  {
-        private final static String GERMAN_NAME = "Niemals aufhören!";
-        private final static String GERMAN_DESCRIPTION = "Spiele zehn Runden in Folge.";
-        private final static String ENGLISH_NAME = "Never stop!";
-        private final static String ENGLISH_DESCRIPTION = "Play ten rounds in a row.";
+    STREAK_TEN("Niemals aufhören!",
+            "Spiele zehn Runden in Folge.",
+            "Never stop!",
+            "Play ten rounds in a row.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -333,36 +184,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having completed one daily challenge.
      */
-    DAILY_ONE  {
-        private final static String GERMAN_NAME = "Tägliche Aufgabe!";
-        private final static String GERMAN_DESCRIPTION = "Schließe eine Daily-Challenge ab.";
-        private final static String ENGLISH_NAME = "Daily task!";
-        private final static String ENGLISH_DESCRIPTION = "Complete one daily challenge.";
+    DAILY_ONE("Tägliche Aufgabe!",
+            "Schließe eine Daily-Challenge ab.",
+            "Daily task!",
+            "Complete one daily challenge.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -371,36 +201,15 @@ public enum AchievementType {
             }
             return AchievementState.SHOWN;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having completed three daily challenges.
      */
-    DAILY_THREE  {
-        private final static String GERMAN_NAME = "Daily-Challenge Veteran!";
-        private final static String GERMAN_DESCRIPTION = "Schließe drei Daily-Challenges ab.";
-        private final static String ENGLISH_NAME = "Daily challenge veteran!";
-        private final static String ENGLISH_DESCRIPTION = "Complete three daily challenges.";
+    DAILY_THREE("Daily-Challenge Veteran!",
+            "Schließe drei Daily-Challenges ab.",
+            "Daily challenge veteran!",
+            "Complete three daily challenges.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -413,36 +222,15 @@ public enum AchievementType {
             }
             return AchievementState.CONCEALED;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having completed seven daily challenges.
      */
-    DAILY_SEVEN  {
-        private final static String GERMAN_NAME = "Daily-Challenge Meister!";
-        private final static String GERMAN_DESCRIPTION = "Schließe sieben Daily-Challenges ab.";
-        private final static String ENGLISH_NAME = "Daily challenge master!";
-        private final static String ENGLISH_DESCRIPTION = "Complete seven daily challenges.";
+    DAILY_SEVEN("Daily-Challenge Meister!",
+            "Schließe sieben Daily-Challenges ab.",
+            "Daily challenge master!",
+            "Complete seven daily challenges.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -459,36 +247,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 100.
      */
-    TOTAL_SCORE_HUNDRED  {
-        private final static String GERMAN_NAME = "100 Punkte!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 100 Punkten.";
-        private final static String ENGLISH_NAME = "100 points!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 100 points.";
+    TOTAL_SCORE_HUNDRED("100 Punkte!",
+            "Erreiche einen Punktestand von 100 Punkten.",
+            "100 points!",
+            "Reach a total of 100 points.")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -497,36 +264,15 @@ public enum AchievementType {
             }
             return AchievementState.SHOWN;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 250.
      */
-    TOTAL_SCORE_TWOHUNDREDFIFTY  {
-        private final static String GERMAN_NAME = "Mehr Punkte!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 250 Punkten.";
-        private final static String ENGLISH_NAME = "More points!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 250 points.";
+    TOTAL_SCORE_TWOHUNDREDFIFTY("Mehr Punkte!",
+            "Erreiche einen Punktestand von 250 Punkten.",
+            "More points!",
+            "Reach a total of 250 points.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -539,36 +285,15 @@ public enum AchievementType {
             }
             return AchievementState.CONCEALED;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 500.
      */
-    TOTAL_SCORE_FIVEHUNDRED  {
-        private final static String GERMAN_NAME = "Punktesammler!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 500 Punkten.";
-        private final static String ENGLISH_NAME = "Points collector!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 500 points.";
+    TOTAL_SCORE_FIVEHUNDRED("Punktesammler!",
+            "Erreiche einen Punktestand von 500 Punkten.",
+            "Points collector!",
+            "Reach a total of 500 points.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -585,36 +310,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 1000.
      */
-    TOTAL_SCORE_THOUSAND  {
-        private final static String GERMAN_NAME = "Ich mag dieses Spiel!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 1000 Punkten.";
-        private final static String ENGLISH_NAME = "I like this game!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 1000 points.";
+    TOTAL_SCORE_THOUSAND("Ich mag dieses Spiel!",
+            "Erreiche einen Punktestand von 1000 Punkten.",
+            "I like this game!",
+            "Reach a total of 1000 points.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -631,36 +335,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 2000.
      */
-    TOTAL_SCORE_TWOTHOUSAND  {
-        private final static String GERMAN_NAME = "Ich höre nie auf!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 2000 Punkten.";
-        private final static String ENGLISH_NAME = "I will not stop!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 2000 points.";
+    TOTAL_SCORE_TWOTHOUSAND("Ich höre nie auf!",
+            "Erreiche einen Punktestand von 2000 Punkten.",
+            "I will not stop!",
+            "Reach a total of 2000 points.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -677,36 +360,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a total score of 5000.
      */
-    TOTAL_SCORE_FIVETHOUSAND  {
-        private final static String GERMAN_NAME = "CS:Select Koryphäe!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche einen Punktestand von 5000 Punkten.";
-        private final static String ENGLISH_NAME = "CS:Select luminary!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a total of 5000 points.";
+    TOTAL_SCORE_FIVETHOUSAND("CS:Select Koryphäe!",
+            "Erreiche einen Punktestand von 5000 Punkten.",
+            "CS:Select luminary!",
+            "Reach a total of 5000 points.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -723,36 +385,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a round score of 60.
      */
-    ROUND_SCORE_SIXTY  {
-        private final static String GERMAN_NAME = "Nicht schlecht!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche 60 Punkte nach einer einzelnen Runde.";
-        private final static String ENGLISH_NAME = "Not bad!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a score of 60 after a single round.";
+    ROUND_SCORE_SIXTY("Nicht schlecht!",
+            "Erreiche 60 Punkte nach einer einzelnen Runde.",
+            "Not bad!",
+            "Reach a score of 60 after a single round.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -761,36 +402,15 @@ public enum AchievementType {
             }
             return AchievementState.SHOWN;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a round score of 70.
      */
-    ROUND_SCORE_SEVENTY  {
-        private final static String GERMAN_NAME = "Gute Auswahl!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche 70 Punkte nach einer einzelnen Runde.";
-        private final static String ENGLISH_NAME = "Good choice!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a score of 70 after a single round.";
+    ROUND_SCORE_SEVENTY("Gute Auswahl!",
+            "Erreiche 70 Punkte nach einer einzelnen Runde.",
+            "Good choice!",
+            "Reach a score of 70 after a single round.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -803,36 +423,15 @@ public enum AchievementType {
             }
             return AchievementState.CONCEALED;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a round score of 80.
      */
-    ROUND_SCORE_EIGHTY  {
-        private final static String GERMAN_NAME = "Profi!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche 80 Punkte nach einer einzelnen Runde.";
-        private final static String ENGLISH_NAME = "Pro!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a score of 80 after a single round.";
+    ROUND_SCORE_EIGHTY("Profi!",
+            "Erreiche 80 Punkte nach einer einzelnen Runde.",
+            "Pro!",
+            "Reach a score of 80 after a single round.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -849,36 +448,15 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     },
 
     /**
      * This type of achievement is completed after having reached a round score of 90.
      */
-    ROUND_SCORE_NINETY  {
-        private final static String GERMAN_NAME = "Fachexperte!";
-        private final static String GERMAN_DESCRIPTION = "Erreiche 90 Punkte nach einer einzelnen Runde.";
-        private final static String ENGLISH_NAME = "Domain expert!";
-        private final static String ENGLISH_DESCRIPTION = "Reach a score of 90 after a single round.";
+    ROUND_SCORE_NINETY("Fachexperte!",
+            "Erreiche 90 Punkte nach einer einzelnen Runde.",
+            "Domain expert!",
+            "Reach a score of 90 after a single round.") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -895,27 +473,26 @@ public enum AchievementType {
             }
             return AchievementState.INVISIBLE;
         }
-
-        @Override
-        public String getGermanName() {
-            return GERMAN_NAME;
-        }
-
-        @Override
-        public String getGermanDescription() {
-            return GERMAN_DESCRIPTION;
-        }
-
-        @Override
-        public String getEnglishName() {
-            return ENGLISH_NAME;
-        }
-
-        @Override
-        public String getEnglishDescription() {
-            return ENGLISH_DESCRIPTION;
-        }
     };
+
+    private final String germanName;
+    private final String germanDesc;
+    private final String englishName;
+    private final String englishDesc;
+
+    /**
+     * Sets the names and the descriptions of the achievement types in the given languages.
+     * @param germanName The German name.
+     * @param germanDesc The German description.
+     * @param englishName The English name.
+     * @param englishDesc The English description.
+     */
+    AchievementType(String germanName, String germanDesc, String englishName, String englishDesc) {
+        this.germanName = germanName;
+        this.germanDesc = germanDesc;
+        this.englishName = englishName;
+        this.englishDesc = englishDesc;
+    }
 
     /**
      * Checks the progress of an achievement and then return a new achievement that
@@ -940,24 +517,32 @@ public enum AchievementType {
      * Gets the German name of the achievement type.
      * @return The German name.
      */
-    public abstract String getGermanName();
+    public final String getGermanName() {
+        return germanName;
+    }
 
     /**
      * Gets the German description for the achievement type.
      * @return The German description.
      */
-    public abstract String getGermanDescription();
+    public final String getGermanDescription() {
+        return germanDesc;
+    }
 
     /**
      * Gets the English name of the achievement type.
      * @return The English name.
      */
-    public abstract String getEnglishName();
+    public final String getEnglishName() {
+        return englishName;
+    }
 
     /**
      * Gets the English description of the achievement type.
      * @return The English description.
      */
-    public abstract String getEnglishDescription();
+    public final String getEnglishDescription() {
+        return englishDesc;
+    }
 
 }
