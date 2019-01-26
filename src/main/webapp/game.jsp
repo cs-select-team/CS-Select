@@ -6,7 +6,7 @@
                         <div class="row mt-5">
                                 <div class="col-11">
                         <component v-bind:is="gameType"
-                                   v-bind:featurelist="featureList" v-bind:options="options" v-on:done="unlockButton" v-bind:key="forceUpdate"></component>
+                                   v-bind:feature-list="featureList" v-bind:options="options" v-on:done="unlockButton" v-bind:key="forceUpdate"></component>
                                 </div>
                                 <div class="col-1">
                                         <input type="button" class="btn btn-primary btn-block" v-on:click="forceUpdate++" v-bind:class="{ disabled: this.buttonState }" value="<fmt:message key="next"/>"/>
@@ -18,7 +18,11 @@
         </div>
 
         <script src="src/js/featureDisplay.js"></script>
+
         <script src="src/js/binarySelect.js"></script>
+        <script src="src/js/matrixSelect.js"></script>
+        <!-- add new gamemodes here -->
+
         <script src="src/js/gameFrame.js"></script>
         </fmt:bundle>
 <%@ include file="WEB-INF/jspf/footer.jspf" %>

@@ -1,12 +1,13 @@
 /**
  * include this file for a feature box, a component that displays a feature
+ * has an event called 'toggled' which will fire if the feature is selected
  */
 Vue.component('feature-box', {
     props: ['feature'],
-    data: function() {
-        return {
-            toggled: false
-        }
+    watch: {
+      'feature.toggled': function (oldVal, newVal) {
+          this.$emit("toggled", newVal, oldVal)
+      }
     },
     template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled }" >' +
         '                        <h5 class="card-title">{{ feature.name }}</h5>' +

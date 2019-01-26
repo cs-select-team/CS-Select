@@ -1,5 +1,5 @@
 Vue.component('binary-select', {
-    props: ['featurelist', 'options'],
+    props: ['feature-list', 'options'],
     data: function() {
         return {
             feature1: {},
@@ -27,7 +27,7 @@ Vue.component('binary-select', {
                 this.feature1 = this.featurelist[2 * this.currentRound];
                 this.feature2 = this.featurelist[2 * this.currentRound + 1];
             } else {
-                this.$emit('done');
+                this.$emit('done', true);
                 this.disabled = true
             }
         }
