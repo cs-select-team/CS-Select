@@ -4,8 +4,9 @@ import com.csselect.game.BinarySelect;
 import com.csselect.game.Gamemode;
 import com.csselect.game.MatrixSelect;
 
-import java.util.*;
-
+/**
+ *  This class is there to enable retrieving of {@link Gamemode} objects out of a String
+ */
 public final class GamemodeParser {
 
     private GamemodeParser() {
@@ -22,7 +23,6 @@ public final class GamemodeParser {
         String type = args[0];
         String arguments = args[1];
         if (type.equals("matrix")) {
-            Collection<String> constructorList = new LinkedList<>();
             String[] splitArguments = arguments.split(","); //Syntax: "num=x, min=y, max=z"
             int number = Integer.parseInt(splitArguments[0].split("=")[1]);
             int min = Integer.parseInt(splitArguments[1].split("=")[1]);
