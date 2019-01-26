@@ -18,7 +18,7 @@ Vue.component('layout', {
     template: '<div></div>'
 });
 
-Vue.component('pattern', {
+Vue.component('pat', {
     props: [''],
     template: '<div></div>'
 });

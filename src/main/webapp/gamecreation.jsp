@@ -19,7 +19,7 @@
                         <layout></layout>
                     </div>
                     <div class="col" id="pattern-area">
-                        <pattern></pattern>
+                        <pat></pat>
                     </div>
                 </div>
                 <div class="row">
@@ -29,8 +29,8 @@
                     <div class="col" id="termination-area">
                         <termination></termination>
                     </div>
-                    <div class="col" id="feature-area">
-                        <div class="row">
+                    <div class="col">
+                        <div class="row" id="feature-area">
                             <features></features>
                         </div>
                         <div class="row" id="database-area">

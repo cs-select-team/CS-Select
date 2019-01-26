@@ -18,6 +18,17 @@
     margin-right: 5px;
 }
 
+.btn-secondary {
+    background-color: slategrey;
+    border-color: #cccccc;
+}
+
+.btn-secondary:hover {
+    background-color: #cccccc;
+    border-color: slategray;
+    color: slategray;
+}
+
 .form-control:focus {
     border-color: #cccccc;
     box-shadow: 0 0 0 .2rem #cccccc;
@@ -30,7 +41,7 @@
     margin-top:20px;
 }
 .title {
-    background-color: #6c757d;
+    background-color: slategray;
     border-radius: 5px;
     margin-top: 10px;
     margin-bottom: 20px;
