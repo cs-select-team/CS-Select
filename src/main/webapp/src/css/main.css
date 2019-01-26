@@ -38,6 +38,10 @@
     text-align: center;
     color: white;
 }
+.disabled-div {
+    pointer-events: none;
+    opacity: 0.4;
+}
 body {
     height: 100vh;
 }
