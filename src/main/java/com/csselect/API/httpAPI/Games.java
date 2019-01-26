@@ -84,6 +84,13 @@ public class Games extends Servlet {
         getPlayerFacade().acceptInvite(getId(req.getPathInfo()));
     }
 
+    /* should return a json object of the form
+        { listOfFeatures : [{id: , desc:, name:, graph1:(base64img), graph2: (base64img)}],
+            options: {} // gamemode specific
+
+
+        }
+     */
     private void startRound(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
 
         int gameId = getId(req.getPathInfo());
