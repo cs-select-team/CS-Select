@@ -1,7 +1,9 @@
     <%@ include file="WEB-INF/jspf/header.jspf" %>
         <fmt:bundle basename="locale.Locale">
-            <div class="container h-100">
+            <div>
             <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
+            <div class="top-buffer"></div>
+            <div class="container h-10 title"><fmt:message key="creation"/></div>
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -14,9 +16,6 @@
                     </div>
                     <div class="col" id="mode-area">
                         <mode></mode>
-                    </div>
-                    <div class="col" id="layout-area">
-                        <layout></layout>
                     </div>
                     <div class="col" id="pattern-area">
                         <pat></pat>

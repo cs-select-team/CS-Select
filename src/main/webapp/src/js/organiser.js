@@ -8,8 +8,8 @@ Vue.component('active-games-display', {
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="terminate"/>' +
-        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="invite"/>' +
+        '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="terminate">' +
+        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="invite">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +

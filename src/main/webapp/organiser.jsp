@@ -1,6 +1,6 @@
 <%@ include file="WEB-INF/jspf/header.jspf" %>
     <fmt:bundle basename="locale.Locale">
-        <div class="container h-100">
+        <div>
         <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
         <div class="container">
             <div class="row">

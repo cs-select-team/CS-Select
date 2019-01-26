@@ -1,7 +1,9 @@
 <%@ include file="WEB-INF/jspf/header.jspf" %>
 <fmt:bundle basename = "locale.Locale">
-<div class="container h-100">
+<div>
 <%@ include file="WEB-INF/jspf/playerNavbar.jspf" %>
+    <div class="top-buffer"></div>
+    <div class="container">
 <div class="row">
     <div class="col-md-3">
         Übersicht
@@ -55,6 +57,7 @@
 
 </div>
 </div>
+    </div>
 <script src="src/js/player.js"></script>
 </fmt:bundle>
 <%@ include file="WEB-INF/jspf/footer.jspf" %>
