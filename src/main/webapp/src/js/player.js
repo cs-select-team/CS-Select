@@ -4,8 +4,14 @@ Vue.component('game-display', {
         '                <div class="col"><div>{{ game.title }}</div>' +
         '                <div>{{ game.type }}</div>' +
         '                <div>{{ game.roundsPlayed  }}</div></div>' +
-        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="play"/></div>' +
-        '            </div></div></div>'
+        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="play" v-on:click="startGame(game.gameId)"/></div>' +
+        '            </div></div></div>',
+    methods: {
+        startGame: function(gameId) {
+            localStorage.setItem("gameId", gameId);
+            window.location.href = "game.jsp"
+        }
+    }
 });
 
 Vue.component('leaderboard-element', {
