@@ -107,4 +107,20 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     public Collection<Game> getTerminatedGames() {
         return DATABASE_ADAPTER.getTerminatedGames(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else if (!(o instanceof MysqlPlayerAdapter)) {
+            return false;
+        } else {
+            return this.getID() == ((MysqlPlayerAdapter) o).getID();
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return getID();
+    }
 }
