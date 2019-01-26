@@ -22,6 +22,7 @@ public final class TerminationParser {
      * @return Termination object
      */
     public static Termination getTermination(String[] args) {
+        assert args.length == 2;
         String type = args[0];
         String value = args[1];
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Syntax = '2011-12-03T10:15:30'

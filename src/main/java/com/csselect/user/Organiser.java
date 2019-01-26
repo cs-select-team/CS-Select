@@ -5,10 +5,14 @@ import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;
+import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import org.apache.commons.collections.set.ListOrderedSet;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The organiser is an user in our system which is able to create games, decide in which database the result shall be
@@ -135,13 +139,20 @@ public class Organiser extends User implements Comparable {
 
     /**
      * Sets options for the game that the organiser is currently creating
-     * if there is no game being created right now, this will start the process
      *
      * @param option name of the option
      * @param data value
      */
     public void setGameOption(String option, String data) {
+        gameBuilder.setOption(option, data);
+    }
 
+    /**
+     * Returns ccpy of gameoptions object currently loaded in the game builder ({@link GameCreator})
+     * @return cloned object of {@link GameOptions}
+     */
+    public GameOptions getGameOptions() {
+        return this.gameBuilder.getGameOptions();
     }
 
     /**
