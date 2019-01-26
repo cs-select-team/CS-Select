@@ -5,38 +5,38 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="row">
-                            <title></title>
+                        <div class="row" id="title-area">
+                            <gametitle></gametitle>
                         </div>
-                        <div class="row">
+                        <div class="row" id="invite-area">
                             <invite></invite>
                         </div>
                     </div>
-                    <div class="col">
-                        <modi></modi>
+                    <div class="col" id="mode-area">
+                        <mode></mode>
                     </div>
-                    <div class="col">
+                    <div class="col" id="layout-area">
                         <layout></layout>
                     </div>
-                    <div class="col">
-                        <patterns></patterns>
+                    <div class="col" id="pattern-area">
+                        <pattern></pattern>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col" id="description-area">
                         <description></description>
                     </div>
-                    <div class="col">
+                    <div class="col" id="termination-area">
                         <termination></termination>
                     </div>
-                    <div class="col">
+                    <div class="col" id="feature-area">
                         <div class="row">
                             <features></features>
                         </div>
-                        <div class="row">
+                        <div class="row" id="database-area">
                             <database></database>
                         </div>
-                        <div class="row">
+                        <div class="row" id="control-area">
                             <control></control>
                         </div>
                     </div>
