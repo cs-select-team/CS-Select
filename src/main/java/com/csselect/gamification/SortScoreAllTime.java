@@ -14,12 +14,13 @@ public class SortScoreAllTime extends LeaderboardSortingStrategy {
     @Override
     protected Map<Player, Integer> sort(List<Player> players) {
 
-        Map<Player, Integer> sortAllTime = new TreeMap<>();
+        Map<Player, Integer> scoreAllTime = new TreeMap<>();
+
         for (Player player : players) {
-            sortAllTime.put(player, player.getStats().getScore());
+            scoreAllTime.put(player, player.getStats().getScore());
         }
 
-        Map<Player, Integer> sortedMap = sortAllTime.entrySet().stream()
+        Map<Player, Integer> sortedMap = scoreAllTime.entrySet().stream()
                 .sorted(Collections.reverseOrder(Comparator.comparing(Map.Entry::getValue)))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
