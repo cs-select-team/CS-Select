@@ -20,7 +20,12 @@
                         <fmt:message key="terminatedGames"/>
                     </div>
                     <div class="row" id="terminated">
-                        <terminated-games-display></terminated-games-display>
+                        <terminated-games-display
+                            v-for="game in listOfGames"
+                            v-bind:game="game"
+                            v-bind:game-id="game.gameId"
+                            v-bind:key="game.gameId"
+                            v-bind:del="'<fmt:message key="delete"/>'"></terminated-games-display>
                     </div>
                 </div>
                 <div class="col" id="stats">
