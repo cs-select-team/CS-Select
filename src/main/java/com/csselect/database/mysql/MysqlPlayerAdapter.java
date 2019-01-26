@@ -9,12 +9,16 @@ import com.csselect.gamification.PlayerStats;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Mysql-Implementation of the {@link PlayerAdapter} Interface
  */
 public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapter {
+
+    private static final Map<PlayerAdapter, PlayerStats> PLAYERSTATS_MAP = new HashMap<>();
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
@@ -60,7 +64,13 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     @Override
     public PlayerStats getPlayerStats() {
         try {
-            return new PlayerStats(new MysqlPlayerStatsAdapter(getID()));
+            if (PLAYERSTATS_MAP.containsKey(this)) {
+                return PLAYERSTATS_MAP.get(this);
+            } else {
+                PlayerStats stats = new PlayerStats(new MysqlPlayerStatsAdapter(getID()));
+                PLAYERSTATS_MAP.put(this, stats);
+                return stats;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
