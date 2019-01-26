@@ -73,13 +73,21 @@ Vue.component('database', {
 Vue.component('control', {
     props: [''],
     template: '<div class="container">' +
-        '           <button type="button" class="btn btn-primary float-right btn-space">Abort</button>' +
+        '           <button type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()">Abort</button>' +
         '           <button type="button" class="btn btn-primary float-right btn-space">Okay</button>' +
-        '       </div>'
+        '       </div>',
+    abort() {
+        store.state.forEach(function(item) {
+            item = '';
+        });
+    }
 });
 
 var title = new Vue({
-    el: "#title-area"
+    el: "#title-area",
+    data: {
+        sharedState: store.state.title
+    }
 });
 
 var invite = new Vue({
@@ -113,3 +121,73 @@ var database = new Vue({
 var control = new Vue({
     el: "#control-area"
 });
+
+var store = {
+    state: {
+        title: '',
+        invites: [],
+        mode: '',
+        width: '',
+        height: '',
+        pattern: '',
+        description: '',
+        terminationtype: '',
+        terminationvalue: '',
+        featureSet: '',
+        databaseAddress: '',
+        savePattern: false,
+    },
+    setOption(option, value) {
+        switch(option) {
+            case "title":
+                this.state.title = value;
+                break;
+            case "addInvite":
+                this.state.invites.push(value);
+                break;
+            case "removeInvite":
+                this.state.invites.forEach(function (item, index,) {
+                    if(value == item.toString()) this.state.invites.splice(index, 1);
+                });
+                break;
+            case "mode":
+                this.state.mode = value;
+                break;
+            case "width":
+                if (isNaN(value) || value < 1) {
+                    alert("Input not valid");
+                    return;
+                }
+                this.state.width = value;
+                break;
+            case "height":
+                if (isNaN(value) || value < 1) {
+                    alert("Input not valid");
+                    return;
+                }
+                this.state.height = value;
+                break;
+            case "pattern":
+                this.store.state.pattern = value;
+                break;
+            case "description":
+                this.store.state.description = value;
+                break;
+            case "terminationtype":
+                this.store.state.terminationtype = value;
+                break;
+            case "terminationvalue":
+                this.store.state.terminationvalue = value;
+                break;
+            case "featureSet":
+                this.store.state.featureSet = value;
+                break;
+            case "database":
+                this.store.state.databaseAddress = value;
+                break;
+            case "savePattern":
+                this.store.state.savePattern = value;
+                break;
+        }
+    },
+};
