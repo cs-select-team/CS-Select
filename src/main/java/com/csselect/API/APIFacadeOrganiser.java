@@ -25,7 +25,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      */
     public boolean register(String[] args) {
         OrganiserManagement om = new OrganiserManagement();
-        return null != om.register(args);
+        organiser = om.register(args);
+        return organiser != null;
     }
 
     @Override

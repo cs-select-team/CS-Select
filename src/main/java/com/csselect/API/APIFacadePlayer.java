@@ -34,7 +34,8 @@ public class APIFacadePlayer extends APIFacadeUser {
     @Override
     public boolean register(String[] args) {
         PlayerManagement pm = new PlayerManagement();
-        return null != pm.register(args);
+        player = pm.register(args);
+        return player != null;
     }
 
     @Override
