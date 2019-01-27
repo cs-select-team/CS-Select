@@ -192,7 +192,10 @@ public class GameTests extends TestClass {
 
     private Player invitePlayer1() {
         DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
-        Player player = database.createPlayer("email", "hash", "salt", "username");
+        Player player = database.getPlayer("email");
+        if (player == null) {
+            player = database.createPlayer("email", "hash", "salt", "username");
+        }
         Collection<String> emails = new ArrayList<>();
         emails.add("email");
         game.invitePlayers(emails);

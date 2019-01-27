@@ -84,6 +84,10 @@ public class StandardRound extends Round {
 
     @Override
     public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        if (uselessFeatures == null || selectedFeatures == null) {
+            return -1;
+        }
+
         if (this.minSelect > selectedFeatures.length || this.maxSelect < selectedFeatures.length) {
             return -1;
         }
