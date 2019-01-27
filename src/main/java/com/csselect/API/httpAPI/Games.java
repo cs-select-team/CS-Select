@@ -120,6 +120,7 @@ public class Games extends Servlet {
         Gamemode gm = getPlayerFacade().getGame(gameId).getGamemode();
         JsonObject options = new Gson().fromJson(new Gson().toJson(gm), JsonObject.class);
         jsonObject.add("options", options);
+        jsonObject.addProperty("gameType", gm.getName());
         returnJson(resp, jsonObject);
     }
 
