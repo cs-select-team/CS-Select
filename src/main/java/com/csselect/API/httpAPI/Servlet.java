@@ -44,8 +44,7 @@ public abstract  class Servlet extends HttpServlet {
     }
 
     /**
-     * there will always be a player facade, even if no player is logged in. in that case most calls to that facade
-     * will do noting or throw an exception
+     *
      *
      * @return the current playerFacade
      */
@@ -56,8 +55,6 @@ public abstract  class Servlet extends HttpServlet {
 
 
     /**
-     * there will always be an organiser facade, even if no organiser is logged in.
-     * in that case most calls to that facade will do nothing or throw an exception
      * @return current organiserFacade
      */
     protected APIFacadeOrganiser getOrganiserFacade() {

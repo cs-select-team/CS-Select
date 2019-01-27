@@ -55,6 +55,18 @@ var gameFrame = new Vue({
                 if (this.featureList[i].toggled) idList.push(this.featureList[i].id)
             }
             return idList;
+        },
+        sendResults: function () {
+            if (!this.buttonState) { // truly only send if the game is finished
+                axios({
+                    method: 'post',
+                    url: 'games/' + localStorage.getItem("gameId") + "/play",
+                    params: {
+                        useless: '[]',
+                        selected: JSON.stringify(this.getSelectedFeaturesById())
+                    }
+                })
+            }
         }
     }
 
