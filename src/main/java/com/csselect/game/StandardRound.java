@@ -67,18 +67,20 @@ public class StandardRound extends Round {
     @Override
     public List<Feature> provideFeatures() {
         List<Feature> providedFeatures = new ArrayList<>();
-        for (int i = 0; i < this.numberOfSelections; i++) {
-            List<Feature> featureListThisSelection = new ArrayList<>(this.features);
-            for (int j = 0; j < this.featuresPerSelection; j++) {
+        do {
+            for (int i = 0; i < this.numberOfSelections; i++) {
+                List<Feature> featureListThisSelection = new ArrayList<>(this.features);
+                for (int j = 0; j < this.featuresPerSelection; j++) {
 
 
-                int randomFeature = (int) (Math.random() * featureListThisSelection.size());
+                    int randomFeature = (int) (Math.random() * featureListThisSelection.size());
 
-                Feature feature = featureListThisSelection.get(randomFeature);
-                providedFeatures.add(feature);
-                featureListThisSelection.remove(feature);
+                    Feature feature = featureListThisSelection.get(randomFeature);
+                    providedFeatures.add(feature);
+                    featureListThisSelection.remove(feature);
+                }
             }
-        }
+        } while (this.game.checkDuplicateFeatureProvision(providedFeatures));
         return providedFeatures;
     }
 

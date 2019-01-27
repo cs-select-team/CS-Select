@@ -349,4 +349,13 @@ public class Game {
     public int hashCode() {
         return id;
     }
+
+    /**
+     * Checks whether the given {@link Collection} of {@link Feature}s was already displayed for selection in this game
+     * @param features features to check
+     * @return true if features were already displayed, false otherwise
+     */
+    boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
+        return this.database.checkDuplicateFeatureProvision(features);
+    }
 }
