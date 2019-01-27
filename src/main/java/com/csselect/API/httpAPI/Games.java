@@ -1,17 +1,25 @@
 package com.csselect.API.httpAPI;
 import com.csselect.API.APIFacadePlayer;
+import com.csselect.game.Feature;
 import com.csselect.game.Game;
+import com.csselect.game.Gamemode;
+import com.csselect.game.MatrixSelect;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Base64;
 
 /**
  * only request from players.
@@ -40,9 +48,9 @@ public class Games extends Servlet {
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        if (!isPlayer()) {
-            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
-        }
+        //if (!isPlayer()) {
+        //    throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        //}
         String requestString = req.getPathInfo();
         if (requestString.matches("/[0-9]+/accept")) {
             acceptInvite(req, resp);
@@ -94,7 +102,22 @@ public class Games extends Servlet {
     private void startRound(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
 
         int gameId = getId(req.getPathInfo());
-        returnAsJson(resp, getPlayerFacade().startRound(gameId));
+        JsonObject jsonObject = new JsonObject();
+        JsonArray featureList = new JsonArray();
+        for (Feature feature: getPlayerFacade().startRound(gameId)) {
+            JsonObject jsonFeature = new JsonObject();
+            jsonFeature.addProperty("id", feature.getID());
+            jsonFeature.addProperty("desc", feature.getEnglishDescription()); // check for language
+            jsonFeature.addProperty("name", feature.getEnglishName());
+            jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
+            jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
+            featureList.add(jsonFeature);
+        }
+        jsonObject.add("listOfFeatures", featureList);
+        Gamemode gm = getPlayerFacade().getGame(gameId).getGamemode();
+        JsonObject options = new Gson().fromJson(new Gson().toJson(gm), JsonObject.class);
+        jsonObject.add("options", options);
+        returnJson(resp, jsonObject);
     }
 
 
@@ -110,6 +133,7 @@ public class Games extends Servlet {
             jsonObject.addProperty("id", game.getId());
             jsonObject.addProperty("title", game.getTitle());
             jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
+            jsonObject.addProperty("type", "Matrix"); // TODO get gamemode name from somewhere
             json.add(jsonObject);
         }
         returnJson(resp, json);
@@ -130,6 +154,23 @@ public class Games extends Servlet {
         Matcher m = p.matcher(urlPath);
         m.find();
         return Integer.parseInt(m.group(1));
+    }
+
+    public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+
+            imageString = Base64.getEncoder().encodeToString(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
     }
 
 }

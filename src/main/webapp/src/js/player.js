@@ -94,35 +94,35 @@ var stats = new Vue({
     data: {
         username: 'Bendix',
         points: 1234
-    }//, //TODO remove comment if API does actually return something
-    //mounted: function () {
-    //    axios({
-    //        method: 'get',
-    //        url: 'users'
-    //    }).then(function (response) {
-    //        this.points = JSON.parse(response.data).score
-    //        this.username = JSON.parse(response.data).username
-    //    })
-//
-    //}
+    }, //TODO remove comment if API does actually return something
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: 'users'
+        }).then(function (response) {
+            this.points = JSON.parse(response.data).score;
+            this.username = JSON.parse(response.data).username;
+        })
+
+    }
 })
 
 var games = new Vue({
     el: '#games',
     data: {
         listOfGames: [{title:"myCoolGame", type:"Matrix", roundsPlayed:12, gameId: 1},
-            {title:"myRatherAmusingGame", type:"Binär", roundsPlayed:42, gameId: 2},
+            {title:"myRatherAmusingGame", type:"Binary", roundsPlayed:42, gameId: 2},
             {title:"myUnderwhelmingGame", type:"Matrix", roundsPlayed:53, gameId: 3},
             {title:"myDisappointingGame", type:"Matrix", roundsPlayed:256, gameId: 4}]
-    }//,
-    //mounted: function () {
-    //    axios({
-    //        method: 'get',
-    //        url: 'games'
-    //    }).then(function (response) {
-    //        this.listOfGames = JSON.parse(response.data)
-    //    })
-    //}
+    },
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: 'games'
+        }).then(function (response) {
+            this.listOfGames = JSON.parse(response.data)
+        })
+    }
 })
 
 var leaderboard = new Vue({
@@ -135,11 +135,11 @@ var leaderboard = new Vue({
         ]
     },
     mounted: function () {
-        //axios({
-        //    method: 'get',
-        //    url: 'users/leaderboard'
-        //}).then(function (response) {
-        //    this.playerList = JSON.parse(response.data)
-        //})
+        axios({
+            method: 'get',
+            url: 'users/leaderboard'
+        }).then(function (response) {
+            this.playerList = JSON.parse(response.data)
+        })
     }
 })

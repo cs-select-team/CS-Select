@@ -35,7 +35,10 @@ Vue.component('terminated-games-display', {
         remove: function (gameId) {
             axios({
                 method: 'post',
-                url: 'games/' + gameId + '/delete'
+                url: 'create/terminate',
+                params: {
+                    gameId: gameId
+                }
             });
             terminatedGames.listOfGames.forEach(function (value, index) { // remove from the list without reloading page
                 if (value.gameId == gameId) terminatedGames.listOfGames.splice(index, 1);
@@ -56,13 +59,30 @@ var activeGames = new Vue({
             {title:"myRatherAmusingGame", type:"Binär", termination:0, gameId: 2},
             {title:"myUnderwhelmingGame", type:"Matrix", termination:0, gameId: 3},
             {title:"myDisappointingGame", type:"Matrix", termination:0, gameId: 4}]
+    },
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: "create/active"
+        }).then(function (response) {
+            this.listOfGames = JSON.parse(response.data)
+        })
     }
+
 });
 
 var terminatedGames = new Vue({
     el: "#terminated",
     data: {
         listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, gameId: 1}]
+    },
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: "create/terminated"
+        }).then(function (response) {
+            this.listOfGames = JSON.parse(response.data)
+        })
     }
 });
 

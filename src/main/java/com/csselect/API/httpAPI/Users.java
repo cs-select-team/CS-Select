@@ -1,9 +1,13 @@
 package com.csselect.API.httpAPI;
+import com.csselect.user.Player;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * handles requests to /users
@@ -58,7 +62,6 @@ public class Users extends Servlet {
 
     private void setLanguage(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
         getUserFacade().setLanguage(getParameter("lang", req));
-        session.setAttribute("lang", getParameter("lang", req));
     }
 
     private void recoverPassword(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
@@ -86,10 +89,24 @@ public class Users extends Servlet {
     }
 
     private void getLeaderboard(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
-        //if (!isPlayer()) {
-        //    throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
-        //}
-        returnAsJson(resp, getPlayerFacade().getLeaderboard());
+        if (!isPlayer()) {
+            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        }
+        Map<Player, Integer> leaderboard = getPlayerFacade().getLeaderboard();
+        JsonArray array = new JsonArray();
+        Iterator it = leaderboard.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            Player p =((Player)pair.getValue());
+            int place = ((int) pair.getKey());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("username", "Bendix"); // TODO change if the player.getUsername method is available
+            jsonObject.addProperty("points", p.getStats().getScore());
+            jsonObject.addProperty("place", place);
+            array.add(jsonObject);
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        returnJson(resp, array);
     }
 
     private void getAchievments(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
@@ -120,7 +137,6 @@ public class Users extends Servlet {
             json.addProperty("username", "Benidx"); // TODO add username
             json.addProperty("points", 1000 );// TODO getPlayerFacade().getPlayer().getStats().getScore()
             returnJson(resp, json);
-            //returnAsJson(resp, getPlayerFacade().getPlayer());
         } else {
             returnAsJson(resp, getOrganiserFacade().getOrganiser());
         }

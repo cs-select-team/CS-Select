@@ -1,9 +1,14 @@
 package com.csselect.API.httpAPI;
+import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * only request from organisers in this class.
@@ -18,8 +23,15 @@ public class GameManagement extends Servlet {
         }
         if (req.getPathInfo().equals("/patterns")) {
             getPatterns(req, resp);
+        } else if (req.getPathInfo().equals("/active")) {
+            getActiveGames(req, resp);
+        } else if (req.getPathInfo().equals("/terminated")) {
+            getTerminatedGames(req, resp);
         }
     }
+
+
+
 
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
@@ -90,5 +102,27 @@ public class GameManagement extends Servlet {
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+    }
+
+    private void getActiveGames(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Collection<Game> activeGames = getOrganiserFacade().getActiveGames();
+        sendGameArray(resp, activeGames);
+    }
+    private void getTerminatedGames(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Collection<Game> terminatedGames = getOrganiserFacade().getTerminatedGames();
+        sendGameArray(resp, terminatedGames);
+    }
+
+    private void sendGameArray(HttpServletResponse resp, Collection<Game> terminatedGames) throws IOException {
+        JsonArray array = new JsonArray();
+        for (Game game: terminatedGames) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("title", game.getTitle());
+            jsonObject.addProperty("id", game.getId());
+            jsonObject.addProperty("type", "Matrix"); // TODO
+            jsonObject.addProperty("termination", 0); // TODO
+            array.add(jsonObject);
+        }
+        returnJson(resp, array);
     }
 }
