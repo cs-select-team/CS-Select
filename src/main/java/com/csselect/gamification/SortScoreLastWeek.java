@@ -1,6 +1,5 @@
 package com.csselect.gamification;
 
-import com.csselect.game.Round;
 import com.csselect.user.Player;
 
 import java.time.LocalDate;
@@ -14,25 +13,23 @@ public class SortScoreLastWeek extends LeaderboardSortingStrategy {
 
     @Override
     protected Map<Player, Integer> sort(List<Player> players) {
-        Map<Player, List<Round>> roundsLastWeek = new LinkedHashMap<>();
-        Map<Player, Integer> scoreLastWeek = new LinkedHashMap<>();
+        Map<Player, Integer> scoreLastWeek = new TreeMap<>();
 
-        players.stream().forEach(p -> roundsLastWeek.put(p, p.getRounds().stream()
-                .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusDays(7))).collect(Collectors.toList())));
-
-
-        for (Map.Entry<Player, List<Round>> entry : roundsLastWeek.entrySet()) {
+        for (Player player : players) {
             List<Integer> allPoints = new LinkedList<>();
-            entry.getValue().stream().forEach(r -> allPoints.add(r.getPoints()));
+
+            player.getRounds().stream()
+                    .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+                    .collect(Collectors.toList()).stream().forEach(r -> allPoints.add(r.getPoints()));
+
             int sum = allPoints.stream().mapToInt(Integer::intValue).sum();
-            scoreLastWeek.put(entry.getKey(), sum);
+            scoreLastWeek.put(player, sum);
         }
 
         Map<Player, Integer> sortedMap = scoreLastWeek.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e1));
+                .sorted(Collections.reverseOrder(Comparator.comparing(Map.Entry::getValue)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-        // List<Player> sortedList = new LinkedList<>(sortedMap.keySet());
         return sortedMap;
     }
 }

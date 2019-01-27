@@ -1,35 +1,37 @@
 package com.csselect.gamification;
 
 /**
- * Represents an abstract Achievement. Achievements change their state depending on
- * the player's current progress. All subclasses must implement the checkProgress method.
+ * Represents an Achievement. Achievements have a type and
+ * a certain state depending on the player's current progress.
  */
-public abstract class Achievement {
+public class Achievement {
 
-    private String name;
-    private String description;
     private AchievementState state;
+    private AchievementType type;
 
     /**
-     * Determines the current achievement's progress of a player represented by an AchievementState.
-     * @param stats The PlayerStats object of the player.
-     * @return The current state of the achievement.
+     * Creates a new Achievement by setting its type and the current state.
+     * @param state The current state of the achievement for the player.
+     * @param type The type of the achievement.
      */
-    public abstract AchievementState checkProgress(PlayerStats stats);
-
-    /**
-     * Gets the name of the achievement.
-     * @return The name of the achievement.
-     */
-    public String getName() {
-        return name;
+    Achievement(AchievementState state, AchievementType type) {
+        this.state = state;
+        this.type = type;
     }
 
     /**
-     * Gets the description of the achievement.
-     * @return The description of the achievement.
+     * Gets the current state of the achievement.
+     * @return The current state of the achievement.
      */
-    public String getDescription() {
-        return description;
+    public AchievementState getState() {
+        return state;
+    }
+
+    /**
+     * Gets the type of the achievement.
+     * @return The type of the achievement.
+     */
+    public AchievementType getType() {
+        return type;
     }
 }

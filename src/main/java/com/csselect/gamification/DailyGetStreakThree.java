@@ -15,20 +15,13 @@ public class DailyGetStreakThree extends DailyChallenge {
     /**
      * Creates a daily challenge by setting the necessary values.
      */
-    public DailyGetStreakThree() {
+    DailyGetStreakThree() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;
         this.dailyStreak = 0;
-    }
-
-    public DailyGetStreakThree(LocalDate date, boolean completed, int dailyStreak) {
-        this.date = date;
-        this.completed = completed;
-        this.reward = 50;
-        this.dailyStreak = dailyStreak;
     }
 
     @Override
@@ -46,11 +39,5 @@ public class DailyGetStreakThree extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
-        dailyStreak = 0;
     }
 }

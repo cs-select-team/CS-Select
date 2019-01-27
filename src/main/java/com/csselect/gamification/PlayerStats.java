@@ -3,6 +3,7 @@ package com.csselect.gamification;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,13 +16,10 @@ public class PlayerStats implements Gamification {
     private PlayerStatsAdapter playerStatsAdapter;
     private Streak streak;
     private DailyChallenge activeDaily;
-    private List<DailyChallenge> dailies;
-    private static List<Achievement> achievements;
 
     public PlayerStats(PlayerStatsAdapter databaseAdapter) {
         this.playerStatsAdapter = databaseAdapter;
         this.streak = new Streak();
-        this.dailies = loadDailies();
         this.activeDaily = chooseRandomDaily();
     }
 
@@ -63,6 +61,11 @@ public class PlayerStats implements Gamification {
 
     @Override
     public List<Achievement> getAchievements() {
+        List<AchievementType> achievementTypes = Arrays.asList(AchievementType.values());
+        List<Achievement> achievements = new LinkedList<>();
+        for (AchievementType type : achievementTypes) {
+            achievements.add(type.checkProgress(this));
+        }
         return achievements;
     }
 
@@ -155,6 +158,13 @@ public class PlayerStats implements Gamification {
         return newScore;
     }
 
+    /**
+     * Calculates bonus points if the daily challenge has been finished.
+     * @param dailyToCheck The current daily challenge.
+     * @param oldScore The current score.
+     * @return The new score. If the daily has not been finished or already has been finished, the
+     * score stays the same.
+     */
     private int addDailyBonus(DailyChallenge dailyToCheck, int oldScore) {
         int newScore = oldScore;
         if (!dailyToCheck.isCompleted()) {
@@ -188,10 +198,9 @@ public class PlayerStats implements Gamification {
      * @return The chosen daily.
      */
     private DailyChallenge chooseRandomDaily() {
+        List<DailyChallenge> dailies = loadDailies();
         int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
         DailyChallenge newDaily = dailies.get(randomIndex);
-        newDaily.resetDaily();
-        newDaily.setDate(LocalDate.now());
         return newDaily;
     }
 
