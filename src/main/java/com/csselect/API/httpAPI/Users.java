@@ -95,13 +95,15 @@ public class Users extends Servlet {
         Map<Player, Integer> leaderboard = getPlayerFacade().getLeaderboard();
         JsonArray array = new JsonArray();
         Iterator it = leaderboard.entrySet().iterator();
+        int place = 0;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Player p =((Player)pair.getValue());
-            int place = ((int) pair.getKey());
+            place++;
+            Map.Entry pair = (Map.Entry) it.next();
+            Player p = ((Player) pair.getValue());
+            int points = ((int) pair.getKey());
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("username", "Bendix"); // TODO change if the player.getUsername method is available
-            jsonObject.addProperty("points", p.getStats().getScore());
+            jsonObject.addProperty("points", points);
             jsonObject.addProperty("place", place);
             array.add(jsonObject);
             it.remove(); // avoids a ConcurrentModificationException
@@ -135,7 +137,7 @@ public class Users extends Servlet {
         if (isPlayer()) {
             JsonObject json = new JsonObject();
             json.addProperty("username", "Benidx"); // TODO add username
-            json.addProperty("points", 1000 );// TODO getPlayerFacade().getPlayer().getStats().getScore()
+            json.addProperty("points", getPlayerFacade().getScore() );
             returnJson(resp, json);
         } else {
             returnAsJson(resp, getOrganiserFacade().getOrganiser());
