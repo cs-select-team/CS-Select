@@ -6,8 +6,8 @@ package com.csselect.gamification;
  */
 public class DailyReachScoreHundredFifty extends DailyChallenge {
 
-    private final static String GERMAN_NAME = "Erreiche heute insgesamt 100 Punkte.";
-    private final static String ENGLISH_NAME = "Achieve a total score of 100 today.";
+    private final static String GERMAN_NAME = "Erreiche heute insgesamt 150 Punkte.";
+    private final static String ENGLISH_NAME = "Achieve a total score of 150 today.";
     private int dailyScore;
 
     /**
