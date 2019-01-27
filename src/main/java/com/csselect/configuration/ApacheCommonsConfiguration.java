@@ -13,7 +13,9 @@ import java.io.File;
  */
 public final class ApacheCommonsConfiguration implements Configuration {
 
-    private static final String DEFAULT_CONFIG_PATH = "/";
+    private static final String DEFAULT_CONFIG_PATH = System.getProperty("user.dir") + File.separator + ".."
+            + File.separator + "conf" + File.separator + "Catalina" + File.separator + "cs_select" + File.separator
+            + "config.properties";
 
     private FileBasedConfiguration configuration;
 
