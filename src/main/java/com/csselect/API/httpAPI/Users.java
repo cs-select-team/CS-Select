@@ -99,8 +99,8 @@ public class Users extends Servlet {
         while (it.hasNext()) {
             place++;
             Map.Entry pair = (Map.Entry) it.next();
-            Player p = ((Player) pair.getValue());
-            int points = ((int) pair.getKey());
+            int points = ((int) pair.getValue());
+            Player p = ((Player) pair.getKey());
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("username", "Bendix"); // TODO change if the player.getUsername method is available
             jsonObject.addProperty("points", points);

@@ -65,7 +65,7 @@ var activeGames = new Vue({
             method: 'get',
             url: "create/active"
         }).then(function (response) {
-            this.listOfGames = JSON.parse(response.data)
+            this.listOfGames = response.data
         })
     }
 
@@ -81,7 +81,7 @@ var terminatedGames = new Vue({
             method: 'get',
             url: "create/terminated"
         }).then(function (response) {
-            this.listOfGames = JSON.parse(response.data)
+            this.listOfGames = response.data
         })
     }
 });

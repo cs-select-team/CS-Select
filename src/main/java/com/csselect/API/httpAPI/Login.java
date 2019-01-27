@@ -58,8 +58,9 @@ public class Login extends Servlet {
 
         if (isSet("organiser", req)) {
             if (getOrganiserFacade().login(email, password)) {
-                resp.sendError(HttpServletResponse.SC_ACCEPTED);
                 setPlayer(false);
+                resp.sendError(HttpServletResponse.SC_ACCEPTED);
+
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
@@ -67,6 +68,7 @@ public class Login extends Servlet {
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
+                System.out.println("Player: " + email + " logged in");
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }

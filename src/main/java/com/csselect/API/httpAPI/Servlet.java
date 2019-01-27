@@ -43,6 +43,7 @@ public abstract  class Servlet extends HttpServlet {
      */
     public void setPlayer(boolean player) {
         isPlayer = player;
+        session.setAttribute(IS_PLAYER, player);
     }
 
     /**
@@ -180,11 +181,13 @@ public abstract  class Servlet extends HttpServlet {
         resp.getWriter().close();
     }
     private void createOrganiser() {
+        System.out.println("createOrganiser");
         facadeOrganiser = new APIFacadeOrganiser();
-        session.setAttribute(ORGANISERFACADE_ATTR_NAME, facadePlayer);
+        session.setAttribute(ORGANISERFACADE_ATTR_NAME, facadeOrganiser);
     }
 
     private void createPlayer() {
+        System.out.println("createPlayer");
         facadePlayer = new APIFacadePlayer();
         session.setAttribute(PLAYERFACADE_ATTR_NAME, facadePlayer);
     }

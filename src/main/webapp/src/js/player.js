@@ -100,8 +100,8 @@ var stats = new Vue({
             method: 'get',
             url: 'users'
         }).then(function (response) {
-            this.points = JSON.parse(response.data).score;
-            this.username = JSON.parse(response.data).username;
+            stats.points = response.data.points;
+            stats.username = response.data.username;
         })
 
     }
@@ -120,7 +120,7 @@ var games = new Vue({
             method: 'get',
             url: 'games'
         }).then(function (response) {
-            this.listOfGames = JSON.parse(response.data)
+            games.listOfGames = response.data
         })
     }
 })
@@ -139,7 +139,7 @@ var leaderboard = new Vue({
             method: 'get',
             url: 'users/leaderboard'
         }).then(function (response) {
-            this.playerList = JSON.parse(response.data)
+            this.playerList = response.data
         })
     }
 })

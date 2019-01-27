@@ -29,6 +29,8 @@ public class Games extends Servlet {
 
 
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+        System.out.println("Is player: " + isPlayer());
+        System.out.println(req.getPathInfo());
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
@@ -48,9 +50,9 @@ public class Games extends Servlet {
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        //if (!isPlayer()) {
-        //    throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
-        //}
+        if (!isPlayer()) {
+            throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
+        }
         String requestString = req.getPathInfo();
         if (requestString.matches("/[0-9]+/accept")) {
             acceptInvite(req, resp);
