@@ -126,6 +126,7 @@ public class Games extends Servlet {
 
     private void getGames(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
+        System.out.println("requesting games");
         Collection<Game> games = getPlayerFacade().getGames();
         JsonArray json = new JsonArray();
         for (Game game:games) {

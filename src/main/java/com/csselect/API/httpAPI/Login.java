@@ -19,8 +19,10 @@ public class Login extends Servlet {
     private void logout(HttpServletResponse resp) throws IOException {
         if (isPlayer()) {
             getPlayerFacade().logout();
+            System.out.println("player logged out");
         } else {
             getOrganiserFacade().logout();
+            System.out.println("player logged out");
         }
 
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
@@ -40,8 +42,10 @@ public class Login extends Servlet {
         String third = getParameter("thirdParam", req);
         boolean success = false;
         if (isSet("organiser", req)) {
+            createOrganiser();
             success = getOrganiserFacade().register(new String[]{email, password, third});
         } else {
+            createPlayer();
             success = getPlayerFacade().register(new String[]{email, password, third});
         }
         if (success) {
@@ -57,6 +61,7 @@ public class Login extends Servlet {
         String password = getParameter("password", req);
 
         if (isSet("organiser", req)) {
+            createOrganiser();
             if (getOrganiserFacade().login(email, password)) {
                 setPlayer(false);
                 session.setAttribute("lang", getOrganiserFacade().getLanguage());
@@ -65,10 +70,12 @@ public class Login extends Servlet {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         } else {
+            createPlayer();
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
                 session.setAttribute("lang", getPlayerFacade().getLanguage());
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
+                System.out.println("player logged in");
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }

@@ -7,10 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 /** this class handles requests from a url and provides helpful methods
@@ -53,13 +50,6 @@ public abstract  class Servlet extends HttpServlet {
      * @return the current playerFacade
      */
     protected APIFacadePlayer getPlayerFacade() {
-        if (facadePlayer == null) {
-
-            facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
-        }
-        if (facadePlayer == null) {
-            createPlayer();
-        }
         return facadePlayer;
 
     }
@@ -71,21 +61,14 @@ public abstract  class Servlet extends HttpServlet {
      * @return current organiserFacade
      */
     protected APIFacadeOrganiser getOrganiserFacade() {
-        if (facadeOrganiser == null) {
-            facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
-        }
-        if (facadeOrganiser == null) {
-            createOrganiser();
-        }
         return facadeOrganiser;
     }
 
 
     private void setup(HttpServletRequest req, HttpServletResponse resp) {
         session = req.getSession();
-        getOrganiserFacade();
-        getPlayerFacade();
-
+        facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
+        facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;
         } else {
@@ -179,13 +162,13 @@ public abstract  class Servlet extends HttpServlet {
         resp.getWriter().write(json.toString());
         resp.getWriter().close();
     }
-    private void createOrganiser() {
+    protected void createOrganiser() {
         System.out.println("createOrganiser");
         facadeOrganiser = new APIFacadeOrganiser();
         session.setAttribute(ORGANISERFACADE_ATTR_NAME, facadeOrganiser);
     }
 
-    private void createPlayer() {
+    protected void createPlayer() {
         System.out.println("createPlayer");
         facadePlayer = new APIFacadePlayer();
         session.setAttribute(PLAYERFACADE_ATTR_NAME, facadePlayer);
