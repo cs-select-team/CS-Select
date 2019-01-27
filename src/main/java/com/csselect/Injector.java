@@ -38,14 +38,26 @@ public final class Injector {
         return injector;
     }
 
+    /**
+     * Gets the used {@link DatabaseAdapter} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
     public DatabaseAdapter getDatabaseAdapter() {
         return module.getDatabaseAdapter();
     }
 
+    /**
+     * Gets the used {@link MLServer} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
     public MLServer getMLServer() {
         return module.getMLServer();
     }
 
+    /**
+     * Gets the used {@link Configuration} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
     public Configuration getConfiguration() {
         return module.getConfiguration();
     }

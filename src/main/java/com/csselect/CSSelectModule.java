@@ -7,8 +7,12 @@ import com.csselect.mlserver.RESTMLServer;
  * This class manages which implementations should be injected by guice
  */
 
-public class CSSelectModule extends Module {
+class CSSelectModule extends Module {
 
+    /**
+     * Creates a new {@link CSSelectModule}
+     * @param configuration configuration instance to be used
+     */
     CSSelectModule(Configuration configuration) {
         super(new MysqlDatabaseAdapter(configuration), new RESTMLServer(configuration), configuration);
     }
