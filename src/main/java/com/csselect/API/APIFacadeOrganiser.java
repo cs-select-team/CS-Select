@@ -64,6 +64,11 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     }
 
+    @Override
+    public String getLanguage() {
+        return organiser.getLanguage();
+    }
+
     /** returns the logged in organiser that is assoziated with this object
      *
      * @return the organiser

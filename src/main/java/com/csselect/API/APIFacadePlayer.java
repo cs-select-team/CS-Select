@@ -72,6 +72,11 @@ public class APIFacadePlayer extends APIFacadeUser {
     public void validateEmail() {
     }
 
+    @Override
+    public String getLanguage() {
+        return player.getLanguage();
+    }
+
     /** getter for the player associated with this facade
      *
      * @return player
