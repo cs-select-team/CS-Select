@@ -10,10 +10,13 @@ import java.util.Random;
 /**
  * Mock-Implementation of the {@link com.csselect.mlserver.MLServer} Interface
  */
-public class MockMLServer implements MLServer {
+public final class MockMLServer implements MLServer {
 
     private Random random;
 
+    /**
+     * Creates a new {@link MockMLServer}
+     */
     @Inject
     MockMLServer() {
         this.random = new Random();

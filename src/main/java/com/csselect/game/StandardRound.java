@@ -2,7 +2,8 @@ package com.csselect.game;
 
 import com.csselect.user.Player;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The StandardRound class represents all concrete rounds {@link Round} that are only different in the number
@@ -18,14 +19,13 @@ public class StandardRound extends Round {
     /**
      * Constructor for a standard round object
      * @param player the player {@link Player} who plays the round
-     * @param numberOfRound the number of the round
      * @param numberOfSelections the number of selections per round
      * @param featuresPerSelection the number of features {@link Feature} per selection
      * @param minSelect the minimum number of features {@link Feature} to be selected per selection
      * @param maxSelect the maximum number of features {@link Feature} to be selected per selection
      */
-    public StandardRound(Player player, int numberOfRound, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
-        super(player, numberOfRound);
+    public StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
+        super(player);
         this.numberOfSelections = numberOfSelections;
         this.featuresPerSelection = featuresPerSelection;
         this.minSelect = minSelect;
@@ -65,7 +65,29 @@ public class StandardRound extends Round {
     }
 
     @Override
-    public Collection<Feature> provideFeatures() {
-        return null;
+    public List<Feature> provideFeatures() {
+        List<Feature> providedFeatures = new ArrayList<>();
+        for (int i = 0; i < this.numberOfSelections; i++) {
+            List<Feature> featureListThisSelection = new ArrayList<>(this.features);
+            for (int j = 0; j < this.featuresPerSelection; j++) {
+
+
+                int randomFeature = (int) (Math.random() * featureListThisSelection.size());
+
+                Feature feature = featureListThisSelection.get(randomFeature);
+                providedFeatures.add(feature);
+                featureListThisSelection.remove(feature);
+            }
+        }
+        return providedFeatures;
+    }
+
+    @Override
+    public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        if (this.minSelect > selectedFeatures.length || this.maxSelect < selectedFeatures.length) {
+            return -1;
+        }
+
+        return super.selectFeatures(selectedFeatures, uselessFeatures);
     }
 }

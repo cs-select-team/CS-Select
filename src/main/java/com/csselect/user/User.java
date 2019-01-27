@@ -1,6 +1,7 @@
 package com.csselect.user;
 
 import com.csselect.database.UserAdapter;
+import com.csselect.user.management.safety.Encrypter;
 
 /**
  * This class represents an user in our system. All users, despite their role, have access to those methods.
@@ -9,8 +10,8 @@ import com.csselect.database.UserAdapter;
  * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
-public class User{
-    private UserAdapter databaseAdapter;
+public class User {
+    private UserAdapter userAdapter;
     protected boolean loggedIn;
 
     /**
@@ -25,10 +26,10 @@ public class User{
      * (object of {@link UserAdapter}). The constructor will be called as soon as a user registers or logs in.
      * Which value the unique ID will have (registration) is determined
      * by the {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication
+     * @param userAdapter Interface for database communication
      */
-    public User(UserAdapter databaseAdapter) {
-        this.databaseAdapter = databaseAdapter;
+    public User(UserAdapter userAdapter) {
+        this.userAdapter = userAdapter;
     }
 
     /**
@@ -36,7 +37,7 @@ public class User{
      * @return The unique ID which identifies the user in our system
      */
     public int getId() {
-        return this.databaseAdapter.getID();
+        return this.userAdapter.getID();
     }
 
     /**
@@ -71,7 +72,9 @@ public class User{
      * @param password New password which will be set for object's ID in our database.
      */
     public void changePassword(String password) {
-
+        String salt = Encrypter.getRandomSalt();
+        String concatenated = password + salt;
+        userAdapter.setPassword(Encrypter.encrypt(concatenated), salt);
     }
 
     /**
@@ -81,7 +84,7 @@ public class User{
      * @param email New email to which the user ID will refer in our database.
      */
     public void changeEmail(String email) {
-        databaseAdapter.setEmail(email);
+        userAdapter.setEmail(email);
     }
 
     /**
@@ -90,6 +93,19 @@ public class User{
      * @param langCode Code of language selected by the user
      */
     public void setLanguage(String langCode) {
-        databaseAdapter.setLanguage(langCode);
+        userAdapter.setLanguage(langCode);
+    }
+
+    /**
+     * Returns language code of language selected by the user
+     * @return String representing lang code
+     */
+    public String getLanguage() {
+        return userAdapter.getLanguage();
+    }
+
+    @Override
+    public int hashCode() {
+        return userAdapter.getID();
     }
 }

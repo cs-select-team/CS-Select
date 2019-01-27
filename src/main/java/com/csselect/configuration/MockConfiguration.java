@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Mock-Implementation of the {@link Configuration} interface
  */
-public class MockConfiguration implements Configuration {
+public final class MockConfiguration implements Configuration {
 
     @Inject
     private MockConfiguration() {
@@ -22,6 +22,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public String getMLServerURL() {
         return "127.0.0.1:8000";
+    }
+
+    @Override
+    public String getTimezone() {
+        return "CET";
     }
 
     @Override

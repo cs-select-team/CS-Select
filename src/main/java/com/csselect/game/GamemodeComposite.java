@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class GamemodeComposite extends Gamemode {
 
-    private List<Gamemode> gamemodes;
+    private final List<Gamemode> gamemodes;
 
     /**
      * Constructor for a game mode composite object
@@ -25,11 +25,10 @@ public class GamemodeComposite extends Gamemode {
      * Creates a round {@link Round} object from one of the game modes {@link Gamemode} it contains, which one
      * is chosen randomly
      * @param player the player {@link Player} who plays the round {@link Round}
-     * @param number the number rounds {@link Round} that have already been started in a game {@link Game}
      * @return the randomly created round {@link Round}
      */
-    public Round createRound(Player player, int number) {
-        if(player == null || this.gamemodes.size() == 0) {
+    public Round createRound(Player player) {
+        if (player == null || this.gamemodes.size() == 0) {
             return null;
         }
 
@@ -37,7 +36,7 @@ public class GamemodeComposite extends Gamemode {
 
         int randomMode = (int) (Math.random() * numberOfGamemodes);
 
-        return this.gamemodes.get(randomMode).createRound(player, number);
+        return this.gamemodes.get(randomMode).createRound(player);
     }
 
     /**
@@ -45,7 +44,7 @@ public class GamemodeComposite extends Gamemode {
      * @param gamemode the game mode {@link Gamemode} to be added
      */
     public void add(Gamemode gamemode) {
-        if(gamemode == null || this.gamemodes.contains(gamemode)) {
+        if (gamemode == null || this.gamemodes.contains(gamemode)) {
             return;
         }
         this.gamemodes.add(gamemode);

@@ -21,10 +21,14 @@ public class Pattern {
      * This method returns the String representing the title of the pattern
      * @return Name of the pattern
      */
-    public String getString() {
+    public String getTitle() {
         return title;
     }
 
+    /**
+     * Getter for game options. Creates a cloned object to not manipulate the old object.
+     * @return {@link GameOptions} object saved in Pattern
+     */
     public GameOptions getGameOptions() {
         return (GameOptions) gameOptions.clone();
     }

@@ -21,6 +21,11 @@ public class MLServerTests extends TestClass {
         mlServer = new RESTMLServer(config);
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void testVersion() throws IOException {
         Assert.assertEquals("0.1.5", mlServer.getVersion());

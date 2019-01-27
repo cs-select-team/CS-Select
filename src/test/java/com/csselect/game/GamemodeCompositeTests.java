@@ -17,6 +17,11 @@ public class GamemodeCompositeTests extends TestClass {
         this.gamemodeComposite = new GamemodeComposite();
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void addGamemodes() {
         MatrixSelect testMatrix = new MatrixSelect(5, 3, 4);
@@ -58,7 +63,7 @@ public class GamemodeCompositeTests extends TestClass {
 
         this.gamemodeComposite.add(testBinary);
 
-        Assert.assertNotNull(this.gamemodeComposite.createRound(player, 0));
+        Assert.assertNotNull(this.gamemodeComposite.createRound(player));
 
     }
 
@@ -73,7 +78,7 @@ public class GamemodeCompositeTests extends TestClass {
         this.gamemodeComposite.add(testBinary);
         this.gamemodeComposite.add(testBinaryB);
 
-        Assert.assertNotNull(this.gamemodeComposite.createRound(player, 0));
+        Assert.assertNotNull(this.gamemodeComposite.createRound(player));
 
     }
 

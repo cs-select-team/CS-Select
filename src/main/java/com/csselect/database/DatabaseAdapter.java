@@ -42,6 +42,13 @@ public interface DatabaseAdapter {
     Player getPlayer(String email);
 
     /**
+     * Gets the {@link Player} with the given id
+     * @param id players id
+     * @return player
+     */
+    Player getPlayer(int id);
+
+    /**
      * Gets the {@link Organiser} with the given email-address
      * @param email organisers email
      * @return organiser
@@ -95,7 +102,7 @@ public interface DatabaseAdapter {
      * @param hash players hashed password
      * @param salt salt used while hashing
      * @param username players username
-     * @return the created player
+     * @return the created player, null if a player with the same email or password already exists
      */
     Player createPlayer(String email, String hash, String salt, String username);
 
@@ -105,7 +112,7 @@ public interface DatabaseAdapter {
      * @param email organisers email
      * @param hash organisers hashed password
      * @param salt salt used while hashing
-     * @return the created organiser
+     * @return the created organiser, null if an organiser with the same email alredy exists
      */
     Organiser createOrganiser(String email, String hash, String salt);
 

@@ -5,6 +5,7 @@ import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
+import com.csselect.game.Round;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import com.google.inject.Inject;
@@ -67,6 +68,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
+    public Player getPlayer(int id) {
+        return new Player(playerAdapterMap.get(id));
+    }
+
+    @Override
     public Organiser getOrganiser(String email) {
         OrganiserAdapter adapter = organiserAdapterMap.values().stream().filter(p -> p.getEmail().equals(email))
                 .findFirst().orElse(null);
@@ -112,8 +118,8 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         for (PlayerAdapter p : playerAdapterMap.values()) {
-            if (p.getEmail().equalsIgnoreCase(email)) {
-                return new Player(p);
+            if (p.getEmail().equalsIgnoreCase(email) || p.getUsername().equalsIgnoreCase(username)) {
+                return null;
             }
         }
         MockPlayerAdapter adapter = new MockPlayerAdapter(nextPlayerId);
@@ -129,10 +135,10 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     public Organiser createOrganiser(String email, String hash, String salt) {
         for (OrganiserAdapter o : organiserAdapterMap.values()) {
             if (o.getEmail().equalsIgnoreCase(email)) {
-                return new Organiser(o);
+                return null;
             }
         }
-        OrganiserAdapter adapter = new MockOrganiserAdapter(nextPlayerId);
+        OrganiserAdapter adapter = new MockOrganiserAdapter(nextOrganiserId);
         adapter.setEmail(email);
         adapter.setPassword(hash, salt);
         organiserAdapterMap.put(nextOrganiserId, adapter);
@@ -144,6 +150,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     public void registerGame(Organiser organiser, Game game) {
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
+            nextGameId++;
         }
     }
 
@@ -213,5 +220,20 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     private Collection<Game> getTerminatedGames() {
         return gameMap.keySet().stream().filter(Game::isTerminated).collect(Collectors.toSet());
 
+    }
+
+    /**
+     * Gets all rounds the player has participated in
+     * @param adapter adapter of the player
+     * @return rounds
+     */
+    Collection<Round> getRounds(PlayerAdapter adapter) {
+        Collection<Round> rounds = new HashSet<>();
+        gameMap.keySet().forEach(game -> game.getRounds().forEach(round -> {
+            if (round.getPlayer().getId() == adapter.getID()) {
+                rounds.add(round);
+            }
+        }));
+        return rounds;
     }
 }
