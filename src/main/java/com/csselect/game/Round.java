@@ -15,14 +15,14 @@ import java.util.List;
 public abstract class Round {
 
     protected final LocalDateTime time;
-    protected double quality;
+    private double quality;
     protected int points;
     protected final Player player;
     protected Game game;
 
-    protected final Collection<Feature> uselessFeatures;
-    protected final Collection<Feature> chosenFeatures;
-    protected Collection<Feature> shownFeatures;
+    private final Collection<Feature> uselessFeatures;
+    private final Collection<Feature> chosenFeatures;
+    private Collection<Feature> shownFeatures;
 
     protected List<Feature> features;
 

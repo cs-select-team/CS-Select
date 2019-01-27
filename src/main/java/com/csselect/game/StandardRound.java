@@ -24,7 +24,7 @@ public class StandardRound extends Round {
      * @param minSelect the minimum number of features {@link Feature} to be selected per selection
      * @param maxSelect the maximum number of features {@link Feature} to be selected per selection
      */
-    public StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
+    StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
         super(player);
         this.numberOfSelections = numberOfSelections;
         this.featuresPerSelection = featuresPerSelection;

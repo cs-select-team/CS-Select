@@ -127,7 +127,7 @@ public class Game {
      * Getter for the feature set {@link FeatureSet} that includes the features {@link Feature} for the game
      * @return the feature set {@link FeatureSet}
      */
-    public FeatureSet getFeatureSet() {
+    FeatureSet getFeatureSet() {
         return this.featureSet;
     }
 

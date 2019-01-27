@@ -12,7 +12,7 @@ public class MatrixSelect extends Gamemode {
     /**
      * The number of selections of features in the MatrixSelect game mode
      */
-    public static final int NUMBER_OF_SELECTIONS = 1;
+    private static final int NUMBER_OF_SELECTIONS = 1;
 
     private final int numberOfFeatures;
     private final int minSelect;

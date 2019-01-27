@@ -8,6 +8,7 @@ import com.csselect.user.Player;
  */
 public abstract class Gamemode {
 
+
     /**
      * Creates a round {@link Round} object of this game mode
      * @param player the player {@link Player} who plays the round {@link Round}
