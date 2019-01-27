@@ -38,7 +38,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
     @Override
     public void setUp() {
-        mysqlDatabaseAdapter = new MysqlDatabaseAdapter(Injector.getInjector().getInstance(Configuration.class));
+        mysqlDatabaseAdapter = new MysqlDatabaseAdapter(Injector.getInstance().getConfiguration());
     }
 
     @Override
@@ -168,7 +168,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
     private Game createGame() throws IOException {
         Game game = new Game(1);
         game.setGamemode(new BinarySelect());
-        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        game.setMlserver(Injector.getInstance().getMLServer());
         game.setTitle(TEST_TITLE);
         game.setDescription(TEST_DESC);
         game.setAddressOrganiserDatabase(TEST_DB);

@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.sql.ResultSet;
@@ -12,8 +11,7 @@ import java.sql.SQLException;
  */
 public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStatsAdapter {
 
-    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInjector()
-            .getInstance(DatabaseAdapter.class);
+    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlPlayerStatsAdapter}

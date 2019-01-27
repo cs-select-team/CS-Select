@@ -24,7 +24,7 @@ public class SortScoreLastWeekTests extends TestClass {
     public void setUp() {
         playersList = new LinkedList<>();
         lastWeek = new SortScoreLastWeek();
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

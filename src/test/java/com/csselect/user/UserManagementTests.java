@@ -21,7 +21,7 @@ public class UserManagementTests extends TestClass {
     public void setUp() {
         pm = new PlayerManagement();
         om = new OrganiserManagement();
-        globalPassword = Injector.getInjector().getInstance(Configuration.class).getOrganiserPassword();
+        globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
     }
 
     @Override

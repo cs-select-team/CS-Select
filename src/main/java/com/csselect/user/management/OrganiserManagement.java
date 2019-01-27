@@ -10,12 +10,12 @@ import com.csselect.user.management.safety.Encrypter;
  * {@link UserManagement} class for {@link Organiser}
  */
 public final class OrganiserManagement extends UserManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
 
     @Override
     public Organiser register(String[] parameters) {
         assert parameters.length == 3;
-        Configuration config = Injector.getInjector().getInstance(Configuration.class);
+        Configuration config = Injector.getInstance().getConfiguration();
         String email = parameters[0];
         String password = parameters[1];
         String globalPassword = parameters[2];

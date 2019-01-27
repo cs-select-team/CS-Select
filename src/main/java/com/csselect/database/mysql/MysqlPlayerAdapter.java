@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
@@ -21,7 +20,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     private static final Map<PlayerAdapter, PlayerStats> PLAYERSTATS_MAP = new HashMap<>();
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlPlayerAdapter} with the given id

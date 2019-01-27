@@ -1,7 +1,6 @@
 package com.csselect.utils;
 
 import com.csselect.Injector;
-import com.csselect.configuration.Configuration;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.google.gson.Gson;
@@ -24,7 +23,7 @@ public final class FeatureSetUtils {
         //Utility classes shouldn't be instantiated
     }
 
-    private static final String HOMEDIR = Injector.getInjector().getInstance(Configuration.class).getHomeDirectory();
+    private static final String HOMEDIR = Injector.getInstance().getConfiguration().getHomeDirectory();
 
     /**
      * Loads a {@link FeatureSet} from the disk

@@ -56,7 +56,7 @@ public class GamemodeCompositeTests extends TestClass {
 
     @Test
     public void createRoundOneGamemode() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
 
         BinarySelect testBinary = new BinarySelect();
@@ -69,7 +69,7 @@ public class GamemodeCompositeTests extends TestClass {
 
     @Test
     public void createRoundTwoGamemodes() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
 
         BinarySelect testBinary = new BinarySelect();

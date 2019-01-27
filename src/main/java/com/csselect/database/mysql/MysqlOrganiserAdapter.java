@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
@@ -19,7 +18,7 @@ import java.util.StringJoiner;
 public class MysqlOrganiserAdapter extends MysqlUserAdapter implements OrganiserAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlOrganiserAdapter} with the given id

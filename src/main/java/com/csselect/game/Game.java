@@ -31,7 +31,7 @@ public class Game {
      */
     public Game(int id) {
         this.id = id;
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         this.database =  adapter.getGameAdapter(this.id);
     }
 

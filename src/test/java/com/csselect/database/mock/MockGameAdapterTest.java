@@ -25,7 +25,7 @@ public class MockGameAdapterTest extends TestClass {
     @Override
     public void setUp() {
         adapter = new MockGameAdapter(0);
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.csselect.email.EmailSender;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
-import com.csselect.mlserver.MLServer;
 import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
@@ -98,7 +97,7 @@ public class GameCreator {
      * @return New {@link Game} object
      */
     public Game doCreate() {
-        DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter databaseAdapter = Injector.getInstance().getDatabaseAdapter();
         int gameId = databaseAdapter.getNextGameID();
         Game game = new Game(gameId);
         game.setTitle(gameOptions.getTitle());
@@ -106,7 +105,7 @@ public class GameCreator {
         game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
         game.setTermination(gameOptions.getTermination());
         game.setGamemode(gameOptions.getGamemode());
-        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        game.setMlserver(Injector.getInstance().getMLServer());
         databaseAdapter.registerGame(organiser, game);
         game.invitePlayers(gameOptions.getInvitedEmails());
         for (String mail : gameOptions.getInvitedEmails()) {

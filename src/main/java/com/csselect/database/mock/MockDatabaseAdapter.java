@@ -8,7 +8,6 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.google.inject.Inject;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,8 +30,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     /**
      * Creates a new {@link MockDatabaseAdapter}
      */
-    @Inject
-    MockDatabaseAdapter() {
+    public MockDatabaseAdapter() {
         playerAdapterMap = new HashMap<>();
         organiserAdapterMap = new HashMap<>();
         gameMap = new HashMap<>();

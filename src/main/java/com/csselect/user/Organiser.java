@@ -7,12 +7,9 @@ import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
-import org.apache.commons.collections.set.ListOrderedSet;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * The organiser is an user in our system which is able to create games, decide in which database the result shall be
@@ -21,7 +18,7 @@ import java.util.HashSet;
  * for creating games.
  */
 public class Organiser extends User implements Comparable {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 

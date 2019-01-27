@@ -18,7 +18,7 @@ public class StandardRoundTests extends TestClass {
 
     @Override @Before
     public void setUp() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
         round = new StandardRound(player, 5, 3, 2, 2);
 

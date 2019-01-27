@@ -9,7 +9,7 @@ import com.csselect.user.management.safety.Encrypter;
  * {@link UserManagement} class for {@link Player}
  */
 public final class PlayerManagement extends UserManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
 
     @Override
     public Player register(String[] parameters) {

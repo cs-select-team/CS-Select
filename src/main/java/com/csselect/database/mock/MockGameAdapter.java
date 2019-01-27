@@ -1,7 +1,6 @@
 package com.csselect.database.mock;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
@@ -161,14 +160,14 @@ public class MockGameAdapter implements GameAdapter {
 
     @Override
     public void addPlayingPlayers(Collection<String> emails) {
-        emails.forEach(e -> playingPlayers.add(Injector.getInjector().getInstance(DatabaseAdapter.class).getPlayer(e)));
+        emails.forEach(e -> playingPlayers.add(Injector.getInstance().getDatabaseAdapter().getPlayer(e)));
         removeInvitedPlayers(emails);
 
     }
 
     @Override
     public void addPlayingPlayer(int id) {
-        playingPlayers.add(Injector.getInjector().getInstance(DatabaseAdapter.class).getPlayer(id));
+        playingPlayers.add(Injector.getInstance().getDatabaseAdapter().getPlayer(id));
     }
 
     @Override

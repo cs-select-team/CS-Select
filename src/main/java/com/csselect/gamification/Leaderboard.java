@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Leaderboard {
 
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
     private List<Player> players;
     private LeaderboardSortingStrategy strategy;
     private static Leaderboard instance;

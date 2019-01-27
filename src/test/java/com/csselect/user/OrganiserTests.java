@@ -13,7 +13,7 @@ public class OrganiserTests extends TestClass {
     @Override
     public void setUp() {
         if (!registered) {
-            String globalPassword = Injector.getInjector().getInstance(Configuration.class).getOrganiserPassword();
+            String globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
             OrganiserManagement om = new OrganiserManagement();
             String[] args = new String[3];
             args[0] = "voldi@csselect.com";

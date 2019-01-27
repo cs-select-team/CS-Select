@@ -21,7 +21,7 @@ public class GameTests extends TestClass {
     public void setUp() {
         this.game = new Game(1);
         this.game.setGamemode(new BinarySelect());
-        this.game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        this.game.setMlserver(Injector.getInstance().getMLServer());
         FeatureSet features = new FeatureSet("abc");
         for (int i = 0; i < 10; i++) {
             features.addFeature(new Feature(i, "a"));
@@ -50,19 +50,19 @@ public class GameTests extends TestClass {
     @Test
     public void termination() {
         Assert.assertFalse(game.isTerminated());
-        Round round = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round);
-        Round round2 = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round2 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round2);
-        Round round3 = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round3 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round3);
-        Round round4 = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round4 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round4);
         Assert.assertFalse(game.isTerminated());
-        Round round5 = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round5 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round5);
         Assert.assertTrue(game.isTerminated());
-        Round round6 = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round6 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round6);
         Assert.assertEquals(6, game.getNumberOfRounds());
     }
@@ -150,7 +150,7 @@ public class GameTests extends TestClass {
 
     @Test
     public void createRoundWrongPlayer() {
-        DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
         Player player = database.createPlayer("emai", "has", "sal", "usernam");
         Collection<Feature> features = game.startRound(player);
         Assert.assertNull(features);
@@ -160,7 +160,7 @@ public class GameTests extends TestClass {
     public void addFinishedRound() {
         Assert.assertEquals(0, game.getNumberOfRounds());
         Assert.assertEquals(0, game.getRounds().size());
-        Round round = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round);
         Assert.assertEquals(1, game.getNumberOfRounds());
         Assert.assertEquals(1, game.getRounds().size());
@@ -173,7 +173,7 @@ public class GameTests extends TestClass {
         game.startRound(player);
         game.startRound(player);
         Assert.assertEquals(0, game.getNumberOfRounds());
-        Round round = new StandardRound(Injector.getInjector().getInstance(DatabaseAdapter.class).createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
         game.addFinishedRound(round);
         Assert.assertEquals(1, game.getNumberOfRounds());
     }
@@ -191,7 +191,7 @@ public class GameTests extends TestClass {
     }
 
     private Player invitePlayer1() {
-        DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
         Player player = database.createPlayer("email", "hash", "salt", "username");
         Collection<String> emails = new ArrayList<>();
         emails.add("email");
@@ -200,7 +200,7 @@ public class GameTests extends TestClass {
     }
 
     private Player invitePlayer2() {
-        DatabaseAdapter database = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
         Player player = database.createPlayer("emai", "has", "sal", "usernam");
         Collection<String> emails = new ArrayList<>();
         emails.add("emai");

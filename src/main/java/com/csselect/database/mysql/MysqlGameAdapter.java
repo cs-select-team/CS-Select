@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
@@ -25,7 +24,7 @@ import java.util.StringJoiner;
 public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     private String databaseName;
     private String title;

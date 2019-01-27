@@ -1,7 +1,6 @@
 package com.csselect.database.mock;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
@@ -24,7 +23,7 @@ public class MockOrganiserAdapter extends MockUserAdapter implements OrganiserAd
     MockOrganiserAdapter(int id) {
         super(id);
         patterns = new HashSet<>();
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

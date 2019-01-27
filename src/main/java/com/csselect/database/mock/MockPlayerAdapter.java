@@ -1,7 +1,6 @@
 package com.csselect.database.mock;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.database.PlayerStatsAdapter;
 import com.csselect.game.Game;
@@ -27,7 +26,7 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
      */
     MockPlayerAdapter(int id) {
         super(id);
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

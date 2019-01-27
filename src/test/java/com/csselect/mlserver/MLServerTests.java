@@ -17,7 +17,7 @@ public class MLServerTests extends TestClass {
 
     @Override
     public void setUp() {
-        Configuration config = Injector.getInjector().getInstance(Configuration.class);
+        Configuration config = Injector.getInstance().getConfiguration();
         mlServer = new RESTMLServer(config);
     }
 

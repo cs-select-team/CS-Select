@@ -8,7 +8,6 @@ import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.google.inject.Inject;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 
@@ -39,11 +38,10 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private final Map<Integer, GameAdapter> gameAdapterMap;
 
     /**
-     * Creates a new MysqlDatabaseAdapter
+     * Creates a new MysqlDatabaseAdapter. Only to be used by the {@link com.csselect.Injector}
      * @param configuration configuration to use
      */
-    @Inject
-    MysqlDatabaseAdapter(Configuration configuration) {
+    public MysqlDatabaseAdapter(Configuration configuration) {
         gameMap = new HashMap<>();
         gameAdapterMap = new HashMap<>();
         this.hostname = configuration.getDatabaseHostname();

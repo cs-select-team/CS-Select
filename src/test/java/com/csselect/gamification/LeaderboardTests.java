@@ -41,7 +41,7 @@ public class LeaderboardTests extends TestClass {
     /*
     @Test
     public void testOneLeaderboardNoScore() {
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
         Player player = mockDatabaseAdapter.createPlayer("email", "hash", "salt", "username");
         Player player2 = mockDatabaseAdapter.createPlayer("email2", "hash2", "salt2", "username2");
         Assert.assertEquals(2, leaderboard.getPlayers().size());
