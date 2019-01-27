@@ -1,8 +1,8 @@
 package com.csselect.gamification;
 
 /**
- * Represents an Achievement. Achievements are represented by their type and
- * change their state depending on the player's current progress.
+ * Represents an Achievement. Achievements have a type and
+ * a certain state depending on the player's current progress.
  */
 public class Achievement {
 
@@ -11,7 +11,7 @@ public class Achievement {
 
     /**
      * Creates a new Achievement by setting its type and the current state.
-     * @param state the current state of the achievement for the player.
+     * @param state The current state of the achievement for the player.
      * @param type The type of the achievement.
      */
     Achievement(AchievementState state, AchievementType type) {
@@ -20,8 +20,8 @@ public class Achievement {
     }
 
     /**
-     * Gets the state of the achievement.
-     * @return The state of the achievement.
+     * Gets the current state of the achievement.
+     * @return The current state of the achievement.
      */
     public AchievementState getState() {
         return state;
