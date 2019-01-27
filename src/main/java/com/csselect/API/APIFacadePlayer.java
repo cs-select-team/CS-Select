@@ -6,9 +6,11 @@ import com.csselect.gamification.Achievement;
 import com.csselect.gamification.DailyChallenge;
 import com.csselect.gamification.Streak;
 import com.csselect.user.Player;
+import com.csselect.user.management.PlayerManagement;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * API facade for player specific calls
@@ -29,13 +31,45 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     private Player player;
 
-    public void register(String[] args) {
-
+    @Override
+    public boolean register(String[] args) {
+        PlayerManagement pm = new PlayerManagement();
+        return null != pm.register(args);
     }
 
     @Override
     public boolean login(String email, String password) {
-        return true;
+        PlayerManagement pm = new PlayerManagement();
+        player = pm.login(email, password);
+        return player != null;
+    }
+
+    @Override
+    public void logout() {
+        player = null;
+    }
+
+    @Override
+    public void changeEmail(String email) {
+        player.changeEmail(email);
+    }
+
+    @Override
+    public void changePassword(String password) {
+        player.changePassword(password);
+    }
+
+    @Override
+    public void setLanguage(String languageCode) {
+        player.setLanguage(languageCode);
+    }
+
+    @Override
+    public void recoverPassword(String email) {
+    }
+
+    @Override
+    public void validateEmail() {
     }
 
     /** getter for the player associated with this facade
@@ -94,7 +128,6 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param selected ids of the selected Features
      * @param useless ids of the features that are marked useless
      *
-     * @return the score that the selection of the player has achieved
      */
      public void selectFeatures(int[] selected, int[] useless) {
         player.selectFeatures(selected, useless);
@@ -121,7 +154,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @return leaderboard, first entrance has the most points
      */
-     public List<Player> getLeaderboard() {
+     public Map<Player, Integer> getLeaderboard() {
          return player.getLeaderboard();
      }
 

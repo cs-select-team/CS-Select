@@ -10,17 +10,21 @@ import java.util.HashSet;
  *  This class represents the fields which an organiser {@link com.csselect.user.Organiser} can modify whilst in
  *  gamecreation interface.
  */
-public class GameOptions implements  Cloneable{
+public class GameOptions implements  Cloneable {
     private String title;
     private String description;
-    private String nameFeatureDatabase;
+    private String resultDatabaseAddress;
     private Termination termination;
     private Gamemode gamemode;
     private Collection<String> invitedEmails;
 
+    /**
+     * Public constructor for a game options object
+     */
     public GameOptions() {
         this.invitedEmails = new HashSet<>();
     }
+
     /**
      * Get title String
      * @return game title
@@ -57,15 +61,16 @@ public class GameOptions implements  Cloneable{
      * Get String representing address of the database where the results shall be saved in
      * @return database address
      */
-    public String getNameFeatureDatabase() {
-        return nameFeatureDatabase;
+    public String getResultDatabaseAddress() {
+        return resultDatabaseAddress;
     }
 
     /**
      * Set String representing address of the database where the results shall be saved in
+     * @param nameFeatureDatabase Database address
      */
-    public void setNameFeatureDatabase(String nameFeatureDatabase) {
-        this.nameFeatureDatabase = nameFeatureDatabase;
+    public void setResultDatabaseAddress(String nameFeatureDatabase) {
+        this.resultDatabaseAddress = nameFeatureDatabase;
     }
 
     /**
@@ -78,6 +83,7 @@ public class GameOptions implements  Cloneable{
 
     /**
      * Set termination conditions
+     * @param termination {@link Termination} object
      */
     public void setTermination(Termination termination) {
         this.termination = termination;
@@ -93,6 +99,7 @@ public class GameOptions implements  Cloneable{
 
     /**
      * Get gamemode of game
+     * @param gamemode  {@link Gamemode} object
      */
     public void setGamemode(Gamemode gamemode) {
         this.gamemode = gamemode;
@@ -130,7 +137,7 @@ public class GameOptions implements  Cloneable{
             copyObject.setDescription(this.description);
             copyObject.setGamemode(this.gamemode);
             copyObject.addInvitedEmails(this.invitedEmails);
-            copyObject.setNameFeatureDatabase(this.getNameFeatureDatabase());
+            copyObject.setResultDatabaseAddress(this.getResultDatabaseAddress());
             copyObject.setTermination(this.termination);
             return copyObject;
         } catch (CloneNotSupportedException e) {

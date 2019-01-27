@@ -159,6 +159,12 @@ public interface GameAdapter {
     void addPlayingPlayers(Collection<String> emails);
 
     /**
+     * Adds an invited {@link Player} to the playing players
+     * @param id id of the player to be added
+     */
+    void addPlayingPlayer(int id);
+
+    /**
      * Removes a {@link Collection} of email-addresses from the invited players
      * @param emails emails of the players to be removed
      */

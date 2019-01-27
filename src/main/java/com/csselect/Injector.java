@@ -5,10 +5,15 @@ import com.google.inject.Guice;
 /**
  * Class used for retrieving the guice injector
  */
-public class Injector {
+public final class Injector {
 
     private static com.google.inject.Injector injector = null;
     private static boolean testMode;
+    private static boolean mysqlTestMode;
+
+    private Injector() {
+        //Utility classes shouldn't be instantiated
+    }
 
     /**
      * Returns the guice {@link com.google.inject.Injector} to receive instances from
@@ -18,6 +23,8 @@ public class Injector {
         if (injector == null) {
             if (testMode) {
                 injector = Guice.createInjector(new CSSelectTestModule());
+            } else if (mysqlTestMode) {
+                injector = Guice.createInjector(new CSSelectMysqlTestModule());
             } else {
                 injector = Guice.createInjector(new CSSelectModule());
             }
@@ -28,7 +35,25 @@ public class Injector {
     /**
      * This method tells the injector to only produce mock implementations instead of the real implementations
      */
-    public static void useTestMode() {
+    static void useTestMode() {
         testMode = true;
+    }
+
+    /**
+     * This method tells the injector to use the Module for testing the Mysql-database-implementation
+     */
+    static void useMysqlTestMode() {
+        mysqlTestMode = true;
+    }
+
+    /**
+     * This method resets the injector for the next test case, only works if testmode or mysqltestmode == true
+     */
+    static void resetInjector() {
+        if (testMode || mysqlTestMode) {
+            injector = null;
+            testMode = false;
+            mysqlTestMode = false;
+        }
     }
 }

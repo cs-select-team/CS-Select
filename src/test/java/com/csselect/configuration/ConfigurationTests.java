@@ -17,6 +17,11 @@ public class ConfigurationTests extends TestClass {
         config = new ApacheCommonsConfiguration(TEST_PATH);
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     @Test
     public void loadingTest() { Assert.assertNotNull(config); }
 
@@ -28,6 +33,11 @@ public class ConfigurationTests extends TestClass {
     @Test
     public void testMLServerURL() {
         testString("127.0.0.1:8000", config.getMLServerURL());
+    }
+
+    @Test
+    public void testTimezone() {
+        testString("CET", config.getTimezone());
     }
 
     @Test

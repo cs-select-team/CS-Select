@@ -1,15 +1,13 @@
 package com.csselect.API;
 
-import com.csselect.CSSelectModule;
-import com.csselect.database.DatabaseAdapter;
+
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
+import com.csselect.user.management.OrganiserManagement;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 
 /** Facade for all calls that are specific to organisers
  *
@@ -23,15 +21,47 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *             0: email
      *             1: password
      *             2: masterpassword
+     * @return true if registration successfull, false otherwise
      */
-
-    public void register(String[] args) {
-
+    public boolean register(String[] args) {
+        OrganiserManagement om = new OrganiserManagement();
+        return null != om.register(args);
     }
 
     @Override
     public boolean login(String email, String password) {
-        return false;
+        OrganiserManagement om = new OrganiserManagement();
+        organiser = om.login(email, password);
+        return organiser != null;
+    }
+
+    @Override
+    public void logout() {
+        organiser = null;
+    }
+
+    @Override
+    public void changeEmail(String email) {
+        organiser.changeEmail(email);
+    }
+
+    @Override
+    public void changePassword(String password) {
+        organiser.changePassword(password);
+    }
+
+    @Override
+    public void setLanguage(String languageCode) {
+        organiser.setLanguage(languageCode);
+    }
+
+    @Override
+    public void recoverPassword(String email) {
+    }
+
+    @Override
+    public void validateEmail() {
+
     }
 
     /** returns the logged in organiser that is assoziated with this object

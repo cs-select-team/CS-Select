@@ -1,6 +1,5 @@
 package com.csselect.game;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,12 +41,12 @@ public class FeatureSet {
      * @param feature the feature {@link  Feature} to be added
      */
     public void addFeature(Feature feature) {
-        if(feature == null) {
+        if (feature == null) {
             return;
         }
 
-        for(Feature feat : this.features) {
-            if(feat.getID() == feature.getID()) {
+        for (Feature feat : this.features) {
+            if (feat.getID() == feature.getID()) {
                 return;
             }
         }

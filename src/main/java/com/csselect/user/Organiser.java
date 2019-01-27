@@ -5,9 +5,14 @@ import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;
+import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import org.apache.commons.collections.set.ListOrderedSet;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The organiser is an user in our system which is able to create games, decide in which database the result shall be
@@ -15,8 +20,8 @@ import java.util.Collection;
  * This class represents an organiser in our system and is connected to an {@link GameCreator} object, which is there
  * for creating games.
  */
-public class Organiser extends User {
-    private static DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+public class Organiser extends User implements Comparable {
+    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 
@@ -25,11 +30,12 @@ public class Organiser extends User {
      * (object of {@link OrganiserAdapter}. The constructor will be called as soon as an organiser registers
      * or logs in. Which value the unique ID will have (registration) is determined by the
      * {@link com.csselect.database.DatabaseAdapter}
-     * @param databaseAdapter Interface for database communication with organiser tables
+     * @param organiserAdapter Interface for database communication with organiser tables
      */
-    public Organiser(OrganiserAdapter databaseAdapter) {
-        this.organiserAdapter = databaseAdapter;
-        this.gameBuilder = new GameCreator();
+    public Organiser(OrganiserAdapter organiserAdapter) {
+        super(organiserAdapter);
+        this.organiserAdapter = organiserAdapter;
+        this.gameBuilder = new GameCreator(this);
     }
 
     /**
@@ -68,7 +74,6 @@ public class Organiser extends User {
      */
     public void createGame() {
         Game game = gameBuilder.doCreate();
-        databaseAdapter.registerGame(this, game);
     }
 
     /**
@@ -98,7 +103,6 @@ public class Organiser extends User {
         organiserAdapter.getActiveGames().forEach((Game game) -> {
             if (game.getId() == gameId) {
                 game.terminateGame();
-                databaseAdapter.removeGame(game);
             }
         });
     }
@@ -112,7 +116,7 @@ public class Organiser extends User {
     public void deleteGame(int gameId) {
         organiserAdapter.getTerminatedGames().forEach((Game game) -> {
             if (game.getId() == gameId && game.isTerminated()) {
-                databaseAdapter.removeGame(game);
+                DATABASE_ADAPTER.removeGame(game);
             }
         });
     }
@@ -135,12 +139,42 @@ public class Organiser extends User {
 
     /**
      * Sets options for the game that the organiser is currently creating
-     * if there is no game being created right now, this will start the process
      *
      * @param option name of the option
      * @param data value
      */
     public void setGameOption(String option, String data) {
+        gameBuilder.setOption(option, data);
+    }
 
+    /**
+     * Returns ccpy of gameoptions object currently loaded in the game builder ({@link GameCreator})
+     * @return cloned object of {@link GameOptions}
+     */
+    public GameOptions getGameOptions() {
+        return this.gameBuilder.getGameOptions();
+    }
+
+    /**
+     * Assuming an organiser only is compared to another organiser, this object is compared to another object
+     * @param o Object to compare (class organiser)
+     * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Organiser otherOrganiser = (Organiser) o;
+        return Integer.compare(organiserAdapter.getID(), otherOrganiser.getId());
+    }
+
+    @Override
+    public boolean equals(@NotNull Object o) {
+        if (!(o instanceof Organiser)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        Organiser otherOrganiser = (Organiser) o;
+        return organiserAdapter.getID() == otherOrganiser.getId();
     }
 }

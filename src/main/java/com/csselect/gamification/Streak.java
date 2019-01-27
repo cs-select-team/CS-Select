@@ -16,6 +16,14 @@ public class Streak {
     }
 
     /**
+     * Creates a streak that already has a counter. For database purposes.
+     * @param counter The streak's counter.
+     */
+    public Streak(int counter) {
+        this.counter = counter;
+    }
+
+    /**
      * Sets the counter of the streak back to zero.
      */
     public void setZero() {

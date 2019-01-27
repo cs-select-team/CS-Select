@@ -1,6 +1,5 @@
 package com.csselect.database;
 
-import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 
 import java.util.Collection;
