@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import java.time.LocalDate;
+
 /**
  *  * A daily challenge that will be completed once a player reaches 80 points in a single
  *  round without gamification mechanics.
@@ -15,7 +17,7 @@ public class DailyReachRoundScoreEighty extends DailyChallenge {
     DailyReachRoundScoreEighty() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;
     }
@@ -29,10 +31,5 @@ public class DailyReachRoundScoreEighty extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
     }
 }

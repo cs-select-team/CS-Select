@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import java.time.LocalDate;
+
 /**
  * A daily challenge that will be completed once a player reaches a streak
  * of 3 in one day.
@@ -16,7 +18,7 @@ public class DailyGetStreakThree extends DailyChallenge {
     DailyGetStreakThree() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;
         this.dailyStreak = 0;
@@ -37,11 +39,5 @@ public class DailyGetStreakThree extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
-        dailyStreak = 0;
     }
 }

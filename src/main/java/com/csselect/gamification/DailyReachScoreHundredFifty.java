@@ -1,5 +1,7 @@
 package com.csselect.gamification;
 
+import java.time.LocalDate;
+
 /**
  * A daily challenge that will be completed once a player reaches 150 points
  * in one day.
@@ -16,7 +18,7 @@ public class DailyReachScoreHundredFifty extends DailyChallenge {
     DailyReachScoreHundredFifty() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;
         this.dailyScore = 0;
@@ -33,11 +35,5 @@ public class DailyReachScoreHundredFifty extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
-        dailyScore = 0;
     }
 }

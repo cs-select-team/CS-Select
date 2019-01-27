@@ -6,6 +6,8 @@ import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 public class DailyChallengeTests extends TestClass {
 
     private PlayerStats stats;
@@ -29,6 +31,7 @@ public class DailyChallengeTests extends TestClass {
         Assert.assertEquals("Spiele drei Runden am Stück.", daily.getGermanName());
         Assert.assertEquals("Play three rounds in a row.", daily.getEnglishName());
         Assert.assertEquals(50, daily.getReward());
+        Assert.assertEquals(LocalDate.now(), daily.getDate());
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
@@ -52,6 +55,7 @@ public class DailyChallengeTests extends TestClass {
         Assert.assertEquals("Spiele heute drei Runden.", daily.getGermanName());
         Assert.assertEquals("Play three rounds today.", daily.getEnglishName());
         Assert.assertEquals(50, daily.getReward());
+        Assert.assertEquals(LocalDate.now(), daily.getDate());
 
         Assert.assertFalse(daily.isCompleted());
 
@@ -75,6 +79,7 @@ public class DailyChallengeTests extends TestClass {
         Assert.assertEquals("Erreiche 80 Punkte nach einer einzelnen Runde.", daily.getGermanName());
         Assert.assertEquals("Reach a score of 80 after a single round.", daily.getEnglishName());
         Assert.assertEquals(50, daily.getReward());
+        Assert.assertEquals(LocalDate.now(), daily.getDate());
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
@@ -98,6 +103,7 @@ public class DailyChallengeTests extends TestClass {
         Assert.assertEquals("Erreiche heute insgesamt 150 Punkte.", daily.getGermanName());
         Assert.assertEquals("Achieve a total score of 150 today.", daily.getEnglishName());
         Assert.assertEquals(50, daily.getReward());
+        Assert.assertEquals(LocalDate.now(), daily.getDate());
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 

@@ -201,8 +201,6 @@ public class PlayerStats implements Gamification {
         List<DailyChallenge> dailies = loadDailies();
         int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
         DailyChallenge newDaily = dailies.get(randomIndex);
-        newDaily.resetDaily();
-        newDaily.setDate(LocalDate.now());
         return newDaily;
     }
 
