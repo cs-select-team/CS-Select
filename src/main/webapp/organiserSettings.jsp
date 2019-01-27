@@ -26,7 +26,7 @@
             v-bind:value="lang"> {{ lang }}</option>
             </select>
             <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" v-on:click="setLanguage"><fmt:message key="update"></fmt:message></button>
+            <button class="btn btn-outline-secondary" type="button" v-bind:class="{ disabled: language==''}"v-on:click="setLanguage"><fmt:message key="update"></fmt:message></button>
             </div>
             </div>
             </div>

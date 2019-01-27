@@ -21,7 +21,7 @@ public abstract  class Servlet extends HttpServlet {
     private static final String ORGANISERFACADE_ATTR_NAME = "organiserFacade";
     private static final String IS_PLAYER = "player";
     private static final String DEFAULT_LANGUAGE = "de";
-    private HttpSession session;
+    protected HttpSession session;
 
 
 
@@ -85,7 +85,6 @@ public abstract  class Servlet extends HttpServlet {
         session = req.getSession();
         getOrganiserFacade();
         getPlayerFacade();
-        session.setAttribute("lang", DEFAULT_LANGUAGE);
 
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;

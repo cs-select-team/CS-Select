@@ -59,16 +59,16 @@ public class Login extends Servlet {
         if (isSet("organiser", req)) {
             if (getOrganiserFacade().login(email, password)) {
                 setPlayer(false);
+                session.setAttribute("lang", getOrganiserFacade().getLanguage());
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
-
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         } else {
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
+                session.setAttribute("lang", getPlayerFacade().getLanguage());
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
-                System.out.println("Player: " + email + " logged in");
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }

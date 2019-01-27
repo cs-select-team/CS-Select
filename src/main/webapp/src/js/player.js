@@ -139,7 +139,7 @@ var leaderboard = new Vue({
             method: 'get',
             url: 'users/leaderboard'
         }).then(function (response) {
-            this.playerList = response.data
+            leaderboard.playerList = response.data
         })
     }
 })

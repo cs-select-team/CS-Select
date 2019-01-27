@@ -5,9 +5,10 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="navbar-nav">
+    <div class="navbar-nav" id="navbar">
           <a class="nav-item nav-link" href="settings.jsp"><fmt:message key="settings"/></a>
-          <a class="nav-item nav-link" href="login/logout"><fmt:message key="logout"/></a>
+          <a class="nav-item nav-link" v-on:click="logout"><fmt:message key="logout"/></a>
         </div>
   </div>
+    <script src="src/js/navbar.js"></script>
 </nav>
