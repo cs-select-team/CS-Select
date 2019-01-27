@@ -1,5 +1,6 @@
 package com.csselect.database;
 
+import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Round;
@@ -169,4 +170,11 @@ public interface GameAdapter {
      * @param emails emails of the players to be removed
      */
     void removeInvitedPlayers(Collection<String> emails);
+
+    /**
+     * Checks whether the given {@link Collection} of {@link Feature}s was already displayed for selection
+     * @param features features to check
+     * @return true if features were already displayed, false otherwise
+     */
+    boolean checkDuplicateFeatureProvision(Collection<Feature> features);
 }

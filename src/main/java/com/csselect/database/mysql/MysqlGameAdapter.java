@@ -296,6 +296,18 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     }
 
     @Override
+    public boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
+        try {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT id FROM rounds WHERE shownFeatures=?",
+                    new StringParam(featuresToString(features)));
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     ResultSet getRow() throws SQLException {
         return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM games WHERE (id=" + getID() + ");");
     }
