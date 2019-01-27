@@ -14,4 +14,12 @@ public abstract class Gamemode {
      * @return returns the round {@link Round} object
      */
     public abstract Round createRound(Player player);
+
+    /**
+     * Getter for the name of the gamemode
+     * @return returns the name of the class of the gamemode
+     */
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }
