@@ -84,12 +84,8 @@ public abstract  class Servlet extends HttpServlet {
         session = req.getSession();
         getOrganiserFacade();
         getPlayerFacade();
-        if (getUserFacade() == null) {
-            session.setAttribute("lang", DEFAULT_LANGUAGE);
+        session.setAttribute("lang", DEFAULT_LANGUAGE);
 
-        } else {
-            session.setAttribute("lang", getUserFacade().getLanguage());
-        }
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;
         } else {
