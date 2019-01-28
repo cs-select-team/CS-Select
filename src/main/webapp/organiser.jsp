@@ -12,9 +12,7 @@
                         <active-games-display
                             v-for="game in listOfGames"
                             v-bind:game="game"
-                            v-bind:key="game.gameId"
-                            v-bind:invite="'<fmt:message key="invite"/>'"
-                            v-bind:terminate="'<fmt:message key="terminate"/>'"></active-games-display>
+                            v-bind:key="game.gameId"></active-games-display>
                     </div>
                     <div class="container h-10 title">
                         <fmt:message key="terminatedGames"/>
@@ -24,8 +22,7 @@
                             v-for="game in listOfGames"
                             v-bind:game="game"
                             v-bind:game-id="game.gameId"
-                            v-bind:key="game.gameId"
-                            v-bind:del="'<fmt:message key="delete"/>'"></terminated-games-display>
+                            v-bind:key="game.gameId"></terminated-games-display>
                     </div>
                 </div>
                 <div class="col" id="stats">

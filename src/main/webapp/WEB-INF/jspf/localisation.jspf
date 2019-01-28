@@ -1,0 +1,24 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- File for strings that need to be inside of a vue component, when you dont want to add them as
+    props -->
+<fmt:bundle basename="locale.Locale">
+    <script>
+        Vue.mixin({
+            data: function() {
+                return {
+                    get localisation() {
+                        return {
+                            showGraphs: '<fmt:message key="showGraphs" />',
+                            selectFeature: '<fmt:message key="selectFeature"/>',
+                            toggleUseless: '<fmt:message key="toggleUseless"/>',
+                            play: '<fmt:message key="play"/>',
+                            del: '<fmt:message key="delete"/>',
+                            invite: '<fmt:message key="invite"/>',
+                            terminate: '<fmt:message key="terminate"/>'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</fmt:bundle>

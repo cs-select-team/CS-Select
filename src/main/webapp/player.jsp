@@ -39,8 +39,7 @@
             <game-display
                     v-for="game in listOfGames"
                     v-bind:game="game"
-                    v-bind:key="game.gameId"
-                     v-bind:play="'<fmt:message key="play"/>'">
+                    v-bind:key="game.gameId">
 
             </game-display>
     </div>

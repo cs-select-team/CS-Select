@@ -1,5 +1,5 @@
 Vue.component('active-games-display', {
-    props: ['game', 'invite', 'terminate'],
+    props: ['game', ],
     template: '<div class="container">' +
         '       <div class="container">' +
         '           <div class="row">' +
@@ -8,8 +8,8 @@ Vue.component('active-games-display', {
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="terminate">' +
-        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="invite">' +
+        '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="localisation.terminate">' +
+        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisaton.invite">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +
@@ -17,7 +17,7 @@ Vue.component('active-games-display', {
 });
 
 Vue.component('terminated-games-display', {
-    props: ['game', 'del', 'game-id'],
+    props: ['game', 'game-id'],
     template: '<div class="container">' +
         '       <div class="container">' +
         '           <div class="row">' +
@@ -26,7 +26,7 @@ Vue.component('terminated-games-display', {
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(gameId)" :value="del">' +
+        '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(gameId)" :value="localisation.del">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +

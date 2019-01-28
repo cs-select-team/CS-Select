@@ -16,10 +16,10 @@ Vue.component('feature-box', {
         '                        </div>' +
         '                        <div class="btn-group">' +
         '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id">' +
-        '                                Show graphs for this feature' +
+        '                                {{ localisation.showGraphs }}' +
         '                        </button>' +
-        '                        <button type="button" class="btn btn-primary" v-on:click="feature.toggled = !feature.toggled">Select this feature</button>' +
-        '                        <button type="button" class="btn btn-secondary" v-on:click="feature.useless = !feature.useless">Toggle useless</button>' +
+        '                        <button type="button" class="btn btn-primary" v-on:click="feature.toggled = !feature.toggled">{{ localisation.selectFeature}}</button>' +
+        '                        <button type="button" class="btn btn-secondary" v-on:click="feature.useless = !feature.useless">{{ localisation.toggleUseless}}</button>' +
         '                        </div>' +
         '                        <div class="modal fade" :id="\'graphModal\' + feature.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
         '                                <div class="modal-dialog modal-lg" role="document">' +
