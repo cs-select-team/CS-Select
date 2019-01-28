@@ -9,7 +9,7 @@
                                    v-bind:feature-list="featureList" v-bind:options="options" v-on:done="unlockButton" v-bind:key="forceUpdate"></component>
                                 </div>
                                 <div class="col-1">
-                                        <input type="button" class="btn btn-primary btn-block" v-on:click="forceUpdate++" v-bind:class="{ disabled: this.buttonState }" value="<fmt:message key="next"/>"/>
+                                        <input type="button" class="btn btn-primary btn-block" v-on:click="sendResults" v-bind:class="{ disabled: this.buttonState }" value="<fmt:message key="next"/>"/>
                                         <input type="button" class="btn btn-outline-primary btn-block" value="<fmt:message key="skip"/>"/>
                                         <input type="button" class="btn btn-outline-primary btn-block" value="<fmt:message key="quit"/>"/>
                                 </div>

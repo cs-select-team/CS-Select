@@ -144,7 +144,7 @@ public class Games extends Servlet {
 
 
 
-    public void getGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void getGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
         APIFacadePlayer facade = getPlayerFacade();
         // getting the game id
@@ -159,7 +159,7 @@ public class Games extends Servlet {
         return Integer.parseInt(m.group(1));
     }
 
-    public static String encodeToString(BufferedImage image, String type) {
+    private static String encodeToString(BufferedImage image, String type) {
         String imageString = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
