@@ -495,7 +495,7 @@ public enum AchievementType {
     }
 
     /**
-     * Checks the progress of an achievement and then return a new achievement that
+     * Checks the progress of an achievement and then returns a new achievement that
      * represents the progress of that achievement.
      * @param stats The player's stats.
      * @return A new Achievement with the corresponding state and type.
@@ -514,35 +514,41 @@ public enum AchievementType {
     protected abstract AchievementState getState(PlayerStats stats);
 
     /**
-     * Gets the German name of the achievement type.
-     * @return The German name.
+     * Gets the name of the achievement type in the specified language.
+     * @param lang The language code in ISO 369-1 format.
+     * @return The name in the specified language. Assertion error if language code is not known.
      */
-    public final String getGermanName() {
-        return germanName;
+    public final String getName(String lang) {
+        switch (lang) {
+            case "de":
+                return germanName;
+
+            case "en":
+                return englishName;
+
+            default:
+                assert false: "Unknown language!";
+                return "...";
+        }
     }
 
     /**
-     * Gets the German description for the achievement type.
-     * @return The German description.
+     * Gets the description of the achievement in the specified language.
+     * @param lang The language code in ISO 639-1 format.
+     * @return The The description in the specified language. Assertion error if language code is not known.
      */
-    public final String getGermanDescription() {
-        return germanDesc;
-    }
+    public final String getDescription(String lang) {
+        switch (lang) {
+            case "de":
+                return germanDesc;
 
-    /**
-     * Gets the English name of the achievement type.
-     * @return The English name.
-     */
-    public final String getEnglishName() {
-        return englishName;
-    }
+            case "en":
+                return englishDesc;
 
-    /**
-     * Gets the English description of the achievement type.
-     * @return The English description.
-     */
-    public final String getEnglishDescription() {
-        return englishDesc;
+            default:
+                assert false: "Unknown language!";
+                return "...";
+        }
     }
 
 }

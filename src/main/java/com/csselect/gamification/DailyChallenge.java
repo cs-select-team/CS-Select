@@ -24,19 +24,22 @@ public abstract class DailyChallenge {
     public abstract boolean checkFinished(PlayerStats stats);
 
     /**
-     * Gets the German name of the daily challenge.
-     * @return The name of the daily.
+     * Gets the description of the task of the daily challenge in the specified language.
+     * @param lang The language code in ISO 369-1 format.
+     * @return The description in the specified language. Assertion error if language code is not known.
      */
-    public String getGermanName() {
-        return germanName;
-    }
+    public final String getDescription(String lang) {
+        switch (lang) {
+            case "de":
+                return germanName;
 
-    /**
-     * Gets the English name of the daily challenge.
-     * @return The name of the daily.
-     */
-    public String getEnglishName() {
-        return englishName;
+            case "en":
+                return englishName;
+
+            default:
+                assert false: "Unknown language!";
+                return "...";
+        }
     }
 
     /**
@@ -62,7 +65,5 @@ public abstract class DailyChallenge {
     public int getReward() {
         return reward;
     }
-
-
 
 }
