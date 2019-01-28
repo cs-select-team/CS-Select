@@ -8,6 +8,7 @@
     <div class="navbar-nav" id="navbar">
           <a class="nav-item nav-link" href="settings.jsp"><fmt:message key="settings"/></a>
           <a class="nav-item nav-link" v-on:click="logout"><fmt:message key="logout"/></a>
+          <a class="nav-item nav-link" href="achievements.jsp"><fmt:message key="achievements"/></a>
         </div>
   </div>
     <script src="src/js/navbar.js"></script>

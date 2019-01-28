@@ -148,9 +148,9 @@ public class APIFacadePlayer extends APIFacadeUser {
         player.skipRound(features);
      }
 
-    /** gets a list of all achievments and their state for this player
+    /** gets a list of all achievements and their state for this player
      *
-     * @return list of all achievments and their state for this player
+     * @return list of all achievements and their state for this player
      */
      public List<Achievement> getAchievments() {
          return player.getStats().getAchievements();

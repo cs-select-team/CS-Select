@@ -1,4 +1,5 @@
 package com.csselect.API.httpAPI;
+import com.csselect.gamification.Achievement;
 import com.csselect.user.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -6,6 +7,7 @@ import com.google.gson.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -116,7 +118,17 @@ public class Users extends Servlet {
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
-        returnAsJson(resp, getPlayerFacade().getAchievments());
+
+        JsonArray array = new JsonArray();
+        Collection<Achievement> achievementCollection = getPlayerFacade().getAchievments();
+        for (Achievement ach: achievementCollection) {
+            JsonObject jsonObject = new JsonObject();
+            //jsonObject.addProperty("state", ach.checkProgress(getPlayerFacade().getPlayer().getStats())); // TODO get the state of the achievements
+            jsonObject.addProperty("desc", ach.getDescription());
+            jsonObject.addProperty("name", ach.getName());
+            array.add(jsonObject);
+        }
+        returnJson(resp, array);
     }
 
     private void getScore(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
