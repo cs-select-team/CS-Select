@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /** this class handles requests from a url and provides helpful methods
  *
@@ -62,8 +63,9 @@ public abstract  class Servlet extends HttpServlet {
     }
 
 
-    private void setup(HttpServletRequest req, HttpServletResponse resp) {
+    private void setup(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         session = req.getSession();
+        req.setCharacterEncoding("UTF-8");
         facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
         facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
         if (session.getAttribute(IS_PLAYER) == null) {

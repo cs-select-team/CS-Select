@@ -46,18 +46,7 @@ var gameFrame = new Vue({
         buttonState: true
     },
     mounted: function () {
-      axios({
-          method: 'get',
-          url: 'games/' + localStorage.getItem("gameId") + "/start"
-      }).then (function (response) {
-          gameFrame.featureList = response.data.featureList;
-          gameFrame.featureList.forEach(function (feature) {
-              feature.toggled = false;
-              feature.useless = false;
-          })
-          gameFrame.options = response.data.options;
-          gameFrame.gameType = response.data.gameType;
-      })
+      this.getNextRound();
     },
     methods: {
         unlockButton: function (done) {
@@ -79,24 +68,41 @@ var gameFrame = new Vue({
         },
         sendResults: function () {
             if (!this.buttonState) { // truly only send if the game is finished
-                this.forceUpdate++;
+
                 axios({
                     method: 'post',
                     url: 'games/' + localStorage.getItem("gameId") + "/play",
-                    params: {
+                    data: {
                         useless: JSON.stringify(this.getUselessFeaturesById()),
                         selected: JSON.stringify(this.getSelectedFeaturesById())
                     }
                 })
+                this.getNextRound();
+                this.forceUpdate++;
             }
         },
         skip: function() {
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/skip",
-                params: {
+                data: {
                     useless: JSON.stringify(this.getUselessFeaturesById())
                 }
+            })
+            this.getNextRound();
+        },
+        getNextRound: function () {
+            axios({
+                method: 'get',
+                url: 'games/' + localStorage.getItem("gameId") + "/start"
+            }).then (function (response) {
+                gameFrame.featureList = response.data.featureList;
+                gameFrame.featureList.forEach(function (feature) {
+                    feature.toggled = false;
+                    feature.useless = false;
+                })
+                gameFrame.options = response.data.options;
+                gameFrame.gameType = response.data.gameType;
             })
         }
     }
