@@ -104,6 +104,9 @@ var gameFrame = new Vue({
                 gameFrame.options = response.data.options;
                 gameFrame.gameType = response.data.gameType;
             })
+        },
+        quit: function() {
+            window.location.href = 'player.jsp'
         }
     }
 

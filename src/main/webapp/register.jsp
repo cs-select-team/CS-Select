@@ -5,6 +5,8 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <form id="registerForm">
+                        <div class="alert alert-danger" v-bind:class="{ collapse: !alert }">
+                            <fmt:message key="noRegister"/></div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress" v-model="email">
@@ -16,7 +18,7 @@
                         </div>
                         <div class="form-group">
                             <label for="passwordRepeat"><fmt:message key="passwordRepeat"/></label>
-                            <input type="password" class="form-control" id="password"
+                            <input type="password" class="form-control" id="passwordRepeat"
                                    placeholder="<fmt:message key="passwordRepeat"/>" v-model="passwordRepeat">
                         </div>
                         <div class="alert alert-danger" v-bind:class="{collapse: passwordRepeat == password }">

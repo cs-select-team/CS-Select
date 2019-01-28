@@ -5,7 +5,8 @@ var app1 = new Vue({
             password: '',
             passwordRepeat: '',
             organiser: 'player', // so that the player is the default option for registering
-            thirdParam: ''
+            thirdParam: '',
+            alert: false
         },
         methods: {
             submit: function(event) {
@@ -19,12 +20,16 @@ var app1 = new Vue({
                             thirdParam: this.thirdParam
                             }
                 }).then(function (response) {
-                    window.open("","_self")
+                    if (app1.organiser == "player") {
+                        window.location.href = "player.jsp"
+                    }
+                    else if (app1.organiser == "organiser") {
+                        window.location.href = "organiser.jsp"
+                    }
                     // if (response.status == 202) window.open("login.jsp","_self")
 
                 }).catch(function (error) {
-                      if (error.response) {
-                      }
+                      app1.alert = true;
                     });
             }
         }
