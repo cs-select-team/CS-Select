@@ -78,7 +78,6 @@ public class Games extends Servlet {
     private void playRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
         String selectedString = getParameter("selected", req);
-        System.out.println(selectedString);
         String uselessString = getParameter("useless", req);
         int[] selected = new Gson().fromJson(selectedString, (Type) int.class);
         int[] useless = new Gson().fromJson(uselessString, (Type) int.class);

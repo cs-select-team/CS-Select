@@ -50,7 +50,10 @@ var gameFrame = new Vue({
           method: 'get',
           url: 'games/' + localStorage.getItem("gameId") + "/start"
       }).then (function (response) {
-          gameFrame.listOfGames = response.data.listOfGames;
+          gameFrame.featureList = response.data.featureList;
+          gameFrame.featureList.forEach(function (feature) {
+              feature.toggled = false;
+          })
           gameFrame.options = response.data.options;
           gameFrame.gameType = response.data.gameType;
       })
