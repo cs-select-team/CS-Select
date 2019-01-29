@@ -12,7 +12,7 @@ import java.util.Map;
  * Represents a leaderboard and consists of a list of players.
  * This class is realised as a singleton.
  */
-public class Leaderboard {
+public final class Leaderboard {
 
     private final DatabaseAdapter databaseAdapter;
     private List<Player> players;
@@ -25,6 +25,10 @@ public class Leaderboard {
         setSortingStrategy(new SortScoreLastWeek());
     }
 
+    /**
+     * Gets the {@link Leaderboard}
+     * @return instance of the Leaderboard
+     */
     public static Leaderboard getInstance() {
         if (Leaderboard.instance == null) {
             Leaderboard.instance = new Leaderboard();
