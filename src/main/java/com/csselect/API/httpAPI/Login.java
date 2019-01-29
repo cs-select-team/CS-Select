@@ -44,9 +44,11 @@ public class Login extends Servlet {
         if (isSet("organiser", req)) {
             createOrganiser();
             success = getOrganiserFacade().register(new String[]{email, password, third});
+            setPlayer(false);
         } else {
             createPlayer();
             success = getPlayerFacade().register(new String[]{email, password, third});
+            setPlayer(true);
         }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
