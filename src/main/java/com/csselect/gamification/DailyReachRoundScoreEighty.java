@@ -8,15 +8,15 @@ import java.time.LocalDate;
  */
 public class DailyReachRoundScoreEighty extends DailyChallenge {
 
-    private final static String GERMAN_NAME = "Erreiche 80 Punkte nach einer einzelnen Runde.";
-    private final static String ENGLISH_NAME = "Reach a score of 80 after a single round.";
+    private final static String GERMAN_DESC = "Erreiche 80 Punkte nach einer einzelnen Runde.";
+    private final static String ENGLISH_DESC = "Reach a score of 80 after a single round.";
 
     /**
      * Creates a daily challenge by setting the necessary values.
      */
     DailyReachRoundScoreEighty() {
-        this.germanName = GERMAN_NAME;
-        this.englishName = ENGLISH_NAME;
+        this.descriptionMap.put("de", GERMAN_DESC);
+        this.descriptionMap.put("en", ENGLISH_DESC);
         this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;

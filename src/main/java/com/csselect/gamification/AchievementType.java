@@ -1,5 +1,8 @@
 package com.csselect.gamification;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * An enumeration for all the existing achievements. Every instance
  * has to implement the method getState.
@@ -475,10 +478,9 @@ public enum AchievementType {
         }
     };
 
-    private final String germanName;
-    private final String germanDesc;
-    private final String englishName;
-    private final String englishDesc;
+    private final Map<String, String> nameMap = new HashMap<>();
+    private final Map<String, String> descriptionMap = new HashMap<>();
+
 
     /**
      * Sets the names and the descriptions of the achievement types in the given languages.
@@ -488,10 +490,11 @@ public enum AchievementType {
      * @param englishDesc The English description.
      */
     AchievementType(String germanName, String germanDesc, String englishName, String englishDesc) {
-        this.germanName = germanName;
-        this.germanDesc = germanDesc;
-        this.englishName = englishName;
-        this.englishDesc = englishDesc;
+        nameMap.put("de", germanName);
+        nameMap.put("en", englishName);
+
+        descriptionMap.put("de", germanDesc);
+        descriptionMap.put("en", englishDesc);
     }
 
     /**
@@ -519,17 +522,10 @@ public enum AchievementType {
      * @return The name in the specified language. Assertion error if language code is not known.
      */
     public final String getName(String lang) {
-        switch (lang) {
-            case "de":
-                return germanName;
-
-            case "en":
-                return englishName;
-
-            default:
-                assert false: "Unknown language!";
-                return "...";
+        if (!nameMap.containsKey(lang)) {
+            return "Unknown language.";
         }
+        return nameMap.get(lang);
     }
 
     /**
@@ -538,17 +534,10 @@ public enum AchievementType {
      * @return The The description in the specified language. Assertion error if language code is not known.
      */
     public final String getDescription(String lang) {
-        switch (lang) {
-            case "de":
-                return germanDesc;
-
-            case "en":
-                return englishDesc;
-
-            default:
-                assert false: "Unknown language!";
-                return "...";
+        if (!descriptionMap.containsKey(lang)) {
+            return "Unknown language.";
         }
+        return descriptionMap.get(lang);
     }
 
 }

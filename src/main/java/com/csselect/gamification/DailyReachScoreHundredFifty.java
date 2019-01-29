@@ -8,16 +8,16 @@ import java.time.LocalDate;
  */
 public class DailyReachScoreHundredFifty extends DailyChallenge {
 
-    private final static String GERMAN_NAME = "Erreiche heute insgesamt 150 Punkte.";
-    private final static String ENGLISH_NAME = "Achieve a total score of 150 today.";
+    private final static String GERMAN_DESC = "Erreiche heute insgesamt 150 Punkte.";
+    private final static String ENGLISH_DESC = "Achieve a total score of 150 today.";
     private int dailyScore;
 
     /**
      * Creates a daily challenge by setting the necessary values.
      */
     DailyReachScoreHundredFifty() {
-        this.germanName = GERMAN_NAME;
-        this.englishName = ENGLISH_NAME;
+        this.descriptionMap.put("de", GERMAN_DESC);
+        this.descriptionMap.put("en", ENGLISH_DESC);
         this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;

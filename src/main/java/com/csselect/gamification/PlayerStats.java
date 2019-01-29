@@ -194,7 +194,7 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Chooses a daily challenge randomly from the list of dailies and sets its date to today.
+     * Chooses a daily challenge randomly from the list of dailies.
      * @return The chosen daily.
      */
     private DailyChallenge chooseRandomDaily() {
