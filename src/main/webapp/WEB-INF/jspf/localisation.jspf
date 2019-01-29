@@ -15,7 +15,10 @@
                             del: '<fmt:message key="delete"/>',
                             invite: '<fmt:message key="invite"/>',
                             terminate: '<fmt:message key="terminate"/>',
-                            streak: '<fmt:message key="streak"/>'
+                            streak: '<fmt:message key="streak"/>',
+                            points: '<fmt:message key="points"/>',
+                            accept: '<fmt:message key="accept"/>',
+                            decline: '<fmt:message key="decline"/>'
                         }
                     }
                 }

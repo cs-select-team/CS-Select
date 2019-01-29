@@ -14,6 +14,16 @@ Vue.component('game-display', {
     }
 });
 
+Vue.component('daily-challenge', {
+    props:['daily'],
+    template: '<div class="card" v-bind:class="{\'disabled-div\': daily.finished}">' +
+        '<h5 class="card-title">{{daily.title}}</h5>' +
+        '<div class="card-body">' +
+        '   {{localisation.points}}: {{daily.points}}' +
+        '</div>' +
+        '</div>'
+})
+
 Vue.component('leaderboard-element', {
     props: ['place', 'username', 'points'],
     template: '<tr>\n' +
@@ -40,8 +50,8 @@ Vue.component('invite-element', {
         '                </div>\n' +
         '                <div class="col">\n' +
         '                <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">\n' +
-        '                    <button type="button" class="btn-primary btn float-right" v-on:click="accept(gameId)">Annehmen</button>\n' +
-        '                    <button type="button" class="btn-secondary btn float-right" v-on:click="decline(gameId)">Ablehnen</button>\n' +
+        '                    <button type="button" class="btn-primary btn float-right" v-on:click="accept(gameId)">{{localisation.accept}}</button>\n' +
+        '                    <button type="button" class="btn-secondary btn float-right" v-on:click="decline(gameId)">{{localisation.decline}}</button>\n' +
         '                </div>\n' +
         '                </div>\n' +
         '            </div>\n' +
@@ -140,6 +150,26 @@ var leaderboard = new Vue({
             url: 'users/leaderboard'
         }).then(function (response) {
             leaderboard.playerList = response.data
+        })
+    }
+})
+
+
+var daily = new Vue({
+    el: "#daily",
+    data: {
+        daily: {
+            title: 'Töte drei piraten an diesem Tag(Ich hab gerade eine Runde Blackwake gespielt)',
+            points: 500,
+            finished: true
+        }
+    },
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: 'users/daily'
+        }).then(function (response) {
+            daily.daily = response.data
         })
     }
 })

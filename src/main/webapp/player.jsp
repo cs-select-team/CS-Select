@@ -6,7 +6,9 @@
     <div class="container">
 <div class="row">
     <div class="col-md-3">
-        Übersicht
+        <div id="daily">
+            <daily-challenge v-bind:daily="daily"></daily-challenge>
+        </div>
     </div>
     <div class="col-md-4" id="stats">
         <stats-display v-bind:username="username"

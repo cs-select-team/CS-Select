@@ -1,5 +1,6 @@
 package com.csselect.API.httpAPI;
 import com.csselect.gamification.Achievement;
+import com.csselect.gamification.DailyChallenge;
 import com.csselect.user.Player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -142,7 +143,12 @@ public class Users extends Servlet {
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
-        returnAsJson(resp, getPlayerFacade().getDaily());
+        DailyChallenge d = getPlayerFacade().getDaily();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("points", d.getReward());
+        jsonObject.addProperty("title", d.getEnglishName()); // TODO make work with new way of getting texts
+        jsonObject.addProperty("finished", d.isCompleted());
+        returnJson(resp, jsonObject);
     }
 
 
