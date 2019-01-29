@@ -9,7 +9,7 @@ Vue.component('active-games-display', {
         '               </div>' +
         '               <div class="col">' +
         '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="localisation.terminate">' +
-        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisaton.invite">' +
+        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +
