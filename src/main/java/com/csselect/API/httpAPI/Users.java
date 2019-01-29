@@ -88,7 +88,7 @@ public class Users extends Servlet {
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
-        returnAsJson(resp, getPlayerFacade().getStreak());
+        returnAsJson(resp, getPlayerFacade().getStreak().getCounter());
     }
 
     private void getLeaderboard(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {

@@ -14,7 +14,8 @@
                             play: '<fmt:message key="play"/>',
                             del: '<fmt:message key="delete"/>',
                             invite: '<fmt:message key="invite"/>',
-                            terminate: '<fmt:message key="terminate"/>'
+                            terminate: '<fmt:message key="terminate"/>',
+                            streak: '<fmt:message key="streak"/>'
                         }
                     }
                 }
