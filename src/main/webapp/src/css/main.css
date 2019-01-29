@@ -56,6 +56,9 @@
 .gray-out {
     opacity: .4;
 }
+.nav-item.nav-link {
+    cursor: pointer;
+}
 body {
     height: 100vh;
 }
