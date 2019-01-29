@@ -14,13 +14,14 @@ import java.util.Map;
  */
 public class Leaderboard {
 
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInjector().getInstance(DatabaseAdapter.class);
+    private final DatabaseAdapter databaseAdapter;
     private List<Player> players;
     private LeaderboardSortingStrategy strategy;
     private static Leaderboard instance;
 
     private Leaderboard() {
         this.players = new LinkedList<>();
+        databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
         setSortingStrategy(new SortScoreLastWeek());
     }
 
@@ -61,7 +62,7 @@ public class Leaderboard {
      * @return The list of players.
      */
     private List<Player> getPlayersFromDatabase() {
-        return new LinkedList<>(DATABASE_ADAPTER.getPlayers());
+        return new LinkedList<>(databaseAdapter.getPlayers());
     }
 
 }
