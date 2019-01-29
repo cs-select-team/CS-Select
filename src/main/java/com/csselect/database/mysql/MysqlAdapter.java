@@ -57,9 +57,7 @@ public abstract class MysqlAdapter {
         try {
             ResultSet resultSet = getRow();
             if (resultSet.next()) {
-                String res = resultSet.getString(columnLabel);
-                resultSet.close();
-                return res;
+                return resultSet.getString(columnLabel);
             } else {
                 return null;
             }
@@ -94,9 +92,7 @@ public abstract class MysqlAdapter {
         try {
             ResultSet resultSet = getRow();
             if (resultSet.next()) {
-                int res = resultSet.getInt(columnLabel);
-                resultSet.close();
-                return res;
+                return resultSet.getInt(columnLabel);
             } else {
                 return -1;
             }
@@ -169,9 +165,7 @@ public abstract class MysqlAdapter {
         try {
             ResultSet resultSet = getRow();
             if (resultSet.next()) {
-                boolean res = resultSet.getBoolean(columnLabel);
-                resultSet.close();
-                return res;
+                return resultSet.getBoolean(columnLabel);
             } else {
                 return false;
             }

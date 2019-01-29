@@ -12,6 +12,8 @@ import com.google.inject.Inject;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,11 +120,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     private Player getPlayer(ResultSet set) throws SQLException {
         if (set.next()) {
-            Player p = new Player(new MysqlPlayerAdapter(set.getInt("id")));
-            set.close();
-            return p;
+            return new Player(new MysqlPlayerAdapter(set.getInt("id")));
         } else {
-            set.close();
             return null;
         }
     }
@@ -133,11 +132,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);",
                     new StringParam(email));
             if (set.next()) {
-                Organiser o = new Organiser(new MysqlOrganiserAdapter(set.getInt("id")));
-                set.close();
-                return o;
+                return new Organiser(new MysqlOrganiserAdapter(set.getInt("id")));
             } else {
-                set.close();
                 return null;
             }
         } catch (SQLException e) {
@@ -154,7 +150,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             while (set.next()) {
                 players.add(new Player(new MysqlPlayerAdapter(set.getInt("id"))));
             }
-            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,7 +176,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             } else {
                 hash = null;
             }
-            set.close();
             return hash;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,7 +193,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             } else {
                 salt = null;
             }
-            set.close();
             return salt;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -217,7 +210,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             } else {
                 hash = null;
             }
-            set.close();
             return hash;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -235,7 +227,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             } else {
                 salt = null;
             }
-            set.close();
             return salt;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -248,10 +239,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         try {
             ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
             if (set.next()) {
-                set.close();
                 return null;
             }
-            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -275,10 +264,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set
                     = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);", new StringParam(email));
             if (set.next()) {
-                set.close();
                 return null;
             }
-            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -338,12 +325,15 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params)
             throws SQLException {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        for (int i = 0; i < params.length; i++) {
-            params[i].apply(statement, i + 1);
+        CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            for (int i = 0; i < params.length; i++) {
+                params[i].apply(statement, i + 1);
+            }
+            rowSet.populate(statement.executeQuery());
         }
-        return statement.executeQuery();
+        return rowSet;
     }
 
     /**
@@ -365,14 +355,13 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      */
     void executeMysqlUpdate(@Language("sql") String update, String databaseName, Param... params) throws SQLException {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
-        Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(update);
-        for (int i = 0; i < params.length; i++) {
-            params[i].apply(statement, i + 1);
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(update);
+            for (int i = 0; i < params.length; i++) {
+                params[i].apply(statement, i + 1);
+            }
+            statement.executeUpdate();
         }
-        statement.executeUpdate();
-        statement.close();
-        connection.close();
     }
 
     private MysqlDataSource createDataSource(String databaseName) {
@@ -401,12 +390,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     int getNextIdOfTable(String tableName) throws SQLException {
         ResultSet set = executeMysqlQuery("SELECT MAX(id) AS id FROM " + tableName + ";");
         if (!set.next()) {
-            set.close();
             return 1;
         } else {
-            int tmp = set.getInt("id") + 1;
-            set.close();
-            return tmp;
+            return set.getInt("id") + 1;
         }
     }
 
