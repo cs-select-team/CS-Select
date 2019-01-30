@@ -49,13 +49,6 @@ public class TerminationComposite extends Termination {
         this.terminations.add(termination);
     }
 
-    /**
-     * Deletes a termination {@link Termination} cause from the set of terminations {@link Termination}
-     * @param termination the termination {@link Termination} cause to be deleted
-     */
-    public void delete(Termination termination) {
-        this.terminations.remove(termination);
-    }
 
     @Override
     public void setGame(Game game) {

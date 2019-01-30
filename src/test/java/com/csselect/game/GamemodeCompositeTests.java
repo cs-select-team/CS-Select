@@ -45,16 +45,6 @@ public class GamemodeCompositeTests extends TestClass {
     }
 
     @Test
-    public void deleteGamemode() {
-        BinarySelect testBinary = new BinarySelect();
-
-        this.gamemodeComposite.add(testBinary);
-        this.gamemodeComposite.delete(testBinary);
-
-        Assert.assertEquals(0, this.gamemodeComposite.getGamemodes().size());
-    }
-
-    @Test
     public void createRoundOneGamemode() {
         DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.createPlayer("email", "hash", "salt", "username");

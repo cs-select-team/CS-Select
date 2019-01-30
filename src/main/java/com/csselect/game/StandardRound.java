@@ -24,7 +24,7 @@ public class StandardRound extends Round {
      * @param minSelect the minimum number of features {@link Feature} to be selected per selection
      * @param maxSelect the maximum number of features {@link Feature} to be selected per selection
      */
-    public StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
+    StandardRound(Player player, int numberOfSelections, int featuresPerSelection, int minSelect, int maxSelect) {
         super(player);
         this.numberOfSelections = numberOfSelections;
         this.featuresPerSelection = featuresPerSelection;
@@ -67,23 +67,29 @@ public class StandardRound extends Round {
     @Override
     public List<Feature> provideFeatures() {
         List<Feature> providedFeatures = new ArrayList<>();
-        for (int i = 0; i < this.numberOfSelections; i++) {
-            List<Feature> featureListThisSelection = new ArrayList<>(this.features);
-            for (int j = 0; j < this.featuresPerSelection; j++) {
+        do {
+            for (int i = 0; i < this.numberOfSelections; i++) {
+                List<Feature> featureListThisSelection = new ArrayList<>(this.features);
+                for (int j = 0; j < this.featuresPerSelection; j++) {
 
 
-                int randomFeature = (int) (Math.random() * featureListThisSelection.size());
+                    int randomFeature = (int) (Math.random() * featureListThisSelection.size());
 
-                Feature feature = featureListThisSelection.get(randomFeature);
-                providedFeatures.add(feature);
-                featureListThisSelection.remove(feature);
+                    Feature feature = featureListThisSelection.get(randomFeature);
+                    providedFeatures.add(feature);
+                    featureListThisSelection.remove(feature);
+                }
             }
-        }
+        } while (this.game.checkDuplicateFeatureProvision(providedFeatures));
         return providedFeatures;
     }
 
     @Override
     public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        if (uselessFeatures == null || selectedFeatures == null) {
+            return -1;
+        }
+
         if (this.minSelect > selectedFeatures.length || this.maxSelect < selectedFeatures.length) {
             return -1;
         }

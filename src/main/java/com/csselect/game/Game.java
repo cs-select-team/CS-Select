@@ -127,7 +127,7 @@ public class Game {
      * Getter for the feature set {@link FeatureSet} that includes the features {@link Feature} for the game
      * @return the feature set {@link FeatureSet}
      */
-    public FeatureSet getFeatureSet() {
+    FeatureSet getFeatureSet() {
         return this.featureSet;
     }
 
@@ -348,5 +348,14 @@ public class Game {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    /**
+     * Checks whether the given {@link Collection} of {@link Feature}s was already displayed for selection in this game
+     * @param features features to check
+     * @return true if features were already displayed, false otherwise
+     */
+    boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
+        return this.database.checkDuplicateFeatureProvision(features);
     }
 }

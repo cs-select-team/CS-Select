@@ -2,6 +2,7 @@ package com.csselect.database.mock;
 
 import com.csselect.Injector;
 import com.csselect.database.GameAdapter;
+import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Round;
@@ -173,5 +174,10 @@ public class MockGameAdapter implements GameAdapter {
     @Override
     public void removeInvitedPlayers(Collection<String> emails) {
         invitedPlayers.removeAll(emails);
+    }
+
+    @Override
+    public boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
+        return rounds.stream().anyMatch(r -> r.getShownFeatures().equals(features));
     }
 }

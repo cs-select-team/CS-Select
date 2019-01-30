@@ -3,7 +3,6 @@ package com.csselect.gamification;
 import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.database.DatabaseAdapter;
-import com.csselect.database.PlayerAdapter;
 import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.user.Player;
 import org.junit.Assert;
@@ -42,13 +41,17 @@ public class SortScoreLastWeekTests extends TestClass {
     @Test
     public void testNotEmptyList() {
         Player player = mockDatabaseAdapter.createPlayer("email", "hash", "salt", "username");
-        PlayerAdapter adapter = mockDatabaseAdapter.getPlayerAdapter(0);
-        Player player1 = new Player(adapter);
+        Player player1 = mockDatabaseAdapter.createPlayer("email1", "hash1", "salt1", "username1");
+        Player player2 = mockDatabaseAdapter.createPlayer("email2", "hash2", "salt2", "username2");
+        playersList.add(player);
         playersList.add(player1);
+        playersList.add(player2);
+
+        player.getStats().finishRound(0.0);
+        player1.getStats().finishRound(0.6);
 
         playersMap = lastWeek.sort(playersList);
         Assert.assertNotNull(playersMap);
-        Assert.assertEquals(1, playersMap.size());
-        Assert.assertEquals(new Integer(0), playersMap.get(player1));
+        Assert.assertEquals(3, playersMap.size());
     }
 }

@@ -51,18 +51,10 @@ public class GamemodeComposite extends Gamemode {
     }
 
     /**
-     * Deletes a game mode {@link Gamemode} from the set of game modes {@link Gamemode}
-     * @param gamemode the game mode {@link Gamemode} to be deleted
-     */
-    public void delete(Gamemode gamemode) {
-            this.gamemodes.remove(gamemode);
-    }
-
-    /**
      * Getter for the contained game modes
      * @return the game modes contained by the composite
      */
-    public List<Gamemode> getGamemodes() {
+    List<Gamemode> getGamemodes() {
         return this.gamemodes;
     }
 }

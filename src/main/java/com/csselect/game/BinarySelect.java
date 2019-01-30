@@ -11,22 +11,22 @@ public class BinarySelect extends Gamemode {
     /**
      * The number of selections of features in the BinarySelect game mode
      */
-    public static final int NUMBER_OF_SELECTIONS = 5;
+    private static final int NUMBER_OF_SELECTIONS = 5;
 
     /**
      * The number of features shown per selection in the BinarySelect game mode
      */
-    public static final int FEATURES_PER_SELECTION = 2;
+    private static final int FEATURES_PER_SELECTION = 2;
 
     /**
      * The minimum number of features to be selected in the BinarySelect game mode
      */
-    public static final int MIN_SELECT = 1;
+    private static final int MIN_SELECT = 1;
 
     /**
      * The maximum number of features to be selected in the BinarySelect game mode
      */
-    public static final int MAX_SELECT = 1;
+    private static final int MAX_SELECT = 1;
 
     /**
      * Constructor for a binary select object

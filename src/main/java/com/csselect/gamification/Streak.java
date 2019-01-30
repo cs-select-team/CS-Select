@@ -11,16 +11,8 @@ public class Streak {
     /**
      * Creates a new Streak by initialising the counter to 0.
      */
-    public Streak() {
+    Streak() {
         this.counter = 0;
-    }
-
-    /**
-     * Creates a streak that already has a counter. For database purposes.
-     * @param counter The streak's counter.
-     */
-    public Streak(int counter) {
-        this.counter = counter;
     }
 
     /**

@@ -4,7 +4,6 @@ import com.csselect.TestClass;
 import com.csselect.database.PlayerStatsAdapter;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -13,8 +12,6 @@ public class PlayerStatsTests extends TestClass {
 
     private PlayerStatsAdapter playerStatsAdapter;
     private PlayerStats stats;
-
-
 
     @Override
     public void setUp() {
@@ -32,86 +29,75 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertNotNull(stats);
     }
 
-    @Ignore("Outdated, because of dailies.")
-    @Test
-    public void testFinishRoundWithStreak() {
-        Assert.assertEquals(stats.finishRound(0.8), 80);
-        Assert.assertEquals(stats.finishRound(0.6), 60);
-        Assert.assertEquals(stats.finishRound(0.8), 120);
-        Assert.assertEquals(stats.finishRound(0.75), 112);
-        Assert.assertEquals(stats.finishRound(0.9), 180);
-        Assert.assertEquals(stats.finishRound(0.66), 132);
-        stats.getStreak().setZero();
-        Assert.assertEquals(stats.finishRound(0.66), 66);
-    }
-
     @Test
     public void testLastScore() {
-        Assert.assertEquals(stats.getLastScore(), 0);
+        Assert.assertEquals(0, stats.getLastScore());
         stats.finishRound(0.8);
-        Assert.assertEquals(stats.getLastScore(), 80);
+        Assert.assertEquals(80, stats.getLastScore());
         stats.finishRound(0.44);
-        Assert.assertEquals(stats.getLastScore(), 22);
+        Assert.assertEquals(22, stats.getLastScore());
         stats.finishRound(0.9);
-        Assert.assertEquals(stats.getLastScore(), 90);
+        Assert.assertEquals(90, stats.getLastScore());
     }
 
     @Test
     public void testMaxRoundScore() {
-        Assert.assertEquals(stats.getMaxRoundScore(), 0);
+        Assert.assertEquals(0, stats.getMaxRoundScore());
         stats.finishRound(0.8);
-        Assert.assertEquals(stats.getMaxRoundScore(), 80);
+        Assert.assertEquals(80, stats.getMaxRoundScore());
         stats.finishRound(0.44);
-        Assert.assertEquals(stats.getMaxRoundScore(), 80);
+        Assert.assertEquals(80, stats.getMaxRoundScore());
         stats.finishRound(0.9);
-        Assert.assertEquals(stats.getMaxRoundScore(), 90);
+        Assert.assertEquals(90, stats.getMaxRoundScore());
         stats.finishRound(0.9);
-        Assert.assertEquals(stats.getMaxRoundScore(), 90);
+        Assert.assertEquals(90, stats.getMaxRoundScore());
+        stats.finishRound(0.91);
+        Assert.assertEquals(91, stats.getMaxRoundScore());
     }
 
     @Test
     public void testRoundsPlayed() {
-        Assert.assertEquals(stats.getRoundsPlayed(), 0);
+        Assert.assertEquals(0, stats.getRoundsPlayed());
         stats.finishRound(0.8);
-        Assert.assertEquals(stats.getRoundsPlayed(), 1);
+        Assert.assertEquals(1, stats.getRoundsPlayed());
         stats.finishRound(0.44);
         Assert.assertEquals(stats.getRoundsPlayed(), 2);
         stats.finishRound(0.92);
         stats.finishRound(0.77);
         stats.finishRound(0.47);
-        Assert.assertEquals(stats.getRoundsPlayed(), 5);
+        Assert.assertEquals(5, stats.getRoundsPlayed());
     }
 
     @Test
     public void testHighestStreak() {
-        Assert.assertEquals(stats.getHighestStreak(), 0);
+        Assert.assertEquals(0, stats.getHighestStreak());
         stats.finishRound(0.8);
-        Assert.assertEquals(stats.getHighestStreak(), 1);
+        Assert.assertEquals(1, stats.getHighestStreak());
         stats.finishRound(0.2);
-        Assert.assertEquals(stats.getHighestStreak(), 2);
+        Assert.assertEquals(2, stats.getHighestStreak());
         stats.getStreak().setZero();
         stats.finishRound(0.44);
-        Assert.assertEquals(stats.getHighestStreak(), 2);
+        Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.9);
-        Assert.assertEquals(stats.getHighestStreak(), 2);
+        Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.82);
-        Assert.assertEquals(stats.getHighestStreak(), 3);
+        Assert.assertEquals(3, stats.getHighestStreak());
         stats.finishRound(0.81);
-        Assert.assertEquals(stats.getHighestStreak(), 4);
+        Assert.assertEquals(4, stats.getHighestStreak());
     }
 
     @Test
     public void testDailiesCompleted() {
-        Assert.assertEquals(stats.getDailiesCompleted(), 0);
+        Assert.assertEquals(0, stats.getDailiesCompleted());
         Assert.assertFalse(stats.getDaily().isCompleted());
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
-        Assert.assertEquals(stats.getDailiesCompleted(), 1);
+        Assert.assertEquals(1, stats.getDailiesCompleted());
         Assert.assertTrue(stats.getDaily().isCompleted());
         stats.finishRound(0.2);
         stats.finishRound(0.75);
-        Assert.assertEquals(stats.getDailiesCompleted(), 1);
+        Assert.assertEquals(1, stats.getDailiesCompleted());
         Assert.assertTrue(stats.getDaily().isCompleted());
     }
 
@@ -126,14 +112,41 @@ public class PlayerStatsTests extends TestClass {
 
     @Test
     public void testStreaks() {
-        Assert.assertEquals(stats.getStreak().getCounter(), 0);
+        Assert.assertNotNull(stats.getStreak());
+        Assert.assertEquals(0, stats.getStreak().getCounter());
         stats.finishRound(0.2);
-        Assert.assertEquals(stats.getStreak().getCounter(), 1);
+        Assert.assertEquals(1, stats.getStreak().getCounter());
         stats.finishRound(0.9);
-        Assert.assertEquals(stats.getStreak().getCounter(), 2);
+        Assert.assertEquals(2, stats.getStreak().getCounter());
         stats.getStreak().setZero();
-        Assert.assertEquals(stats.getStreak().getCounter(), 0);
+        Assert.assertEquals(0, stats.getStreak().getCounter());
         stats.finishRound(0.33);
-        Assert.assertEquals(stats.getStreak().getCounter(), 1);
+        Assert.assertEquals(1, stats.getStreak().getCounter());
     }
+
+    @Test
+    public void testAchievements() {
+        Assert.assertNotNull(stats.getAchievements());
+        Assert.assertFalse(stats.getAchievements().isEmpty());
+        Assert.assertEquals(21, stats.getAchievements().size());
+    }
+
+    @Test
+    public void testSkipRound() {
+        stats.finishRound(0.3);
+        Assert.assertEquals(1, stats.getStreak().getCounter());
+        stats.skipRound();
+        Assert.assertEquals(0, stats.getStreak().getCounter());
+    }
+
+    @Test
+    public void testScore() {
+        Assert.assertEquals(0, stats.getScore());
+        stats.finishRound(0.2);
+        Assert.assertEquals(10, stats.getScore());
+        stats.finishRound(0.6);
+        Assert.assertEquals(70, stats.getScore());
+    }
+
+
 }

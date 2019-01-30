@@ -14,17 +14,11 @@ public class DailyReachRoundScoreEighty extends DailyChallenge {
     /**
      * Creates a daily challenge by setting the necessary values.
      */
-    public DailyReachRoundScoreEighty() {
+    DailyReachRoundScoreEighty() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
-        this.reward = 50;
-    }
-
-    public DailyReachRoundScoreEighty(LocalDate date, boolean completed, int number) {
-        this.date = date;
-        this.completed = completed;
         this.reward = 50;
     }
 
@@ -37,10 +31,5 @@ public class DailyReachRoundScoreEighty extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
     }
 }

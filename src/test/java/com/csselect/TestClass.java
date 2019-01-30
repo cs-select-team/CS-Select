@@ -1,5 +1,6 @@
 package com.csselect;
 
+import com.csselect.database.mock.MockPlayerAdapter;
 import org.junit.After;
 import org.junit.Before;
 
@@ -21,6 +22,7 @@ public abstract class TestClass {
     public void resetInjector() {
         Injector.resetInjector();
         reset();
+        MockPlayerAdapter.reset();
     }
 
     /**

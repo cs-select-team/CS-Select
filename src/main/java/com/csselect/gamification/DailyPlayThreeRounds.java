@@ -18,17 +18,10 @@ public class DailyPlayThreeRounds extends DailyChallenge {
     public DailyPlayThreeRounds() {
         this.germanName = GERMAN_NAME;
         this.englishName = ENGLISH_NAME;
-        this.date = null;
+        this.date = LocalDate.now();
         this.completed = false;
         this.reward = 50;
         this.dailyRounds = 0;
-    }
-
-    public DailyPlayThreeRounds(LocalDate date, boolean completed, int dailyRounds) {
-        this.date = date;
-        this.completed = completed;
-        this.reward = 50;
-        this.dailyRounds = dailyRounds;
     }
 
     @Override
@@ -42,11 +35,5 @@ public class DailyPlayThreeRounds extends DailyChallenge {
         }
 
         return finished;
-    }
-
-    @Override
-    public void resetDaily() {
-        completed = false;
-        dailyRounds = 0;
     }
 }
