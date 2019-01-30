@@ -40,5 +40,10 @@ var achievements = new Vue({
             {state: 3, desc:'click the like button 500 times', title: 'moron', id: 3},
             {state: 3, desc:'click the like button 500 times', title: 'moron', id: 3}]
 
+    },
+    mounted: function () {
+        axios('users/achievements').then(function (response) {
+            achievements.achievementList = response.data;
+        })
     }
 })

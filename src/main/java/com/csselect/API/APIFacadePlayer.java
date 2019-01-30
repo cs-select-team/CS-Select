@@ -190,9 +190,9 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     /** gets all notifications that have to be shown to the player
      *
-     * @return string of all notifications
+     * @return all games that this player has been invited to
      */
-     public String getNotifications() {
-         return "";
+     public Collection<Game> getNotifications() {
+         return player.getInvitedGames();
      }
 }

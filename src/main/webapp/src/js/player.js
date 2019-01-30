@@ -87,17 +87,15 @@ var invites = new Vue({
             {title: "Titel3", gameId: 3},
             {title: "Titel4", gameId: 4}]
     },
-    methods: {}
-    //mounted: function () { // TODO make this function get the invites from the API
-    //    axios({
-    //        method: 'get',
-    //        url: 'users'
-    //    }).then(function (response) {
-    //        this.points = JSON.parse(response.data).score
-    //        this.username = JSON.parse(response.data).username
-    //    })
-//
-    //}
+    mounted: function () {
+        axios({
+            method: 'get',
+            url: 'users/notifications'
+        }).then(function (response) {
+            invites.listOfInvites = response.data
+        })
+
+    }
 })
 var stats = new Vue({
     el: '#stats',

@@ -23,7 +23,7 @@ public class SortScoreAllTimeTests extends TestClass {
     public void setUp() {
         playersList = new LinkedList<>();
         allTime = new SortScoreAllTime();
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        //mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
     }
 
     @Override

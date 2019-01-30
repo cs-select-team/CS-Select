@@ -109,8 +109,8 @@ public class Games extends Servlet {
         for (Feature feature: getPlayerFacade().startRound(gameId)) {
             JsonObject jsonFeature = new JsonObject();
             jsonFeature.addProperty("id", feature.getID());
-            jsonFeature.addProperty("desc", feature.getEnglishDescription()); // check for language
-            jsonFeature.addProperty("name", feature.getEnglishName());
+            jsonFeature.addProperty("desc", feature.getDescription(lang));
+            jsonFeature.addProperty("name", feature.getName(lang));
             jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
             jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
             featureList.add(jsonFeature);
@@ -136,7 +136,7 @@ public class Games extends Servlet {
             jsonObject.addProperty("id", game.getId());
             jsonObject.addProperty("title", game.getTitle());
             jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
-            jsonObject.addProperty("type", "Matrix"); // TODO get gamemode name from somewhere
+            jsonObject.addProperty("type", game.getGamemode().getName());
             json.add(jsonObject);
         }
         returnJson(resp, json);

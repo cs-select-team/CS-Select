@@ -17,7 +17,7 @@ public class RoundTests extends TestClass {
 
     @Override @Before
     public void setUp() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.getPlayer("email");
         if (player == null) {
             player = adapter.createPlayer("email", "hash", "salt", "username");
@@ -34,7 +34,7 @@ public class RoundTests extends TestClass {
             features.addFeature(new Feature(i, "a"));
         }
         game.setFeatureSet(features);
-        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
+        game.setMlserver(Injector.getInstance().getMLServer());
         round.setGame(game);
     }
 

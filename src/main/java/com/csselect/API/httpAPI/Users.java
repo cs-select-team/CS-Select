@@ -1,5 +1,7 @@
 package com.csselect.API.httpAPI;
+import com.csselect.game.Game;
 import com.csselect.gamification.Achievement;
+import com.csselect.gamification.AchievementState;
 import com.csselect.gamification.DailyChallenge;
 import com.csselect.user.Player;
 import com.google.gson.JsonArray;
@@ -24,7 +26,7 @@ public class Users extends Servlet {
             getUser(req, resp);
         } else if (requestString.matches("/daily")) {
             getDaily(req, resp);
-        } else if (requestString.matches("/achievments")) {
+        } else if (requestString.matches("/achievements")) {
             getAchievments(req, resp);
         } else if (requestString.matches("/leaderboard")) {
             getLeaderboard(req, resp);
@@ -80,7 +82,16 @@ public class Users extends Servlet {
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
-        returnAsJson(resp, getPlayerFacade().getNotifications());
+        Collection<Game> notifications = getPlayerFacade().getNotifications();
+        JsonArray array = new JsonArray();
+        for (Game invite: notifications) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("title", invite.getTitle());
+            jsonObject.addProperty("gameId", invite.getId());
+            jsonObject.addProperty("type", invite.getGamemode().getName());
+            array.add(jsonObject);
+        }
+        returnAsJson(resp, array);
     }
 
 
@@ -106,7 +117,7 @@ public class Users extends Servlet {
             int points = ((int) pair.getValue());
             Player p = ((Player) pair.getKey());
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("username", "Bendix"); // TODO change if the player.getUsername method is available
+            jsonObject.addProperty("username", p.getUsername());
             jsonObject.addProperty("points", points);
             jsonObject.addProperty("place", place);
             array.add(jsonObject);
@@ -124,12 +135,22 @@ public class Users extends Servlet {
         Collection<Achievement> achievementCollection = getPlayerFacade().getAchievments();
         for (Achievement ach: achievementCollection) {
             JsonObject jsonObject = new JsonObject();
-            //jsonObject.addProperty("state", ach.checkProgress(getPlayerFacade().getPlayer().getStats())); // TODO get the state of the achievements
-            jsonObject.addProperty("desc", ach.getDescription());
-            jsonObject.addProperty("name", ach.getName());
+            jsonObject.addProperty("state", convertStateToInt(ach.getState()));
+            jsonObject.addProperty("desc", ach.getType().getDescription(lang));
+            jsonObject.addProperty("name", ach.getType().getName(lang));
             array.add(jsonObject);
         }
         returnJson(resp, array);
+    }
+
+    private int convertStateToInt(AchievementState state) {
+        switch (state) {
+            case INVISIBLE: return 0;
+            case CONCEALED: return 1;
+            case SHOWN: return 2;
+            case FINISHED: return 3;
+            default: return -1;
+        }
     }
 
     private void getScore(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
@@ -146,7 +167,7 @@ public class Users extends Servlet {
         DailyChallenge d = getPlayerFacade().getDaily();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("points", d.getReward());
-        jsonObject.addProperty("title", d.getEnglishName()); // TODO make work with new way of getting texts
+        jsonObject.addProperty("title", d.getDescription(lang));
         jsonObject.addProperty("finished", d.isCompleted());
         returnJson(resp, jsonObject);
     }
@@ -155,7 +176,7 @@ public class Users extends Servlet {
     private void getUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (isPlayer()) {
             JsonObject json = new JsonObject();
-            json.addProperty("username", "Benidx"); // TODO add username
+            json.addProperty("username", getPlayerFacade().getPlayer().getUsername());
             json.addProperty("points", getPlayerFacade().getScore() );
             returnJson(resp, json);
         } else {

@@ -20,6 +20,7 @@ public abstract  class Servlet extends HttpServlet {
     private static final String IS_PLAYER = "player";
     private static final String DEFAULT_LANGUAGE = "de";
     protected HttpSession session;
+    protected String lang;
 
 
 
@@ -68,6 +69,7 @@ public abstract  class Servlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
         facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
+        lang = (String)session.getAttribute("lang");
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;
         } else {
