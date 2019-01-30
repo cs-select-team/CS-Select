@@ -59,6 +59,9 @@
 .nav-item.nav-link {
     cursor: pointer;
 }
+.navbar-logo {
+    max-width: 150px;
+}
 body {
     height: 100vh;
 }

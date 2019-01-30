@@ -15,6 +15,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="src/css/main.css" >
+    <link rel="shortcut icon" type="image/png" href="src/img/favicon.ico"/>
     <meta name="viewport" content="width=device-width , initial-scale=1" />
      <meta charset="UTF-8">
 </head>
