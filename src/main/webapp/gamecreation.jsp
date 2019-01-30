@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="row" id="title-area">
-                            <gametitle></gametitle>
+                            <input v-model="title" placeholder='<fmt:message key="inputTitle"/>'/>
                         </div>
                         <div class="row" id="invite-area">
                             <invite></invite>
@@ -23,17 +23,17 @@
                 </div>
                 <div class="row">
                     <div class="col" id="description-area">
-                        <description></description>
+            <textarea v-model="description" placeholder='<fmt:message key="inputDescription"/>'></textarea>
                     </div>
                     <div class="col" id="termination-area">
                         <termination></termination>
                     </div>
                     <div class="col">
                         <div class="row" id="feature-area">
-                            <features></features>
+            <input v-model="featureSet" placeholder='<fmt:message key="inputFeatures"/>'/>
                         </div>
                         <div class="row" id="database-area">
-                            <database></database>
+            <input v-model="databaseAddress" placeholder='<fmt:message key="inputDatabase"/>'/>
                         </div>
                         <div class="row" id="control-area">
                             <control></control>

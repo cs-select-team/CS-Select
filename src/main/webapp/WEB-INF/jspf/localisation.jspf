@@ -18,7 +18,14 @@
                             streak: '<fmt:message key="streak"/>',
                             points: '<fmt:message key="points"/>',
                             accept: '<fmt:message key="accept"/>',
-                            decline: '<fmt:message key="decline"/>'
+                            decline: '<fmt:message key="decline"/>',
+                            create: '<fmt:message key="create"/>',
+                            abort: '<fmt:message key="abort"/>',
+                            submit: '<fmt:message key="submit"/>',
+                            inputTitle: '<fmt:message key="inputTitle"/>',
+                            inputDescription: '<fmt:message key="inputDescription"/>',
+                            inputFeatures: '<fmt:message key="inputFeatures"/>',
+                            inputDatabase: '<fmt:message key="inputDatabase"/>'
                         }
                     }
                 }
