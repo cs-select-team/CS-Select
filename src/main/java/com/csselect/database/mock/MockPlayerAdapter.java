@@ -74,11 +74,4 @@ public class MockPlayerAdapter extends MockUserAdapter implements PlayerAdapter 
     void setUsername(String username) {
         this.username = username;
     }
-
-    /**
-     * Resets the stored adapters map
-     */
-    public static void reset() {
-        PLAYERSTATS_ADAPTERS.clear();
-    }
 }

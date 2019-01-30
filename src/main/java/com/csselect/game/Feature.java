@@ -1,6 +1,8 @@
 package com.csselect.game;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Feature class represents a feature belonging to a feature set {@link FeatureSet} and stores the information
@@ -11,12 +13,12 @@ public class Feature {
 
     private final int id;
     private final String internalName;
-    private String germanName;
-    private String englishName;
-    private String germanDescription;
-    private String englishDescription;
+    private Map<String, String> nameMap;
+    private Map<String, String> descriptionMap;
     private BufferedImage totalGraph;
     private BufferedImage classGraph;
+
+    private static final String DEFAULT_LANGUAGE_CODE = "en";
 
 
     /**
@@ -27,6 +29,9 @@ public class Feature {
     public Feature(int id, String internalName) {
         this.id = id;
         this.internalName = internalName;
+
+        this.nameMap = new HashMap<>();
+        this.descriptionMap = new HashMap<>();
     }
     /**
      * Getter for the ID of the feature
@@ -45,36 +50,36 @@ public class Feature {
     }
 
     /**
-     * Getter for the german name of the feature
-     * @return the german name
+     * Getter for the name of the feature in a specific language, default is english
+     * @param langCode the language code for the language of the name of the feature
+     * @return the name in the specific language if it exists, else in english
      */
-    public String getGermanName() {
-        return this.germanName;
+    public String getName(String langCode) {
+        if (this.nameMap.containsKey(langCode)) {
+            return this.nameMap.get(langCode);
+        }
+        if (this.nameMap.containsKey(DEFAULT_LANGUAGE_CODE)) {
+            return this.nameMap.get(DEFAULT_LANGUAGE_CODE);
+        }
+        return "";
     }
 
-    /**
-     * Getter for the english name of the feature
-     * @return the english name
-     */
-    public String getEnglishName() {
-        return this.englishName;
-    }
 
     /**
-     * Getter for the german description of the feature
-     * @return the german description
+     * Getter for the description of the feature in a specific language, default is english
+     * @param langCode the language code for the language of the description of the feature
+     * @return the description in the specific language if it exists, else in english
      */
-    public String getGermanDescription() {
-        return this.germanDescription;
+    public String getDescription(String langCode) {
+        if (this.descriptionMap.containsKey(langCode)) {
+            return this.descriptionMap.get(langCode);
+        }
+        if (this.descriptionMap.containsKey(DEFAULT_LANGUAGE_CODE)) {
+            return this.descriptionMap.get(DEFAULT_LANGUAGE_CODE);
+        }
+        return "";
     }
 
-    /**
-     * Getter for the english description of the feature
-     * @return the english description
-     */
-    public String getEnglishDescription() {
-        return this.englishDescription;
-    }
 
     /**
      * Getter for the graph with the total data of the feature
@@ -97,7 +102,7 @@ public class Feature {
      * @param germanName the german name
      */
     public void setGermanName(String germanName) {
-        this.germanName = germanName;
+        this.nameMap.put("de", germanName);
     }
 
     /**
@@ -105,7 +110,7 @@ public class Feature {
      * @param englishName the english name
      */
     public void setEnglishName(String englishName) {
-        this.englishName = englishName;
+        this.nameMap.put("en", englishName);
     }
 
     /**
@@ -113,7 +118,7 @@ public class Feature {
      * @param germanDescription the german description
      */
     public void setGermanDescription(String germanDescription) {
-        this.germanDescription = germanDescription;
+        this.descriptionMap.put("de", germanDescription);
     }
 
     /**
@@ -121,7 +126,7 @@ public class Feature {
      * @param englishDescription the english description
      */
     public void setEnglishDescription(String englishDescription) {
-        this.englishDescription = englishDescription;
+        this.descriptionMap.put("en", englishDescription);
     }
 
     /**

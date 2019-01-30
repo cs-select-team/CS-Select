@@ -12,18 +12,23 @@ import java.util.Map;
  * Represents a leaderboard and consists of a list of players.
  * This class is realised as a singleton.
  */
-public class Leaderboard {
+public final class Leaderboard {
 
-    private final static DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
+    private final DatabaseAdapter databaseAdapter;
     private List<Player> players;
     private LeaderboardSortingStrategy strategy;
     private static Leaderboard instance;
 
     private Leaderboard() {
         this.players = new LinkedList<>();
+        databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
         setSortingStrategy(new SortScoreLastWeek());
     }
 
+    /**
+     * Gets the {@link Leaderboard}
+     * @return instance of the Leaderboard
+     */
     public static Leaderboard getInstance() {
         if (Leaderboard.instance == null) {
             Leaderboard.instance = new Leaderboard();
@@ -61,7 +66,7 @@ public class Leaderboard {
      * @return The list of players.
      */
     private List<Player> getPlayersFromDatabase() {
-        return new LinkedList<>(DATABASE_ADAPTER.getPlayers());
+        return new LinkedList<>(databaseAdapter.getPlayers());
     }
 
 }

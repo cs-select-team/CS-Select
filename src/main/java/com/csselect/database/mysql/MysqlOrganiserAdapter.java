@@ -57,7 +57,6 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 options.setGamemode(parseGamemode(set.getString("gamemode")));
                 patterns.add(new Pattern(options, set.getString("title")));
             }
-            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

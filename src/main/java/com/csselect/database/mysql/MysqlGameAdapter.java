@@ -90,12 +90,9 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         try {
             set = DATABASE_ADAPTER.executeMysqlQuery("SELECT MAX(id) AS id FROM rounds;", getDatabaseName());
             if (!set.next()) {
-                set.close();
                 return 0;
             } else {
-                int tmp = set.getInt("id");
-                set.close();
-                return tmp;
+                return set.getInt("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,7 +109,6 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             while (resultSet.next()) {
                 emails.add(resultSet.getString("email"));
             }
-            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,7 +124,6 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             while (resultSet.next()) {
                 players.add(DATABASE_ADAPTER.getPlayer(resultSet.getString("email")));
             }
-            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -144,7 +139,6 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 rounds.add(getGamemode().createRound(new Player(new MysqlPlayerAdapter(
                         set.getInt("player_id")))));
             }
-            set.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -193,11 +187,15 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void setDatabase(String name) {
-        databaseName = name;
-        setString("databaseName", name);
         try {
-            createPlayersTable();
-            createRoundsTable();
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
+                    "SELECT * FROM games WHERE databaseName=?", new StringParam(databaseName));
+            if (!set.next()) {
+                databaseName = name;
+                setString("databaseName", name);
+                createPlayersTable();
+                createRoundsTable();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

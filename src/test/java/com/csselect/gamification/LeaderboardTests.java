@@ -1,7 +1,10 @@
 package com.csselect.gamification;
 
+import com.csselect.Injector;
 import com.csselect.TestClass;
+import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.mock.MockDatabaseAdapter;
+import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +16,7 @@ public class LeaderboardTests extends TestClass {
     @Override
     public void setUp() {
         leaderboard = Leaderboard.getInstance();
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
     }
 
     @Override
@@ -33,21 +37,21 @@ public class LeaderboardTests extends TestClass {
     @Test
     public void testSortingStrategy() {
         Assert.assertNotNull(leaderboard.getStrategy());
+
         LeaderboardSortingStrategy sortingStrategy = new SortScoreAllTime();
         leaderboard.setSortingStrategy(sortingStrategy);
-        Assert.assertEquals(leaderboard.getStrategy(), sortingStrategy);
+        Assert.assertEquals(sortingStrategy, leaderboard.getStrategy());
+
+        LeaderboardSortingStrategy otherSortingStrategy = new SortScoreLastWeek();
+        leaderboard.setSortingStrategy(otherSortingStrategy);
+        Assert.assertEquals(otherSortingStrategy, leaderboard.getStrategy());
     }
 
-    /*
     @Test
-    public void testOneLeaderboardNoScore() {
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    public void testLeaderboardNoScore() {
         Player player = mockDatabaseAdapter.createPlayer("email", "hash", "salt", "username");
         Player player2 = mockDatabaseAdapter.createPlayer("email2", "hash2", "salt2", "username2");
-        Assert.assertEquals(2, leaderboard.getPlayers().size());
+        Player player3 = mockDatabaseAdapter.createPlayer("email3", "hash3", "salt3", "username3");
+        Assert.assertEquals(3, leaderboard.getPlayers().size());
     }
-    */
-
-
-
 }

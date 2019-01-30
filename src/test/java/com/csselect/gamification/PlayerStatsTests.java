@@ -1,7 +1,6 @@
 package com.csselect.gamification;
 
 import com.csselect.TestClass;
-import com.csselect.database.PlayerStatsAdapter;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,13 +9,11 @@ import java.time.LocalDate;
 
 public class PlayerStatsTests extends TestClass {
 
-    private PlayerStatsAdapter playerStatsAdapter;
     private PlayerStats stats;
 
     @Override
     public void setUp() {
-        playerStatsAdapter = new MockPlayerStatsAdapter();
-        stats = new PlayerStats(playerStatsAdapter);
+        stats = new PlayerStats(new MockPlayerStatsAdapter());
     }
 
     @Override
@@ -51,6 +48,8 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(90, stats.getMaxRoundScore());
         stats.finishRound(0.9);
         Assert.assertEquals(90, stats.getMaxRoundScore());
+        stats.finishRound(0.55);
+        Assert.assertEquals(90, stats.getMaxRoundScore());
         stats.finishRound(0.91);
         Assert.assertEquals(91, stats.getMaxRoundScore());
     }
@@ -66,6 +65,8 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.77);
         stats.finishRound(0.47);
         Assert.assertEquals(5, stats.getRoundsPlayed());
+        stats.skipRound();
+        Assert.assertEquals(5, stats.getRoundsPlayed());
     }
 
     @Test
@@ -75,7 +76,7 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(1, stats.getHighestStreak());
         stats.finishRound(0.2);
         Assert.assertEquals(2, stats.getHighestStreak());
-        stats.getStreak().setZero();
+        stats.skipRound();
         stats.finishRound(0.44);
         Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.9);
@@ -89,21 +90,16 @@ public class PlayerStatsTests extends TestClass {
     @Test
     public void testDailiesCompleted() {
         Assert.assertEquals(0, stats.getDailiesCompleted());
-        Assert.assertFalse(stats.getDaily().isCompleted());
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
         Assert.assertEquals(1, stats.getDailiesCompleted());
-        Assert.assertTrue(stats.getDaily().isCompleted());
+        stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
         Assert.assertEquals(1, stats.getDailiesCompleted());
-        Assert.assertTrue(stats.getDaily().isCompleted());
     }
 
-    /**
-     * Dailies are chosen randomly, difficult to test.
-     */
     @Test
     public void testDailies() {
         Assert.assertNotNull(stats.getDaily());
@@ -118,7 +114,7 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(1, stats.getStreak().getCounter());
         stats.finishRound(0.9);
         Assert.assertEquals(2, stats.getStreak().getCounter());
-        stats.getStreak().setZero();
+        stats.skipRound();
         Assert.assertEquals(0, stats.getStreak().getCounter());
         stats.finishRound(0.33);
         Assert.assertEquals(1, stats.getStreak().getCounter());
@@ -135,8 +131,10 @@ public class PlayerStatsTests extends TestClass {
     public void testSkipRound() {
         stats.finishRound(0.3);
         Assert.assertEquals(1, stats.getStreak().getCounter());
+        Assert.assertEquals(15, stats.getScore());
         stats.skipRound();
         Assert.assertEquals(0, stats.getStreak().getCounter());
+        Assert.assertEquals(15, stats.getScore());
     }
 
     @Test
@@ -148,5 +146,13 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(70, stats.getScore());
     }
 
+    @Test
+    public void testWrongScore() {
+        Assert.assertEquals(0, stats.getScore());
+        stats.finishRound(-1);
+        Assert.assertEquals(0, stats.getScore());
+        stats.finishRound(44);
+        Assert.assertEquals(0, stats.getScore());
+    }
 
 }

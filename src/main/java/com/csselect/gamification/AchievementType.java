@@ -1,5 +1,8 @@
 package com.csselect.gamification;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 /**
  * An enumeration for all the existing achievements. Every instance
  * has to implement the method getState.
@@ -9,10 +12,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having played one round.
      */
-    PLAY_ROUND_ONE("Die allererste Runde!",
-            "Spiele eine Runde.",
-            "The very first round!",
-            "Play one round.") {
+    PLAY_ROUND_ONE("roundOneName", "roundOneDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -26,10 +26,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having played five rounds.
      */
-    PLAY_ROUND_FIVE("Fünf!",
-            "Spiele fünf Runden.",
-            "Five!",
-            "Play five rounds.") {
+    PLAY_ROUND_FIVE("roundFiveName", "roundFiveDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -48,10 +45,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having played ten rounds.
      */
-    PLAY_ROUND_TEN("Treuer Mitspieler!",
-            "Spiele zehn Runden.",
-            "Loyal player!",
-            "Play ten rounds.")  {
+    PLAY_ROUND_TEN("roundTenName", "roundTenDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -74,10 +68,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having played 42 rounds.
      */
-    PLAY_ROUND_FORTYTWO("Die Antwort auf alles!",
-            "Spiele 42 Runden.",
-            "The answer to everything!",
-            "Play 42 rounds.")  {
+    PLAY_ROUND_FORTYTWO("roundFortyTwoName", "roundFortyTwoDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -100,10 +91,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having played 100 rounds.
      */
-    PLAY_ROUND_HUNDRED("Es hört nie auf!",
-            "Spiele 100 Runden.",
-            "Never ending!",
-            "Play 100 rounds.")  {
+    PLAY_ROUND_HUNDRED("roundHundredName", "roundHundredDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -126,10 +114,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a streak of two.
      */
-    STREAK_TWO("Zwei am Stück!",
-            "Spiele zwei Runden in Folge.",
-            "Two in a row!",
-            "Play two rounds in a row.")  {
+    STREAK_TWO("streakTwoName", "streakTwoDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -143,10 +128,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a streak of five.
      */
-    STREAK_FIVE ("Alle guten Dinge sind fünf!",
-            "Alle guten Dinge sind fünf!",
-            "All good things come in fives!",
-            "Play five rounds in a row.") {
+    STREAK_FIVE ("streakFiveName", "streakFiveDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -164,10 +146,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a streak of ten.
      */
-    STREAK_TEN("Niemals aufhören!",
-            "Spiele zehn Runden in Folge.",
-            "Never stop!",
-            "Play ten rounds in a row.")  {
+    STREAK_TEN("streakTenName", "streakTenDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -189,10 +168,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having completed one daily challenge.
      */
-    DAILY_ONE("Tägliche Aufgabe!",
-            "Schließe eine Daily-Challenge ab.",
-            "Daily task!",
-            "Complete one daily challenge.")  {
+    DAILY_ONE("dailyOneName", "dailyOneDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -206,10 +182,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having completed three daily challenges.
      */
-    DAILY_THREE("Daily-Challenge Veteran!",
-            "Schließe drei Daily-Challenges ab.",
-            "Daily challenge veteran!",
-            "Complete three daily challenges.")  {
+    DAILY_THREE("dailyThreeName", "dailyThreeDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -227,10 +200,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having completed seven daily challenges.
      */
-    DAILY_SEVEN("Daily-Challenge Meister!",
-            "Schließe sieben Daily-Challenges ab.",
-            "Daily challenge master!",
-            "Complete seven daily challenges.")  {
+    DAILY_SEVEN("dailySevenName", "dailySevenDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -252,10 +222,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 100.
      */
-    TOTAL_SCORE_HUNDRED("100 Punkte!",
-            "Erreiche einen Punktestand von 100 Punkten.",
-            "100 points!",
-            "Reach a total of 100 points.")  {
+    TOTAL_SCORE_HUNDRED("totalScoreHundredName", "totalScoreHundredDesc")  {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -269,10 +236,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 250.
      */
-    TOTAL_SCORE_TWOHUNDREDFIFTY("Mehr Punkte!",
-            "Erreiche einen Punktestand von 250 Punkten.",
-            "More points!",
-            "Reach a total of 250 points.") {
+    TOTAL_SCORE_TWOHUNDREDFIFTY("totalScoreTwoHundredFiftyName", "totalScoreTwoHundredFiftyDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -290,10 +254,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 500.
      */
-    TOTAL_SCORE_FIVEHUNDRED("Punktesammler!",
-            "Erreiche einen Punktestand von 500 Punkten.",
-            "Points collector!",
-            "Reach a total of 500 points.") {
+    TOTAL_SCORE_FIVEHUNDRED("totalScoreFiveHundredName", "totalScoreFiveHundredDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -315,10 +276,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 1000.
      */
-    TOTAL_SCORE_THOUSAND("Ich mag dieses Spiel!",
-            "Erreiche einen Punktestand von 1000 Punkten.",
-            "I like this game!",
-            "Reach a total of 1000 points.") {
+    TOTAL_SCORE_THOUSAND("totalScoreThousandName", "totalScoreThousandDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -340,11 +298,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 2000.
      */
-    TOTAL_SCORE_TWOTHOUSAND("Ich höre nie auf!",
-            "Erreiche einen Punktestand von 2000 Punkten.",
-            "I will not stop!",
-            "Reach a total of 2000 points.") {
-
+    TOTAL_SCORE_TWOTHOUSAND("totalScoreTwoThousandName", "totalScoreTwoThousandDesc")  {
         @Override
         protected AchievementState getState(PlayerStats stats) {
             if (stats.getScore() >= 2000) {
@@ -365,10 +319,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a total score of 5000.
      */
-    TOTAL_SCORE_FIVETHOUSAND("CS:Select Koryphäe!",
-            "Erreiche einen Punktestand von 5000 Punkten.",
-            "CS:Select luminary!",
-            "Reach a total of 5000 points.") {
+    TOTAL_SCORE_FIVETHOUSAND("totalScoreFiveThousandName", "totalScoreFiveThousandDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -390,10 +341,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a round score of 60.
      */
-    ROUND_SCORE_SIXTY("Nicht schlecht!",
-            "Erreiche 60 Punkte nach einer einzelnen Runde.",
-            "Not bad!",
-            "Reach a score of 60 after a single round.") {
+    ROUND_SCORE_SIXTY("roundScoreSixtyName", "roundScoreSixtyDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -407,10 +355,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a round score of 70.
      */
-    ROUND_SCORE_SEVENTY("Gute Auswahl!",
-            "Erreiche 70 Punkte nach einer einzelnen Runde.",
-            "Good choice!",
-            "Reach a score of 70 after a single round.") {
+    ROUND_SCORE_SEVENTY("roundScoreSeventyName", "roundScoreSeventyDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -428,10 +373,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a round score of 80.
      */
-    ROUND_SCORE_EIGHTY("Profi!",
-            "Erreiche 80 Punkte nach einer einzelnen Runde.",
-            "Pro!",
-            "Reach a score of 80 after a single round.") {
+    ROUND_SCORE_EIGHTY("roundScoreEightyName", "roundScoreEightyDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -453,10 +395,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a round score of 90.
      */
-    ROUND_SCORE_NINETY("Fachexperte!",
-            "Erreiche 90 Punkte nach einer einzelnen Runde.",
-            "Domain expert!",
-            "Reach a score of 90 after a single round.") {
+    ROUND_SCORE_NINETY("roundScoreNinetyName", "roundScoreNinetyDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -475,27 +414,17 @@ public enum AchievementType {
         }
     };
 
-    private final String germanName;
-    private final String germanDesc;
-    private final String englishName;
-    private final String englishDesc;
+    private final String nameKey;
+    private final String descKey;
 
-    /**
-     * Sets the names and the descriptions of the achievement types in the given languages.
-     * @param germanName The German name.
-     * @param germanDesc The German description.
-     * @param englishName The English name.
-     * @param englishDesc The English description.
-     */
-    AchievementType(String germanName, String germanDesc, String englishName, String englishDesc) {
-        this.germanName = germanName;
-        this.germanDesc = germanDesc;
-        this.englishName = englishName;
-        this.englishDesc = englishDesc;
+
+    AchievementType(String nameKey, String descKey) {
+        this.nameKey = nameKey;
+        this.descKey = descKey;
     }
 
     /**
-     * Checks the progress of an achievement and then return a new achievement that
+     * Checks the progress of an achievement and then returns a new achievement that
      * represents the progress of that achievement.
      * @param stats The player's stats.
      * @return A new Achievement with the corresponding state and type.
@@ -514,35 +443,27 @@ public enum AchievementType {
     protected abstract AchievementState getState(PlayerStats stats);
 
     /**
-     * Gets the German name of the achievement type.
-     * @return The German name.
+     * Gets the name of the achievement type in the specified language.
+     * @param lang The language code in ISO 369-1 format.
+     * @return The name in the specified language. Assertion error if language code is not known.
      */
-    public final String getGermanName() {
-        return germanName;
+    public final String getName(String lang) {
+        Locale locale = new Locale(lang);
+        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", locale,
+                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        return bundle.getString(nameKey);
     }
 
     /**
-     * Gets the German description for the achievement type.
-     * @return The German description.
+     * Gets the description of the achievement in the specified language.
+     * @param lang The language code in ISO 639-1 format.
+     * @return The The description in the specified language. Assertion error if language code is not known.
      */
-    public final String getGermanDescription() {
-        return germanDesc;
-    }
-
-    /**
-     * Gets the English name of the achievement type.
-     * @return The English name.
-     */
-    public final String getEnglishName() {
-        return englishName;
-    }
-
-    /**
-     * Gets the English description of the achievement type.
-     * @return The English description.
-     */
-    public final String getEnglishDescription() {
-        return englishDesc;
+    public final String getDescription(String lang) {
+        Locale locale = new Locale(lang);
+        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", locale,
+                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        return bundle.getString(descKey);
     }
 
 }

@@ -14,8 +14,9 @@ import java.util.Map;
 /**
  * The player is a user with specified possibilities of interaction with our system. This class represents a player in
  * our system. Players are important for crowd sourcing, the main component of our solution.
- * They are allowed to play games ({@link Game} organisers created and invited them to and see information about
- * their statistics, more precisely their score over time, their achievements and daily challenges.
+ * They are allowed to play games ({@link Game} organisers ({@link Organiser}) created and
+ * invited them to and see information about their statistics,
+ * more precisely their score over time, their achievements and daily challenges.
  */
 public class Player extends User implements Comparable {
     private PlayerAdapter playerAdapter;
@@ -119,6 +120,14 @@ public class Player extends User implements Comparable {
     }
 
     /**
+     * Returns the username under which this user was registered
+     * @return String representing username of the player
+     */
+    public String getUsername() {
+        return playerAdapter.getUsername();
+    }
+
+    /**
      * To retrieve the player's stats, it is necessary to get access to the according {@link Gamification} interface.
      * @return Gamification interface of the player
      */
@@ -147,6 +156,14 @@ public class Player extends User implements Comparable {
             }
         });
         return gameToReturn;
+    }
+
+    /**
+     * Returns all games the player is invited to
+     * @return {@link Game} object collection
+     */
+    public Collection<Game> getInvitedGames() {
+        return playerAdapter.getInvitedGames();
     }
 
     /**

@@ -50,9 +50,8 @@ public class StreakTests extends TestClass {
             streak.increaseStreak();
         }
 
+        Assert.assertEquals(5, streak.getCounter());
         streak.setZero();
         Assert.assertEquals(0, streak.getCounter());
     }
-
-
 }

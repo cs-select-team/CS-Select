@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Implements the Gamification Interface. PlayerStats combines he defined gamification mechanics
+ * Implements the Gamification Interface. PlayerStats combines the defined gamification mechanics
  * and is responsible for the calculation of the score reached by a player.
  */
 public class PlayerStats implements Gamification {
@@ -17,8 +17,8 @@ public class PlayerStats implements Gamification {
     private Streak streak;
     private DailyChallenge activeDaily;
 
-    public PlayerStats(PlayerStatsAdapter databaseAdapter) {
-        this.playerStatsAdapter = databaseAdapter;
+    public PlayerStats(PlayerStatsAdapter playerStatsAdapter) {
+        this.playerStatsAdapter = playerStatsAdapter;
         this.streak = new Streak();
         this.activeDaily = chooseRandomDaily();
     }
@@ -97,7 +97,7 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Gets the maximum score achieved by the player in a single round. This
+     * Gets the maximum score ever achieved by the player in a single round. This
      * does not take into account any gamification mechanics.
      * @return The maximum score of the player.
      */
@@ -116,7 +116,7 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Gets the highest streak ever reached of the player.
+     * Gets the highest streak ever reached by the player.
      * @return The highest streak of the player.
      */
     public int getHighestStreak() {
@@ -194,14 +194,13 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Chooses a daily challenge randomly from the list of dailies and sets its date to today.
+     * Chooses a daily challenge randomly from the list of dailies.
      * @return The chosen daily.
      */
     private DailyChallenge chooseRandomDaily() {
         List<DailyChallenge> dailies = loadDailies();
         int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
-        DailyChallenge newDaily = dailies.get(randomIndex);
-        return newDaily;
+        return dailies.get(randomIndex);
     }
 
     /**

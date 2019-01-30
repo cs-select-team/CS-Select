@@ -1,6 +1,8 @@
 package com.csselect.gamification;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents an abstract DailyChallenge. This is a task that a player
@@ -9,8 +11,7 @@ import java.time.LocalDate;
  */
 public abstract class DailyChallenge {
 
-    String germanName;
-    String englishName;
+    Map<String, String> descriptionMap = new HashMap<>();
     LocalDate date;
     boolean completed;
     int reward;
@@ -24,20 +25,15 @@ public abstract class DailyChallenge {
     public abstract boolean checkFinished(PlayerStats stats);
 
     /**
-     * Gets the German name of the daily challenge.
-     * @return The name of the daily.
+     * Gets the description of the task of the daily challenge in the specified language.
+     * @param lang The language code in ISO 369-1 format.
+     * @return The description in the specified language. Assertion error if language code is not known.
      */
-    public String getGermanName() {
-        return germanName;
+    public final String getDescription(String lang) {
+        if (!descriptionMap.containsKey(lang)) {
+        return "Unknown language.";
     }
-
-    /**
-     * Gets the English name of the daily challenge.
-     * @return The name of the daily.
-     */
-    public String getEnglishName() {
-        return englishName;
-    }
+        return descriptionMap.get(lang);    }
 
     /**
      * Gets the date of the daily challenge.
@@ -62,7 +58,5 @@ public abstract class DailyChallenge {
     public int getReward() {
         return reward;
     }
-
-
 
 }

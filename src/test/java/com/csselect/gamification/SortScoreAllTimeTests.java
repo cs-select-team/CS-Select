@@ -82,7 +82,6 @@ public class SortScoreAllTimeTests extends TestClass {
         Assert.assertEquals(player2, players[1]);
         Assert.assertEquals(player, players[2]);
 
-
         player.getStats().finishRound(0.4);
         player2.getStats().finishRound(0.0);
         player1.getStats().finishRound(0.59);
