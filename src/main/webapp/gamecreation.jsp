@@ -4,7 +4,7 @@
             <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
             <div class="top-buffer"></div>
             <div class="container h-10 title"><fmt:message key="creation"/></div>
-            <div class="container">
+            <div class="container" id="gamecreation">
                 <div class="row">
                     <div class="col">
                         <div class="row" id="title-area">

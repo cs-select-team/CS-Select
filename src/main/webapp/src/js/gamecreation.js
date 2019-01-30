@@ -76,54 +76,24 @@ Vue.component('control', {
         '           <button type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()">Abort</button>' +
         '           <button type="button" class="btn btn-primary float-right btn-space">Okay</button>' +
         '       </div>',
-    abort() {
-        store.state.forEach(function(item) {
-            item = '';
-        });
+    methods: {
+        abort: function () {
+            creation.state.forEach(function (item) {
+                if (item == creation.invites) {
+                    item = [];
+                } else if (item == creation.savePattern) {
+                    item = false;
+                } else {
+                    item = '';
+                }
+            });
+        }
     }
 });
 
-var title = new Vue({
-    el: "#title-area",
+var creation = new Vue({
+    el: '#gamecreation',
     data: {
-        sharedState: store.state.title
-    }
-});
-
-var invite = new Vue({
-    el: "#invite-area"
-});
-
-var mode = new Vue({
-    el: "#mode-area"
-});
-
-var pattern = new Vue({
-    el: "#pattern-area"
-});
-
-var description = new Vue({
-    el: "#description-area"
-});
-
-var termination = new Vue({
-    el: "#termination-area"
-});
-
-var features = new Vue({
-    el: "#feature-area"
-});
-
-var database = new Vue({
-    el: "#database-area"
-});
-
-var control = new Vue({
-    el: "#control-area"
-});
-
-var store = {
-    state: {
         title: '',
         invites: [],
         mode: '',
@@ -137,7 +107,7 @@ var store = {
         databaseAddress: '',
         savePattern: false,
     },
-    setOption(option, value) {
+    storeOption(option, value) {
         switch(option) {
             case "title":
                 this.state.title = value;
@@ -190,4 +160,4 @@ var store = {
                 break;
         }
     },
-};
+});
