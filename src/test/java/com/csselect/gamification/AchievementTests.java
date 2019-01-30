@@ -32,9 +32,9 @@ public class AchievementTests extends TestClass {
     @Test
     public void testPlayRounds() {
         List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals("Die allererste Runde!", ach.get(0).getType().getName("de"));
+        Assert.assertEquals("Die allererste Runde", ach.get(0).getType().getName("de"));
         Assert.assertEquals("Spiele eine Runde.", ach.get(0).getType().getDescription("de"));
-        Assert.assertEquals("The very first round!", ach.get(0).getType().getName("en"));
+        Assert.assertEquals("The very first round", ach.get(0).getType().getName("en"));
         Assert.assertEquals("Play one round.", ach.get(0).getType().getDescription("en"));
         Assert.assertEquals(AchievementState.SHOWN, ach.get(0).getState());
         Assert.assertEquals(AchievementState.CONCEALED, ach.get(1).getState());
@@ -74,9 +74,9 @@ public class AchievementTests extends TestClass {
     @Test
     public void testGetStreak() {
         List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals("Zwei am Stück!", ach.get(5).getType().getName("de"));
+        Assert.assertEquals("Zwei am Stück", ach.get(5).getType().getName("de"));
         Assert.assertEquals("Spiele zwei Runden in Folge.", ach.get(5).getType().getDescription("de"));
-        Assert.assertEquals("Two in a row!", ach.get(5).getType().getName("en"));
+        Assert.assertEquals("Two in a row", ach.get(5).getType().getName("en"));
         Assert.assertEquals("Play two rounds in a row.", ach.get(5).getType().getDescription("en"));
         Assert.assertEquals(AchievementState.SHOWN, ach.get(5).getState());
         Assert.assertEquals(AchievementState.CONCEALED, ach.get(6).getState());
@@ -109,9 +109,9 @@ public class AchievementTests extends TestClass {
     @Test
     public void testCompleteDaily() {
         List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals("Tägliche Aufgabe!", ach.get(8).getType().getName("de"));
+        Assert.assertEquals("Tägliche Aufgabe", ach.get(8).getType().getName("de"));
         Assert.assertEquals("Schließe eine Daily-Challenge ab.", ach.get(8).getType().getDescription("de"));
-        Assert.assertEquals("Daily task!", ach.get(8).getType().getName("en"));
+        Assert.assertEquals("Daily task", ach.get(8).getType().getName("en"));
         Assert.assertEquals("Complete one daily challenge.", ach.get(8).getType().getDescription("en"));
         Assert.assertEquals(AchievementState.SHOWN, ach.get(8).getState());
         Assert.assertEquals(AchievementState.CONCEALED, ach.get(9).getState());
@@ -130,9 +130,9 @@ public class AchievementTests extends TestClass {
     @Test
     public void testTotalScore() {
         List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals("100 Punkte!", ach.get(11).getType().getName("de"));
+        Assert.assertEquals("100 Punkte", ach.get(11).getType().getName("de"));
         Assert.assertEquals("Erreiche einen Punktestand von 100 Punkten.", ach.get(11).getType().getDescription("de"));
-        Assert.assertEquals("100 points!", ach.get(11).getType().getName("en"));
+        Assert.assertEquals("100 points", ach.get(11).getType().getName("en"));
         Assert.assertEquals("Reach a total of 100 points.", ach.get(11).getType().getDescription("en"));
         Assert.assertEquals(AchievementState.SHOWN, ach.get(11).getState());
         Assert.assertEquals(AchievementState.CONCEALED, ach.get(12).getState());
@@ -179,9 +179,9 @@ public class AchievementTests extends TestClass {
     @Test
     public void testRoundScore() {
         List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals("Nicht schlecht!", ach.get(17).getType().getName("de"));
+        Assert.assertEquals("Nicht schlecht", ach.get(17).getType().getName("de"));
         Assert.assertEquals("Erreiche 60 Punkte nach einer einzelnen Runde.", ach.get(17).getType().getDescription("de"));
-        Assert.assertEquals("Not bad!", ach.get(17).getType().getName("en"));
+        Assert.assertEquals("Not bad", ach.get(17).getType().getName("en"));
         Assert.assertEquals("Reach a score of 60 after a single round.", ach.get(17).getType().getDescription("en"));
         Assert.assertEquals(AchievementState.SHOWN, ach.get(17).getState());
         Assert.assertEquals(AchievementState.CONCEALED, ach.get(18).getState());
