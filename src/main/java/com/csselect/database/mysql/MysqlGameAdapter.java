@@ -188,11 +188,15 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void setDatabase(String name) {
-        databaseName = name;
-        setString("databaseName", name);
         try {
-            createPlayersTable();
-            createRoundsTable();
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
+                    "SELECT * FROM games WHERE databaseName=?", new StringParam(databaseName));
+            if (!set.next()) {
+                databaseName = name;
+                setString("databaseName", name);
+                createPlayersTable();
+                createRoundsTable();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
