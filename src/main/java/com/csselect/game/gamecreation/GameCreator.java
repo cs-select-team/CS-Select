@@ -45,7 +45,7 @@ public class GameCreator {
      * @param data Value of the option
      */
     public void setOption(String option, String data) {
-        String[] arguments = data.split("&");
+        String[] arguments = data.split("_");
         assert arguments.length > 0;
         switch(option) {
             case "title":
