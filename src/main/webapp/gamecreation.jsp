@@ -19,23 +19,23 @@
                     <div class="col" id="mode-area">
                         <div class="col">
                             <input type="radio" id="matrix" value="matrix" v-model="mode">
-                            <label for="matrix">Matrix-Select</label>
+                            <label for="matrix"><fmt:message key="matrixSelect"/></label>
                             <br>
                             <input type="radio" id="binary" value="binary" v-model="mode">
-                            <label for="binary">Binary-Select</label>
+                            <label for="binary"><fmt:message key="binarySelect"/></label>
                         </div>
                         <div class="col" v-if="mode === 'matrix'">
                             <input type="number" id="num" value="10" v-model="numberFeatures" min="0">
-                            <label for="num">Num features</label> <br>
+                            <label for="num"><fmt:message key="numFeatures"/></label> <br>
                             <input type="number" id="min" value="1" v-model="minSelect" min="0">
-                            <label for="min">Min Features</label> <br>
+                            <label for="min"><fmt:message key="minFeatures"/></label> <br>
                             <input type="number" id="max" value="5" v-model="maxSelect" min="0">
-                            <label for="max">Max Features</label>
+                            <label for="max"><fmt:message key="maxFeatures"/></label>
                         </div>
                     </div>
                     <div class="col" id="pattern-area">
                         <input type="checkbox" id="save" value="save" v-model="savePattern">
-                        <label for="save">Save pattern?</label>
+                        <label for="save"><fmt:message key="askSavePattern"/></label>
                         <pat></pat>
                     </div>
                 </div>
@@ -47,18 +47,20 @@
                     <div class="col" id="termination-area">
                     <div>
                         <input type="radio" id="time" value="time" v-model="terminationtype">
-                        <label for="time">Time-Termination</label>
+                        <label for="time"><fmt:message key="timeT"/></label>
                         <br>
                         <input type="radio" id="rounds" value="rounds" v-model="terminationtype">
-                        <label for="rounds">Rounds-Termination</label>
+                        <label for="rounds"><fmt:message key="roundsT"/></label>
                     </div>
                     <div v-if="terminationtype === 'time'">
                         <input type="text" id="datetime" v-model="terminationvalue"
-                            placeholder="yyyy-mm-ddThh:mm:ss"/>
+                            placeholder='<fmt:message key="timeSyntax"/>'/>
+                        <label for="datetime"><fmt:message key="timeInput"/></label>
                     </div>
                     <div v-else-if="terminationtype === 'rounds'">
                         <input type="text" id="numRounds" v-model="terminationvalue"
-                        placeholder="Number of rounds"/>
+                        placeholder='<fmt:message key="roundsSyntax"/>'/>
+                        <label for="numRounds"><fmt:message key="roundsInput"/></label>
                     </div>
                     </div>
                     <div class="col">
