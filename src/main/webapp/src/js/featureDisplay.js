@@ -15,7 +15,7 @@ Vue.component('feature-box', {
         '                                {{ feature.desc }}' +
         '                        </div>' +
         '                        <div class="btn-group">' +
-        '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id">' +
+        '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id" :disabled="feature.useless">' +
         '                                {{ localisation.showGraphs }}' +
         '                        </button>' +
         '                        <button type="button" class="btn btn-primary" v-on:click="feature.toggled = !feature.toggled">{{ localisation.selectFeature}}</button>' +
