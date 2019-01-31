@@ -253,12 +253,7 @@ var creation = new Vue({
             axios({
                 method: 'post',
                 url: 'create'
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         }
     },
     mounted: function() {
