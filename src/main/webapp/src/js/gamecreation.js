@@ -152,9 +152,9 @@ var creation = new Vue({
             this.players = '';
             this.invites.forEach(function(email, index) {
                 if (index == 0) {
-                    this.players += email.toString();
+                    this.players = email;
                 } else {
-                    this.players += "_" + email.toString();
+                    this.players += "_" + email;
                 }
             });
             this.callbackCounter++;
