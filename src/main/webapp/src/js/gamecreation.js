@@ -141,7 +141,7 @@ var creation = new Vue({
                 if (index == 0) {
                     players += email.toString();
                 } else {
-                    players += "_" + email.toString();
+                    players += ":" + email.toString();
                 }
             });
             axios({
@@ -167,7 +167,7 @@ var creation = new Vue({
                 url: 'create/setParam',
                 params: {
                     option: "termination",
-                    data: this.terminationtype + "_" + this.terminationvalue,
+                    data: this.terminationtype + ":" + this.terminationvalue,
                 }
             });
         },
@@ -185,7 +185,7 @@ var creation = new Vue({
                 url: 'create/setParam',
                 params: {
                     option: "gamemode",
-                    data: this.mode + "_" +
+                    data: this.mode + ":" +
                         "num~" + this.numberFeatures + "-" +
                         "min~" + this.minSelect + "-" +
                         "max~" + this.maxSelect,
