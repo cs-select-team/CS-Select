@@ -16,13 +16,19 @@ Vue.component('invite', {
 
 Vue.component('pat', {
     props: [''],
-    template: '',
+    template: '<input type="button" class="btn btn-primary" :value="localisation.loadPattern" ' +
+        'v-on:click="loadPattern()">',
+    methods: {
+        loadPattern() {
+            creation.loadPattern();
+        }
+    }
 });
 
 Vue.component('control', {
     props: [''],
     template: '<div class="container">' +
-        '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()" ' +
+        '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()"' +
         ':value="localisation.abort">' +
         '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="create()"' +
         ':value="localisation.create">' +
@@ -61,6 +67,8 @@ var creation = new Vue({
         featureSet: '',
         databaseAddress: '',
         savePattern: false,
+        savedPatterns: ["pattern 1"],
+        selected: 'null',
     },
     methods: {
         emptyStore() {
@@ -77,6 +85,7 @@ var creation = new Vue({
             this.features = '';
             this.databaseAddress = '';
             this.savePattern = false;
+            this.selected = 'null';
         },
         submitTitle() {
             if (this.title == '') {
@@ -196,5 +205,27 @@ var creation = new Vue({
                 }
             });
         },
+        loadPattern() {
+            this.savedPatterns.forEach(function(value) {
+               if (value.toString() == creation.selected.toString()) {
+                   axios({
+                       method: 'post',
+                       url: 'create/loadPattern',
+                       params: {
+                           pattern: value,
+                       }
+                   })
+               }
+            });
+            //TODO: Extract somehow the parameters for all fields
+        }
+    },
+    mounted: function() {
+        axios({
+            method: 'get',
+            url: 'create/patterns',
+        }).then(function (response) {
+            this.patterns= response.data;
+        });
     }
 });

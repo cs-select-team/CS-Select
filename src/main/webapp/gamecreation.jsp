@@ -34,11 +34,25 @@
                         </div>
                     </div>
                     <div class="col" id="pattern-area">
-                        <pat></pat>
-                        <input type="checkbox" id="save" value="save" v-model="savePattern">
-                        <label for="save"><fmt:message key="askSavePattern"/></label>
-                        <input v-if="savePattern" type="text" id="patternTitle" v-model="pattern"
-                            :placeholder="localisation.patternTitle"/>
+                        <div class="row">
+                            <div class="col">
+                            <select v-model="selected">
+                                <option value='null'>(none)</option>
+                                <option v-for="item in savedPatterns" :value="item.toString()">{{item}}</option>
+                                </select>
+                            </div>
+                            <div v-if="selected !== 'null'" class="col">
+                                <pat></pat>
+                            </div>
+                        </div> <br>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" id="save" value="save" v-model="savePattern">
+                                <label for="save"><fmt:message key="askSavePattern"/></label> <br>
+                                <input v-if="savePattern" type="text" id="patternTitle" v-model="pattern"
+                                    :placeholder="localisation.patternTitle"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="top-buffer"></div>

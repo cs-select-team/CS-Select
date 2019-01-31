@@ -29,7 +29,8 @@
                             inviteEmailGameCreation: '<fmt:message key="inviteGC"/>',
                             emailGC: '<fmt:message key="emailGC"/>',
                             emailGCSuccessful: '<fmt:message key="emailGCSuccessful"/>',
-                            patternTitle: '<fmt:message key="patternTitle"/>'
+                            patternTitle: '<fmt:message key="patternTitle"/>',
+                            loadPattern: '<fmt:message key="loadPattern"/>'
                         }
                     }
                 }
