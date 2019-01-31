@@ -37,7 +37,7 @@
                         <div class="form-group fixed-height" >
                             <div class="position-absolute" v-bind:class="{ invisible: organiser !='organiser' }">
                             <label for="thirdParam"><fmt:message key="masterPassword"/></label>
-                            <input type="text" class="form-control" id="thirdParam"
+                            <input type="password" class="form-control" id="thirdParam"
                                    placeholder="<fmt:message key="masterPassword"/>" v-model="thirdParam">
                             </div>
                             <div class="position-absolute" v-bind:class="{ invisible: organiser =='organiser' }">
