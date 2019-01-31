@@ -92,7 +92,7 @@ var gameFrame = new Vue({
         },
         getNextRound: function() {
             axios({
-                method: 'get',
+                method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
             }).then (function (response) {
                 gameFrame.featureList = response.data.featureList;
