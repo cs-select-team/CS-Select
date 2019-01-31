@@ -6,6 +6,7 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
 import com.csselect.gamification.Leaderboard;
+import com.csselect.gamification.PlayerStats;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -129,9 +130,9 @@ public class Player extends User implements Comparable {
 
     /**
      * To retrieve the player's stats, it is necessary to get access to the according {@link Gamification} interface.
-     * @return Gamification interface of the player
+     * @return {@link PlayerStats} object belonging to the player
      */
-    public Gamification getStats() {
+    public PlayerStats getStats() {
         return playerAdapter.getPlayerStats();
     }
 
