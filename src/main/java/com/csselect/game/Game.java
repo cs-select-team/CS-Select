@@ -118,7 +118,11 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        return database.getTermination();
+        Termination termination = database.getTermination();
+        if (termination != null) {
+            termination.setGame(this);
+        }
+        return termination;
     }
 
     /**
