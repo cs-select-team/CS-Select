@@ -41,6 +41,7 @@ Vue.component('control', {
             creation.submitTitle();
             creation.submitDescription();
             creation.submitDatabaseAddress();
+            creation.submitFeatureSet();
             creation.invitePlayers();
             creation.submitTermination();
             creation.submitGamemode();
@@ -84,7 +85,7 @@ var creation = new Vue({
             this.description = '';
             this.terminationtype = '';
             this.terminationvalue = '';
-            this.features = '';
+            this.featureSet = '';
             this.databaseAddress = '';
             this.savePattern = false;
             this.selectedPattern = null;
@@ -217,6 +218,27 @@ var creation = new Vue({
                         "num~" + this.numberFeatures + "-" +
                         "min~" + this.minSelect + "-" +
                         "max~" + this.maxSelect,
+                }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
+            });
+        },
+        submitFeatureSet: function() {
+            if (this.featureSet == '') {
+                alert("Please set featureSet");
+                return;
+            }
+            this.callbackCounter++;
+            axios({
+                method: 'post',
+                url: 'create/setParam',
+                params: {
+                    option: "featureSet",
+                    data: this.featureSet
+
                 }
             }).then(function(response) {
                 creation.callbackCounter--;
