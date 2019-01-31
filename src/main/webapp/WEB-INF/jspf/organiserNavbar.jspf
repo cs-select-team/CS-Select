@@ -11,4 +11,5 @@
         <a class="nav-item nav-link" v-on:click="logout"><fmt:message key="logout"/></a>
         </div>
         </div>
+            <script src="src/js/navbar.js"></script>
         </nav>
