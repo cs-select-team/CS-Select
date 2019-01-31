@@ -119,7 +119,6 @@ public class Game {
      */
     public Termination getTermination() {
         Termination termination = database.getTermination();
-        termination.setGame(this);
         return termination;
     }
 
@@ -187,6 +186,7 @@ public class Game {
      * @param termination the termination {@link Termination} cause
      */
     public void setTermination(Termination termination) {
+        termination.setGame(this);
         database.setTermination(termination);
     }
 
