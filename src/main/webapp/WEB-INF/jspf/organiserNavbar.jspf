@@ -1,11 +1,11 @@
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
         <a class="navbar-brand" href="organiser.jsp"><img class="navbar-logo" src="src/img/cs_select.svg" alt=<fmt:message key="brand"/>></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="navbar-nav">
+        <div class="navbar-nav" id="navbar">
         <a class="nav-item nav-link" href="organiserSettings.jsp"><fmt:message key="settings"/></a>
             <a class="nav-item nav-link" href="gamecreation.jsp"><fmt:message key="gamecreation"/></a>
         <a class="nav-item nav-link" v-on:click="logout"><fmt:message key="logout"/></a>

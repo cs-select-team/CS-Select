@@ -251,7 +251,6 @@ var creation = new Vue({
             this.terminationtype = this.selectedPattern.termination.type;
         },
         createGame: function () {
-            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create'
