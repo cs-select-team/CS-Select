@@ -25,7 +25,11 @@
                             inputTitle: '<fmt:message key="inputTitle"/>',
                             inputDescription: '<fmt:message key="inputDescription"/>',
                             inputFeatures: '<fmt:message key="inputFeatures"/>',
-                            inputDatabase: '<fmt:message key="inputDatabase"/>'
+                            inputDatabase: '<fmt:message key="inputDatabase"/>',
+                            inviteEmailGameCreation: '<fmt:message key="inviteGC"/>',
+                            emailGC: '<fmt:message key="emailGC"/>',
+                            emailGCSuccessful: '<fmt:message key="emailGCSuccessful"/>',
+                            patternTitle: '<fmt:message key="patternTitle"/>'
                         }
                     }
                 }

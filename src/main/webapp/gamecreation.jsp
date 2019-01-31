@@ -34,9 +34,11 @@
                         </div>
                     </div>
                     <div class="col" id="pattern-area">
+                        <pat></pat>
                         <input type="checkbox" id="save" value="save" v-model="savePattern">
                         <label for="save"><fmt:message key="askSavePattern"/></label>
-                        <pat></pat>
+                        <input v-if="savePattern" type="text" id="patternTitle" v-model="pattern"
+                            :placeholder="localisation.patternTitle"/>
                     </div>
                 </div>
                 <div class="top-buffer"></div>

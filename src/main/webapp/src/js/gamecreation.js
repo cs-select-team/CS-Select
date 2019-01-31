@@ -1,49 +1,22 @@
 Vue.component('invite', {
     props: [''],
-    template: '<div>Invite People</div>'
-});
-
-Vue.component('mode', {
-    props: [''],
-    template: '<div class="container">' +
-        '           <div class="col">Checklist</div>' +
-        '           <div class="col">Layout</div>' +
-        '      </div>'
-});
-
-Vue.component('layout', {
-    props: [''],
-    template: '<div class="container">' +
-        '       <div class="col">' +
-        '        Checklist' +
-        '       </div>' +
-        '           <div class="col">' +
-        '           <form>' +
-        '               <input type="text" name="minSelect">' +
-        '               <input type="text" name="numberFeatures">' +
-        '           </form>' +
-        '       </div>' +
-        '      </div>'
+    template: '<div>' +
+        '           <input type="text" id="emailToAdd" :placeholder="localisation.emailGC"/>' +
+        '           <input type="button" class="btn btn-primary" ' +
+        '               v-on:click="invite()" :value="localisation.invite"/>' +
+        '      </div>',
+    methods: {
+        invite() {
+            creation.addPlayer(document.getElementById("emailToAdd").value.toString());
+            document.getElementById("emailToAdd").value = '';
+            alert("Successfully added Email")
+        }
+    }
 });
 
 Vue.component('pat', {
     props: [''],
-    template: '<div class="container">' +
-        '       <div class="row">' +
-        '           Dropdown' +
-        '       </div>' +
-        '       <div class="row">' +
-        '           Save pattern?' +
-        '       </div>' +
-        '       <div class="row">' +
-        '           Input name' +
-        '       </div>' +
-        '      </div>'
-});
-
-Vue.component('termination', {
-    props: ['type'],
-    template: '<div class="container">Termination</div>'
+    template: '',
 });
 
 Vue.component('control', {
@@ -148,7 +121,7 @@ var creation = new Vue({
             });
         },
         addPlayer(email) {
-            this.invites.push(email);
+            this.invites.push(email.toString());
         },
         invitePlayers() {
             if (this.invites.length == 0) {
