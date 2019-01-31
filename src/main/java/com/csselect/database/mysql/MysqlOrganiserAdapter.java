@@ -52,7 +52,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));
                 options.setDescription(set.getString("description"));
-                options.setResultDatabaseAddress(set.getString("database"));
+                options.setResultDatabaseAddress(set.getString("databasename"));
                 options.setTermination(parseTermination(set.getString("termination")));
                 options.setGamemode(parseGamemode(set.getString("gamemode")));
                 patterns.add(new Pattern(options, set.getString("title")));

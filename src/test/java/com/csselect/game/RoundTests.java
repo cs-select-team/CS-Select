@@ -34,7 +34,6 @@ public class RoundTests extends TestClass {
             features.addFeature(new Feature(i, "a"));
         }
         game.setFeatureSet(features);
-        game.setMlserver(Injector.getInstance().getMLServer());
         round.setGame(game);
     }
 

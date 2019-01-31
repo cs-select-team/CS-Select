@@ -19,11 +19,9 @@ public class Game {
     private String description;
     private final int id;
     private String addressOrganiserDatabase;
-    private Termination termination;
     private FeatureSet featureSet;
     private final GameAdapter database;
-    private MLServer mlserver;
-    private Gamemode gamemode;
+
 
     /**
      * Constructor for a game object.
@@ -40,8 +38,8 @@ public class Game {
      * @return the title of the fame
      */
     public String getTitle() {
-        if (title == null) {
-            title = database.getTitle();
+        if (this.title == null) {
+            this.title = this.database.getTitle();
         }
         return this.title;
     }
@@ -51,8 +49,8 @@ public class Game {
      * @return the description of the game
      */
     public String getDescription() {
-        if (description == null) {
-            description = database.getDescription();
+        if (this.description == null) {
+            this.description = this.database.getDescription();
         }
         return this.description;
     }
@@ -81,7 +79,7 @@ public class Game {
         if (this.database.isFinished()) {
             return true;
         }
-        if (this.termination.checkTermination()) {
+        if (this.getTermination().checkTermination()) {
             this.terminateGame();
             return true;
         }
@@ -101,8 +99,8 @@ public class Game {
      * @return the address of the database
      */
     public String getAddressOrganiserDatabase() {
-        if (addressOrganiserDatabase == null) {
-            addressOrganiserDatabase = database.getDatabaseName();
+        if (this.addressOrganiserDatabase == null) {
+            this.addressOrganiserDatabase = this.database.getDatabaseName();
         }
         return this.addressOrganiserDatabase;
     }
@@ -120,7 +118,11 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        return database.getTermination();
+        Termination termination = database.getTermination();
+        if (termination != null) {
+            termination.setGame(this);
+        }
+        return termination;
     }
 
     /**
@@ -128,6 +130,9 @@ public class Game {
      * @return the feature set {@link FeatureSet}
      */
     FeatureSet getFeatureSet() {
+        if (this.featureSet == null) {
+            this.featureSet = this.database.getFeatures();
+        }
         return this.featureSet;
     }
 
@@ -139,13 +144,6 @@ public class Game {
         return database.getGamemode();
     }
 
-    /**
-     * Getter for the ml-server {@link MLServer} that provides the features {@link Feature}
-     * @return the ml-server {@link MLServer}
-     */
-    public MLServer getMlserver() {
-        return this.mlserver;
-    }
 
     /**
      * Getter for the rounds {@link Round} that are already finished
@@ -187,7 +185,6 @@ public class Game {
      * @param termination the termination {@link Termination} cause
      */
     public void setTermination(Termination termination) {
-        this.termination = termination;
         termination.setGame(this);
         database.setTermination(termination);
     }
@@ -206,17 +203,9 @@ public class Game {
      * @param gamemode the game mode {@link Gamemode}
      */
     public void setGamemode(Gamemode gamemode) {
-        this.gamemode = gamemode;
         database.setGamemode(gamemode);
     }
 
-    /**
-     * Setter for the ml-server {@link MLServer }that provides the feature set {@link FeatureSet}
-     * @param mlserver the ml-server
-     */
-    public void setMlserver(MLServer mlserver) {
-        this.mlserver = mlserver;
-    }
 
     /**
      * Adds invited the email-addresses of invited players to the collection invitedPlayers
@@ -290,7 +279,7 @@ public class Game {
         Collection<Player> players = this.database.getPlayingPlayers();
         for (Player compPlayer : players) {
             if (player.getId() == compPlayer.getId()) {
-                Round round = this.gamemode.createRound(player);
+                Round round = this.getGamemode().createRound(player);
                 round.setGame(this);
                 return round.start();
             }
