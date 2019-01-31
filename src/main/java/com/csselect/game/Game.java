@@ -38,8 +38,8 @@ public class Game {
      * @return the title of the fame
      */
     public String getTitle() {
-        if (title == null) {
-            title = database.getTitle();
+        if (this.title == null) {
+            this.title = this.database.getTitle();
         }
         return this.title;
     }
@@ -49,8 +49,8 @@ public class Game {
      * @return the description of the game
      */
     public String getDescription() {
-        if (description == null) {
-            description = database.getDescription();
+        if (this.description == null) {
+            this.description = this.database.getDescription();
         }
         return this.description;
     }
@@ -99,8 +99,8 @@ public class Game {
      * @return the address of the database
      */
     public String getAddressOrganiserDatabase() {
-        if (addressOrganiserDatabase == null) {
-            addressOrganiserDatabase = database.getDatabaseName();
+        if (this.addressOrganiserDatabase == null) {
+            this.addressOrganiserDatabase = this.database.getDatabaseName();
         }
         return this.addressOrganiserDatabase;
     }
@@ -118,8 +118,7 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        Termination termination = database.getTermination();
-        return termination;
+        return database.getTermination();
     }
 
     /**
@@ -127,6 +126,9 @@ public class Game {
      * @return the feature set {@link FeatureSet}
      */
     FeatureSet getFeatureSet() {
+        if (this.featureSet == null) {
+            this.featureSet = this.database.getFeatures();
+        }
         return this.featureSet;
     }
 
