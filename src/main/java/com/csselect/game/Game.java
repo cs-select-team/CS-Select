@@ -19,11 +19,9 @@ public class Game {
     private String description;
     private final int id;
     private String addressOrganiserDatabase;
-    private Termination termination;
     private FeatureSet featureSet;
     private final GameAdapter database;
     private MLServer mlserver;
-    private Gamemode gamemode;
 
     /**
      * Constructor for a game object.
@@ -81,7 +79,7 @@ public class Game {
         if (this.database.isFinished()) {
             return true;
         }
-        if (this.termination.checkTermination()) {
+        if (this.getTermination().checkTermination()) {
             this.terminateGame();
             return true;
         }
@@ -120,7 +118,9 @@ public class Game {
      * @return the termination {@link Termination} cause
      */
     public Termination getTermination() {
-        return database.getTermination();
+        Termination termination = database.getTermination();
+        termination.setGame(this);
+        return termination;
     }
 
     /**
@@ -187,8 +187,6 @@ public class Game {
      * @param termination the termination {@link Termination} cause
      */
     public void setTermination(Termination termination) {
-        this.termination = termination;
-        termination.setGame(this);
         database.setTermination(termination);
     }
 
@@ -206,7 +204,6 @@ public class Game {
      * @param gamemode the game mode {@link Gamemode}
      */
     public void setGamemode(Gamemode gamemode) {
-        this.gamemode = gamemode;
         database.setGamemode(gamemode);
     }
 
@@ -290,7 +287,7 @@ public class Game {
         Collection<Player> players = this.database.getPlayingPlayers();
         for (Player compPlayer : players) {
             if (player.getId() == compPlayer.getId()) {
-                Round round = this.gamemode.createRound(player);
+                Round round = this.getGamemode().createRound(player);
                 round.setGame(this);
                 return round.start();
             }
