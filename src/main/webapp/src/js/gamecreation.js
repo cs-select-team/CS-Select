@@ -163,7 +163,7 @@ var creation = new Vue({
                 url: 'create/setParam',
                 params: {
                     option: "addPlayers",
-                    data: players,
+                    data: this.players,
                 }
             }).then(function(response) {
                 creation.callbackCounter--;

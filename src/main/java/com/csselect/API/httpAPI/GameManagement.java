@@ -14,6 +14,7 @@ import java.util.Collection;
 
 /**
  * only request from organisers in this class.
+ * handles requests to '/create'
  */
 public class GameManagement extends Servlet {
 
