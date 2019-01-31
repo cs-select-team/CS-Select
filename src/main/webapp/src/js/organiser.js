@@ -8,16 +8,28 @@ Vue.component('active-games-display', {
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" :value="localisation.terminate">' +
+        '                   <input type="button" class="btn btn-secondary float-right btn-space"' +
+        '                        v-on:click="terminate(game.id)" :value="localisation.terminate">' +
         '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +
-        '      </div>'
+        '      </div>',
+    methods: {
+        terminate: function(gameId) {
+            axios({
+                method: 'post',
+                url: 'create/terminate',
+                params: {
+                    gameId: gameId
+                }
+            })
+        }
+    }
 });
 
 Vue.component('terminated-games-display', {
-    props: ['game', 'game-id'],
+    props: ['game'],
     template: '<div class="container">' +
         '       <div class="container">' +
         '           <div class="row">' +
@@ -26,7 +38,7 @@ Vue.component('terminated-games-display', {
         '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(gameId)" :value="localisation.del">' +
+        '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)" :value="localisation.del">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +
@@ -35,13 +47,13 @@ Vue.component('terminated-games-display', {
         remove: function (gameId) {
             axios({
                 method: 'post',
-                url: 'create/terminate',
+                url: 'create/delete',
                 params: {
                     gameId: gameId
                 }
             });
             terminatedGames.listOfGames.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.gameId == gameId) terminatedGames.listOfGames.splice(index, 1);
+                if (value.id == gameId) terminatedGames.listOfGames.splice(index, 1);
             });
         }
     }
@@ -55,10 +67,10 @@ Vue.component('stats-display', {
 var activeGames = new Vue({
     el: "#active",
     data: {
-        listOfGames: [{title:"myCoolGame", type:"Matrix", termination:0, gameId: 1},
-            {title:"myRatherAmusingGame", type:"Binär", termination:0, gameId: 2},
-            {title:"myUnderwhelmingGame", type:"Matrix", termination:0, gameId: 3},
-            {title:"myDisappointingGame", type:"Matrix", termination:0, gameId: 4}]
+        listOfGames: [{title:"myCoolGame", type:"Matrix", termination:0, id: 1},
+            {title:"myRatherAmusingGame", type:"Binär", termination:0, id: 2},
+            {title:"myUnderwhelmingGame", type:"Matrix", termination:0, id: 3},
+            {title:"myDisappointingGame", type:"Matrix", termination:0, id: 4}]
     },
     mounted: function () {
         axios({
@@ -74,7 +86,7 @@ var activeGames = new Vue({
 var terminatedGames = new Vue({
     el: "#terminated",
     data: {
-        listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, gameId: 1}]
+        listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, id: 1}]
     },
     mounted: function () {
         axios({

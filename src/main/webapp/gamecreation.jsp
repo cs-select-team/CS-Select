@@ -36,12 +36,12 @@
                     <div class="col" id="pattern-area">
                         <div class="row">
                             <div class="col">
-                            <select v-model="selected">
+                            <select v-model="selectedPattern">
                                 <option value='null'>(none)</option>
-                                <option v-for="item in savedPatterns" :value="item.toString()">{{item}}</option>
+                                <option v-for="item in savedPatterns" :value="item">{{item.title}}</option>
                                 </select>
                             </div>
-                            <div v-if="selected !== 'null'" class="col">
+                            <div v-if="selectedPattern !== null" class="col">
                                 <pat></pat>
                             </div>
                         </div> <br>

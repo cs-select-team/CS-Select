@@ -105,7 +105,6 @@ public class GameCreator {
         game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
         game.setTermination(gameOptions.getTermination());
         game.setGamemode(gameOptions.getGamemode());
-        game.setMlserver(Injector.getInstance().getMLServer());
         databaseAdapter.registerGame(organiser, game);
         game.invitePlayers(gameOptions.getInvitedEmails());
         for (String mail : gameOptions.getInvitedEmails()) {

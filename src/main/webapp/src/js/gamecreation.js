@@ -6,7 +6,7 @@ Vue.component('invite', {
         '               v-on:click="invite()" :value="localisation.invite"/>' +
         '      </div>',
     methods: {
-        invite() {
+        invite: function() {
             creation.addPlayer(document.getElementById("emailToAdd").value.toString());
             document.getElementById("emailToAdd").value = '';
             alert("Successfully added Email")
@@ -19,7 +19,7 @@ Vue.component('pat', {
     template: '<input type="button" class="btn btn-primary" :value="localisation.loadPattern" ' +
         'v-on:click="loadPattern()">',
     methods: {
-        loadPattern() {
+        loadPattern: function() {
             creation.loadPattern();
         }
     }
@@ -38,15 +38,16 @@ Vue.component('control', {
             creation.emptyStore();
         },
         create : function() {
-            setTimeout(creation.submitTitle, 1000);
-            setTimeout(creation.submitDescription, 1000);
-            setTimeout(creation.submitDatabaseAddress, 1000);
-            setTimeout(creation.invitePlayers, 1000);
-            setTimeout(creation.submitTermination, 1000);
-            setTimeout(creation.submitGamemode, 1000);
+            creation.submitTitle();
+            creation.submitDescription();
+            creation.submitDatabaseAddress();
+            creation.invitePlayers();
+            creation.submitTermination();
+            creation.submitGamemode();
             if (creation.savePattern) {
-                setTimeout(creation.saveP());
+                 creation.saveP();
             }
+            creation.create();
         }
     }
 });
@@ -60,7 +61,7 @@ var creation = new Vue({
         numberFeatures: '',
         minSelect: '',
         maxSelect: '',
-        pattern: '',
+        patternName: '',
         description: '',
         terminationtype: '',
         terminationvalue: '',
@@ -68,30 +69,32 @@ var creation = new Vue({
         databaseAddress: '',
         savePattern: false,
         savedPatterns: ["pattern 1"],
-        selected: 'null',
+        selectedPattern: null,
+        callbackCounter: 0 // very primitive sephamore
     },
     methods: {
-        emptyStore() {
+        emptyStore: function() {
             this.title = '';
             this.invites = [];
             this.mode = '';
             this.numberFeatures = '';
             this.minSelect = '';
             this.maxSelect = '';
-            this.pattern = '';
+            this.patternName = '';
             this.description = '';
             this.terminationtype = '';
             this.terminationvalue = '';
             this.features = '';
             this.databaseAddress = '';
             this.savePattern = false;
-            this.selected = 'null';
+            this.selectedPattern = null;
         },
-        submitTitle() {
+        submitTitle: function() {
             if (this.title == '') {
                 alert("Please set title");
                 return;
             }
+            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -99,13 +102,19 @@ var creation = new Vue({
                     option: "title",
                     data: this.title,
                 }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
             });
         },
-        submitDescription() {
+        submitDescription: function() {
             if (this.description == '') {
                 alert("Please set description");
                 return;
             }
+            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -113,9 +122,14 @@ var creation = new Vue({
                     option: "description",
                     data: this.description,
                 }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
             });
         },
-        submitDatabaseAddress() {
+        submitDatabaseAddress: function() {
             if (this.databaseAddress == '') {
                 alert("Please set database address");
                 return;
@@ -127,33 +141,39 @@ var creation = new Vue({
                     option: "addressOrganiserDatabase",
                     data: this.databaseAddress,
                 }
-            });
+            })
         },
-        addPlayer(email) {
+        addPlayer: function(email) {
             this.invites.push(email.toString());
         },
-        invitePlayers() {
+        invitePlayers: function() {
             if (this.invites.length == 0) {
                 alert("You did not invite any players. Invite them later to your game")
             }
-            let players = '';
+            this.players = '';
             this.invites.forEach(function(email, index) {
                 if (index == 0) {
-                    players += email.toString();
+                    this.players = email;
                 } else {
-                    players += ":" + email.toString();
+                    this.players += "_" + email;
                 }
             });
+            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
                 params: {
                     option: "addPlayers",
-                    data: players,
+                    data: this.players,
+                }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
                 }
             });
         },
-        submitTermination() {
+        submitTermination: function() {
             if (this.terminationtype == '') {
                 alert("Please set termination type");
                 return;
@@ -162,6 +182,7 @@ var creation = new Vue({
                 alert("Please set a value for your termination");
                 return;
             }
+            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -169,9 +190,14 @@ var creation = new Vue({
                     option: "termination",
                     data: this.terminationtype + ":" + this.terminationvalue,
                 }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
             });
         },
-        submitGamemode() {
+        submitGamemode: function() {
             if (this.mode == '') {
                 alert("Please set gamemmode");
                 return;
@@ -180,6 +206,7 @@ var creation = new Vue({
                 alert("Please configure matrix select mode");
                 return;
             }
+            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -190,42 +217,53 @@ var creation = new Vue({
                         "min~" + this.minSelect + "-" +
                         "max~" + this.maxSelect,
                 }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
             });
         },
-        saveP() {
-           if (this.pattern == '') {
+        saveP: function() {
+           if (this.patternName == '') {
                alert("Please name your pattern");
                return;
            }
+           this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/savePattern',
                 params: {
-                    title: this.pattern,
+                    title: this.patternName,
+                }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
                 }
             });
         },
-        loadPattern() {
-            this.savedPatterns.forEach(function(value) {
-               if (value.toString() == creation.selected.toString()) {
-                   axios({
-                       method: 'post',
-                       url: 'create/loadPattern',
-                       params: {
-                           pattern: value,
-                       }
-                   })
-               }
-            });
-            //TODO: Extract somehow the parameters for all fields
+        loadPattern: function() {
+            this.title = this.selectedPattern.gameOptions.title;
+            this.description = this.selectedPattern.gameOption.desc;
+            // TODO add the rest
+            this.terminationtype = this.selectedPattern.termination.type;
+        },
+        createGame: function () {
+            this.callbackCounter++;
+            axios({
+                method: 'post',
+                url: 'create'
+            })
         }
     },
     mounted: function() {
+        var self = this;
         axios({
             method: 'get',
             url: 'create/patterns',
         }).then(function (response) {
-            this.patterns= response.data;
+            self.savedPatterns = response.data;
         });
     }
 });
