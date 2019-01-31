@@ -49,7 +49,7 @@
                             <div class="col">
                                 <input type="checkbox" id="save" value="save" v-model="savePattern">
                                 <label for="save"><fmt:message key="askSavePattern"/></label> <br>
-                                <input v-if="savePattern" type="text" id="patternTitle" v-model="pattern"
+                                <input v-if="savePattern" type="text" id="patternTitle" v-model="patternName"
                                     :placeholder="localisation.patternTitle"/>
                             </div>
                         </div>
