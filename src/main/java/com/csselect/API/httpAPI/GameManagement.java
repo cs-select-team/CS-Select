@@ -1,5 +1,7 @@
 package com.csselect.API.httpAPI;
 import com.csselect.game.Game;
+import com.csselect.game.Termination;
+import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -79,8 +81,38 @@ public class GameManagement extends Servlet {
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
 
-    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        returnAsJson(resp, getOrganiserFacade().getPatterns());
+    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException { // TODO add featureSet
+        Collection<Pattern> patterns = getOrganiserFacade().getPatterns();
+        JsonArray array = new JsonArray();
+        for (Pattern p: patterns) {
+            JsonObject object = new JsonObject();
+            object.addProperty("title", p.getTitle());
+
+
+            JsonObject gameOptionsJson = new JsonObject();
+            GameOptions go = p.getGameOptions();
+            gameOptionsJson.addProperty("desc", go.getDescription());
+            gameOptionsJson.addProperty("title", go.getTitle());
+            gameOptionsJson.addProperty("database", go.getResultDatabaseAddress());
+
+            JsonObject terminationJson = new JsonObject();
+            Termination termination = go.getTermination();
+            terminationJson.addProperty("type", termination.getClass().getName());
+            terminationJson.addProperty("value", new Gson().toJson(termination));
+
+            gameOptionsJson.add("termination", terminationJson);
+
+            JsonArray invitations = new JsonArray();
+            for (String email: go.getInvitedEmails()) {
+                invitations.add(email);
+            }
+
+            gameOptionsJson.add("invites", invitations);
+            object.add("gameOptions", gameOptionsJson);
+
+            array.add(object);
+        }
+        returnJson(resp, array);
     }
 
     private void savePattern(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
