@@ -18,8 +18,8 @@ Vue.component('feature-box', {
         '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id" :disabled="feature.useless">' +
         '                                {{ localisation.showGraphs }}' +
         '                        </button>' +
-        '                        <button type="button" class="btn btn-primary" v-on:click="feature.toggled = !feature.toggled">{{ localisation.selectFeature}}</button>' +
-        '                        <button type="button" class="btn btn-secondary" v-on:click="feature.useless = !feature.useless">{{ localisation.toggleUseless}}</button>' +
+        '                        <button type="button" class="btn btn-primary" v-on:click="toggleMarked">{{ localisation.selectFeature}}</button>' +
+        '                        <button type="button" class="btn btn-secondary" v-on:click="toggleUseless">{{ localisation.toggleUseless}}</button>' +
         '                        </div>' +
         '                        <div class="modal fade" :id="\'graphModal\' + feature.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
         '                                <div class="modal-dialog modal-lg" role="document">' +
@@ -44,5 +44,14 @@ Vue.component('feature-box', {
         '                                        </div>' +
         '                                </div>' +
         '                        </div>' +
-        '                </div>'
+        '                </div>',
+    methods: {
+        toggleMarked: function () {
+            if (!this.feature.useless) this.feature.toggled = !this.feature.toggled
+        },
+        toggleUseless: function () {
+            this.feature.useless = !this.feature.useless;
+            this.feature.toggled = false;
+        }
+    }
 })
