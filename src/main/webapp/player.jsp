@@ -41,7 +41,7 @@
             <game-display
                     v-for="game in listOfGames"
                     v-bind:game="game"
-                    v-bind:key="game.gameId">
+                    v-bind:key="game.id">
 
             </game-display>
     </div>

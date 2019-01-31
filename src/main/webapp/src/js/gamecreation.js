@@ -151,11 +151,12 @@ var creation = new Vue({
                 alert("You did not invite any players. Invite them later to your game")
             }
             this.players = '';
+            var self = this;
             this.invites.forEach(function(email, index) {
                 if (index == 0) {
-                    this.players = email;
+                    self.players = email;
                 } else {
-                    this.players += "_" + email;
+                    self.players += "_" + email;
                 }
             });
             this.callbackCounter++;
