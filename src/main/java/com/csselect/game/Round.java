@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import com.csselect.Injector;
 import com.csselect.user.Player;
 
 import java.time.LocalDateTime;
@@ -148,7 +149,7 @@ public abstract class Round {
 
         String identifier = this.game.getFeatureSet().getIdentifier();
         try {
-            this.quality = this.game.getMlserver().getScore(identifier, this.chosenFeatures);
+            this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }

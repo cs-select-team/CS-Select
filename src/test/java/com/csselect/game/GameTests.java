@@ -21,7 +21,6 @@ public class GameTests extends TestClass {
     public void setUp() {
         this.game = new Game(1);
         this.game.setGamemode(new BinarySelect());
-        this.game.setMlserver(Injector.getInstance().getMLServer());
         FeatureSet features = new FeatureSet("abc");
         for (int i = 0; i < 10; i++) {
             features.addFeature(new Feature(i, "a"));

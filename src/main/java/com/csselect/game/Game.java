@@ -21,7 +21,7 @@ public class Game {
     private String addressOrganiserDatabase;
     private FeatureSet featureSet;
     private final GameAdapter database;
-    private MLServer mlserver;
+
 
     /**
      * Constructor for a game object.
@@ -144,13 +144,6 @@ public class Game {
         return database.getGamemode();
     }
 
-    /**
-     * Getter for the ml-server {@link MLServer} that provides the features {@link Feature}
-     * @return the ml-server {@link MLServer}
-     */
-    public MLServer getMlserver() {
-        return this.mlserver;
-    }
 
     /**
      * Getter for the rounds {@link Round} that are already finished
@@ -213,13 +206,6 @@ public class Game {
         database.setGamemode(gamemode);
     }
 
-    /**
-     * Setter for the ml-server {@link MLServer }that provides the feature set {@link FeatureSet}
-     * @param mlserver the ml-server
-     */
-    public void setMlserver(MLServer mlserver) {
-        this.mlserver = mlserver;
-    }
 
     /**
      * Adds invited the email-addresses of invited players to the collection invitedPlayers
