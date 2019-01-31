@@ -13,7 +13,7 @@ public abstract class TestClass {
 
     @Before
     public void enableTestmode() {
-        com.csselect.Injector.useTestMode();
+        Injector.useTestMode();
         setUp();
     }
 
@@ -25,10 +25,10 @@ public abstract class TestClass {
 
     @After
     public void resetInjector() throws Exception {
-        Injector.resetInjector();
         reset();
         resetStaticFinal(MockPlayerAdapter.class.getDeclaredField("PLAYERSTATS_ADAPTERS"), new HashMap<>());
         resetStaticFinal(Leaderboard.class.getDeclaredField("instance"), null);
+        Injector.resetInjector();
     }
 
     /**
