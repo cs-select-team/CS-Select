@@ -29,8 +29,6 @@ public class Games extends Servlet {
 
 
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
-        System.out.println("Is player: " + isPlayer());
-        System.out.println(req.getPathInfo());
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);
         }
@@ -106,7 +104,9 @@ public class Games extends Servlet {
         int gameId = getId(req.getPathInfo());
         JsonObject jsonObject = new JsonObject();
         JsonArray featureList = new JsonArray();
+        System.out.println(featureList);
         for (Feature feature: getPlayerFacade().startRound(gameId)) {
+            System.out.println(feature);
             JsonObject jsonFeature = new JsonObject();
             jsonFeature.addProperty("id", feature.getID());
             jsonFeature.addProperty("desc", feature.getDescription(lang));
