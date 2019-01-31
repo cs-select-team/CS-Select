@@ -81,10 +81,27 @@ public class GameManagement extends Servlet {
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
 
+    /*
+        sends an json object with the format:
+        [{
+            title: <patternTitle>,
+            gameOptions: {
+                title: <gameTitle>,
+                desc: <gameDescription>,
+                database: <database>,
+                termination: {
+                    type: <ClassName of termination>,
+                    value: <string with the parameters of the termination>
+                },
+                invites: [<emails of users to invite>]
+            }
+        }]
+     */
     private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException { // TODO add featureSet
         Collection<Pattern> patterns = getOrganiserFacade().getPatterns();
         JsonArray array = new JsonArray();
         for (Pattern p: patterns) {
+            System.out.println("loading pattern " + p.getTitle());
             JsonObject object = new JsonObject();
             object.addProperty("title", p.getTitle());
 

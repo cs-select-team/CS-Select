@@ -38,7 +38,7 @@
                             <div class="col">
                             <select v-model="selected">
                                 <option value='null'>(none)</option>
-                                <option v-for="item in savedPatterns" :value="item.toString()">{{item}}</option>
+                                <option v-for="item in savedPatterns" :value="item">{{item.title}}</option>
                                 </select>
                             </div>
                             <div v-if="selected !== 'null'" class="col">
