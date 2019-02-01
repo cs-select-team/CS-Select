@@ -30,10 +30,15 @@ public class GameManagement extends Servlet {
             getActiveGames(req, resp);
         } else if (req.getPathInfo().equals("/terminated")) {
             getTerminatedGames(req, resp);
+        } else if (req.getPathInfo().matches("/exists.*")) {
+            checkExist(req, resp);
         }
     }
 
-
+    private void checkExist(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+        String name = getParameter("name", req);
+        returnAsJson(resp, getOrganiserFacade().checkFeatureSet(name));
+    }
 
 
     @Override
