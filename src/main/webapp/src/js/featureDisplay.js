@@ -5,8 +5,8 @@
 Vue.component('feature-box', {
     props: ['feature'],
     watch: {
-      'feature.toggled': function (oldVal, newVal) {
-          this.$emit("toggled", newVal, oldVal)
+      'feature.toggled': function (newVal, oldVal) {
+
       }
     },
     template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
@@ -47,11 +47,15 @@ Vue.component('feature-box', {
         '                </div>',
     methods: {
         toggleMarked: function () {
+            oldVal = this.feature.toggled;
             if (!this.feature.useless) this.feature.toggled = !this.feature.toggled
+            this.$forceUpdate()
+            this.$emit("toggled", !oldVal, oldVal)
         },
         toggleUseless: function () {
             this.feature.useless = !this.feature.useless;
             this.feature.toggled = false;
+            this.$forceUpdate()
         }
     }
 })

@@ -24,6 +24,7 @@ import java.util.Base64;
  */
 public class Games extends Servlet {
 
+    private static final String BASE_64_PNG_PREFIX = "data:image/png;base64,";
 
 
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
@@ -171,7 +172,7 @@ public class Games extends Servlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return imageString;
+        return BASE_64_PNG_PREFIX + imageString;
     }
 
 }
