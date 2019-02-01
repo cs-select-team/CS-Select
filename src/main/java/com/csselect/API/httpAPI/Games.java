@@ -117,7 +117,12 @@ public class Games extends Servlet {
         int gameId = getId(req.getPathInfo());
         JsonObject jsonObject = new JsonObject();
         JsonArray featureList = new JsonArray();
-        for (Feature feature: getPlayerFacade().startRound(gameId)) {
+        Collection<Feature> featureCollection = getPlayerFacade().startRound(gameId);
+        if (featureCollection == null) { // if game has been terminated
+            resp.sendError(HttpServletResponse.SC_NO_CONTENT);
+            return;
+        }
+        for (Feature feature: featureCollection) {
             JsonObject jsonFeature = new JsonObject();
             jsonFeature.addProperty("id", feature.getID());
             jsonFeature.addProperty("desc", feature.getDescription(lang));

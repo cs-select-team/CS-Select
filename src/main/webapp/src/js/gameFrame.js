@@ -58,6 +58,9 @@ var gameFrame = new Vue({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
             }).then (function (response) {
+                if (resonse.status == 204) {
+                    gameFrame.quit()
+                }
                 gameFrame.featureList = response.data.listOfFeatures;
                 gameFrame.featureList.forEach(function (feature) {
                     // add necessary properties
