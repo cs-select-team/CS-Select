@@ -105,9 +105,10 @@ public class Player extends User implements Comparable {
      * Calling this method means to actually play the active round and retrieving a score.
      * @param selectedFeatures Features the player has selected for this round
      * @param uselessFeatures Features the player marked as unimportant
+     * @return Integer representing score
      */
-    public void selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
-        activeRound.selectFeatures(selectedFeatures, uselessFeatures);
+    public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        return activeRound.selectFeatures(selectedFeatures, uselessFeatures);
     }
 
     /**
