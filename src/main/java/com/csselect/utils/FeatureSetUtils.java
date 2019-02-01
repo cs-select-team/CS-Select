@@ -47,8 +47,8 @@ public final class FeatureSetUtils {
             values = values.substring(1, values.length() - 1);
             String stats = "Min. " + e.get("Min.") + ", 1st Qu. " + e.get("1st Qu.") + ", Median " + e.get("Median")
                     + ", Mean " + e.get("Mean") + ", 3rd Qu. " + e.get("3rd Qu.") + ", Max. " + e.get("Max.");
-            feature.setEnglishDescription((String) e.get("description_en" + "\\n Values: " + values + "\\n" + stats));
-            feature.setGermanDescription((String) e.get("description_de" + "\\n Werte : " + values + "\\n" + stats));
+            feature.setEnglishDescription(e.get("description_en") + "\\n Values: " + values + "\\n" + stats);
+            feature.setGermanDescription(e.get("description_de") + "\\n Werte : " + values + "\\n" + stats);
             feature.setTotalGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + ".png")));
             feature.setClassGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + "_class.png")));
             featureSet.addFeature(feature);
