@@ -38,6 +38,7 @@ Vue.component('control', {
             creation.emptyStore();
         },
         create : function() {
+            creation.fail = false;
             creation.submitTitle();
             creation.submitDescription();
             creation.submitDatabaseAddress();
@@ -71,7 +72,8 @@ var creation = new Vue({
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
         callbackCounter: 0 ,// very primitive sephamore
-        success: false // success message for the use
+        success: false, // success message for the use
+        fail: false
     },
     methods: {
         emptyStore: function() {
@@ -227,25 +229,43 @@ var creation = new Vue({
             });
         },
         submitFeatureSet: function() {
+
+            var self = this;
             if (this.featureSet == '') {
                 alert("Please set featureSet");
                 return;
-            }
-            this.callbackCounter++;
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "featureSet",
-                    data: this.featureSet
+            } else {
+                // checking if the feature set exists on the server
+                axios({
+                    method:'get',
+                    url:'create/exists',
+                    params: {
+                        name: this.featureSet
+                    }
+                }).then(function(response) {
+                    if (!response.data) {
+                        alert("Feature set does not exist");
+                        return;
+                    }
+                    self.callbackCounter++;
+                    axios({
+                        method: 'post',
+                        url: 'create/setParam',
+                        params: {
+                            option: "featureSet",
+                            data: self.featureSet
 
-                }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+                        }
+                    }).then(function(response) {
+                        creation.callbackCounter--;
+                        if (creation.callbackCounter == 0) {
+                            creation.createGame();
+                        }
+                    });
+                })
+            }
+
+
         },
         saveP: function() {
            if (this.patternName == '') {
@@ -274,6 +294,7 @@ var creation = new Vue({
         },
         createGame: function () {
             var self = this;
+            if (this.fail) return;
             axios({
                 method: 'post',
                 url: 'create'
