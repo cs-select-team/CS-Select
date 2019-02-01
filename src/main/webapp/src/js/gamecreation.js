@@ -70,7 +70,8 @@ var creation = new Vue({
         savePattern: false,
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
-        callbackCounter: 0 // very primitive sephamore
+        callbackCounter: 0, // very primitive sephamore
+        alert: false,
     },
     methods: {
         emptyStore: function() {
@@ -267,16 +268,20 @@ var creation = new Vue({
         },
         loadPattern: function() {
             this.title = this.selectedPattern.gameOptions.title;
-            this.description = this.selectedPattern.gameOption.desc;
+            this.description = this.selectedPattern.gameOptions.desc;
             // TODO add the rest
             this.terminationtype = this.selectedPattern.termination.type;
         },
-        createGame: function () {
+        createGame: function() {
             axios({
                 method: 'post',
                 url: 'create'
-            })
-        }
+            }).then(function (response) {
+                window.location.href = "organiser.jsp"
+            }).catch(function (error) {
+                creation.alert = true;
+            });
+        },
     },
     mounted: function() {
         var self = this;
