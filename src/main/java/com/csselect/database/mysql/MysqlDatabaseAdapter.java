@@ -315,6 +315,17 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         }
     }
 
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        try {
+            ResultSet set = executeMysqlQuery("SHOW DATABASES LIKE ?", new StringParam(databaseName));
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; //We don't want to overwrite anything in case of errors
+        }
+    }
+
     /**
      * Executes the given Mysql-query on the main database
      * @param query query to execute

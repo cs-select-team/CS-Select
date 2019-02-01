@@ -35,4 +35,9 @@ public final class MockMLServer implements MLServer {
     public double getScore(String dataset, Collection<Feature> selectedFeatures) {
         return random.nextDouble();
     }
+
+    @Override
+    public boolean isValidDataset(String dataset) {
+        return dataset.equalsIgnoreCase("populationGender");
+    }
 }

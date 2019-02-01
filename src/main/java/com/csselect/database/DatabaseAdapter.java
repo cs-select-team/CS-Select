@@ -132,4 +132,11 @@ public interface DatabaseAdapter {
      */
     void removeGame(Game game);
 
+    /**
+     * Checks whether the given database name already exists
+     * @param databaseName database name to check
+     * @return true if given database is a duplicate, false otherwise
+     */
+    boolean checkDuplicateDatabase(String databaseName);
+
 }

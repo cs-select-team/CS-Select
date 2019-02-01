@@ -165,6 +165,12 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         Assert.assertEquals(game, sameGame);
     }
 
+    @Test
+    public void testDuplicateDatabase() throws IOException {
+        Game game = createGame();
+        Assert.assertTrue(mysqlDatabaseAdapter.checkDuplicateDatabase(TEST_DB));
+    }
+
     private Game createGame() throws IOException {
         Game game = new Game(1);
         game.setGamemode(new BinarySelect());

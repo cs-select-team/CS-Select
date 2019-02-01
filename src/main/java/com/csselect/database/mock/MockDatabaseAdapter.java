@@ -157,6 +157,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
         gameMap.remove(game);
     }
 
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        return false; //Doesn't concern the mock-implementation as it doesn't use databases at all
+    }
+
     /**
      * Gets the active games the given {@link PlayerAdapter} participates in or is invited to
      * @param adapter adapter to get games for
