@@ -5,6 +5,9 @@
             <div class="top-buffer"></div>
             <div class="container h-10 title"><fmt:message key="creation"/></div>
             <div class="container" id="gamecreation">
+                <div class="alert alert-success" v-bind:class="{collapse: !this.success}" role="alert">
+                    <fmt:message key="successfulCreation"/>
+                </div>
                 <div class="row">
                     <div class="col">
                         <div class="col">

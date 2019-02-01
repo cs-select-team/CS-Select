@@ -70,7 +70,8 @@ var creation = new Vue({
         savePattern: false,
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
-        callbackCounter: 0 // very primitive sephamore
+        callbackCounter: 0 ,// very primitive sephamore
+        success: false // success message for the use
     },
     methods: {
         emptyStore: function() {
@@ -272,9 +273,12 @@ var creation = new Vue({
             this.terminationtype = this.selectedPattern.termination.type;
         },
         createGame: function () {
+            var self = this;
             axios({
                 method: 'post',
                 url: 'create'
+            }).then(function () {
+                self.success = true;
             })
         }
     },
