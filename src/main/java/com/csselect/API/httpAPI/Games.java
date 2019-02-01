@@ -76,7 +76,7 @@ public class Games extends Servlet {
         JsonObject json = new Gson().fromJson(body, JsonObject.class);
         int[] selected = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("selected"));
         int[] useless = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("useless"));
-        getPlayerFacade().selectFeatures(selected, useless);
+        returnAsJson(resp, getPlayerFacade().selectFeatures(selected, useless));
     }
 
     private int[] convertJsonPrimitiveToIntArray(JsonPrimitive primitive) {

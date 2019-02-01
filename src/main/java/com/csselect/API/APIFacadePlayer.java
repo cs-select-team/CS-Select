@@ -135,8 +135,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param useless ids of the features that are marked useless
      *
      */
-     public void selectFeatures(int[] selected, int[] useless) {
-        player.selectFeatures(selected, useless);
+     public int selectFeatures(int[] selected, int[] useless) {
+        return player.selectFeatures(selected, useless);
      }
 
 
