@@ -73,7 +73,7 @@ final class Query {
     static final String CREATE_ROUNDS_TABLE
             = "CREATE TABLE IF NOT EXISTS rounds("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
-            + "player_id INT,"
+            + "playerId INT,"
             + "time DATETIME,"
             + "quality DOUBLE,"
             + "points INT,"

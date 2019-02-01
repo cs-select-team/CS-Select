@@ -143,7 +143,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM rounds", getDatabaseName());
             while (set.next()) {
                 rounds.add(getGamemode().createRound(new Player(new MysqlPlayerAdapter(
-                        set.getInt("player_id")))));
+                        set.getInt("playerId")))));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -226,7 +226,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public void addRound(Round round) {
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO rounds ("
-                    + "playerid,'time',quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
+                    + "playerId,time,quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
                     + "VALUES (?,NOW(),?,?,?,?,?);", getDatabaseName(), new IntParam(round.getPlayer().getId()),
                     new DoubleParam(round.getQuality()), new IntParam(round.getPoints()),
                     new StringParam(featuresToString(round.getUselessFeatures())),
