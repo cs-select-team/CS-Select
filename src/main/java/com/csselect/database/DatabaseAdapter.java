@@ -35,6 +35,12 @@ public interface DatabaseAdapter {
     GameAdapter getGameAdapter(int id);
 
     /**
+     * Gets a new {@link GameAdapter} for a new {@link Game}
+     * @return new gameAdapter
+     */
+    GameAdapter getNewGameAdapter();
+
+    /**
      * Gets the {@link Player} with the given email-address
      * @param email players email
      * @return player
@@ -117,11 +123,10 @@ public interface DatabaseAdapter {
     Organiser createOrganiser(String email, String hash, String salt);
 
     /**
-     * Registers a new {@link Game} attributed to the given {@link Organiser}
+     * Creates a new {@link Game} attributed to the given {@link Organiser}
      * @param organiser organiser who the game belongs to
-     * @param game game to be registered
      */
-    void registerGame(Organiser organiser, Game game);
+    Game createGame(Organiser organiser);
 
     /**
      * Removes a game from the database

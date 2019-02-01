@@ -78,19 +78,20 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public GameAdapter getGameAdapter(int id) {
         if (gameAdapterMap.containsKey(id)) {
             return gameAdapterMap.get(id);
-        } else if (id < getNextGameID()) {
+        } else {
             MysqlGameAdapter adapter = new MysqlGameAdapter(id);
             gameAdapterMap.put(id, adapter);
             return new MysqlGameAdapter(id);
-        } else {
-            try {
-                MysqlGameAdapter adapter = new MysqlGameAdapter();
-                gameAdapterMap.put(id, adapter);
-                return adapter;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
+        }
+    }
+
+    @Override
+    public GameAdapter getNewGameAdapter() {
+        try {
+            return new MysqlGameAdapter();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -293,7 +294,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
-    public void registerGame(Organiser organiser, Game game) {
+    public Game createGame(Organiser organiser) {
+        Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             try {
@@ -303,6 +305,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 e.printStackTrace();
             }
         }
+        return game;
     }
 
     @Override
