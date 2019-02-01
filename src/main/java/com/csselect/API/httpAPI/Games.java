@@ -3,9 +3,7 @@ import com.csselect.API.APIFacadePlayer;
 import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Gamemode;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -74,13 +72,29 @@ public class Games extends Servlet {
 
     private void playRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        String selectedString = getParameter("selected", req);
-        String uselessString = getParameter("useless", req);
-        int[] selected = new Gson().fromJson(selectedString, (Type) int.class);
-        int[] useless = new Gson().fromJson(uselessString, (Type) int.class);
+        String body = getBody(req);
+        JsonObject json = new Gson().fromJson(body, JsonObject.class);
+        int[] selected = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("selected"));
+        int[] useless = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("useless"));
         getPlayerFacade().selectFeatures(selected, useless);
     }
 
+    private int[] convertJsonPrimitiveToIntArray(JsonPrimitive primitive) {
+        String p = primitive.getAsString();
+        p = p.replace("[", ""); // TODO find a more elegant way to do this
+        p = p.replace("]", "");
+        // if no integer was in the array to begin with
+        if (p.equals("")) {
+            return new int[0];
+        }
+        String[] arrayOfStrings = p.split(",");
+        int[] returnval = new int[arrayOfStrings.length];
+        for (int i = 0; i < arrayOfStrings.length; i++) {
+
+            returnval[i] = Integer.parseInt(arrayOfStrings[i]);
+        }
+        return returnval;
+    }
     private void declineInvite(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
 
         getPlayerFacade().declineInvite(getId(req.getPathInfo()));
@@ -103,9 +117,7 @@ public class Games extends Servlet {
         int gameId = getId(req.getPathInfo());
         JsonObject jsonObject = new JsonObject();
         JsonArray featureList = new JsonArray();
-        System.out.println(featureList);
         for (Feature feature: getPlayerFacade().startRound(gameId)) {
-            System.out.println(feature);
             JsonObject jsonFeature = new JsonObject();
             jsonFeature.addProperty("id", feature.getID());
             jsonFeature.addProperty("desc", feature.getDescription(lang));
