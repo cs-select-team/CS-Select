@@ -12,7 +12,7 @@
                         <active-games-display
                             v-for="game in listOfGames"
                             v-bind:game="game"
-                            v-bind:key="game.gameId"></active-games-display>
+                            v-bind:key="game.gameId" v-on:terminate="gameWasTerminated"></active-games-display>
                     </div>
                     <div class="container h-10 title">
                         <fmt:message key="terminatedGames"/>
