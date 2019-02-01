@@ -78,19 +78,20 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public GameAdapter getGameAdapter(int id) {
         if (gameAdapterMap.containsKey(id)) {
             return gameAdapterMap.get(id);
-        } else if (id < getNextGameID()) {
+        } else {
             MysqlGameAdapter adapter = new MysqlGameAdapter(id);
             gameAdapterMap.put(id, adapter);
             return new MysqlGameAdapter(id);
-        } else {
-            try {
-                MysqlGameAdapter adapter = new MysqlGameAdapter();
-                gameAdapterMap.put(id, adapter);
-                return adapter;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
+        }
+    }
+
+    @Override
+    public GameAdapter getNewGameAdapter() {
+        try {
+            return new MysqlGameAdapter();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -293,7 +294,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
-    public void registerGame(Organiser organiser, Game game) {
+    public Game createGame(Organiser organiser) {
+        Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             try {
@@ -303,6 +305,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 e.printStackTrace();
             }
         }
+        return game;
     }
 
     @Override
@@ -312,6 +315,17 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             executeMysqlUpdate("DELETE FROM games WHERE (id=" + game.getId() + ");");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        try {
+            ResultSet set = executeMysqlQuery("SHOW DATABASES LIKE ?", new StringParam(databaseName));
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; //We don't want to overwrite anything in case of errors
         }
     }
 
@@ -400,11 +414,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @throws SQLException Thrown if an error occurs while communicating with the database
      */
     int getNextIdOfTable(String tableName) throws SQLException {
-        ResultSet set = executeMysqlQuery("SELECT MAX(id) AS id FROM " + tableName + ";");
-        if (!set.next()) {
-            return 1;
+        ResultSet set = executeMysqlQuery(
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES"
+                        + " WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?;", new StringParam(PRODUCT_DATABASE_NAME),
+                new StringParam(tableName));
+        if (set.next()) {
+            return set.getInt("AUTO_INCREMENT");
         } else {
-            return set.getInt("id") + 1;
+            throw new NullPointerException("Next table id couldn't be resolved!");
         }
     }
 

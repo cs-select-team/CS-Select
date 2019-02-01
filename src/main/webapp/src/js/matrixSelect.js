@@ -18,16 +18,26 @@ Vue.component('MatrixSelect', {
             count: 0 // number of selected features
         }
     },
+    computed: {
+        col: function () {
+            return Math.sqrt(this.options.numberOfFeatures);
+        },
+        row: function () {
+            return Math.sqrt(this.options.numberOfFeatures);
+        }
+    },
     template: '        <div >' +
-        '<matrix-row  v-on:toggled="toggled" v-for="i in [...Array(options.row).keys()]"\n' +
+        '<matrix-row  v-on:toggled="toggled" v-for="i in [...Array(row).keys()]"\n' +
         '                    v-bind:key="i"\n' +
-        '                    v-bind:feature-list="featureList.slice(i * options.col, (i+1) * options.col)">\n' +
+        '                    v-bind:feature-list="featureList.slice(i * col, (i+1) * col)">\n' +
         '        </matrix-row></div>',
     methods: {
         toggled: function(newVal, oldVal) {
             if (newVal && !oldVal) this.count++;
             if (!newVal && oldVal) this.count--;
-            if (this.count >= this.options.num) this.$emit("done", true)
+            if (this.count >= this.options.minSelect && this.count <= this.options.maxSelect) {
+                this.$emit("done", true)
+            }
             else this.$emit("done", false)
         }
     }

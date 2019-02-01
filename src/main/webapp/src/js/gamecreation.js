@@ -38,6 +38,7 @@ Vue.component('control', {
             creation.emptyStore();
         },
         create : function() {
+            creation.fail = false;
             creation.submitTitle();
             creation.submitDescription();
             creation.submitDatabaseAddress();
@@ -72,6 +73,8 @@ var creation = new Vue({
         selectedPattern: null,
         callbackCounter: 0, // very primitive sephamore
         alert: false,
+        success: false, // success message for the use
+        fail: false
     },
     methods: {
         emptyStore: function() {
@@ -230,22 +233,39 @@ var creation = new Vue({
             if (this.featureSet == '') {
                 alert("Please set featureSet");
                 return;
-            }
-            this.callbackCounter++;
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "featureSet",
-                    data: this.featureSet
+            } else {
+                // checking if the feature set exists on the server
+                axios({
+                    method:'get',
+                    url:'create/exists',
+                    params: {
+                        name: this.featureSet
+                    }
+                }).then(function(response) {
+                    if (!response.data) {
+                        alert("Feature set does not exist");
+                        self.fail = true;
+                        return;
+                    }
+                    self.callbackCounter++;
+                    axios({
+                        method: 'post',
+                        url: 'create/setParam',
+                        params: {
+                            option: "featureSet",
+                            data: self.featureSet
 
-                }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+                        }
+                    }).then(function(response) {
+                        creation.callbackCounter--;
+                        if (creation.callbackCounter == 0) {
+                            creation.createGame();
+                        }
+                    });
+                })
+            }
+
+
         },
         saveP: function() {
            if (this.patternName == '') {
@@ -268,15 +288,18 @@ var creation = new Vue({
         },
         loadPattern: function() {
             this.title = this.selectedPattern.gameOptions.title;
-            this.description = this.selectedPattern.gameOptions.desc;
+            this.description = this.selectedPattern.gameOption.desc;
             // TODO add the rest
             this.terminationtype = this.selectedPattern.termination.type;
         },
         createGame: function() {
+            var self = this;
+            if (this.fail) return;
             axios({
                 method: 'post',
                 url: 'create'
             }).then(function (response) {
+                self.success = true;
                 window.location.href = "organiser.jsp"
             }).catch(function (error) {
                 creation.alert = true;

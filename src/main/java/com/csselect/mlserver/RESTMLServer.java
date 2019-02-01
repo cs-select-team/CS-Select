@@ -65,6 +65,21 @@ public class RESTMLServer implements MLServer {
         return Double.parseDouble(response);
     }
 
+    @Override
+    public boolean isValidDataset(String dataset) {
+        if (datasetExists(dataset)) {
+            return true;
+        } else {
+            try {
+                writeDataset(dataset);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
     private Invocation.Builder get(String request) {
         WebTarget target = client.target(mlserverUrl + request);
         return target.request();

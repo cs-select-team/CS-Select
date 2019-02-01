@@ -102,8 +102,7 @@ public class GameCreator {
      */
     public Game doCreate() {
         DatabaseAdapter databaseAdapter = Injector.getInstance().getDatabaseAdapter();
-        int gameId = databaseAdapter.getNextGameID();
-        Game game = new Game(gameId);
+        Game game = databaseAdapter.createGame(organiser);
         game.setTitle(gameOptions.getTitle());
         game.setDescription(gameOptions.getDescription());
         game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
@@ -114,6 +113,10 @@ public class GameCreator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        game.invitePlayers(gameOptions.getInvitedEmails());
+        for (String mail : gameOptions.getInvitedEmails()) {
+            EmailSender.sendEmail(mail, "CS:Select Invitation",
+                    "Your knowledge is needed in a CS:Select game. Log in and check your notifications!");
         databaseAdapter.registerGame(organiser, game);
         if (!gameOptions.getInvitedEmails().isEmpty()) {
             game.invitePlayers(gameOptions.getInvitedEmails());

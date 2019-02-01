@@ -55,6 +55,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
+    public GameAdapter getNewGameAdapter() {
+        return new MockGameAdapter(nextGameId++);
+    }
+
+    @Override
     public Player getPlayer(String email) {
         PlayerAdapter adapter = playerAdapterMap.values().stream().filter(p -> p.getEmail().equals(email)).findFirst()
                 .orElse(null);
@@ -145,16 +150,22 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
-    public void registerGame(Organiser organiser, Game game) {
+    public Game createGame(Organiser organiser) {
+        Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
-            nextGameId++;
         }
+        return game;
     }
 
     @Override
     public void removeGame(Game game) {
         gameMap.remove(game);
+    }
+
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        return false; //Doesn't concern the mock-implementation as it doesn't use databases at all
     }
 
     /**

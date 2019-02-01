@@ -64,7 +64,10 @@ Vue.component('invite-element', {
                 url: 'games/' + gameId + '/accept'
             })
             invites.listOfInvites.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.gameId == gameId) invites.listOfInvites.splice(index, 1);
+                if (value.id == gameId){
+
+                    games.listOfGames.push(invites.listOfInvites.splice(index, 1)[0]);
+                }
             });
         },
         decline: function (gameId) {
@@ -73,7 +76,7 @@ Vue.component('invite-element', {
                 url: 'games/' + gameId + '/decline'
             })
             invites.listOfInvites.forEach(function (value, index) {  // remove from the list without reloading page
-                if (value.gameId == gameId) invites.listOfInvites.splice(index, 1);
+                if (value.id == gameId) invites.listOfInvites.splice(index, 1);
             })
         }
     }
@@ -82,7 +85,7 @@ Vue.component('invite-element', {
 var invites = new Vue({
     el: '#invites',
     data: {
-        listOfInvites: []
+        listOfInvites: [{id:1, title: "asdf", type:"mom", roundsPlayed: 0}]
     },
     mounted: function () {
         axios({
@@ -99,7 +102,7 @@ var stats = new Vue({
     data: {
         username: 'Bendix',
         points: 1234
-    }, //TODO remove comment if API does actually return something
+    },
     mounted: function () {
         axios({
             method: 'get',

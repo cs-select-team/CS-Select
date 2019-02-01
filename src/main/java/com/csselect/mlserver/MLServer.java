@@ -38,4 +38,11 @@ public interface MLServer {
      * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
     double getScore(String dataset, Collection<Feature> selectedFeatures) throws IOException;
+
+    /**
+     * This method checks whether a dataset with the given name exists
+     * @param dataset dataset to check
+     * @return true if dataset exists, false otherwise
+     */
+    boolean isValidDataset(String dataset) throws IOException;
 }

@@ -23,13 +23,21 @@ public class Game {
 
 
     /**
-     * Constructor for a game object.
+     * Constructor for a game object for a game that already exists.
      * @param id the unigue numerical identifier of a game
      */
     public Game(int id) {
         this.id = id;
         DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         this.database =  adapter.getGameAdapter(this.id);
+    }
+
+    /**
+     * Constructor for an entirely new game
+     */
+    public Game() {
+        this.database = Injector.getInstance().getDatabaseAdapter().getNewGameAdapter();
+        this.id = database.getID();
     }
 
     /**

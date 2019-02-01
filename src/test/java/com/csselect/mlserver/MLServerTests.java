@@ -43,4 +43,10 @@ public class MLServerTests extends TestClass {
         features.add(new Feature(1, "2"));
         Assert.assertEquals(0.5473, mlServer.getScore("populationGender", features), Double.MIN_VALUE);
     }
+
+    @Test
+    public void validDatasetTest() throws IOException {
+        Assert.assertTrue(mlServer.isValidDataset("populationGender"));
+        Assert.assertFalse(mlServer.isValidDataset("test"));
+    }
 }
