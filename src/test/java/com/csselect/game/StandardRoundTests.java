@@ -46,7 +46,7 @@ public class StandardRoundTests extends TestClass {
 
     @Test
     public void selectTooManyFeatures() {
-        int[] feat = new int[]{1, 2, 3};
+        int[] feat = new int[]{1, 2, 3, 1, 1, 2, 1, 2, 3, 1, 2};
         Assert.assertEquals(round.selectFeatures(feat, feat), -1);
     }
 
