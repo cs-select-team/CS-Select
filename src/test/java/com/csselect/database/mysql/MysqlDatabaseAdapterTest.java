@@ -147,15 +147,14 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
     @Test
     public void testGameCreation() throws IOException {
-        Game game = createGame();
         Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_HASH, TEST_SALT, TEST_USERNAME);
+        Game game = createGame(organiser);
         Collection<String> invitedEmails = new HashSet<>();
         Collection<String> expectedInvitedPlayers = new HashSet<>();
         invitedEmails.add(TEST_EMAIL);
         invitedEmails.add(TEST_EMAIL2);
         expectedInvitedPlayers.add(TEST_EMAIL2);
-        mysqlDatabaseAdapter.registerGame(organiser, game);
         game.invitePlayers(invitedEmails);
         game.acceptInvite(player.getId(), TEST_EMAIL);
         Assert.assertEquals(expectedInvitedPlayers, game.getInvitedPlayers());
@@ -167,12 +166,13 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
     @Test
     public void testDuplicateDatabase() throws IOException {
-        Game game = createGame();
+        Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
+        Game game = createGame(organiser);
         Assert.assertTrue(mysqlDatabaseAdapter.checkDuplicateDatabase(TEST_DB));
     }
 
-    private Game createGame() throws IOException {
-        Game game = new Game(1);
+    private Game createGame(Organiser o) throws IOException {
+        Game game = mysqlDatabaseAdapter.createGame(o);
         game.setGamemode(new BinarySelect());
         game.setTitle(TEST_TITLE);
         game.setDescription(TEST_DESC);
