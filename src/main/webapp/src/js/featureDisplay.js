@@ -5,14 +5,14 @@
 Vue.component('feature-box', {
     props: ['feature'],
     watch: {
-      'feature.toggled': function (newVal, oldVal) {
+        'feature.toggled': function (newVal, oldVal) {
 
-      }
+        }
     },
     template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
-        '                        <h5 class="card-title">{{ feature.name }}</h5>' +
         '                        <div class="card-body">' +
-        '                                {{ feature.desc }}' +
+        '                         <h5 class="card-title">{{ feature.name }}</h5>' +
+        '                         <p class="card-text">{{ feature.desc }}</p>' +
         '                        </div>' +
         '                        <div class="btn-group">' +
         '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id" :disabled="feature.useless">' +
