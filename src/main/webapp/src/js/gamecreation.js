@@ -71,7 +71,7 @@ var creation = new Vue({
         savePattern: false,
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
-        callbackCounter: 0, // very primitive sephamore
+        callbackCounter: 1 ,// very primitive sephamore
         alert: false,
         success: false, // success message for the use
         fail: false
@@ -230,6 +230,8 @@ var creation = new Vue({
             });
         },
         submitFeatureSet: function() {
+
+            var self = this;
             if (this.featureSet == '') {
                 alert("Please set featureSet");
                 return;
@@ -247,7 +249,6 @@ var creation = new Vue({
                         self.fail = true;
                         return;
                     }
-                    self.callbackCounter++;
                     axios({
                         method: 'post',
                         url: 'create/setParam',
