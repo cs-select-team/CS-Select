@@ -5,9 +5,11 @@ import com.csselect.API.APIFacadePlayer;
 import com.csselect.API.APIFacadeUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -69,7 +71,7 @@ public abstract  class Servlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
         facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
-        lang = (String)session.getAttribute("lang");
+        lang = (String) session.getAttribute("lang");
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;
         } else {
