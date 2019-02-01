@@ -414,11 +414,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @throws SQLException Thrown if an error occurs while communicating with the database
      */
     int getNextIdOfTable(String tableName) throws SQLException {
-        ResultSet set = executeMysqlQuery("SELECT MAX(id) AS id FROM " + tableName + ";");
-        if (!set.next()) {
-            return 1;
+        ResultSet set = executeMysqlQuery(
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES"
+                        + " WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?;", new StringParam(PRODUCT_DATABASE_NAME),
+                new StringParam(tableName));
+        if (set.next()) {
+            return set.getInt("AUTO_INCREMENT");
         } else {
-            return set.getInt("id") + 1;
+            throw new NullPointerException("Next table id couldn't be resolved!");
         }
     }
 
