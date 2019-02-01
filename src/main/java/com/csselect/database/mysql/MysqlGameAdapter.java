@@ -44,7 +44,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
      */
     MysqlGameAdapter() throws SQLException {
         super(DATABASE_ADAPTER.getNextGameID());
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games () VALUES ();");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games (isTerminated) VALUES (0);");
     }
 
     @Override
