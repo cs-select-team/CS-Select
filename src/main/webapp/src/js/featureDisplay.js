@@ -9,10 +9,15 @@ Vue.component('feature-box', {
 
         }
     },
+    computed: {
+        desc: function () {
+            return this.feature.desc.replace(/(\\n)+/g, '<br>');
+        }
+    },
     template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
         '                        <div class="card-body">' +
         '                         <h5 class="card-title">{{ feature.name }}</h5>' +
-        '                         <p class="card-text">{{ feature.desc }}</p>' +
+        '                         <p class="card-text" v-html="desc"></p>' +
         '                        </div>' +
         '                        <div class="btn-group">' +
         '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id" :disabled="feature.useless">' +
