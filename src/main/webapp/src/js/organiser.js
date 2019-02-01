@@ -53,6 +53,7 @@ Vue.component('active-games-display', {
                     gameId: gameId
                 }
             })
+            this.$emit("terminate", gameId);
         },
         invitePlayer: function(gameId) {
             axios({
@@ -118,6 +119,18 @@ var activeGames = new Vue({
         }).then(function (response) {
             activeGames.listOfGames = response.data
         })
+    },
+    methods: {
+        gameWasTerminated: function (gameId) {
+            var self = this;
+            this.listOfGames.forEach(function (value, index) {
+                if (value.id == gameId) {
+                    var game = self.listOfGames.splice(index, 1);
+                    terminatedGames.listOfGames.push(game[0]);
+                }
+            })
+
+        }
     }
 
 });

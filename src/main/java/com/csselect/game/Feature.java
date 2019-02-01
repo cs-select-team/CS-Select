@@ -18,7 +18,10 @@ public class Feature {
     private BufferedImage totalGraph;
     private BufferedImage classGraph;
 
-    private static final String DEFAULT_LANGUAGE_CODE = "en";
+
+    private static final String ENGLISH_LANGUAGE_CODE = "en";
+    private static final String GERMAN_LANGUAGE_CODE = "de";
+    private static final String DEFAULT_LANGUAGE_CODE = ENGLISH_LANGUAGE_CODE;
 
 
     /**
@@ -102,7 +105,7 @@ public class Feature {
      * @param germanName the german name
      */
     public void setGermanName(String germanName) {
-        this.nameMap.put("de", germanName);
+        this.nameMap.put(GERMAN_LANGUAGE_CODE, germanName);
     }
 
     /**
@@ -110,7 +113,7 @@ public class Feature {
      * @param englishName the english name
      */
     public void setEnglishName(String englishName) {
-        this.nameMap.put("en", englishName);
+        this.nameMap.put(ENGLISH_LANGUAGE_CODE, englishName);
     }
 
     /**
@@ -118,7 +121,7 @@ public class Feature {
      * @param germanDescription the german description
      */
     public void setGermanDescription(String germanDescription) {
-        this.descriptionMap.put("de", germanDescription);
+        this.descriptionMap.put(GERMAN_LANGUAGE_CODE, germanDescription);
     }
 
     /**
@@ -126,7 +129,7 @@ public class Feature {
      * @param englishDescription the english description
      */
     public void setEnglishDescription(String englishDescription) {
-        this.descriptionMap.put("en", englishDescription);
+        this.descriptionMap.put(ENGLISH_LANGUAGE_CODE, englishDescription);
     }
 
     /**

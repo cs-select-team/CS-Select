@@ -8,6 +8,11 @@ var app1 = new Vue({
             thirdParam: '',
             alert: false
         },
+    watch:{
+        organiser: function () {
+            this.thirdParam = '';
+        }
+    },
         methods: {
             submit: function(event) {
                 event.preventDefault();
