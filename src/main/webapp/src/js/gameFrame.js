@@ -67,10 +67,12 @@ var gameFrame = new Vue({
                 gameFrame.options = response.data.options;
                 gameFrame.gameType = response.data.gameType;
                 gameFrame.forceUpdate++;
+                gameFrame.buttonState = true;
+                axios('users/streak').then(function (response) {
+                    gameFrame.counter = response.data
+                })
             })
-            axios('users/streak').then(function (response) {
-                gameFrame.counter = response.data
-            })
+
 
         },
         quit: function() {
