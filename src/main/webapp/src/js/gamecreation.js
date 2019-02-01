@@ -245,6 +245,7 @@ var creation = new Vue({
                 }).then(function(response) {
                     if (!response.data) {
                         alert("Feature set does not exist");
+                        self.fail = true;
                         return;
                     }
                     self.callbackCounter++;
