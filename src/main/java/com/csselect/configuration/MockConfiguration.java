@@ -1,7 +1,5 @@
 package com.csselect.configuration;
 
-import com.google.inject.Inject;
-
 import java.io.File;
 
 /**
@@ -9,8 +7,11 @@ import java.io.File;
  */
 public final class MockConfiguration implements Configuration {
 
-    @Inject
-    private MockConfiguration() {
+
+    /**
+     * Creates a new {@link MockConfiguration}. Only to be used by the {@link com.csselect.Injector}
+     */
+    public MockConfiguration() {
 
     }
 

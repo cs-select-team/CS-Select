@@ -22,7 +22,7 @@ public class MysqlUserAdapterTest extends MysqlTestClass {
 
     @Override
     public void setUp() {
-        mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
         mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_HASH, TEST_SALT, TEST_USERNAME);
         mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         adapter = mysqlDatabaseAdapter.getPlayerAdapter(1);

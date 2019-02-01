@@ -21,13 +21,13 @@ public final class Leaderboard {
 
     private Leaderboard() {
         this.players = new LinkedList<>();
-        databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        databaseAdapter =  Injector.getInstance().getDatabaseAdapter();
         setSortingStrategy(new SortScoreLastWeek());
     }
 
     /**
-     * Gets the {@link Leaderboard}
-     * @return instance of the Leaderboard
+     * Gets the {@link Leaderboard}.
+     * @return Instance of the Leaderboard
      */
     public static Leaderboard getInstance() {
         if (Leaderboard.instance == null) {

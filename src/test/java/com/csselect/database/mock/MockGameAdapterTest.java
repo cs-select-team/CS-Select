@@ -2,7 +2,6 @@ package com.csselect.database.mock;
 
 import com.csselect.Injector;
 import com.csselect.TestClass;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
 import com.csselect.user.Player;
 import org.junit.Assert;
@@ -25,7 +24,7 @@ public class MockGameAdapterTest extends TestClass {
     @Override
     public void setUp() {
         adapter = new MockGameAdapter(0);
-        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

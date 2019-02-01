@@ -8,7 +8,6 @@ import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.google.inject.Inject;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 
@@ -41,11 +40,10 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private final Map<Integer, GameAdapter> gameAdapterMap;
 
     /**
-     * Creates a new MysqlDatabaseAdapter
+     * Creates a new MysqlDatabaseAdapter. Only to be used by the {@link com.csselect.Injector}
      * @param configuration configuration to use
      */
-    @Inject
-    MysqlDatabaseAdapter(Configuration configuration) {
+    public MysqlDatabaseAdapter(Configuration configuration) {
         gameMap = new HashMap<>();
         gameAdapterMap = new HashMap<>();
         this.hostname = configuration.getDatabaseHostname();
@@ -80,19 +78,20 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public GameAdapter getGameAdapter(int id) {
         if (gameAdapterMap.containsKey(id)) {
             return gameAdapterMap.get(id);
-        } else if (id < getNextGameID()) {
+        } else {
             MysqlGameAdapter adapter = new MysqlGameAdapter(id);
             gameAdapterMap.put(id, adapter);
             return new MysqlGameAdapter(id);
-        } else {
-            try {
-                MysqlGameAdapter adapter = new MysqlGameAdapter();
-                gameAdapterMap.put(id, adapter);
-                return adapter;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
+        }
+    }
+
+    @Override
+    public GameAdapter getNewGameAdapter() {
+        try {
+            return new MysqlGameAdapter();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -140,6 +139,20 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private Map<Integer, Organiser> getOrganisers() {
+        Map<Integer, Organiser> organisers = new HashMap<>();
+        try {
+            ResultSet set = executeMysqlQuery("SELECT * FROM organisers;");
+            while (set.next()) {
+                organisers.put(set.getInt("id"),
+                        new Organiser(new MysqlOrganiserAdapter(set.getInt("id"))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return organisers;
     }
 
     @Override
@@ -281,7 +294,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
-    public void registerGame(Organiser organiser, Game game) {
+    public Game createGame(Organiser organiser) {
+        Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             try {
@@ -291,6 +305,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 e.printStackTrace();
             }
         }
+        return game;
     }
 
     @Override
@@ -300,6 +315,17 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             executeMysqlUpdate("DELETE FROM games WHERE (id=" + game.getId() + ");");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        try {
+            ResultSet set = executeMysqlQuery("SHOW DATABASES LIKE ?", new StringParam(databaseName));
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; //We don't want to overwrite anything in case of errors
         }
     }
 
@@ -388,11 +414,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @throws SQLException Thrown if an error occurs while communicating with the database
      */
     int getNextIdOfTable(String tableName) throws SQLException {
-        ResultSet set = executeMysqlQuery("SELECT MAX(id) AS id FROM " + tableName + ";");
-        if (!set.next()) {
-            return 1;
+        ResultSet set = executeMysqlQuery(
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES"
+                        + " WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?;", new StringParam(PRODUCT_DATABASE_NAME),
+                new StringParam(tableName));
+        if (set.next()) {
+            return set.getInt("AUTO_INCREMENT");
         } else {
-            return set.getInt("id") + 1;
+            throw new NullPointerException("Next table id couldn't be resolved!");
         }
     }
 
@@ -426,6 +455,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @return active games
      */
     Collection<Game> getActiveGames(OrganiserAdapter adapter) {
+        if (gameAdapterMap.isEmpty()) {
+            populateGameMap();
+        }
         Collection<Game> games = new HashSet<>();
         gameMap.forEach((game, organiser) -> {
             if (organiser.getId() == adapter.getID() && !game.isTerminated()) {
@@ -441,6 +473,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @return terminated games
      */
     Collection<Game> getTerminatedGames(OrganiserAdapter adapter) {
+        if (gameAdapterMap.isEmpty()) {
+            populateGameMap();
+        }
         Collection<Game> games = new HashSet<>();
         gameMap.forEach((game, organiser) -> {
             if (organiser.getId() == adapter.getID() && game.isTerminated()) {
@@ -451,10 +486,16 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     }
 
     private Collection<Game> getActiveGames() {
+        if (gameAdapterMap.isEmpty()) {
+            populateGameMap();
+        }
         return gameMap.keySet().stream().filter(game -> !game.isTerminated()).collect(Collectors.toSet());
     }
 
     private Collection<Game> getTerminatedGames() {
+        if (gameAdapterMap.isEmpty()) {
+            populateGameMap();
+        }
         return gameMap.keySet().stream().filter(Game::isTerminated).collect(Collectors.toSet());
     }
 
@@ -464,8 +505,24 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @return games
      */
     Collection<Game> getGames(int playerId) {
+        if (gameAdapterMap.isEmpty()) {
+            populateGameMap();
+        }
         return gameMap.keySet().stream().filter(game ->
                 game.getPlayingPlayers().stream().anyMatch(player -> player.getId() == playerId))
                 .collect(Collectors.toSet());
+    }
+
+    private void populateGameMap() {
+        try {
+            ResultSet gameSet = executeMysqlQuery("SELECT * FROM games");
+            Map<Integer, Organiser> organisers = getOrganisers();
+            while (gameSet.next()) {
+                gameMap.put(new Game(gameSet.getInt("id")),
+                        organisers.get(gameSet.getInt("organiserId")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -8,7 +8,6 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.google.inject.Inject;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,8 +30,7 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     /**
      * Creates a new {@link MockDatabaseAdapter}
      */
-    @Inject
-    MockDatabaseAdapter() {
+    public MockDatabaseAdapter() {
         playerAdapterMap = new HashMap<>();
         organiserAdapterMap = new HashMap<>();
         gameMap = new HashMap<>();
@@ -54,6 +52,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     @Override
     public GameAdapter getGameAdapter(int id) {
         return new MockGameAdapter(id);
+    }
+
+    @Override
+    public GameAdapter getNewGameAdapter() {
+        return new MockGameAdapter(nextGameId++);
     }
 
     @Override
@@ -147,16 +150,22 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     }
 
     @Override
-    public void registerGame(Organiser organiser, Game game) {
+    public Game createGame(Organiser organiser) {
+        Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
-            nextGameId++;
         }
+        return game;
     }
 
     @Override
     public void removeGame(Game game) {
         gameMap.remove(game);
+    }
+
+    @Override
+    public boolean checkDuplicateDatabase(String databaseName) {
+        return false; //Doesn't concern the mock-implementation as it doesn't use databases at all
     }
 
     /**

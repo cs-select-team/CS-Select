@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import com.csselect.Injector;
 import com.csselect.user.Player;
 
 import java.time.LocalDateTime;
@@ -136,6 +137,7 @@ public abstract class Round {
      * @return returns the points earned in this round
      */
     public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+        this.player.setActiveRound(null);
         this.addUselessFeatures(uselessFeatures);
 
         for (int id : selectedFeatures) {
@@ -148,7 +150,7 @@ public abstract class Round {
 
         String identifier = this.game.getFeatureSet().getIdentifier();
         try {
-            this.quality = this.game.getMlserver().getScore(identifier, this.chosenFeatures);
+            this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
@@ -156,7 +158,7 @@ public abstract class Round {
         this.points = this.player.getStats().finishRound(this.quality);
 
         this.game.addFinishedRound(this);
-        this.player.setActiveRound(null);
+
 
         return this.points;
     }

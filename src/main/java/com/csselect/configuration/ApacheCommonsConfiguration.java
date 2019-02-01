@@ -1,6 +1,5 @@
 package com.csselect.configuration;
 
-import com.google.inject.Inject;
 import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -14,12 +13,15 @@ import java.io.File;
  */
 public final class ApacheCommonsConfiguration implements Configuration {
 
-    private static final String DEFAULT_CONFIG_PATH = "/";
+    private static final String DEFAULT_CONFIG_PATH = System.getProperty("catalina.home") + File.separator + "conf"
+            + File.separator + "Catalina" + File.separator + "cs_select" + File.separator + "config.properties";
 
     private FileBasedConfiguration configuration;
 
-    @Inject
-    private ApacheCommonsConfiguration() {
+    /**
+     * Creates a new {@link ApacheCommonsConfiguration}. Only to be used by the {@link com.csselect.Injector}
+     */
+    public ApacheCommonsConfiguration() {
         this(DEFAULT_CONFIG_PATH);
     }
 

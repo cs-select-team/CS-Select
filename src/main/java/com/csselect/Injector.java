@@ -1,35 +1,65 @@
 package com.csselect;
 
-import com.google.inject.Guice;
+import com.csselect.configuration.ApacheCommonsConfiguration;
+import com.csselect.configuration.Configuration;
+import com.csselect.configuration.MockConfiguration;
+import com.csselect.database.DatabaseAdapter;
+import com.csselect.mlserver.MLServer;
 
 /**
  * Class used for retrieving the guice injector
  */
 public final class Injector {
 
-    private static com.google.inject.Injector injector = null;
+    private static Injector injector = null;
     private static boolean testMode;
     private static boolean mysqlTestMode;
 
-    private Injector() {
-        //Utility classes shouldn't be instantiated
+    private final Module module;
+
+    private Injector(Module module) {
+        this.module = module;
     }
 
     /**
-     * Returns the guice {@link com.google.inject.Injector} to receive instances from
+     * Returns the Injector to receive instances from
      * @return the injector
      */
-    public static com.google.inject.Injector getInjector() {
+    public static Injector getInstance() {
         if (injector == null) {
             if (testMode) {
-                injector = Guice.createInjector(new CSSelectTestModule());
+                injector = new Injector(new CSSelectTestModule());
             } else if (mysqlTestMode) {
-                injector = Guice.createInjector(new CSSelectMysqlTestModule());
+                injector = new Injector(new CSSelectMysqlTestModule(new MockConfiguration()));
             } else {
-                injector = Guice.createInjector(new CSSelectModule());
+                injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
             }
         }
         return injector;
+    }
+
+    /**
+     * Gets the used {@link DatabaseAdapter} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
+    public DatabaseAdapter getDatabaseAdapter() {
+        return module.getDatabaseAdapter();
+    }
+
+    /**
+     * Gets the used {@link MLServer} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
+    public MLServer getMLServer() {
+        return module.getMLServer();
+    }
+
+    /**
+     * Gets the used {@link Configuration} as specified in the active {@link Module}
+     * @return databaseAdapter
+     */
+    public Configuration getConfiguration() {
+        return module.getConfiguration();
     }
 
     /**

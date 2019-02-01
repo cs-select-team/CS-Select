@@ -18,7 +18,7 @@ public class StandardRoundTests extends TestClass {
 
     @Override @Before
     public void setUp() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.createPlayer("email", "hash", "salt", "username");
         round = new StandardRound(player, 5, 3, 2, 2);
 
@@ -46,7 +46,7 @@ public class StandardRoundTests extends TestClass {
 
     @Test
     public void selectTooManyFeatures() {
-        int[] feat = new int[]{1, 2, 3};
+        int[] feat = new int[]{1, 2, 3, 1, 1, 2, 1, 2, 3, 1, 2};
         Assert.assertEquals(round.selectFeatures(feat, feat), -1);
     }
 

@@ -1,12 +1,20 @@
 package com.csselect.API.httpAPI;
+import com.csselect.game.Game;
+import com.csselect.game.Termination;
+import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * only request from organisers in this class.
+ * handles requests to '/create'
  */
 public class GameManagement extends Servlet {
 
@@ -18,8 +26,20 @@ public class GameManagement extends Servlet {
         }
         if (req.getPathInfo().equals("/patterns")) {
             getPatterns(req, resp);
+        } else if (req.getPathInfo().equals("/active")) {
+            getActiveGames(req, resp);
+        } else if (req.getPathInfo().equals("/terminated")) {
+            getTerminatedGames(req, resp);
+        } else if (req.getPathInfo().matches("/exists.*")) {
+            checkExist(req, resp);
         }
     }
+
+    private void checkExist(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+        String name = getParameter("name", req);
+        returnAsJson(resp, getOrganiserFacade().checkFeatureSet(name));
+    }
+
 
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
@@ -67,8 +87,55 @@ public class GameManagement extends Servlet {
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
 
-    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        returnAsJson(resp, getOrganiserFacade().getPatterns());
+    /*
+        sends an json object with the format:
+        [{
+            title: <patternTitle>,
+            gameOptions: {
+                title: <gameTitle>,
+                desc: <gameDescription>,
+                database: <database>,
+                termination: {
+                    type: <ClassName of termination>,
+                    value: <string with the parameters of the termination>
+                },
+                invites: [<emails of users to invite>]
+            }
+        }]
+     */
+    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException { // TODO add featureSet
+        Collection<Pattern> patterns = getOrganiserFacade().getPatterns();
+        JsonArray array = new JsonArray();
+        for (Pattern p: patterns) {
+            System.out.println("loading pattern " + p.getTitle());
+            JsonObject object = new JsonObject();
+            object.addProperty("title", p.getTitle());
+
+
+            JsonObject gameOptionsJson = new JsonObject();
+            GameOptions go = p.getGameOptions();
+            gameOptionsJson.addProperty("desc", go.getDescription());
+            gameOptionsJson.addProperty("title", go.getTitle());
+            gameOptionsJson.addProperty("database", go.getResultDatabaseAddress());
+
+            JsonObject terminationJson = new JsonObject();
+            Termination termination = go.getTermination();
+            terminationJson.addProperty("type", termination.getClass().getName());
+            terminationJson.addProperty("value", new Gson().toJson(termination));
+
+            gameOptionsJson.add("termination", terminationJson);
+
+            JsonArray invitations = new JsonArray();
+            for (String email: go.getInvitedEmails()) {
+                invitations.add(email);
+            }
+
+            gameOptionsJson.add("invites", invitations);
+            object.add("gameOptions", gameOptionsJson);
+
+            array.add(object);
+        }
+        returnJson(resp, array);
     }
 
     private void savePattern(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
@@ -90,5 +157,27 @@ public class GameManagement extends Servlet {
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+    }
+
+    private void getActiveGames(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Collection<Game> activeGames = getOrganiserFacade().getActiveGames();
+        sendGameArray(resp, activeGames);
+    }
+    private void getTerminatedGames(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Collection<Game> terminatedGames = getOrganiserFacade().getTerminatedGames();
+        sendGameArray(resp, terminatedGames);
+    }
+
+    private void sendGameArray(HttpServletResponse resp, Collection<Game> terminatedGames) throws IOException {
+        JsonArray array = new JsonArray();
+        for (Game game: terminatedGames) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("title", game.getTitle());
+            jsonObject.addProperty("id", game.getId());
+            jsonObject.addProperty("type", game.getGamemode().getName());
+            jsonObject.addProperty("termination", 0); // TODO
+            array.add(jsonObject);
+        }
+        returnJson(resp, array);
     }
 }

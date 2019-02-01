@@ -6,11 +6,11 @@ import com.csselect.email.EmailSender;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
-import com.csselect.mlserver.MLServer;
 import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -46,7 +46,7 @@ public class GameCreator {
      * @param data Value of the option
      */
     public void setOption(String option, String data) {
-        String[] arguments = data.split("&");
+        String[] arguments = data.split(":");
         assert arguments.length > 0;
         switch(option) {
             case "title":
@@ -54,6 +54,9 @@ public class GameCreator {
                 break;
             case "description":
                 gameOptions.setDescription(arguments[0]);
+                break;
+            case "featureSet":
+                gameOptions.setDataset(arguments[0]);
                 break;
             case "addressOrganiserDatabase":
                 gameOptions.setResultDatabaseAddress(arguments[0]);
@@ -98,16 +101,18 @@ public class GameCreator {
      * @return New {@link Game} object
      */
     public Game doCreate() {
-        DatabaseAdapter databaseAdapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
-        int gameId = databaseAdapter.getNextGameID();
-        Game game = new Game(gameId);
+        DatabaseAdapter databaseAdapter = Injector.getInstance().getDatabaseAdapter();
+        Game game = databaseAdapter.createGame(organiser);
         game.setTitle(gameOptions.getTitle());
         game.setDescription(gameOptions.getDescription());
         game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
         game.setTermination(gameOptions.getTermination());
         game.setGamemode(gameOptions.getGamemode());
-        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
-        databaseAdapter.registerGame(organiser, game);
+        try {
+            game.setFeatureSet(Injector.getInstance().getMLServer().getFeatures(gameOptions.getDataset()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         game.invitePlayers(gameOptions.getInvitedEmails());
         for (String mail : gameOptions.getInvitedEmails()) {
             EmailSender.sendEmail(mail, "CS:Select Invitation",

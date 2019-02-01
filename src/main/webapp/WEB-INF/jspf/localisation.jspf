@@ -1,0 +1,40 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- File for strings that need to be inside of a vue component, when you dont want to add them as
+    props -->
+<fmt:bundle basename="locale.Locale">
+    <script>
+        Vue.mixin({
+            data: function() {
+                return {
+                    get localisation() {
+                        return {
+                            showGraphs: '<fmt:message key="showGraphs" />',
+                            selectFeature: '<fmt:message key="selectFeature"/>',
+                            toggleUseless: '<fmt:message key="toggleUseless"/>',
+                            play: '<fmt:message key="play"/>',
+                            del: '<fmt:message key="delete"/>',
+                            invite: '<fmt:message key="invite"/>',
+                            terminate: '<fmt:message key="terminate"/>',
+                            streak: '<fmt:message key="streak"/>',
+                            points: '<fmt:message key="points"/>',
+                            accept: '<fmt:message key="accept"/>',
+                            decline: '<fmt:message key="decline"/>',
+                            create: '<fmt:message key="create"/>',
+                            abort: '<fmt:message key="abort"/>',
+                            submit: '<fmt:message key="submit"/>',
+                            inputTitle: '<fmt:message key="inputTitle"/>',
+                            inputDescription: '<fmt:message key="inputDescription"/>',
+                            inputFeatures: '<fmt:message key="inputFeatures"/>',
+                            inputDatabase: '<fmt:message key="inputDatabase"/>',
+                            inviteEmailGameCreation: '<fmt:message key="inviteGC"/>',
+                            emailGC: '<fmt:message key="emailGC"/>',
+                            emailGCSuccessful: '<fmt:message key="emailGCSuccessful"/>',
+                            patternTitle: '<fmt:message key="patternTitle"/>',
+                            loadPattern: '<fmt:message key="loadPattern"/>'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</fmt:bundle>

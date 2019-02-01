@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
@@ -19,7 +18,7 @@ import java.util.StringJoiner;
 public class MysqlOrganiserAdapter extends MysqlUserAdapter implements OrganiserAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlOrganiserAdapter} with the given id
@@ -39,8 +38,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
      */
     MysqlOrganiserAdapter(String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable("organisers"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers (email,hash,salt) VALUES (?,?,?);",
-                new StringParam(email), new StringParam(hash), new StringParam(salt));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers (email,hash,salt,language) VALUES (?,?,?,?);",
+                new StringParam(email), new StringParam(hash), new StringParam(salt), new StringParam("de"));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));
                 options.setDescription(set.getString("description"));
-                options.setResultDatabaseAddress(set.getString("database"));
+                options.setResultDatabaseAddress(set.getString("databasename"));
                 options.setTermination(parseTermination(set.getString("termination")));
                 options.setGamemode(parseGamemode(set.getString("gamemode")));
                 patterns.add(new Pattern(options, set.getString("title")));

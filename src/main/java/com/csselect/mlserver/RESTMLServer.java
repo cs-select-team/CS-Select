@@ -5,7 +5,6 @@ import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
 import com.csselect.utils.FeatureSetUtils;
 import com.google.gson.Gson;
-import com.google.inject.Inject;
 import org.apache.commons.io.FileUtils;
 
 import javax.ws.rs.client.Client;
@@ -32,11 +31,10 @@ public class RESTMLServer implements MLServer {
     private final String homeDir;
 
     /**
-     * Constructor to instantiate a {@link RESTMLServer}
+     * Constructor to instantiate a {@link RESTMLServer} Only to be used by the {@link com.csselect.Injector}
      * @param configuration configuration to be used by the server. Injected by guice
      */
-    @Inject
-    RESTMLServer(Configuration configuration) {
+    public RESTMLServer(Configuration configuration) {
         this.client = ClientBuilder.newClient();
         this.mlserverUrl = "http://" + configuration.getMLServerURL();
         this.homeDir = configuration.getHomeDirectory();
@@ -65,6 +63,21 @@ public class RESTMLServer implements MLServer {
         request.deleteCharAt(request.length() - 1);
         String response = get(request.toString()).get(String.class);
         return Double.parseDouble(response);
+    }
+
+    @Override
+    public boolean isValidDataset(String dataset) {
+        if (datasetExists(dataset)) {
+            return true;
+        } else {
+            try {
+                writeDataset(dataset);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
     }
 
     private Invocation.Builder get(String request) {

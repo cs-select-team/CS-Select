@@ -17,12 +17,12 @@ public class RoundTests extends TestClass {
 
     @Override @Before
     public void setUp() {
-        DatabaseAdapter adapter = Injector.getInjector().getInstance(DatabaseAdapter.class);
+        DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
         Player player = adapter.getPlayer("email");
         if (player == null) {
             player = adapter.createPlayer("email", "hash", "salt", "username");
         }
-        round = new StandardRound(player, 5, 3, 0, 2);
+        round = new StandardRound(player, 5, 2, 1, 1);
 
         Game game = new Game(1);
 
@@ -34,7 +34,6 @@ public class RoundTests extends TestClass {
             features.addFeature(new Feature(i, "a"));
         }
         game.setFeatureSet(features);
-        game.setMlserver(Injector.getInjector().getInstance(MLServer.class));
         round.setGame(game);
     }
 
@@ -52,21 +51,21 @@ public class RoundTests extends TestClass {
 
     @Test
     public void selectTwoFeatures() {
-        round.selectFeatures(new int[]{3, 0}, new int[]{1});
+        round.selectFeatures(new int[]{3, 0, 1, 2, 4}, new int[]{1});
         Assert.assertEquals(round.getUselessFeatures().size(), 1);
         Assert.assertTrue(round.getPoints() > 0);
         Assert.assertTrue(round.getQuality() > 0);
-        Assert.assertEquals(round.getChosenFeatures().size(), 2);
+        Assert.assertEquals(round.getChosenFeatures().size(), 5);
     }
 
     @Test
     public void featureSelectedAndUseless() {
-        int[] feature = new int[]{1, 2};
+        int[] feature = new int[]{1, 2, 1, 1, 2};
         round.selectFeatures(feature, feature);
-        Assert.assertEquals(round.getUselessFeatures().size(), 2);
+        Assert.assertEquals(round.getUselessFeatures().size(), 5);
         Assert.assertTrue(round.getPoints() > 0);
         Assert.assertTrue(round.getQuality() > 0);
-        Assert.assertEquals(round.getChosenFeatures().size(), 2);
+        Assert.assertEquals(round.getChosenFeatures().size(), 5);
     }
 
     @Test
@@ -77,7 +76,7 @@ public class RoundTests extends TestClass {
 
     @Test
     public void start() {
-        Assert.assertEquals(round.start().size(), 15);
+        Assert.assertEquals(round.start().size(), 10);
         Assert.assertEquals(round, round.getPlayer().getActiveRound());
     }
 

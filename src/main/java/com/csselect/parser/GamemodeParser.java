@@ -23,10 +23,10 @@ public final class GamemodeParser {
         String type = args[0];
         String arguments = args[1];
         if (type.equals("matrix")) {
-            String[] splitArguments = arguments.split(","); //Syntax: "num=x, min=y, max=z"
-            int number = Integer.parseInt(splitArguments[0].split("=")[1]);
-            int min = Integer.parseInt(splitArguments[1].split("=")[1]);
-            int max = Integer.parseInt(splitArguments[2].split("=")[1]);
+            String[] splitArguments = arguments.split("-"); //Syntax: "num~x-min~y-max~z"
+            int number = Integer.parseInt(splitArguments[0].split("~")[1]);
+            int min = Integer.parseInt(splitArguments[1].split("~")[1]);
+            int max = Integer.parseInt(splitArguments[2].split("~")[1]);
             gamemode = new MatrixSelect(number, min, max);
         } else if (type.equals("binary")) {
             gamemode = new BinarySelect();

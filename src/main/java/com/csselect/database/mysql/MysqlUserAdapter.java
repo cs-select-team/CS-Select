@@ -1,8 +1,8 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.UserAdapter;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,8 +11,8 @@ import java.sql.SQLException;
  */
 public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapter {
 
-    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInjector()
-            .getInstance(DatabaseAdapter.class);
+    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance()
+            .getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlUserAdapter} with the given id

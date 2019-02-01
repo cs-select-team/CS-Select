@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="player.jsp"><img class="navbar-logo" src="src/img/cs_select.svg" alt=<fmt:message key="brand"/>></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav" id="navbar">
+            <a class="nav-item nav-link" href="settings.jsp"><fmt:message key="settings"/></a>
+            <a class="nav-item nav-link" href="achievements.jsp"><fmt:message key="achievements"/></a>
+            <a class="nav-item nav-link" v-on:click="logout"><fmt:message key="logout"/></a>
+        </div>
+    </div>
+    <script src="src/js/navbar.js"></script>
+</nav>

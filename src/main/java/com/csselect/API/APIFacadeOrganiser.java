@@ -1,11 +1,13 @@
 package com.csselect.API;
 
 
+import com.csselect.Injector;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;
 import com.csselect.user.management.OrganiserManagement;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -25,7 +27,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      */
     public boolean register(String[] args) {
         OrganiserManagement om = new OrganiserManagement();
-        return null != om.register(args);
+        organiser = om.register(args);
+        return organiser != null;
     }
 
     @Override
@@ -62,6 +65,11 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     @Override
     public void validateEmail() {
 
+    }
+
+    @Override
+    public String getLanguage() {
+        return organiser.getLanguage();
     }
 
     /** returns the logged in organiser that is assoziated with this object
@@ -159,6 +167,15 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      */
     public void deleteGame(int gameId) {
         organiser.deleteGame(gameId);
+    }
+
+    /** checks if a feature set with the given name exists
+     *
+     * @param name name of the feature set to look up
+     * @return true if a feature set does exist , false otherwise
+     */
+    public boolean checkFeatureSet(String name) throws IOException {
+        return Injector.getInstance().getMLServer().isValidDataset(name);
     }
 
 }

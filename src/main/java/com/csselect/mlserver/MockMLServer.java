@@ -2,7 +2,6 @@ package com.csselect.mlserver;
 
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
-import com.google.inject.Inject;
 
 import java.util.Collection;
 import java.util.Random;
@@ -17,8 +16,7 @@ public final class MockMLServer implements MLServer {
     /**
      * Creates a new {@link MockMLServer}
      */
-    @Inject
-    MockMLServer() {
+    public MockMLServer() {
         this.random = new Random();
     }
 
@@ -36,5 +34,10 @@ public final class MockMLServer implements MLServer {
     @Override
     public double getScore(String dataset, Collection<Feature> selectedFeatures) {
         return random.nextDouble();
+    }
+
+    @Override
+    public boolean isValidDataset(String dataset) {
+        return dataset.equalsIgnoreCase("populationGender");
     }
 }

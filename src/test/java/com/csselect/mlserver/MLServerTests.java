@@ -17,7 +17,7 @@ public class MLServerTests extends TestClass {
 
     @Override
     public void setUp() {
-        Configuration config = Injector.getInjector().getInstance(Configuration.class);
+        Configuration config = Injector.getInstance().getConfiguration();
         mlServer = new RESTMLServer(config);
     }
 
@@ -42,5 +42,11 @@ public class MLServerTests extends TestClass {
         features.add(new Feature(1, "1"));
         features.add(new Feature(1, "2"));
         Assert.assertEquals(0.5473, mlServer.getScore("populationGender", features), Double.MIN_VALUE);
+    }
+
+    @Test
+    public void validDatasetTest() throws IOException {
+        Assert.assertTrue(mlServer.isValidDataset("populationGender"));
+        Assert.assertFalse(mlServer.isValidDataset("test"));
     }
 }

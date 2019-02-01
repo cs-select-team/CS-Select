@@ -1,8 +1,8 @@
 var app1 = new Vue({
     el: '#loginForm',
     data: {
-        email: 'email',
-        password: 'password',
+        email: '',
+        password: '',
         organiser: false,
         alert: true
     },
@@ -16,7 +16,11 @@ var app1 = new Vue({
                         password: this.password,
                         organiser: this.organiser}
             }).then(function (response) {
-                if (response.status == 202) window.open("landing","_self")
+                if (response.status == 202) {
+                    if (app1.organiser) window.open("organiser.jsp","_self")
+                    else window.open("player.jsp", "_self")
+
+                }
 
             }).catch(function (error) {
                   if (error.response) {

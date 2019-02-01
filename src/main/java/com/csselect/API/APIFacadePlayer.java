@@ -34,7 +34,8 @@ public class APIFacadePlayer extends APIFacadeUser {
     @Override
     public boolean register(String[] args) {
         PlayerManagement pm = new PlayerManagement();
-        return null != pm.register(args);
+        player = pm.register(args);
+        return player != null;
     }
 
     @Override
@@ -70,6 +71,11 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     @Override
     public void validateEmail() {
+    }
+
+    @Override
+    public String getLanguage() {
+        return player.getLanguage();
     }
 
     /** getter for the player associated with this facade
@@ -129,8 +135,8 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param useless ids of the features that are marked useless
      *
      */
-     public void selectFeatures(int[] selected, int[] useless) {
-        player.selectFeatures(selected, useless);
+     public int selectFeatures(int[] selected, int[] useless) {
+        return player.selectFeatures(selected, useless);
      }
 
 
@@ -142,9 +148,9 @@ public class APIFacadePlayer extends APIFacadeUser {
         player.skipRound(features);
      }
 
-    /** gets a list of all achievments and their state for this player
+    /** gets a list of all achievements and their state for this player
      *
-     * @return list of all achievments and their state for this player
+     * @return list of all achievements and their state for this player
      */
      public List<Achievement> getAchievments() {
          return player.getStats().getAchievements();
@@ -184,9 +190,9 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     /** gets all notifications that have to be shown to the player
      *
-     * @return string of all notifications
+     * @return all games that this player has been invited to
      */
-     public String getNotifications() {
-         return "";
+     public Collection<Game> getNotifications() {
+         return player.getInvitedGames();
      }
 }

@@ -25,7 +25,7 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
 
     @Override
     public void setUp() {
-        mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
         try {
             adapter = new MysqlGameAdapter();
             adapter.setDatabase("PSE");

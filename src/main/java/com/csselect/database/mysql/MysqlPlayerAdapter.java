@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
@@ -12,6 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Mysql-Implementation of the {@link PlayerAdapter} Interface
@@ -21,7 +21,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     private static final Map<PlayerAdapter, PlayerStats> PLAYERSTATS_MAP = new HashMap<>();
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlPlayerAdapter} with the given id
@@ -42,8 +42,9 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
      */
     MysqlPlayerAdapter(String username, String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable("players"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (username,email,hash,salt) VALUES (?,?,?,?);",
-                new StringParam(username), new StringParam(email), new StringParam(hash), new StringParam(salt));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (username,email,hash,salt,language)"
+                + "VALUES (?,?,?,?,?);", new StringParam(username), new StringParam(email),
+                new StringParam(hash), new StringParam(salt), new StringParam("de"));
     }
 
     @Override
@@ -80,8 +81,8 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
     @Override
     public Collection<Game> getInvitedGames() {
         Collection<Game> allGames = new HashSet<>(DATABASE_ADAPTER.getActiveGames(this));
-        allGames.addAll(DATABASE_ADAPTER.getActiveGames(this));
-        return allGames;
+        return allGames.stream().filter(
+                game -> game.getInvitedPlayers().contains(this.getEmail())).collect(Collectors.toSet());
     }
 
     @Override
@@ -100,7 +101,10 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     public Collection<Game> getActiveGames() {
-        return DATABASE_ADAPTER.getActiveGames(this);
+        Collection<Game> allGames = new HashSet<>(DATABASE_ADAPTER.getActiveGames(this));
+        return allGames.stream().filter(
+                game -> game.getPlayingPlayers().stream().anyMatch(
+                        player -> this.getID() == player.getId())).collect(Collectors.toSet());
     }
 
     @Override

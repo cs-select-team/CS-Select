@@ -1,7 +1,6 @@
 package com.csselect.database.mysql;
 
 import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.game.BinarySelect;
 import com.csselect.game.Gamemode;
 import com.csselect.game.MatrixSelect;
@@ -22,7 +21,7 @@ import java.time.ZoneOffset;
 public abstract class MysqlAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
-            = (MysqlDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+            = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
 
     private final int id;
 

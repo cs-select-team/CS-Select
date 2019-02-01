@@ -63,5 +63,9 @@ public abstract class APIFacadeUser {
      */
     public abstract void validateEmail();
 
+    /**
+     * @return the language that the user selected
+     */
+    public abstract String getLanguage();
 
 }
