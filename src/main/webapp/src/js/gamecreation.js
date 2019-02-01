@@ -48,7 +48,6 @@ Vue.component('control', {
             if (creation.savePattern) {
                  creation.saveP();
             }
-            creation.create();
         }
     }
 });
