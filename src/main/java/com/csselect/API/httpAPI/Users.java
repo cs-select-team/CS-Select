@@ -87,8 +87,9 @@ public class Users extends Servlet {
         for (Game invite: notifications) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("title", invite.getTitle());
-            jsonObject.addProperty("gameId", invite.getId());
+            jsonObject.addProperty("id", invite.getId());
             jsonObject.addProperty("type", invite.getGamemode().getName());
+            jsonObject.addProperty("roundsPlayed", invite.getNumberOfRounds());
             array.add(jsonObject);
         }
         returnAsJson(resp, array);

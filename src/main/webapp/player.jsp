@@ -48,8 +48,8 @@
     <div class="col-md-5 h-100" id="invites">
         <div class="overflow-auto h-100">
             <invite-element v-for="invite in listOfInvites"
-                            v-bind:key="invite.gameId"
-                            v-bind:game-id="invite.gameId"
+                            v-bind:key="invite.id"
+                            v-bind:game-id="invite.id"
                             v-bind:title="invite.title">
 
             </invite-element>
