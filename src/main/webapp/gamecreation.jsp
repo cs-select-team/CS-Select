@@ -25,11 +25,11 @@
                             <label for="binary"><fmt:message key="binarySelect"/></label>
                         </div>
                         <div class="col" v-if="mode === 'matrix'">
-                            <input type="number" id="num" value="10" v-model="numberFeatures" min="0">
+                            <input type="number" id="num" v-model="numberFeatures" min="0">
                             <label for="num"><fmt:message key="numFeatures"/></label> <br>
-                            <input type="number" id="min" value="1" v-model="minSelect" min="0">
+                            <input type="number" id="min" v-model="minSelect" min="0">
                             <label for="min"><fmt:message key="minFeatures"/></label> <br>
-                            <input type="number" id="max" value="5" v-model="maxSelect" min="0">
+                            <input type="number" id="max" v-model="maxSelect" min="0">
                             <label for="max"><fmt:message key="maxFeatures"/></label>
                         </div>
                     </div>
