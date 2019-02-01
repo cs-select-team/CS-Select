@@ -1,4 +1,4 @@
-Vue.component('binarySelect', {
+Vue.component('BinarySelect', {
     props: ['feature-list', 'options'],
     data: function() {
         return {

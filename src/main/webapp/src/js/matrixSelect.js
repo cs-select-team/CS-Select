@@ -11,7 +11,7 @@ Vue.component('matrix-row', {
         }
     }
 })
-Vue.component('matrixSelect', {
+Vue.component('MatrixSelect', {
     props: ['feature-list', 'options'],
     data: function() {
         return {
