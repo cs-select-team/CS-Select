@@ -9,7 +9,6 @@ import com.csselect.game.Round;
 import com.csselect.game.Termination;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.csselect.utils.FeatureSetUtils;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -44,7 +43,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
      */
     MysqlGameAdapter() throws SQLException {
         super(DATABASE_ADAPTER.getNextGameID());
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games () VALUES ();");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games (isTerminated) VALUES (0);");
     }
 
     @Override
@@ -77,8 +76,15 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public FeatureSet getFeatures() {
         try {
-            return FeatureSetUtils.loadFeatureSet("dataSetName");
-        } catch (IOException e) {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
+                    "SELECT dataset AS dataset FROM games WHERE id=" + getID());
+            if (set.next()) {
+                FeatureSet featureSet = Injector.getInstance().getMLServer().getFeatures(set.getString("dataset"));
+                return featureSet;
+            } else {
+                return null;
+            }
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
             return null;
         }
@@ -296,7 +302,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
         try {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT id FROM rounds WHERE shownFeatures=?",
-                    new StringParam(featuresToString(features)));
+                    getDatabaseName(), new StringParam(featuresToString(features)));
             return set.next();
         } catch (SQLException e) {
             e.printStackTrace();

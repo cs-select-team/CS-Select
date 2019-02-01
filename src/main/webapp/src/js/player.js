@@ -4,7 +4,7 @@ Vue.component('game-display', {
         '                <div class="col"><div>{{ game.title }}</div>' +
         '                <div>{{ game.type }}</div>' +
         '                <div>{{ game.roundsPlayed  }}</div></div>' +
-        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.gameId)"/></div>' +
+        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
         '            </div></div></div>',
     methods: {
         startGame: function(gameId) {
@@ -82,10 +82,7 @@ Vue.component('invite-element', {
 var invites = new Vue({
     el: '#invites',
     data: {
-        listOfInvites: [{title: "Titel", gameId: 1},
-            {title: "Titel2", gameId: 2},
-            {title: "Titel3", gameId: 3},
-            {title: "Titel4", gameId: 4}]
+        listOfInvites: []
     },
     mounted: function () {
         axios({
@@ -118,10 +115,7 @@ var stats = new Vue({
 var games = new Vue({
     el: '#games',
     data: {
-        listOfGames: [{title:"myCoolGame", type:"Matrix", roundsPlayed:12, gameId: 1},
-            {title:"myRatherAmusingGame", type:"Binary", roundsPlayed:42, gameId: 2},
-            {title:"myUnderwhelmingGame", type:"Matrix", roundsPlayed:53, gameId: 3},
-            {title:"myDisappointingGame", type:"Matrix", roundsPlayed:256, gameId: 4}]
+        listOfGames: []
     },
     mounted: function () {
         axios({
@@ -136,11 +130,7 @@ var games = new Vue({
 var leaderboard = new Vue({
     el: '#leaderboard',
     data: {
-        playerList: [{username: "bendix", points: 1000, place: 1},
-            {username: "fred", points: 500, place: 2},
-            {username: "olaf", points: 250, place: 3},
-            {username: "dieter", points: 0, place: 4}
-        ]
+        playerList: []
     },
     mounted: function () {
         axios({
@@ -156,11 +146,7 @@ var leaderboard = new Vue({
 var daily = new Vue({
     el: "#daily",
     data: {
-        daily: {
-            title: 'Töte drei piraten an diesem Tag(Ich hab gerade eine Runde Blackwake gespielt)',
-            points: 500,
-            finished: true
-        }
+        daily: {}
     },
     mounted: function () {
         axios({

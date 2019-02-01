@@ -41,13 +41,13 @@ Vue.component('control', {
             creation.submitTitle();
             creation.submitDescription();
             creation.submitDatabaseAddress();
+            creation.submitFeatureSet();
             creation.invitePlayers();
             creation.submitTermination();
             creation.submitGamemode();
             if (creation.savePattern) {
                  creation.saveP();
             }
-            creation.create();
         }
     }
 });
@@ -84,7 +84,7 @@ var creation = new Vue({
             this.description = '';
             this.terminationtype = '';
             this.terminationvalue = '';
-            this.features = '';
+            this.featureSet = '';
             this.databaseAddress = '';
             this.savePattern = false;
             this.selectedPattern = null;
@@ -151,11 +151,12 @@ var creation = new Vue({
                 alert("You did not invite any players. Invite them later to your game")
             }
             this.players = '';
+            var self = this;
             this.invites.forEach(function(email, index) {
                 if (index == 0) {
-                    this.players = email;
+                    self.players = email;
                 } else {
-                    this.players += "_" + email;
+                    self.players += "_" + email;
                 }
             });
             this.callbackCounter++;
@@ -224,6 +225,27 @@ var creation = new Vue({
                 }
             });
         },
+        submitFeatureSet: function() {
+            if (this.featureSet == '') {
+                alert("Please set featureSet");
+                return;
+            }
+            this.callbackCounter++;
+            axios({
+                method: 'post',
+                url: 'create/setParam',
+                params: {
+                    option: "featureSet",
+                    data: this.featureSet
+
+                }
+            }).then(function(response) {
+                creation.callbackCounter--;
+                if (creation.callbackCounter == 0) {
+                    creation.createGame();
+                }
+            });
+        },
         saveP: function() {
            if (this.patternName == '') {
                alert("Please name your pattern");
@@ -250,7 +272,6 @@ var creation = new Vue({
             this.terminationtype = this.selectedPattern.termination.type;
         },
         createGame: function () {
-            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create'

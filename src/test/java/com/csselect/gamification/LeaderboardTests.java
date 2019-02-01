@@ -3,6 +3,7 @@ package com.csselect.gamification;
 import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,7 +46,6 @@ public class LeaderboardTests extends TestClass {
         Assert.assertEquals(otherSortingStrategy, leaderboard.getStrategy());
     }
 
-    /*
     @Test
     public void testLeaderboardNoScore() {
         Player player = mockDatabaseAdapter.createPlayer("email", "hash", "salt", "username");
@@ -53,5 +53,4 @@ public class LeaderboardTests extends TestClass {
         Player player3 = mockDatabaseAdapter.createPlayer("email3", "hash3", "salt3", "username3");
         Assert.assertEquals(3, leaderboard.getPlayers().size());
     }
-    */
 }

@@ -10,6 +10,7 @@ import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -53,6 +54,9 @@ public class GameCreator {
                 break;
             case "description":
                 gameOptions.setDescription(arguments[0]);
+                break;
+            case "featureSet":
+                gameOptions.setDataset(arguments[0]);
                 break;
             case "addressOrganiserDatabase":
                 gameOptions.setResultDatabaseAddress(arguments[0]);
@@ -105,6 +109,11 @@ public class GameCreator {
         game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
         game.setTermination(gameOptions.getTermination());
         game.setGamemode(gameOptions.getGamemode());
+        try {
+            game.setFeatureSet(Injector.getInstance().getMLServer().getFeatures(gameOptions.getDataset()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         databaseAdapter.registerGame(organiser, game);
         game.invitePlayers(gameOptions.getInvitedEmails());
         for (String mail : gameOptions.getInvitedEmails()) {

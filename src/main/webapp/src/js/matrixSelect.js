@@ -7,11 +7,11 @@ Vue.component('matrix-row', {
         '        </div>',
     methods: {
         toggled: function (newVal, oldVal) {
-            this.$emit("toggled", oldVal, newVal)
+            this.$emit("toggled", newVal, oldVal)
         }
     }
 })
-Vue.component('matrixSelect', {
+Vue.component('MatrixSelect', {
     props: ['feature-list', 'options'],
     data: function() {
         return {

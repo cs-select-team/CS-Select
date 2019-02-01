@@ -14,6 +14,7 @@ public class GameOptions implements  Cloneable {
     private String title;
     private String description;
     private String resultDatabaseAddress;
+    private String dataset;
     private Termination termination;
     private Gamemode gamemode;
     private Collection<String> invitedEmails;
@@ -63,6 +64,22 @@ public class GameOptions implements  Cloneable {
      */
     public String getResultDatabaseAddress() {
         return resultDatabaseAddress;
+    }
+
+    /**
+     * Get dataset String
+     * @return game description
+     */
+    public String getDataset() {
+        return dataset;
+    }
+
+    /**
+     * Set dataset String
+     * @param dataset dataset to use
+     */
+    public void setDataset(String dataset) {
+        this.dataset = dataset;
     }
 
     /**

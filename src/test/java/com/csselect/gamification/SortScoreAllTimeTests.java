@@ -2,7 +2,6 @@ package com.csselect.gamification;
 
 import com.csselect.Injector;
 import com.csselect.TestClass;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.user.Player;
 import org.junit.Assert;
@@ -23,7 +22,7 @@ public class SortScoreAllTimeTests extends TestClass {
     public void setUp() {
         playersList = new LinkedList<>();
         allTime = new SortScoreAllTime();
-        //mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInjector().getInstance(DatabaseAdapter.class);
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

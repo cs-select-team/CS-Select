@@ -11,7 +11,8 @@ import java.sql.SQLException;
  */
 public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStatsAdapter {
 
-    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance()
+            .getDatabaseAdapter();
 
     /**
      * Creates a new {@link MysqlPlayerStatsAdapter}

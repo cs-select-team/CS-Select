@@ -177,7 +177,7 @@ public class Users extends Servlet {
         if (isPlayer()) {
             JsonObject json = new JsonObject();
             json.addProperty("username", getPlayerFacade().getPlayer().getUsername());
-            json.addProperty("points", getPlayerFacade().getScore() );
+            json.addProperty("points", getPlayerFacade().getScore());
             returnJson(resp, json);
         } else {
             returnAsJson(resp, getOrganiserFacade().getOrganiser());
