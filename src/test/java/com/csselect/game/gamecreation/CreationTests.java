@@ -24,19 +24,19 @@ public class CreationTests extends TestClass {
 
     @Test
     public void testSetTermination() {
-        builder.setOption("termination", "rounds&50");
+        builder.setOption("termination", "rounds:50");
         Assert.assertNotNull(builder.getGameOptions().getTermination());
     }
 
     @Test
     public void testSetGamemodeBinary() {
-        builder.setOption("gamemode", "binary&50");
+        builder.setOption("gamemode", "binary:50");
         Assert.assertNotNull(builder.getGameOptions().getGamemode());
     }
 
     @Test
     public void testAddPlayers() {
-        builder.setOption("addPlayers", "3@yahoo.de&1@gmail.com&2@gmx.de");
+        builder.setOption("addPlayers", "3@yahoo.de:1@gmail.com:2@gmx.de");
         Assert.assertTrue(builder.getGameOptions().getInvitedEmails().contains("3@yahoo.de"));
         Assert.assertTrue(builder.getGameOptions().getInvitedEmails().contains("1@gmail.com"));
         Assert.assertTrue(builder.getGameOptions().getInvitedEmails().contains("2@gmx.de"));
