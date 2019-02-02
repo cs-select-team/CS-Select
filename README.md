@@ -17,3 +17,6 @@
 - Deploy the project from the command line by typing `mvn tomcat7:deploy` whilst in the repository folder
 - Access the server from a browser under the address [localhost:8080/CS-Select/]() (If you used the default settings in
  Tomcat)
+ 
+ # Known issues
+ - Only works with MySql Version 5.7.20
