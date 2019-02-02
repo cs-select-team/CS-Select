@@ -4,14 +4,17 @@ import com.csselect.API.APIFacadeOrganiser;
 import com.csselect.API.APIFacadePlayer;
 import com.csselect.API.APIFacadeUser;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 /** this class handles requests from a url and provides helpful methods
  *
@@ -21,7 +24,7 @@ public abstract  class Servlet extends HttpServlet {
     private static final String ORGANISERFACADE_ATTR_NAME = "organiserFacade";
     private static final String IS_PLAYER = "player";
     private static final String DEFAULT_LANGUAGE = "de";
-    protected HttpSession session;
+    HttpSession session;
     protected String lang;
 
 
@@ -138,7 +141,7 @@ public abstract  class Servlet extends HttpServlet {
      *                                                  this
      * @throws HttpError if name is not present as parameter in the request
      */
-    protected String getParameter(String name, HttpServletRequest req) throws HttpError {
+    String getParameter(String name, HttpServletRequest req) throws HttpError {
         if (req.getParameterMap().containsKey(name)) {
             return req.getParameter(name);
         }
@@ -152,32 +155,51 @@ public abstract  class Servlet extends HttpServlet {
      * @param o object which to send as json
      * @throws IOException if there was an ioException
      */
-    protected void returnAsJson(HttpServletResponse resp, Object o) throws IOException {
+    void returnAsJson(HttpServletResponse resp, Object o) throws IOException {
         String json = new Gson().toJson(o);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json);
         resp.getWriter().close();
     }
-    protected void returnJson(HttpServletResponse resp, JsonElement json) throws IOException {
+
+    /** returns a json Element over http to the request
+     *
+     * @param resp response object to  which to return the json Element
+     * @param json Element to return
+     * @throws IOException if the response failed
+     */
+    void returnJson(HttpServletResponse resp, JsonElement json) throws IOException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json.toString());
         resp.getWriter().close();
     }
-    protected void createOrganiser() {
-        System.out.println("createOrganiser");
+
+    /**
+     * creates a new OrganiserFacade for this object
+     * {@link Servlet#getOrganiserFacade()}
+     */
+    void createOrganiser() {
         facadeOrganiser = new APIFacadeOrganiser();
         session.setAttribute(ORGANISERFACADE_ATTR_NAME, facadeOrganiser);
     }
-
-    protected void createPlayer() {
-        System.out.println("createPlayer");
+    /**
+     * creates a new PlayerFacade for this object
+     * {@link Servlet#getPlayerFacade()}
+     */
+    void createPlayer() {
         facadePlayer = new APIFacadePlayer();
         session.setAttribute(PLAYERFACADE_ATTR_NAME, facadePlayer);
     }
 
-    protected static String getBody(HttpServletRequest request) throws IOException {
+    /** gets the body of an httpRequest
+     *
+     * @param request the request from which to get the body
+     * @return The Body string of the request
+     * @throws IOException if the request is malformed
+     */
+    static String getBody(HttpServletRequest request) throws IOException {
 
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();

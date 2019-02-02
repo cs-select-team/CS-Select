@@ -103,7 +103,7 @@ public class GameManagement extends Servlet {
             }
         }]
      */
-    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException { // TODO add featureSet
+    private void getPatterns(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Collection<Pattern> patterns = getOrganiserFacade().getPatterns();
         JsonArray array = new JsonArray();
         for (Pattern p: patterns) {
@@ -114,6 +114,7 @@ public class GameManagement extends Servlet {
 
             JsonObject gameOptionsJson = new JsonObject();
             GameOptions go = p.getGameOptions();
+            gameOptionsJson.addProperty("featureset", go.getDataset());
             gameOptionsJson.addProperty("desc", go.getDescription());
             gameOptionsJson.addProperty("title", go.getTitle());
             gameOptionsJson.addProperty("database", go.getResultDatabaseAddress());

@@ -21,16 +21,17 @@ import java.util.Map;
 public class APIFacadePlayer extends APIFacadeUser {
 
 
+
+
+    private Player player;
     /** registers a new player
      *
      * @param args array with arguments for this method
      *              0: email
      *              1: password
      *              2: username
+     * @return true if registration successful, false otherwise
      */
-
-    private Player player;
-
     @Override
     public boolean register(String[] args) {
         PlayerManagement pm = new PlayerManagement();
@@ -134,6 +135,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      * @param selected ids of the selected Features
      * @param useless ids of the features that are marked useless
      *
+     * @return the points that the user achieved with their selection
      */
      public int selectFeatures(int[] selected, int[] useless) {
         return player.selectFeatures(selected, useless);

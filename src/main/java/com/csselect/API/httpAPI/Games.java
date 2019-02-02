@@ -3,7 +3,10 @@ import com.csselect.API.APIFacadePlayer;
 import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Gamemode;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +22,14 @@ import java.util.Base64;
 
 /**
  * only request from players.
+ * handles '/games/*'
  */
 public class Games extends Servlet {
 
     private static final String BASE_64_PNG_PREFIX = "data:image/png;base64,";
 
 
+    @Override
     public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         if (!isPlayer()) {
             throw new HttpError(HttpServletResponse.SC_FORBIDDEN);

@@ -171,6 +171,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     /** checks if a feature set with the given name exists
      *
+     * @throws IOException if the backend failed the connection to the database
      * @param name name of the feature set to look up
      * @return true if a feature set does exist , false otherwise
      */
