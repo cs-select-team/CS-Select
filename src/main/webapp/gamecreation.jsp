@@ -5,7 +5,8 @@
             <div class="top-buffer"></div>
             <div class="container h-10 title"><fmt:message key="creation"/></div>
             <div class="container" id="gamecreation">
-                <div class="alert alert-success" v-bind:class="{collapse: !this.success}" role="alert">
+                <div class="alert alert-success alert-dismissible" v-bind:class="{collapse: !this.success}" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <fmt:message key="successfulCreation"/>
                 </div>
                 <div class="row">

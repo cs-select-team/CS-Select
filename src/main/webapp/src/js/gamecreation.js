@@ -75,7 +75,7 @@ var creation = new Vue({
         terminationtype: '',
         terminationvalue: '',
         featureSet: '',
-        databaseAddress: '',
+        databaseName: '',
         savePattern: false,
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
