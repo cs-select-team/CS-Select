@@ -1,12 +1,12 @@
 package com.csselect.gamification;
 
+import com.csselect.game.Round;
 import com.csselect.user.Player;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,13 +22,12 @@ public class SortScoreLastWeek extends LeaderboardSortingStrategy {
         Map<Player, Integer> scoreLastWeek = new TreeMap<>();
 
         for (Player player : players) {
-            List<Integer> allPoints = new LinkedList<>();
-
-            player.getRounds().stream()
+            int sum = 0;
+            for (Round round : player.getRounds().stream()
                     .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
-                    .collect(Collectors.toList()).stream().forEach(r -> allPoints.add(r.getPoints()));
-
-            int sum = allPoints.stream().mapToInt(Integer::intValue).sum();
+                    .collect(Collectors.toList())) {
+                sum += round.getPoints();
+            }
             scoreLastWeek.put(player, sum);
         }
 
