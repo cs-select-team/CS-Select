@@ -125,7 +125,7 @@ public class GameManagement extends Servlet {
             gameOptionsJson.addProperty("featureset", go.getDataset());
             gameOptionsJson.addProperty("desc", go.getDescription());
             gameOptionsJson.addProperty("title", go.getTitle());
-            gameOptionsJson.addProperty("database", go.getResultDatabaseAddress());
+            gameOptionsJson.addProperty("database", go.getResultDatabaseName());
 
             JsonObject terminationJson = new JsonObject();
             Termination termination = go.getTermination();

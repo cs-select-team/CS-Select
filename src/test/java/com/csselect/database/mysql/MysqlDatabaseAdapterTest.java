@@ -181,7 +181,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         game.setGamemode(new BinarySelect());
         game.setTitle(TEST_TITLE);
         game.setDescription(TEST_DESC);
-        game.setAddressOrganiserDatabase(TEST_DB);
+        game.setNameOrganiserDatabase(TEST_DB);
         game.setFeatureSet(features);
         game.setTermination(new NumberOfRoundsTermination(5));
         return game;
