@@ -30,7 +30,16 @@
                             emailGC: '<fmt:message key="emailGC"/>',
                             emailGCSuccessful: '<fmt:message key="emailGCSuccessful"/>',
                             patternTitle: '<fmt:message key="patternTitle"/>',
-                            loadPattern: '<fmt:message key="loadPattern"/>'
+                            loadPattern: '<fmt:message key="loadPattern"/>',
+                            organiserHelp: '<fmt:message key="organiserHelp"/>',
+                            invitePlayerHelp: '<fmt:message key="invitePlayerHelp"/>',
+                            terminateGameHelp: '<fmt:message key="terminateGameHelp"/>',
+                            deleteGameHelp: '<fmt:message key="deleteGameHelp" />',
+                            gamecreationHelp: '<fmt:message key="gamecreationHelp"/>',
+                            binarySelectHelp: '<fmt:message key="binarySelectHelp"/>',
+                            matrixSelectHelp: '<fmt:message key="matrixSelectHelp"/>',
+                            playerHelp: '<fmt:message key="playerHelp"/>',
+                            gameHelp: '<fmt:message key="gameHelp"/>'
                         }
                     }
                 }
