@@ -17,7 +17,7 @@ public class GamemodeComposite extends Gamemode {
     /**
      * Constructor for a game mode composite object
      */
-    public GamemodeComposite() {
+    GamemodeComposite() {
         this.gamemodes = new ArrayList<>();
     }
 
