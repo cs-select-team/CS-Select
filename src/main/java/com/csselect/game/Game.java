@@ -192,7 +192,9 @@ public class Game {
      * @param termination the termination {@link Termination} cause
      */
     public void setTermination(Termination termination) {
-        termination.setGame(this);
+        if (termination != null) {
+            termination.setGame(this);
+        }
         database.setTermination(termination);
     }
 

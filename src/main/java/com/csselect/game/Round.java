@@ -41,6 +41,22 @@ public abstract class Round {
     }
 
     /**
+     * Constructor to generalize constructing for all subclasses with time to set
+     * @param player the player {@link Player} who plays the round
+     * @param time the time when the round was started
+     */
+    public Round(Player player, LocalDateTime time) {
+        this.player = player;
+
+        this.time = time;
+
+        this.uselessFeatures = new ArrayList<>();
+        this.chosenFeatures = new ArrayList<>();
+    }
+
+
+
+    /**
      * Setter for the game to which a round belongs
      * @param game the game of the round
      */
