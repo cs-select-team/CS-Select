@@ -417,11 +417,10 @@ public enum AchievementType {
     private final String nameKey;
     private final String descKey;
 
-
     /**
-     * Creates a new {@link AchievementType}
-     * @param nameKey key of the types name
-     * @param descKey key of the types description
+     * Creates a new {@link AchievementType}.
+     * @param nameKey Key of the type's name.
+     * @param descKey Key of the type's description.
      */
     AchievementType(String nameKey, String descKey) {
         this.nameKey = nameKey;
@@ -449,26 +448,27 @@ public enum AchievementType {
 
     /**
      * Gets the name of the achievement type in the specified language.
-     * @param lang The language code in ISO 369-1 format.
-     * @return The name in the specified language. Assertion error if language code is not known.
+     * @param lang The language code in ISO 639-1 format.
+     * @return The name in the specified language.
      */
     public final String getName(String lang) {
-        Locale locale = new Locale(lang);
-        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", locale,
-                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        ResourceBundle bundle = getBundle(lang);
         return bundle.getString(nameKey);
     }
 
     /**
      * Gets the description of the achievement in the specified language.
      * @param lang The language code in ISO 639-1 format.
-     * @return The The description in the specified language. Assertion error if language code is not known.
+     * @return The The description in the specified language.
      */
     public final String getDescription(String lang) {
-        Locale locale = new Locale(lang);
-        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", locale,
-                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        ResourceBundle bundle = getBundle(lang);
         return bundle.getString(descKey);
+    }
+
+    private ResourceBundle getBundle(String lang) {
+        return ResourceBundle.getBundle("locale/Locale", new Locale(lang),
+                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
     }
 
 }

@@ -2,7 +2,9 @@ package com.csselect.gamification;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Represents an abstract DailyChallenge. This is a task that a player
@@ -11,7 +13,7 @@ import java.util.Map;
  */
 public abstract class DailyChallenge {
 
-    Map<String, String> descriptionMap = new HashMap<>();
+    String descriptionKey;
     LocalDate date;
     boolean completed;
     int reward;
@@ -30,16 +32,16 @@ public abstract class DailyChallenge {
      * @return The description in the specified language. Assertion error if language code is not known.
      */
     public final String getDescription(String lang) {
-        if (!descriptionMap.containsKey(lang)) {
-        return "Unknown language.";
+        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", new Locale(lang),
+                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        return bundle.getString(descriptionKey);
     }
-        return descriptionMap.get(lang);    }
 
     /**
      * Gets the date of the daily challenge.
      * @return The date if the daily.
      */
-    public LocalDate getDate() {
+    LocalDate getDate() {
         return date;
     }
 
