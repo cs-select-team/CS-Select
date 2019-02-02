@@ -11,10 +11,9 @@ Vue.component('active-games-display', {
         '           <div class="row">' +
         '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
-        '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space"' +
+        '                   <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"' +
         '                        v-on:click="terminate(game.id)" :value="localisation.terminate">' +
         '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"' +
         '                       data-toggle="modal" :data-target="\'#inviteModal\' + game.id">' +
@@ -26,7 +25,7 @@ Vue.component('active-games-display', {
                 '    <div class="modal-content">\n' +
                 '      <div class="modal-header">\n' +
                 '        <h5 class="modal-title" id="modalLabel">{{ localisation.invite }}</h5>\n' +
-                '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                '        <button :title="localisation.invitePlayerHelp" type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
                 '          <span aria-hidden="true">&times;</span>\n' +
                 '        </button>\n' +
                 '      </div>\n' +
@@ -75,7 +74,6 @@ Vue.component('terminated-games-display', {
         '           <div class="row">' +
         '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
-        '                   <div>{{ game.termination  }}</div>' +
         '               </div>' +
         '               <div class="col">' +
         '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)" :value="localisation.del">' +
