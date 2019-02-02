@@ -1,5 +1,6 @@
 package com.csselect.game.gamecreation.patterns;
 
+import com.csselect.Injector;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Termination;
 
@@ -152,7 +153,8 @@ public class GameOptions implements Cloneable {
      */
     public boolean isComplete() {
         return title != null && description != null && resultDatabaseAddress != null && dataset != null
-                && termination != null && gamemode != null;
+                && termination != null && gamemode != null
+                && Injector.getInstance().getMLServer().isValidDataset(dataset);
     }
 
     @Override
