@@ -16,7 +16,7 @@ Vue.component('active-games-display', {
         '                   <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"' +
         '                        v-on:click="terminate(game.id)" :value="localisation.terminate">' +
         '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"' +
-        '                       data-toggle="modal" :data-target="\'#inviteModal\' + game.id">' +
+        '                       data-toggle="modal" :title="localisation.invitePlayerHelp" :data-target="\'#inviteModal\' + game.id">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +

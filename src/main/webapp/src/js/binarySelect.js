@@ -34,7 +34,7 @@ Vue.component('BinarySelect', {
         this.nextRound();
     },
 
-    template: '<div class="row" v-bind:class="{\'disabled-div\': disabled}">\n' +
+    template: '<div class="row" :title="binarySelectHelp" v-bind:class="{\'disabled-div\': disabled}">\n' +
         '                                <div class="col-sm" >\n' +
         '                                        <feature-box v-bind:feature="feature1" v-on:toggled="toggled"></feature-box>\n' +
         '                                </div>\n' +
