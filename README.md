@@ -20,3 +20,4 @@
  
  # Known issues
  - Only works with MySql Version 5.7.20
+ - pattern loading doesn't load termination value
