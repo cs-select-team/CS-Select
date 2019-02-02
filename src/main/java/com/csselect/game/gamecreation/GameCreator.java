@@ -46,7 +46,7 @@ public class GameCreator {
      * @param data Value of the option
      */
     public void setOption(String option, String data) {
-        String[] arguments = data.split(":");
+        String[] arguments = data.split(":", 2);
         assert arguments.length > 0;
         switch(option) {
             case "title":
@@ -62,12 +62,8 @@ public class GameCreator {
                 gameOptions.setResultDatabaseName(arguments[0]);
                 break;
             case "termination":
-                String type = arguments[0];
-                String value = arguments[1] + ":" + arguments[2] + ":" + arguments[3];
-                String[] toParse = new String[2];
-                toParse[0] = type;
-                toParse[1] = value;
-                gameOptions.setTermination(TerminationParser.getTermination(toParse));
+                assert arguments.length == 2;
+                gameOptions.setTermination(TerminationParser.getTermination(arguments));
                 assert this.gameOptions.getTermination() != null;
                 break;
             case "gamemode":
