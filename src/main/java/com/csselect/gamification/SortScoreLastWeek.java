@@ -21,7 +21,7 @@ public class SortScoreLastWeek extends LeaderboardSortingStrategy {
         for (Player player : players) {
             int sum = 0;
             for (Round round : player.getRounds().stream()
-                    .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusDays(7)))
+                    .filter(r -> r.getTime().toLocalDate().isAfter(LocalDate.now().minusWeeks(1)))
                     .collect(Collectors.toList())) {
                 sum += round.getPoints();
             }
