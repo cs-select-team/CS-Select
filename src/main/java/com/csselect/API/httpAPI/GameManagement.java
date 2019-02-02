@@ -32,7 +32,15 @@ public class GameManagement extends Servlet {
             getTerminatedGames(req, resp);
         } else if (req.getPathInfo().matches("/exists.*")) {
             checkExist(req, resp);
+        } else if (req.getPathInfo().matches("/dbexists.*")) {
+            checkDatabase(req, resp);
         }
+    }
+
+    private void checkDatabase(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
+        String name = getParameter("name", req);
+        returnAsJson(resp, getOrganiserFacade().checkDatabase(name));
+
     }
 
     private void checkExist(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {

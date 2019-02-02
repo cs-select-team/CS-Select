@@ -171,12 +171,21 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     /** checks if a feature set with the given name exists
      *
-     * @throws IOException if the backend failed the connection to the database
+     * @throws IOException if the backend failed the connection to the ml Server
      * @param name name of the feature set to look up
      * @return true if a feature set does exist , false otherwise
      */
     public boolean checkFeatureSet(String name) {
         return Injector.getInstance().getMLServer().isValidDataset(name);
+    }
+    /** checks if a batabse with the given name exists
+     *
+     * @throws IOException if the backend failed the connection to the database
+     * @param name name of the database to look up
+     * @return true if the database does exist , false otherwise
+     */
+    public boolean checkDatabase(String name) throws IOException {
+        return Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase(name);
     }
 
 }
