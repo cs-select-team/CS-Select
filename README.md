@@ -1,6 +1,7 @@
 # CS-Select
 
 ## Installation
+### Manual
 1. Install tomcat-9 from official [Tomcat Website](http://tomcat.apache.org/)
 1. Install MySql-Server version 5.7.20
 1. Edit values in example-conf.properties and move the new file to `$CATALINA_HOME/conf/Catalina/cs_select/config.properties`
@@ -10,6 +11,8 @@
 1. Start tomcat by executing `$CATALINA_HOME/bin/startup.sh`
 1. go to [http://localhost:8080/CS-Select/] to use CS-Select
 1. to register a new organiser they need the masterpassword set in the config.properties
+### Docker
+1. Refer to [https://github.com/bendixsonnenberg/CS-Select-Docker]
 
 ## Developer setup
 - Install tomcat-9 from the official [Tomcat Website](http://tomcat.apache.org/) 
