@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class Player extends User implements Comparable {
     private PlayerAdapter playerAdapter;
-    private Collection<Feature> featuresToShow;
     private Game gameToReturn;
     private Round activeRound;
 
@@ -75,12 +74,12 @@ public class Player extends User implements Comparable {
      * @return Features to show in this round of the game
      */
     public Collection<Feature> startRound(int gameId) {
-        playerAdapter.getActiveGames().forEach((Game game) -> {
+        for (Game game : playerAdapter.getActiveGames()) {
             if (game.getId() == gameId && !game.isTerminated()) {
-                featuresToShow = game.startRound(this);
+                return game.startRound(this);
             }
-        });
-        return featuresToShow;
+        }
+        throw new IllegalArgumentException("Player doesn't participate in any game with ID " + gameId);
     }
 
     /**
