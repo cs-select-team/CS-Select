@@ -9,10 +9,10 @@
 1. Execute mvn compile 
 1. Copy `target/CS-Select.war` to `$CATALINA_HOME/webapps/`
 1. Start tomcat by executing `$CATALINA_HOME/bin/startup.sh`
-1. go to [http://localhost:8080/CS-Select/] to use CS-Select
+1. go to [http://localhost:8080/CS-Select/](http://localhost:8080/CS-Select/) to use CS-Select
 1. to register a new organiser they need the masterpassword set in the config.properties
 ### Docker
-1. Refer to [https://github.com/bendixsonnenberg/CS-Select-Docker]
+1. Refer to [https://github.com/bendixsonnenberg/CS-Select-Docker](https://github.com/bendixsonnenberg/CS-Select-Docker)
 
 ## Developer setup
 - Install tomcat-9 from the official [Tomcat Website](http://tomcat.apache.org/) 
