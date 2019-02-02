@@ -7,9 +7,13 @@ Vue.component('invite', {
         '      </div>',
     methods: {
         invite: function() {
-            creation.addPlayer(document.getElementById("emailToAdd").value.toString());
-            document.getElementById("emailToAdd").value = '';
-            alert("Successfully added Email")
+            if(document.getElementById("emailToAdd").value.toString() != '') {
+                creation.addPlayer(document.getElementById("emailToAdd").value.toString());
+                document.getElementById("emailToAdd").value = '';
+                alert("Successfully added Email")
+            } else {
+                alert("Please type in Email")
+            }
         }
     }
 });
@@ -26,12 +30,12 @@ Vue.component('pat', {
 });
 
 Vue.component('control', {
-    props: [''],
+    props: ['creationdisabled'],
     template: '<div class="container">' +
         '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()"' +
         ':value="localisation.abort">' +
         '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="create()"' +
-        ':value="localisation.create">' +
+        ':value="localisation.create" :disabled="creationdisabled">' +
         '       </div>',
     methods: {
         abort : function() {
@@ -39,7 +43,8 @@ Vue.component('control', {
         },
         create : function() {
             creation.fail = false;
-            axios.all([creation.submitTitle(), creation.submitDescription(), creation.submitDatabaseAddress(),
+            creation.creationenabled = true;
+            axios.all([creation.submitTitle(), creation.submitDescription(), creation.submitDatabaseName(),
                 creation.checkFeatureSet(), creation.invitePlayers(),
                 creation.submitTermination(), creation.submitGamemode(), creation.submitFeatureSet()]).
                         then(function (response) {
@@ -51,10 +56,7 @@ Vue.component('control', {
                         creation.saveP();
                     }
                     creation.createGame();
-
-            })
-
-
+            });
         }
     }
 });
@@ -78,6 +80,7 @@ var creation = new Vue({
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
         callbackCounter: 1 ,// very primitive sephamore
+        creationenabled: true,
         success: false // success message for the use
     },
     methods: {
@@ -93,7 +96,7 @@ var creation = new Vue({
             this.terminationtype = '';
             this.terminationvalue = '';
             this.featureSet = '';
-            this.databaseAddress = '';
+            this.databaseName = '';
             this.savePattern = false;
             this.selectedPattern = null;
         },
@@ -125,8 +128,8 @@ var creation = new Vue({
                 }
             })
         },
-        submitDatabaseAddress: function() {
-            if (this.databaseAddress == '') {
+        submitDatabaseName: function() {
+            if (this.databaseName == '') {
                 alert("Please set database address");
                 return;
             }
@@ -135,7 +138,7 @@ var creation = new Vue({
                 url: 'create/setParam',
                 params: {
                     option: "addressOrganiserDatabase",
-                    data: this.databaseAddress,
+                    data: this.databaseName,
                 }
             })
         },
@@ -252,7 +255,7 @@ var creation = new Vue({
             this.title = this.selectedPattern.gameOptions.title;
             this.description = this.selectedPattern.gameOptions.desc;
             this.featureSet = this.selectedPattern.gameOptions.featureset;
-            this.databaseAddress = this.selectedPattern.gameOptions.database;
+            this.databaseName = this.selectedPattern.gameOptions.database;
             this.terminationtype = this.selectedPattern.gameOptions.termination.type;
             this.mode = this.selectedPattern.gameOptions.gamemode;
             this.terminationvalue = JSON.parse(this.selectedPattern.gameOptions.termination.value);
@@ -260,15 +263,20 @@ var creation = new Vue({
 
         },
         createGame: function() {
-
             var self = this;
-            if (this.fail) return;
+            self.creationenabled = false;
+            if (this.fail) {
+                self.creationenabled = true;
+                return;
+            }
             axios({
                 method: 'post',
                 url: 'create'
             }).then(function (response) {
+                self.creationenabled = true;
                 self.success = true;
             }).catch(function (error) {
+                self.creationenabled = true;
                 self.alert = true;
             });
         },

@@ -88,10 +88,10 @@
                                 <input v-model="featureSet" placeholder='<fmt:message key="inputFeatures"/>'/>
                             </div> <br>
                             <div class="row" id="database-area">
-                                <input v-model="databaseAddress" placeholder='<fmt:message key="inputDatabase"/>'/>
+                                <input v-model="databaseName" placeholder='<fmt:message key="inputDatabase"/>'/>
                             </div> <br>
                             <div class="row" id="control-area">
-                                <control></control>
+                                <control v-bind:creationdisabled="!creationenabled"></control>
                             </div>
                         </div>
                     </div>
