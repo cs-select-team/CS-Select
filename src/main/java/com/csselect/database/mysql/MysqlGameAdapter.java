@@ -145,6 +145,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 Round round = getGamemode().createRound(new Player(new MysqlPlayerAdapter(
                         set.getInt("playerId"))));
                 round.setTime(set.getTimestamp("time").toLocalDateTime());
+                round.setPoints(set.getInt("points"));
                 rounds.add(round);
             }
         } catch (SQLException e) {

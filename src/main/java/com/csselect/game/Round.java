@@ -65,6 +65,10 @@ public abstract class Round {
         return this.shownFeatures;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     /**
      * Getter for the features {@link Feature} selected by the player {@link Player}
      * @return the selected features {@link Feature}
