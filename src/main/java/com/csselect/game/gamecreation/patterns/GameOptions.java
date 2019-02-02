@@ -10,7 +10,7 @@ import java.util.HashSet;
  *  This class represents the fields which an organiser {@link com.csselect.user.Organiser} can modify whilst in
  *  gamecreation interface.
  */
-public class GameOptions implements  Cloneable {
+public class GameOptions implements Cloneable {
     private String title;
     private String description;
     private String resultDatabaseAddress;
@@ -144,6 +144,15 @@ public class GameOptions implements  Cloneable {
      */
     public void removeInvitedEmails(Collection<String> invitedEmails) {
         this.invitedEmails.removeAll(invitedEmails);
+    }
+
+    /**
+     * Checks whether all options that are necessary for a game have been set correctly
+     * @return true if all options are set, false otherwise
+     */
+    public boolean isComplete() {
+        return title != null && description != null && resultDatabaseAddress != null && dataset != null
+                && termination != null && gamemode != null;
     }
 
     @Override
