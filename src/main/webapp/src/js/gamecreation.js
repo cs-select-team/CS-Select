@@ -289,9 +289,13 @@ var creation = new Vue({
         },
         loadPattern: function() {
             this.title = this.selectedPattern.gameOptions.title;
-            this.description = this.selectedPattern.gameOption.desc;
-            // TODO add the rest
+            this.description = this.selectedPattern.gameOptions.desc;
+            this.featureSet = this.selectedPattern.gameOptions.featureset;
+            this.databaseAddress = this.selectedPattern.gameOptions.database;
             this.terminationtype = this.selectedPattern.termination.type;
+            this.terminationvalue = JSON.parse(this.selectedPattern.termination.value);
+            this.invites = this.selectedPattern.gameOptions.invites;
+
         },
         createGame: function() {
             var self = this;
@@ -301,9 +305,8 @@ var creation = new Vue({
                 url: 'create'
             }).then(function (response) {
                 self.success = true;
-                window.location.href = "organiser.jsp"
             }).catch(function (error) {
-                creation.alert = true;
+                self.alert = true;
             });
         },
     },

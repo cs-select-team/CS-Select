@@ -115,7 +115,6 @@ public class GameManagement extends Servlet {
         Collection<Pattern> patterns = getOrganiserFacade().getPatterns();
         JsonArray array = new JsonArray();
         for (Pattern p: patterns) {
-            System.out.println("loading pattern " + p.getTitle());
             JsonObject object = new JsonObject();
             object.addProperty("title", p.getTitle());
 
