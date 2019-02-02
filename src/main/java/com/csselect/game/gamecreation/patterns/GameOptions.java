@@ -14,7 +14,7 @@ import java.util.HashSet;
 public class GameOptions implements Cloneable {
     private String title;
     private String description;
-    private String resultDatabaseAddress;
+    private String resultDatabaseName;
     private String dataset;
     private Termination termination;
     private Gamemode gamemode;
@@ -63,8 +63,8 @@ public class GameOptions implements Cloneable {
      * Get String representing address of the database where the results shall be saved in
      * @return database address
      */
-    public String getResultDatabaseAddress() {
-        return resultDatabaseAddress;
+    public String getResultDatabaseName() {
+        return resultDatabaseName;
     }
 
     /**
@@ -87,8 +87,8 @@ public class GameOptions implements Cloneable {
      * Set String representing address of the database where the results shall be saved in
      * @param nameFeatureDatabase Database address
      */
-    public void setResultDatabaseAddress(String nameFeatureDatabase) {
-        this.resultDatabaseAddress = nameFeatureDatabase;
+    public void setResultDatabaseName(String nameFeatureDatabase) {
+        this.resultDatabaseName = nameFeatureDatabase;
     }
 
     /**
@@ -152,7 +152,7 @@ public class GameOptions implements Cloneable {
      * @return true if all options are set, false otherwise
      */
     public boolean isComplete() {
-        return title != null && description != null && resultDatabaseAddress != null && dataset != null
+        return title != null && description != null && resultDatabaseName != null && dataset != null
                 && termination != null && gamemode != null
                 && Injector.getInstance().getMLServer().isValidDataset(dataset);
     }
@@ -165,7 +165,7 @@ public class GameOptions implements Cloneable {
             copyObject.setDescription(this.description);
             copyObject.setGamemode(this.gamemode);
             copyObject.addInvitedEmails(this.invitedEmails);
-            copyObject.setResultDatabaseAddress(this.getResultDatabaseAddress());
+            copyObject.setResultDatabaseName(this.getResultDatabaseName());
             copyObject.setTermination(this.termination);
             return copyObject;
         } catch (CloneNotSupportedException e) {

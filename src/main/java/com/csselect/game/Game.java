@@ -17,7 +17,7 @@ public class Game {
     private String title;
     private String description;
     private final int id;
-    private String addressOrganiserDatabase;
+    private String nameOrganiserDatabase;
     private FeatureSet featureSet;
     private final GameAdapter database;
 
@@ -105,11 +105,11 @@ public class Game {
      * Getter for the address of the database in which round data is stored
      * @return the address of the database
      */
-    public String getAddressOrganiserDatabase() {
-        if (this.addressOrganiserDatabase == null) {
-            this.addressOrganiserDatabase = this.database.getDatabaseName();
+    public String getNameOrganiserDatabase() {
+        if (this.nameOrganiserDatabase == null) {
+            this.nameOrganiserDatabase = this.database.getDatabaseName();
         }
-        return this.addressOrganiserDatabase;
+        return this.nameOrganiserDatabase;
     }
 
     /**
@@ -182,8 +182,8 @@ public class Game {
      * Setter for the address of the database in which the round {@link Round} data is stored
      * @param addressOrganiserDatabase the address of the database
      */
-    public void setAddressOrganiserDatabase(String addressOrganiserDatabase) {
-        this.addressOrganiserDatabase = addressOrganiserDatabase;
+    public void setNameOrganiserDatabase(String addressOrganiserDatabase) {
+        this.nameOrganiserDatabase = addressOrganiserDatabase;
         database.setDatabase(addressOrganiserDatabase);
     }
 

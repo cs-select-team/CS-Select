@@ -59,7 +59,7 @@ public class GameCreator {
                 gameOptions.setDataset(arguments[0]);
                 break;
             case "addressOrganiserDatabase":
-                gameOptions.setResultDatabaseAddress(arguments[0]);
+                gameOptions.setResultDatabaseName(arguments[0]);
                 break;
             case "termination":
                 assert arguments.length == 2; // [type, arguments]
@@ -108,7 +108,7 @@ public class GameCreator {
         Game game = databaseAdapter.createGame(organiser);
         game.setTitle(gameOptions.getTitle());
         game.setDescription(gameOptions.getDescription());
-        game.setAddressOrganiserDatabase(gameOptions.getResultDatabaseAddress());
+        game.setNameOrganiserDatabase(gameOptions.getResultDatabaseName());
         game.setTermination(gameOptions.getTermination());
         game.setGamemode(gameOptions.getGamemode());
         try {
