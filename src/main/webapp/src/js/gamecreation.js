@@ -39,16 +39,22 @@ Vue.component('control', {
         },
         create : function() {
             creation.fail = false;
-            creation.submitTitle();
-            creation.submitDescription();
-            creation.submitDatabaseAddress();
-            creation.submitFeatureSet();
-            creation.invitePlayers();
-            creation.submitTermination();
-            creation.submitGamemode();
-            if (creation.savePattern) {
-                 creation.saveP();
-            }
+            axios.all([creation.submitTitle(), creation.submitDescription(), creation.submitDatabaseAddress(),
+                creation.checkFeatureSet(), creation.invitePlayers(),
+                creation.submitTermination(), creation.submitGamemode(), creation.submitFeatureSet()]).
+                        then(function (response) {
+                    if (!response[3].data) {
+                        alert("Feature set does not exist");
+                        return;
+                    }
+                    if (creation.savePattern) {
+                        creation.saveP();
+                    }
+                    creation.createGame();
+
+            })
+
+
         }
     }
 });
@@ -72,9 +78,7 @@ var creation = new Vue({
         savedPatterns: ["pattern 1"],
         selectedPattern: null,
         callbackCounter: 1 ,// very primitive sephamore
-        alert: false,
-        success: false, // success message for the use
-        fail: false
+        success: false // success message for the use
     },
     methods: {
         emptyStore: function() {
@@ -98,7 +102,6 @@ var creation = new Vue({
                 alert("Please set title");
                 return;
             }
-            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -106,19 +109,13 @@ var creation = new Vue({
                     option: "title",
                     data: this.title,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
         submitDescription: function() {
             if (this.description == '') {
                 alert("Please set description");
                 return;
             }
-            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -126,12 +123,7 @@ var creation = new Vue({
                     option: "description",
                     data: this.description,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
         submitDatabaseAddress: function() {
             if (this.databaseAddress == '') {
@@ -163,7 +155,6 @@ var creation = new Vue({
                     self.players += "_" + email;
                 }
             });
-            this.callbackCounter++;
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -171,12 +162,7 @@ var creation = new Vue({
                     option: "addPlayers",
                     data: this.players,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
         submitTermination: function() {
             if (this.terminationtype == '') {
@@ -195,12 +181,7 @@ var creation = new Vue({
                     option: "termination",
                     data: this.terminationtype + ":" + this.terminationvalue,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
         submitGamemode: function() {
             if (this.mode == '') {
@@ -222,49 +203,34 @@ var creation = new Vue({
                         "min~" + this.minSelect + "-" +
                         "max~" + this.maxSelect,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
-        submitFeatureSet: function() {
-
+        checkFeatureSet: function() {
             var self = this;
             if (this.featureSet == '') {
                 alert("Please set featureSet");
                 return;
             } else {
                 // checking if the feature set exists on the server
-                axios({
-                    method:'get',
-                    url:'create/exists',
+                return axios({
+                    method: 'get',
+                    url: 'create/exists',
                     params: {
                         name: this.featureSet
                     }
-                }).then(function(response) {
-                    if (!response.data) {
-                        alert("Feature set does not exist");
-                        self.fail = true;
-                        return;
-                    }
+                })
+            }
+        },
+        submitFeatureSet: function() {
                     axios({
                         method: 'post',
                         url: 'create/setParam',
                         params: {
                             option: "featureSet",
-                            data: self.featureSet
+                            data: this.featureSet
 
                         }
-                    }).then(function(response) {
-                        creation.callbackCounter--;
-                        if (creation.callbackCounter == 0) {
-                            creation.createGame();
-                        }
-                    });
-                })
-            }
+                    })
 
 
         },
@@ -280,12 +246,7 @@ var creation = new Vue({
                 params: {
                     title: this.patternName,
                 }
-            }).then(function(response) {
-                creation.callbackCounter--;
-                if (creation.callbackCounter == 0) {
-                    creation.createGame();
-                }
-            });
+            })
         },
         loadPattern: function() {
             this.title = this.selectedPattern.gameOptions.title;
@@ -299,6 +260,7 @@ var creation = new Vue({
 
         },
         createGame: function() {
+
             var self = this;
             if (this.fail) return;
             axios({
