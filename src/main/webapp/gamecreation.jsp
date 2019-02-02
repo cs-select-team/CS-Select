@@ -21,10 +21,10 @@
                     </div>
                     <div class="col" id="mode-area">
                         <div class="col">
-                            <input type="radio" id="matrix" value="matrix" v-model="mode">
+                            <input type="radio" id="matrix" value="MatrixSelect" v-model="mode">
                             <label for="matrix"><fmt:message key="matrixSelect"/></label>
                             <br>
-                            <input type="radio" id="binary" value="binary" v-model="mode">
+                            <input type="radio" id="binary" value="BinarySelect" v-model="mode">
                             <label for="binary"><fmt:message key="binarySelect"/></label>
                         </div>
                         <div class="col" v-if="mode === 'matrix'">
@@ -65,10 +65,10 @@
                     </div>
                     <div class="col" id="termination-area">
                     <div>
-                        <input type="radio" id="time" value="time" v-model="terminationtype">
+                        <input type="radio" id="time" value="TimeTermination" v-model="terminationtype">
                         <label for="time"><fmt:message key="timeT"/></label>
                         <br>
-                        <input type="radio" id="rounds" value="rounds" v-model="terminationtype">
+                        <input type="radio" id="rounds" value="NumberOfRoundsTermination" v-model="terminationtype">
                         <label for="rounds"><fmt:message key="roundsT"/></label>
                     </div>
                     <div v-if="terminationtype === 'time'">

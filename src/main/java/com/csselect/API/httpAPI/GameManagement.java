@@ -124,13 +124,16 @@ public class GameManagement extends Servlet {
             gameOptionsJson.addProperty("featureset", go.getDataset());
             gameOptionsJson.addProperty("desc", go.getDescription());
             gameOptionsJson.addProperty("title", go.getTitle());
+
             gameOptionsJson.addProperty("database", go.getResultDatabaseName());
+
+            gameOptionsJson.addProperty("gamemode", go.getGamemode().getName());
 
             JsonObject terminationJson = new JsonObject();
             Termination termination = go.getTermination();
-            terminationJson.addProperty("type", termination.getClass().getName());
+            // we will only get one termination, not a composite
+            terminationJson.addProperty("type", termination.getName());
             terminationJson.addProperty("value", new Gson().toJson(termination));
-
             gameOptionsJson.add("termination", terminationJson);
 
             JsonArray invitations = new JsonArray();
