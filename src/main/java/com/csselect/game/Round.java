@@ -65,6 +65,10 @@ public abstract class Round {
         return this.shownFeatures;
     }
 
+    /**
+     * Sets the points of a round. This is for database purposes.
+     * @param points the points to set
+     */
     public void setPoints(int points) {
         this.points = points;
     }

@@ -25,7 +25,7 @@ public class Streak {
     /**
      * Increases the counter of the streak by 1.
      */
-    public void increaseStreak() {
+    void increaseStreak() {
         counter += 1;
     }
 

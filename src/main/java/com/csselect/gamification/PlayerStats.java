@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
-    private PlayerStatsAdapter playerStatsAdapter;
-    private Streak streak;
+    private final PlayerStatsAdapter playerStatsAdapter;
+    private final Streak streak;
     private DailyChallenge activeDaily;
 
     /**
@@ -88,7 +88,7 @@ public class PlayerStats implements Gamification {
      * Gets the amount of played rounds of the player.
      * @return The amount of played rounds of the player.
      */
-    public int getRoundsPlayed() {
+    int getRoundsPlayed() {
         return playerStatsAdapter.getRoundsPlayed();
     }
 
@@ -96,7 +96,7 @@ public class PlayerStats implements Gamification {
      * Gets the amount of dailies that have been completed by the player.
      * @return The amount of dailies completed.
      */
-    public int getDailiesCompleted() {
+    int getDailiesCompleted() {
         return playerStatsAdapter.getDailiesCompleted();
     }
 
@@ -105,7 +105,7 @@ public class PlayerStats implements Gamification {
      * does not take into account any gamification mechanics.
      * @return The maximum score of the player.
      */
-    public int getMaxRoundScore() {
+    int getMaxRoundScore() {
         return playerStatsAdapter.getMaxRoundScore();
     }
 
@@ -115,7 +115,7 @@ public class PlayerStats implements Gamification {
      * mechanics.
      * @return The last score of the player.
      */
-    public int getLastScore() {
+    int getLastScore() {
         return playerStatsAdapter.getLastScore();
     }
 
@@ -123,7 +123,7 @@ public class PlayerStats implements Gamification {
      * Gets the highest streak ever reached by the player.
      * @return The highest streak of the player.
      */
-    public int getHighestStreak() {
+    int getHighestStreak() {
         return playerStatsAdapter.getHighestStreak();
     }
 

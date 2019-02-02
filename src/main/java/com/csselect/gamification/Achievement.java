@@ -6,8 +6,8 @@ package com.csselect.gamification;
  */
 public class Achievement {
 
-    private AchievementState state;
-    private AchievementType type;
+    private final AchievementState state;
+    private final AchievementType type;
 
     /**
      * Creates a new Achievement by setting its type and the current state.
