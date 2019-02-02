@@ -293,6 +293,7 @@ var creation = new Vue({
             this.featureSet = this.selectedPattern.gameOptions.featureset;
             this.databaseAddress = this.selectedPattern.gameOptions.database;
             this.terminationtype = this.selectedPattern.gameOptions.termination.type;
+            this.mode = this.selectedPattern.gameOptions.gamemode;
             this.terminationvalue = JSON.parse(this.selectedPattern.gameOptions.termination.value);
             this.invites = this.selectedPattern.gameOptions.invites;
 

@@ -27,7 +27,7 @@
                             <input type="radio" id="binary" value="BinarySelect" v-model="mode">
                             <label for="binary"><fmt:message key="binarySelect"/></label>
                         </div>
-                        <div class="col" v-if="mode === 'matrix'">
+                        <div class="col" v-if="mode === 'MatrixSelect'">
                             <input type="number" id="num" v-model="numberFeatures" min="0">
                             <label for="num"><fmt:message key="numFeatures"/></label> <br>
                             <input type="number" id="min" v-model="minSelect" min="0">
@@ -71,12 +71,12 @@
                         <input type="radio" id="rounds" value="NumberOfRoundsTermination" v-model="terminationtype">
                         <label for="rounds"><fmt:message key="roundsT"/></label>
                     </div>
-                    <div v-if="terminationtype === 'time'">
+                    <div v-if="terminationtype === 'TimeTermination'">
                         <input type="text" id="datetime" v-model="terminationvalue"
                             placeholder='<fmt:message key="timeSyntax"/>'/>
                         <label for="datetime"><fmt:message key="timeInput"/></label>
                     </div>
-                    <div v-else-if="terminationtype === 'rounds'">
+                    <div v-else-if="terminationtype === 'NumberOfRoundsTermination'">
                         <input type="text" id="numRounds" v-model="terminationvalue"
                         placeholder='<fmt:message key="roundsSyntax"/>'/>
                         <label for="numRounds"><fmt:message key="roundsInput"/></label>
