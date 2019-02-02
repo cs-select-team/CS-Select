@@ -9,6 +9,7 @@ import com.csselect.game.gamecreation.patterns.Pattern;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.StringJoiner;
 
@@ -55,6 +56,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 options.setResultDatabaseAddress(set.getString("databasename"));
                 options.setTermination(parseTermination(set.getString("termination")));
                 options.setGamemode(parseGamemode(set.getString("gamemode")));
+                options.addInvitedEmails(emailCollectionFromString(set.getString("invitedPlayers")));
                 patterns.add(new Pattern(options, set.getString("title")));
             }
         } catch (SQLException e) {
@@ -96,5 +98,11 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
     @Override
     public Collection<Game> getTerminatedGames() {
         return DATABASE_ADAPTER.getTerminatedGames(this);
+    }
+
+    private Collection<String> emailCollectionFromString(String emails) {
+        Collection<String> emailCollection = new HashSet<>();
+        Collections.addAll(emailCollection, emails.split(","));
+        return emailCollection;
     }
 }
