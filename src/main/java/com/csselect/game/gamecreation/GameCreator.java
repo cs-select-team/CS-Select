@@ -101,6 +101,9 @@ public class GameCreator {
      * @return New {@link Game} object
      */
     public Game doCreate() {
+        if (!gameOptions.isComplete()) {
+            return null;
+        }
         DatabaseAdapter databaseAdapter = Injector.getInstance().getDatabaseAdapter();
         Game game = databaseAdapter.createGame(organiser);
         game.setTitle(gameOptions.getTitle());
