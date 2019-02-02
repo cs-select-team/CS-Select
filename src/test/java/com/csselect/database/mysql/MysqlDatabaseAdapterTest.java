@@ -2,16 +2,14 @@ package com.csselect.database.mysql;
 
 import com.csselect.Injector;
 import com.csselect.MysqlTestClass;
-import com.csselect.configuration.Configuration;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.BinarySelect;
+import com.csselect.game.FeatureSet;
 import com.csselect.game.Game;
 import com.csselect.game.NumberOfRoundsTermination;
-import com.csselect.mlserver.MLServer;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.csselect.utils.FeatureSetUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,6 +23,7 @@ import java.util.HashSet;
 public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
     private MysqlDatabaseAdapter mysqlDatabaseAdapter;
+    private FeatureSet features;
 
     private static final String TEST_EMAIL = "test@test.de";
     private static final String TEST_EMAIL2 = "test2@test.de";
@@ -39,6 +38,12 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
     @Override
     public void setUp() {
         mysqlDatabaseAdapter = new MysqlDatabaseAdapter(Injector.getInstance().getConfiguration());
+        try {
+            features = Injector.getInstance().getMLServer().getFeatures("populationGender");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 
     @Override
@@ -177,7 +182,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         game.setTitle(TEST_TITLE);
         game.setDescription(TEST_DESC);
         game.setAddressOrganiserDatabase(TEST_DB);
-        game.setFeatureSet(FeatureSetUtils.loadFeatureSet("populationGender"));
+        game.setFeatureSet(features);
         game.setTermination(new NumberOfRoundsTermination(5));
         return game;
     }
