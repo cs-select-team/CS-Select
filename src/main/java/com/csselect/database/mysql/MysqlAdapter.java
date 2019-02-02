@@ -202,10 +202,10 @@ public abstract class MysqlAdapter {
      * @return created termination
      */
     Termination parseTermination(String termination) {
-        String[] terminations = termination.split(",");
-        if (termination.length() > 1) {
+        String[] terminationArray = termination.split(",");
+        if (terminationArray.length > 1) {
             TerminationComposite term = new TerminationComposite();
-            for (String t : terminations) {
+            for (String t : terminationArray) {
                 if (t.startsWith("time")) {
                     term.add(new TimeTermination(LocalDateTime.ofEpochSecond(
                             Long.parseLong(t.replace("time:", "")), 0, ZoneOffset.UTC)));
@@ -216,11 +216,11 @@ public abstract class MysqlAdapter {
             }
             return term;
         } else {
-            if (terminations[0].startsWith("time")) {
+            if (terminationArray[0].startsWith("time")) {
                 return new TimeTermination(LocalDateTime.ofEpochSecond(
-                        Long.parseLong(terminations[0].replace("time:", "")), 0, ZoneOffset.UTC));
-            } else if (terminations[0].startsWith("rounds")) {
-                return new NumberOfRoundsTermination(Integer.parseInt(terminations[0].replace("rounds:", "")));
+                        Long.parseLong(terminationArray[0].replace("time:", "")), 0, ZoneOffset.UTC));
+            } else if (terminationArray[0].startsWith("rounds")) {
+                return new NumberOfRoundsTermination(Integer.parseInt(terminationArray[0].replace("rounds:", "")));
             } else {
                 return null;
             }
