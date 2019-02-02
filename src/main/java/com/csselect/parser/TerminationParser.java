@@ -27,10 +27,10 @@ public final class TerminationParser {
         String value = args[1];
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Syntax = '2011-12-03T10:15:30'
         Termination termination = null;
-        if (type.equals("time")) {
+        if (type.equals(new TimeTermination(LocalDateTime.now()).getName())) {
             termination = new TimeTermination(LocalDateTime.parse(value, formatter));
         }
-        if (type.equals("rounds")) {
+        if (type.equals(new NumberOfRoundsTermination(0).getName())) {
             termination = new NumberOfRoundsTermination(Integer.parseInt(value));
         }
         return termination;
