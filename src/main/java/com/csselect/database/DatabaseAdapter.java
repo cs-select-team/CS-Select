@@ -125,6 +125,7 @@ public interface DatabaseAdapter {
     /**
      * Creates a new {@link Game} attributed to the given {@link Organiser}
      * @param organiser organiser who the game belongs to
+     * @return the created game
      */
     Game createGame(Organiser organiser);
 

@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class DailyReachScoreHundredFifty extends DailyChallenge {
 
-    private final static String GERMAN_DESC = "Erreiche heute insgesamt 150 Punkte.";
-    private final static String ENGLISH_DESC = "Achieve a total score of 150 today.";
+    private static final String GERMAN_DESC = "Erreiche heute insgesamt 150 Punkte.";
+    private static final String ENGLISH_DESC = "Achieve a total score of 150 today.";
     private int dailyScore;
 
     /**

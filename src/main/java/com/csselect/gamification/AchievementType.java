@@ -128,7 +128,7 @@ public enum AchievementType {
     /**
      * This type of achievement is completed after having reached a streak of five.
      */
-    STREAK_FIVE ("streakFiveName", "streakFiveDesc") {
+    STREAK_FIVE("streakFiveName", "streakFiveDesc") {
 
         @Override
         protected AchievementState getState(PlayerStats stats) {
@@ -418,6 +418,11 @@ public enum AchievementType {
     private final String descKey;
 
 
+    /**
+     * Creates a new {@link AchievementType}
+     * @param nameKey key of the types name
+     * @param descKey key of the types description
+     */
     AchievementType(String nameKey, String descKey) {
         this.nameKey = nameKey;
         this.descKey = descKey;

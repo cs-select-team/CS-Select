@@ -175,7 +175,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param name name of the feature set to look up
      * @return true if a feature set does exist , false otherwise
      */
-    public boolean checkFeatureSet(String name) throws IOException {
+    public boolean checkFeatureSet(String name) {
         return Injector.getInstance().getMLServer().isValidDataset(name);
     }
 

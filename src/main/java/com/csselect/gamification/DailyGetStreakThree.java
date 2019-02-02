@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class DailyGetStreakThree extends DailyChallenge {
 
-    private final static String GERMAN_DESC = "Spiele drei Runden am Stück.";
-    private final static String ENGLISH_DESC = "Play three rounds in a row.";
+    private static final String GERMAN_DESC = "Spiele drei Runden am Stück.";
+    private static final String ENGLISH_DESC = "Play three rounds in a row.";
     private int dailyStreak;
 
     /**

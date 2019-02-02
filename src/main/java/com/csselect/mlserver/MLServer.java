@@ -44,5 +44,5 @@ public interface MLServer {
      * @param dataset dataset to check
      * @return true if dataset exists, false otherwise
      */
-    boolean isValidDataset(String dataset) throws IOException;
+    boolean isValidDataset(String dataset);
 }

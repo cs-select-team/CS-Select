@@ -90,8 +90,8 @@ public class StandardRound extends Round {
             return -1;
         }
 
-        if ((this.minSelect * this.numberOfSelections) > selectedFeatures.length ||
-                (this.maxSelect * this.numberOfSelections) < selectedFeatures.length) {
+        if ((this.minSelect * this.numberOfSelections) > selectedFeatures.length
+                || (this.maxSelect * this.numberOfSelections) < selectedFeatures.length) {
             return -1;
         }
 

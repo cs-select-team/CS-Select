@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class DailyReachRoundScoreEighty extends DailyChallenge {
 
-    private final static String GERMAN_DESC = "Erreiche 80 Punkte nach einer einzelnen Runde.";
-    private final static String ENGLISH_DESC = "Reach a score of 80 after a single round.";
+    private static final String GERMAN_DESC = "Erreiche 80 Punkte nach einer einzelnen Runde.";
+    private static final String ENGLISH_DESC = "Reach a score of 80 after a single round.";
 
     /**
      * Creates a daily challenge by setting the necessary values.

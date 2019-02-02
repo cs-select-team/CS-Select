@@ -17,6 +17,10 @@ public class PlayerStats implements Gamification {
     private Streak streak;
     private DailyChallenge activeDaily;
 
+    /**
+     * Creates a new {@link PlayerStats} object with the given {@link PlayerStatsAdapter}
+     * @param playerStatsAdapter playerstatsadapter for connection to the database
+     */
     public PlayerStats(PlayerStatsAdapter playerStatsAdapter) {
         this.playerStatsAdapter = playerStatsAdapter;
         this.streak = new Streak();
