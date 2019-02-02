@@ -62,8 +62,12 @@ public class GameCreator {
                 gameOptions.setResultDatabaseName(arguments[0]);
                 break;
             case "termination":
-                assert arguments.length == 2; // [type, arguments]
-                gameOptions.setTermination(TerminationParser.getTermination(arguments));
+                String type = arguments[0];
+                String value = arguments[1] + ":" + arguments[2] + ":" + arguments[3];
+                String[] toParse = new String[2];
+                toParse[0] = type;
+                toParse[1] = value;
+                gameOptions.setTermination(TerminationParser.getTermination(toParse));
                 assert this.gameOptions.getTermination() != null;
                 break;
             case "gamemode":
