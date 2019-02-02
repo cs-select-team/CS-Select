@@ -20,4 +20,12 @@ public abstract class Termination {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    /**
+     * Getter for the name of the termination
+     * @return returns the name of the class of the termination
+     */
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

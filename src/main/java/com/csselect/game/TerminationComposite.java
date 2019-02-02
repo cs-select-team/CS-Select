@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -47,6 +48,14 @@ public class TerminationComposite extends Termination {
         }
 
         this.terminations.add(termination);
+    }
+
+    /**
+     * Getter for the terminations included in the TerminationComposite
+     * @return the terminations
+     */
+    public Collection<Termination> getTerminations() {
+        return this.terminations;
     }
 
 

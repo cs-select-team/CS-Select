@@ -16,6 +16,8 @@ public class StandardRound extends Round {
     private final int featuresPerSelection;
     private final int minSelect;
     private final int maxSelect;
+
+    private static final int PROVIDE_FEATURES_MAX_TRIES = 3;
     /**
      * Constructor for a standard round object
      * @param player the player {@link Player} who plays the round
@@ -67,6 +69,7 @@ public class StandardRound extends Round {
     @Override
     public List<Feature> provideFeatures() {
         List<Feature> providedFeatures = new ArrayList<>();
+        int k = 0;
         do {
             for (int i = 0; i < this.numberOfSelections; i++) {
                 List<Feature> featureListThisSelection = new ArrayList<>(this.features);
@@ -80,7 +83,8 @@ public class StandardRound extends Round {
                     featureListThisSelection.remove(feature);
                 }
             }
-        } while (this.game.checkDuplicateFeatureProvision(providedFeatures));
+            k++;
+        } while (this.game.checkDuplicateFeatureProvision(providedFeatures) && k < PROVIDE_FEATURES_MAX_TRIES);
         return providedFeatures;
     }
 
