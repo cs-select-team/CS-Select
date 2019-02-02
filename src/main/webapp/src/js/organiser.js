@@ -76,7 +76,7 @@ Vue.component('terminated-games-display', {
         '                   <div>{{ game.type }}</div>' +
         '               </div>' +
         '               <div class="col">' +
-        '                   <input type="button" class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)" :value="localisation.del">' +
+        '                   <input type="button" :title="localisation.deleteGameHelp" class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)" :value="localisation.del">' +
         '               </div>' +
         '            </div>' +
         '       </div>' +

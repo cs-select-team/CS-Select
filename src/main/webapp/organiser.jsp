@@ -27,9 +27,9 @@
                 </div>
                 <div class="col" id="stats">
                     <div class="container h-10 title">
-                        <fmt:message key="stats"/>
+                        <fmt:message key="help"/>
                     </div>
-                    <stats-display></stats-display>
+                    <fmt:message key="organiserHelp"/>
                 </div>
             </div>
         </div>
