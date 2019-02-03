@@ -55,6 +55,7 @@ public class Login extends Servlet {
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
+        updateLanguage();
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
@@ -66,8 +67,8 @@ public class Login extends Servlet {
             createOrganiser();
             if (getOrganiserFacade().login(email, password)) {
                 setPlayer(false);
-                session.setAttribute("lang", getOrganiserFacade().getLanguage());
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
+                updateLanguage();
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
@@ -75,9 +76,8 @@ public class Login extends Servlet {
             createPlayer();
             if (getPlayerFacade().login(email, password)) {
                 setPlayer(true);
-                session.setAttribute("lang", getPlayerFacade().getLanguage());
                 resp.sendError(HttpServletResponse.SC_ACCEPTED);
-                System.out.println("player logged in");
+                updateLanguage();
             } else {
                 resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }

@@ -253,4 +253,14 @@ public abstract  class Servlet extends HttpServlet {
      * @throws IOException if there are errors in IO
      */
     public abstract void post(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException;
+
+    /** updates the lang attribute and the session attribute with the users
+     *  language from the database
+     *
+     * @throws NullPointerException if no user is logged in
+     */
+    void updateLanguage() throws NullPointerException{
+        lang = getUserFacade().getLanguage();
+        session.setAttribute("lang", lang);
+    }
 }
