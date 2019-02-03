@@ -259,7 +259,7 @@ public abstract  class Servlet extends HttpServlet {
      *
      * @throws NullPointerException if no user is logged in
      */
-    void updateLanguage() throws NullPointerException{
+    void updateLanguage() throws NullPointerException {
         lang = getUserFacade().getLanguage();
         session.setAttribute("lang", lang);
     }
