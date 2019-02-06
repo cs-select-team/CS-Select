@@ -59,4 +59,28 @@ public interface Configuration {
      * @return home directory path
      */
     String getHomeDirectory();
+
+    /**
+     * Gets the hostname of the email-server to use for sending emails
+     * @return hostname of the email-server
+     */
+    String getEmailHostname();
+
+    /**
+     * Gets the port of the email-server to use for sending emails
+     * @return port of the email-server
+     */
+    int getEmailPort();
+
+    /**
+     * Gets the email-address to be used for sending emails
+     * @return email-address
+     */
+    String getEmailAddress();
+
+    /**
+     * Gets the password for the email account to use for sending emails
+     * @return password of the email account
+     */
+    String getEmailPassword();
 }
