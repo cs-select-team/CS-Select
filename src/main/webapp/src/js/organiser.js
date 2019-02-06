@@ -105,10 +105,7 @@ Vue.component('stats-display', {
 var activeGames = new Vue({
     el: "#active",
     data: {
-        listOfGames: [{title:"myCoolGame", type:"Matrix", termination:0, id: 1},
-            {title:"myRatherAmusingGame", type:"Binär", termination:0, id: 2},
-            {title:"myUnderwhelmingGame", type:"Matrix", termination:0, id: 3},
-            {title:"myDisappointingGame", type:"Matrix", termination:0, id: 4}]
+        listOfGames: []
     },
     mounted: function () {
         axios({
