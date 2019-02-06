@@ -69,6 +69,26 @@ public class ConfigurationTests extends TestClass {
         testString("/test/CSSelect", config.getHomeDirectory());
     }
 
+    @Test
+    public void testEmailHostname() {
+        testString("mail.gmx.net", config.getEmailHostname());
+    }
+
+    @Test
+    public void testEmailPort() {
+        Assert.assertEquals(465, config.getEmailPort());
+    }
+
+    @Test
+    public void testEmailAddress() {
+        testString("csselect@gmx.de", config.getEmailAddress());
+    }
+
+    @Test
+    public void testEmailPassword() {
+        testString("PSEWs2018/19", config.getEmailPassword());
+    }
+
     private void testString(String expected, String actual) {
         Assert.assertEquals(expected, actual);
     }
