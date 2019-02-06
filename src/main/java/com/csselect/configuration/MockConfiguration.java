@@ -59,4 +59,24 @@ public final class MockConfiguration implements Configuration {
     public String getHomeDirectory() {
         return System.getProperty("user.dir") + File.separator + "target" + File.separator + "CSSelect";
     }
+
+    @Override
+    public String getEmailHostname() {
+        return "mail.gmx.net";
+    }
+
+    @Override
+    public int getEmailPort() {
+        return 465;
+    }
+
+    @Override
+    public String getEmailAddress() {
+        return "csselect@gmx.de";
+    }
+
+    @Override
+    public String getEmailPassword() {
+        return "PSEWs2018/19";
+    }
 }
