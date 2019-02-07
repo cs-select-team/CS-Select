@@ -4,7 +4,6 @@ import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import java.io.File;
 
@@ -37,10 +36,10 @@ public final class ApacheCommonsConfiguration implements Configuration {
                 .configure(params.fileBased().setFile(configFile));
         try {
             this.configuration = builder.getConfiguration();
-        } catch (ConfigurationException e) {
+        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
             System.err.println("Reading of configuration-file failed! Stacktrace:");
             e.printStackTrace();
-            System.exit(1);
+            throw new ConfigurationException();
         }
     }
 
