@@ -16,11 +16,14 @@ Vue.component('game-display', {
 
 Vue.component('daily-challenge', {
     props:['daily'],
-    template: '<div class="card" v-bind:class="{\'disabled-div\': daily.finished}">' +
-        '<h5 class="card-title">{{daily.title}}</h5>' +
-        '<div class="card-body">' +
-        '   {{localisation.points}}: {{daily.points}}' +
-        '</div>' +
+    template:
+        '<div class="card" v-bind:class="{\'disabled-div\': daily.finished}">' +
+        '  <div class="card-body">' +
+        '    <h5 class="card-title">{{daily.title}}</h5>' +
+        '    <div class="card-text">' +
+        '     {{localisation.points}}: {{daily.points}}' +
+        '    </div>' +
+        '  </div>' +
         '</div>'
 })
 

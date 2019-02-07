@@ -1,12 +1,15 @@
 Vue.component('achievement',{
     props: ['achievement'],
 
-    template: '    <div class="card" v-if="achievement.state > 0">\n' +
-        '        <h5 class="card-title"  v-if="achievement.state > 1">{{ achievement.name }}</h5>\n' +
-        '        <div  v-if="achievement.state > 2"class="card-body">\n' +
-        '            {{ achievement.desc }}\n' +
-        '        </div>\n' +
-        '    </div>'
+    template:
+        '<div class="card" v-if="achievement.state > 0">\n' +
+        '  <div class="card-body">\n' +
+        '    <h5 class="card-title"  v-if="achievement.state > 1">{{ achievement.name }}</h5>\n' +
+        '    <div  v-if="achievement.state > 2"class="card-text">\n' +
+        '      {{ achievement.desc }}\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>'
 
 })
 
