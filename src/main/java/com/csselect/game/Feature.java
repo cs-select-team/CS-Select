@@ -1,5 +1,7 @@
 package com.csselect.game;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.Map;
  * of the feature
  */
 
-public class Feature {
+public class Feature implements Comparable<Feature> {
 
     private final int id;
     private final String internalName;
@@ -146,5 +148,22 @@ public class Feature {
      */
     public void setClassGraph(BufferedImage classGraph) {
         this.classGraph = classGraph;
+    }
+
+    @Override
+    public int compareTo(@NotNull Feature feature) {
+        return  this.id - feature.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else if (o == this) {
+            return true;
+        } else {
+            Feature feature = (Feature) o;
+            return this.id == feature.id;
+        }
     }
 }
