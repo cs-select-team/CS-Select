@@ -1,7 +1,9 @@
 <%@ include file="WEB-INF/jspf/header.jspf" %>
 <fmt:bundle basename="locale.Locale">
     <div>
-        <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
+         <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
+
+
         <div class="container" id="gamecreation">
             <div class="row mt-2">
                 <div class="col-4">
@@ -24,11 +26,16 @@
                                         v-on:update-config-str="updateConfString">
 
                     </gamemode-config>
+                    <termination-config v-bind:termination-config-str="terminationConfigString"
+                                        v-on:update-termination-str="updateTerminationString">
+
+                    </termination-config>
                 </div>
             </div>
 
         </div>
     </div>
+    <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>
     <script src="src/js/gamecreation.js"></script>
 </fmt:bundle>

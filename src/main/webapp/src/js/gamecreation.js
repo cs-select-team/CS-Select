@@ -88,7 +88,8 @@ var creation = new Vue({
         playerInputType: [{title: 'single', value: 'single'}, {title: 'textarea', value: 'textarea'}],
         name: '',
         currentTab: 'single',
-        gameModeConfigString: ''
+        gameModeConfigString: '',
+        terminationConfigString: ''
 
     },
     methods: {
@@ -119,6 +120,9 @@ var creation = new Vue({
         },
         updateConfString: function (newVal) {
             this.gameModeConfigString = newVal;
+        },
+        updateTerminationString: function (newVal) {
+            this.terminationConfigString = newVal;
         }
     },
     computed: {
