@@ -59,8 +59,15 @@ Vue.component('player-invite-textarea', {
             var wrongEmail = false;
             newVal = newVal.replace(/\s/g, '');
             var array = newVal.split(',');
-            array.forEach(function (value) {
-                if (value == '') return // trailing comma will cause one empty string
+            var newArray = [];
+            array.forEach(function (value, index) {
+                if (value == '') {
+
+                    return
+                } // trailing comma will cause one empty string
+                else {
+                    newArray.push(value)
+                }
                 if (!self.validateEmail(value)) {
                     wrongEmail = true;
                 }
@@ -68,7 +75,7 @@ Vue.component('player-invite-textarea', {
             if (wrongEmail) {
                 // TODO inform user
             } else {
-                this.$emit('update-invited', array);
+                this.$emit('update-invited', newArray);
             }
         }
     }
@@ -80,16 +87,47 @@ Vue.component('player-invite-nav-tab', {
         '                                v-on:click="$emit(\'update-tab\', value)" href="#" v-on>{{title}}</a>\n' +
         '                        </li>'
 });
-
+Vue.component('pattern-selection', {
+    data: function() {
+        return {
+            listOfPatterns: [],
+            selectedPattern: {}
+        }
+    },
+    template: '<div class="input-group mb-3">\n' +
+        '  <div class="input-group-prepend">\n' +
+        '    <label class="input-group-text" >Patterns</label>\n' +
+        '  </div>\n' +
+        '  <select class="custom-select" v-model="selectedPattern">\n' +
+        '    <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>' +
+        '  </select>\n' +
+        '</div>',
+    mounted: function() {
+        axios({
+            method: 'get',
+            url: 'create/patterns'
+        }).then(function (response) {
+            this.listOfPatterns = response.data
+        })
+    },
+    watch: {
+        selectedPattern: function(newVal) {
+            this.$emit('load-pattern', newVal)
+        }
+    }
+})
 var creation = new Vue({
     el: '#gamecreation',
     data: {
         invitedPlayers: [],
         playerInputType: [{title: 'single', value: 'single'}, {title: 'textarea', value: 'textarea'}],
-        name: '',
+        title: '',
+        desc: '',
         currentTab: 'single',
         gameModeConfigString: '',
-        terminationConfigString: ''
+        terminationConfigString: '',
+        databaseName: '',
+        featureSet: ''
 
     },
     methods: {
@@ -123,7 +161,11 @@ var creation = new Vue({
         },
         updateTerminationString: function (newVal) {
             this.terminationConfigString = newVal;
+        },
+        loadPattern: function(newVal) {
+            // TODO load pattern in newVal
         }
+
     },
     computed: {
         currentTabComponent: function () {

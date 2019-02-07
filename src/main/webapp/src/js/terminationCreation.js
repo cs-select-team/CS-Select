@@ -36,6 +36,10 @@ Vue.component('termination-config-NumberOfRoundsTermination', {
             conf: this.terminationConfigStr.split(':')[0] == "NumberOfRoundsTermination"?this.terminationConfigStr:"NumberOfRoundsTermination:1"
         }
     },
+    mounted: function () {
+        this.$emit('update-termination', this.conf)
+    },
+
     watch: {
       conf: function(newVal) {
           this.$emit('update-termination', newVal)

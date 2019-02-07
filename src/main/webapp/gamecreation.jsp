@@ -8,7 +8,16 @@
             <div class="row mt-2">
                 <div class="col-4">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Name" aria-label="Name" v-model="name">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Title</span>
+                        </div>
+                        <input type="text" class="form-control"v-model="title">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" >Description</span>
+                        </div>
+                        <textarea class="form-control"  v-model="desc"></textarea>
                     </div>
 
                     <ul class="nav nav-tabs">
@@ -30,6 +39,9 @@
                                         v-on:update-termination-str="updateTerminationString">
 
                     </termination-config>
+                </div>
+                <div class="col-4">
+                    <pattern-selection v-on:load-pattern="loadPattern"></pattern-selection>
                 </div>
             </div>
 
