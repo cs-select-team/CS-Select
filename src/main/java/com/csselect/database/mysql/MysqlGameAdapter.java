@@ -79,8 +79,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
                     "SELECT dataset AS dataset FROM games WHERE id=" + getID());
             if (set.next()) {
-                FeatureSet featureSet = Injector.getInstance().getMLServer().getFeatures(set.getString("dataset"));
-                return featureSet;
+                return Injector.getInstance().getMLServer().getFeatures(set.getString("dataset"));
             } else {
                 return null;
             }
@@ -333,7 +332,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     private String featuresToString(Collection<Feature> features) {
         StringJoiner joiner = new StringJoiner(",");
-        features.forEach(f -> joiner.add("" + f.getID()));
+        features.stream().sorted().forEach(f -> joiner.add("" + f.getID()));
         return joiner.toString();
     }
 }
