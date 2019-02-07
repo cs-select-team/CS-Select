@@ -19,10 +19,17 @@
                     <component v-bind:is="currentTabComponent" v-on:new-email="addInvitedPlayer" v-bind:invited-players="invitedPlayers"
                                           v-on:update-invited="updateInvited"></component>
                 </div>
+                <div class="col-4">
+                    <gamemode-config v-bind:gamemode-config-str="gameModeConfigString"
+                                        v-on:update-config-str="updateConfString">
+
+                    </gamemode-config>
+                </div>
             </div>
 
         </div>
     </div>
+    <script src="src/js/gamemodesCreation.js"></script>
     <script src="src/js/gamecreation.js"></script>
 </fmt:bundle>
 <%@ include file="WEB-INF/jspf/footer.jspf" %>

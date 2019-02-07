@@ -26,7 +26,7 @@ Vue.component('player-invite-single', {
             return re.test(String(this.email).toLowerCase());
         }
     }
-})
+});
 Vue.component('player-invite-textarea', {
     props: ['invited-players'],
     data: function () {
@@ -79,15 +79,16 @@ Vue.component('player-invite-nav-tab', {
         '                            <a class="nav-link" v-bind:class="{active: currentTab == value}"\n' +
         '                                v-on:click="$emit(\'update-tab\', value)" href="#" v-on>{{title}}</a>\n' +
         '                        </li>'
-})
+});
+
 var creation = new Vue({
     el: '#gamecreation',
     data: {
-        gamemodeOptions: {},
         invitedPlayers: [],
         playerInputType: [{title: 'single', value: 'single'}, {title: 'textarea', value: 'textarea'}],
         name: '',
-        currentTab: 'single'
+        currentTab: 'single',
+        gameModeConfigString: ''
 
     },
     methods: {
@@ -113,8 +114,11 @@ var creation = new Vue({
 
             this.invitedPlayers = array;
         },
-        updateTab: function(newVal) {
+        updateTab: function (newVal) {
             this.currentTab = newVal;
+        },
+        updateConfString: function (newVal) {
+            this.gameModeConfigString = newVal;
         }
     },
     computed: {
