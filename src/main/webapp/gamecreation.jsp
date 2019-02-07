@@ -42,6 +42,32 @@
                 </div>
                 <div class="col-4">
                     <pattern-selection v-on:load-pattern="loadPattern"></pattern-selection>
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" v-model="saveAsPattern" >
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" :disabled="!saveAsPattern" v-model="patternName" placeholder="Pattern name">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Feature Set</span>
+                        </div>
+                        <input type="text" class="form-control" v-model="featureSet">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Database name</span>
+                        </div>
+                        <input type="text" class="form-control" v-model="databaseName">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="submitGame">Create</button>
+
                 </div>
             </div>
 

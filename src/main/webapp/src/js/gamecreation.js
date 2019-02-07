@@ -127,7 +127,9 @@ var creation = new Vue({
         gameModeConfigString: '',
         terminationConfigString: '',
         databaseName: '',
-        featureSet: ''
+        featureSet: '',
+        saveAsPattern: false,
+        patternName: ''
 
     },
     methods: {
@@ -141,8 +143,8 @@ var creation = new Vue({
                 method: 'post',
                 url: 'create/setParam',
                 params: {
-                    name: name,
-                    value: value
+                    option: name,
+                    data: value
                 }
             })
         },
@@ -164,12 +166,79 @@ var creation = new Vue({
         },
         loadPattern: function(newVal) {
             // TODO load pattern in newVal
+        },
+        checkFeatureSet: function() {
+            var self = this;
+            if (this.featureSet == '') {
+                alert("Please set featureSet");
+                return;
+            } else {
+                // checking if the feature set exists on the server
+                return axios({
+                    method: 'get',
+                    url: 'create/exists',
+                    params: {
+                        name: this.featureSet
+                    }
+                })
+            }
+        },
+
+        submitGame: function() {
+            var self = this;
+            axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
+                        this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
+                        this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
+                        this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.playersString)]).then(function(response){
+                            if(!response[0].data) {
+                                alert("Feature set does not exist");
+                                return;
+                            }
+                            if (self.saveAsPattern) {
+                                self.savePattern()
+                            }
+                            self.createGame();
+            })
+        },
+        invitePlayers: function() {
+
+
+        },
+        savePattern: function() {
+            axios({
+                method: 'post',
+                url: 'create/savePattern',
+                params: {
+                    title: this.patternName,
+                }
+            })
+        },
+        createGame: function() {
+            var self = this;
+            axios({
+                method: 'post',
+                url: 'create'
+            }).then(function (response) {
+            }).catch(function (error) {
+            });
         }
 
     },
     computed: {
         currentTabComponent: function () {
             return 'player-invite-' + this.currentTab
+        },
+        playersString: function() {
+            var players = ''
+            this.invitedPlayers.forEach(function(value, index) {
+                if (index == 0) {
+                    players = value;
+                }
+                else {
+                    players += '_' + value;
+                }
+            })
+            return players;
         }
     }
 });
