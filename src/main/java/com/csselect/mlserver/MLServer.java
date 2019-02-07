@@ -45,4 +45,10 @@ public interface MLServer {
      * @return true if dataset exists, false otherwise
      */
     boolean isValidDataset(String dataset);
+
+    /**
+     * Checks whether the ML-Server is online and available
+     * @return true if ML-Server is online, false otherwise
+     */
+    boolean isOnline();
 }
