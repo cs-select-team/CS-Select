@@ -85,7 +85,7 @@ Vue.component('invite-element', {
 var invites = new Vue({
     el: '#invites',
     data: {
-        listOfInvites: [{id:1, title: "asdf", type:"mom", roundsPlayed: 0}]
+        listOfInvites: []
     },
     mounted: function () {
         axios({
@@ -100,8 +100,8 @@ var invites = new Vue({
 var stats = new Vue({
     el: '#stats',
     data: {
-        username: 'Bendix',
-        points: 1234
+        username: '',
+        points: 0
     },
     mounted: function () {
         axios({
