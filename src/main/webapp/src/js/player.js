@@ -46,7 +46,7 @@ Vue.component('invite-element', {
         '            <div class="card-body">\n' +
         '            <div class="row">\n' +
         '                <div class="col">\n' +
-        '                <div class="float-left">{{title}} {{gameId}}</div>\n' +
+        '                <div class="float-left">{{title}}</div>\n' +
         '                </div>\n' +
         '                <div class="col">\n' +
         '                <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">\n' +
