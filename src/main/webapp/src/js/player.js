@@ -3,7 +3,8 @@ Vue.component('game-display', {
     template: '<div class="card mt-1"><div class="card-body"><div class="row">' +
         '                <div class="col"><div>{{ game.title }}</div>' +
         '                <div>{{ game.type }}</div>' +
-        '                <div>{{ game.roundsPlayed  }}</div></div>' +
+        '                <div>{{ game.roundsPlayed  }}</div>' +
+        '               <div>{{game.desc}}</div></div>' +
         '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
         '            </div></div></div>',
     methods: {
