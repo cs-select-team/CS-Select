@@ -40,7 +40,8 @@
                             matrixSelectHelp: '<fmt:message key="matrixSelectHelp"/>',
                             playerHelp: '<fmt:message key="playerHelp"/>',
                             gameHelp: '<fmt:message key="gameHelp"/>',
-                            completed: '<fmt:message key="completed"/>'
+                            completed: '<fmt:message key="completed"/>',
+                            roundsPlayed: '<fmt:message key="roundPlayed"/>'
                         }
                     }
                 }
