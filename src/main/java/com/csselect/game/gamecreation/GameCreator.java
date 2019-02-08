@@ -118,6 +118,7 @@ public class GameCreator {
                 EmailSender.sendEmail(mail, "CS:Select Invitation",
                         "Your knowledge is needed in a CS:Select game. Log in and check your notifications!");
             }
+            gameOptions.resetEmails();
         }
         return game;
     }
