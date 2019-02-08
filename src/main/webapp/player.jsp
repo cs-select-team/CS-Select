@@ -17,7 +17,7 @@
                     <stats-display v-bind:username="username"
                                    v-bind:points="points"></stats-display>
                 </div>
-                <div class="col-md-5 h-100 overflow-auto" id="leaderboard">
+                <div class="col-md-5 overflow-auto" id="leaderboard">
                     <table class="table">
                         <thead>
                         <tr>
