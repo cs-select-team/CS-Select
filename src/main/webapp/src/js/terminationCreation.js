@@ -89,7 +89,7 @@ Vue.component('termination-config-time', {
             this.$emit('update-termination', newVal)
         },
         date: function(newVal) {
-            this.conf = "time:" + newVal
+            this.conf = "time:" + new Date(newVal).getTime()
         }
     },
     methods: {
