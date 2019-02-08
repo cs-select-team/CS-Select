@@ -7,31 +7,29 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TerminationParserTest extends TestClass {
-    String input[];
+    String input;
 
     @Override
     public void setUp() {
-        input = new String[2];
+        input = new String();
     }
 
     @Override
     public void reset() {
-        input = new String[2];
+        input = new String();
     }
 
     @Test
     public void testTimeTerminationParsing() {
-        input[0] = "time";
-        input[1] = "2019-01-30T10:15:30";
-        TimeTermination termination = (TimeTermination) TerminationParser.getTermination(input);
+        input= "time:1549639855";
+        TimeTermination termination = (TimeTermination) TerminationParser.parseTermination(input);
         Assert.assertNotNull(termination);
     }
 
     @Test
     public void testRoundTerminationParsing() {
-        input[0] = "rounds";
-        input[1] = "100";
-        NumberOfRoundsTermination termination = (NumberOfRoundsTermination) TerminationParser.getTermination(input);
+
+        NumberOfRoundsTermination termination = (NumberOfRoundsTermination) TerminationParser.parseTermination(input);
         Assert.assertNotNull(termination);
     }
 }

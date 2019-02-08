@@ -77,7 +77,7 @@
                         </div>
                         <input type="text" class="form-control" v-model="databaseName">
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg" v-on:click="submitGame">{{localisation.create}}</button>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="submitGame" :disabled="!createButtonEnabled">{{localisation.create}}</button>
 
                 </div>
             </div>

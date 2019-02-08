@@ -131,7 +131,10 @@ var creation = new Vue({
         databaseName: '',
         featureSet: '',
         saveAsPattern: false,
-        patternName: ''
+        patternName: '',
+
+
+        createButtonEnabled: true
 
     },
     methods: {
@@ -224,10 +227,12 @@ var creation = new Vue({
         },
         createGame: function() {
             var self = this;
+            this.createButtonEnabled = false;
             axios({
                 method: 'post',
                 url: 'create'
             }).then(function (response) {
+                self.createButtonEnabled = true;
             }).catch(function (error) {
             });
         }
