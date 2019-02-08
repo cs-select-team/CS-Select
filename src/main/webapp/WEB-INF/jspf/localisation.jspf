@@ -41,7 +41,8 @@ props -->
                             playerHelp: '<fmt:message key="playerHelp"/>',
                             gameHelp: '<fmt:message key="gameHelp"/>',
                             completed: '<fmt:message key="completed"/>',
-                            roundsPlayed: '<fmt:message key="roundPlayed"/>'
+                            roundsPlayed: '<fmt:message key="roundPlayed"/>',
+                            dailyFinished: '<fmt:message key="dailyFinished"/>'
                         }
                     }
                 }
