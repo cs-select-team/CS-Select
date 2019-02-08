@@ -16,7 +16,10 @@
         </script>
 
         <div class="container" id="gamecreation">
+            <alert-box v-for="(alert, index) in alerts" v-bind:key="index" v-bind:alert-message="alert.message"
+                        v-bind:type="alert.type"></alert-box>
             <div class="row mt-2">
+
                 <div class="col-4">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -84,6 +87,7 @@
 
         </div>
     </div>
+    <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>
     <script src="src/js/gamecreation.js"></script>

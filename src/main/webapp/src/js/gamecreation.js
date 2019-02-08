@@ -134,8 +134,8 @@ var creation = new Vue({
         patternName: '',
 
 
-        createButtonEnabled: true
-
+        createButtonEnabled: true,
+        alerts: []
     },
     methods: {
         /** submits a new parameter to the api
@@ -197,13 +197,15 @@ var creation = new Vue({
         },
 
         submitGame: function() {
+
             var self = this;
+            if (!this.checkParameters()) return
             axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
                         this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
                         this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
                         this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.playersString)]).then(function(response){
                             if(!response[0].data) {
-                                alert("Feature set does not exist");
+                                self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
                                 return;
                             }
                             if (self.saveAsPattern) {
@@ -211,6 +213,17 @@ var creation = new Vue({
                             }
                             self.createGame();
             })
+        },
+        checkParameters: function() {
+            this.alerts = [];
+            // language=RegExp
+            if (this.title.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterTitle, type: 0});
+            // language=RegExp
+            if (this.desc.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDescription, type: 0});
+            // language=RegExp
+            if (this.databaseName.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDatabaseName, type: 0});
+            if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
+            return this.alerts.length === 0;
         },
         invitePlayers: function() {
 
@@ -233,6 +246,7 @@ var creation = new Vue({
                 url: 'create'
             }).then(function (response) {
                 self.createButtonEnabled = true;
+                self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
             });
         }
