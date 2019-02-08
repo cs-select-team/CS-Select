@@ -142,7 +142,7 @@ public class Player extends User implements Comparable {
      * @return List of Players in leaderboard's order
      */
     public Map<Player, Integer> getLeaderboard() {
-        return Leaderboard.getInstance().getPlayers();
+        return Leaderboard.INSTANCE.getPlayers();
     }
 
     /**

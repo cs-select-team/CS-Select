@@ -28,7 +28,8 @@ public abstract class TestClass {
     public void resetInjector() throws Exception {
         reset();
         resetStaticFinal(MockPlayerAdapter.class.getDeclaredField("PLAYERSTATS_ADAPTERS"), new HashMap<>());
-        resetStaticFinal(Leaderboard.class.getDeclaredField("instance"), null);
+        // resetStaticFinal(Leaderboard.class.getDeclaredField("INSTANCE"), null);
+
         Injector.resetInjector();
     }
 
