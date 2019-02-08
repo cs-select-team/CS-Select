@@ -3,6 +3,7 @@ package com.csselect.user;
 import com.csselect.Injector;
 import com.csselect.TestClass;
 import com.csselect.configuration.Configuration;
+import com.csselect.game.Gamemode;
 import com.csselect.game.Termination;
 import com.csselect.user.management.OrganiserManagement;
 import org.junit.Assert;
@@ -74,17 +75,22 @@ public class OrganiserTests extends TestClass {
 
     @Test
     public void testSetTerminationRounds() {
-        organiser.setGameOption("termination",
-                "NumberOfRoundsTermination:100");
+        organiser.setGameOption("termination", "NumberOfRoundsTermination:100");
+        Termination termination = organiser.getGameOptions().getTermination();
+        Assert.assertEquals(termination.getName(), "NumberOfRoundsTermination");
     }
 
     @Test
     public void testSetGamemodeMatrix() {
         organiser.setGameOption("gamemode", "MatrixSelect:num=20~min=2~max=10");
+        Gamemode mode = organiser.getGameOptions().getGamemode();
+        Assert.assertEquals(mode.getName(), "MatrixSelect");
     }
 
     @Test
     public void testSetGamemodeBinary() {
         organiser.setGameOption("gamemode", "BinarySelect:none");
+        Gamemode mode = organiser.getGameOptions().getGamemode();
+        Assert.assertEquals(mode.getName(), "BinarySelect");
     }
 }
