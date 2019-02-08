@@ -1,7 +1,7 @@
 <%@ include file="WEB-INF/jspf/header.jspf" %>
 <fmt:bundle basename = "locale.Locale">
         <%@include file="WEB-INF/jspf/playerNavbar.jspf"%>
-        <div class="container ">
+        <div class="container-flex ">
                 <div id="gameFrame">
                         <div class="row mt-5">
                                 <div class="col-10">

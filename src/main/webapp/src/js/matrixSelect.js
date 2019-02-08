@@ -20,13 +20,13 @@ Vue.component('MatrixSelect', {
     },
     computed: {
         col: function () {
-            return Math.sqrt(this.options.numberOfFeatures);
+            return Math.floor(document.getElementsByClassName("col-10")[0].offsetWidth / 350);
         },
         row: function () {
-            return Math.sqrt(this.options.numberOfFeatures);
+            return Math.ceil(this.options.numberOfFeatures / this.col);
         }
     },
-    template: '        <div >' +
+    template: '        <div ref="matrix">' +
         '<matrix-row  v-on:toggled="toggled" v-for="i in [...Array(row).keys()]"\n' +
         '                    v-bind:key="i"\n' +
         '                    v-bind:feature-list="featureList.slice(i * col, (i+1) * col)">\n' +
