@@ -46,33 +46,29 @@ public class GameCreator {
      * @param data Value of the option
      */
     public void setOption(String option, String data) {
-        String[] arguments = data.split(":", 2);
-        assert arguments.length > 0;
         switch(option) {
             case "title":
-                gameOptions.setTitle(arguments[0]);
+                gameOptions.setTitle(data);
                 break;
             case "description":
-                gameOptions.setDescription(arguments[0]);
+                gameOptions.setDescription(data);
                 break;
             case "featureSet":
-                gameOptions.setDataset(arguments[0]);
+                gameOptions.setDataset(data);
                 break;
             case "addressOrganiserDatabase":
-                gameOptions.setResultDatabaseName(arguments[0]);
+                gameOptions.setResultDatabaseName(data);
                 break;
             case "termination":
-                assert arguments.length == 2;
-                gameOptions.setTermination(TerminationParser.getTermination(arguments));
+                gameOptions.setTermination(TerminationParser.parseTermination(data));
                 assert this.gameOptions.getTermination() != null;
                 break;
             case "gamemode":
-                assert arguments.length == 2; // [type, arguments]
-                gameOptions.setGamemode(GamemodeParser.getGamemode(arguments));
+                gameOptions.setGamemode(GamemodeParser.parseGamemode(data));
                 assert this.gameOptions.getGamemode() != null;
                 break;
             case "addPlayers":
-                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(arguments)));
+                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(data.split(":"))));
                 break;
             default:
                 break;

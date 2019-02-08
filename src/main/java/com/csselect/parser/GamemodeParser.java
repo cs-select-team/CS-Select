@@ -13,24 +13,20 @@ public final class GamemodeParser {
 
     }
 
+
     /**
-     * Creates a {@link Gamemode} object out of a String
-     * @param args arguments for type and value of gamemode
-     * @return Gamemode object
+     * Parses a database saved {@link Gamemode} into a gamemode object
+     * @param gamemode gamemode string to parse
+     * @return created gamemode
      */
-    public static Gamemode getGamemode(String[] args) {
-        Gamemode gamemode = null;
-        String type = args[0];
-        String arguments = args[1];
-        if (type.equals(new MatrixSelect(0, 0, 0).getName())) {
-            String[] splitArguments = arguments.split("-"); //Syntax: "num~x-min~y-max~z"
-            int number = Integer.parseInt(splitArguments[0].split("~")[1]);
-            int min = Integer.parseInt(splitArguments[1].split("~")[1]);
-            int max = Integer.parseInt(splitArguments[2].split("~")[1]);
-            gamemode = new MatrixSelect(number, min, max);
-        } else if (type.equals(new BinarySelect().getName())) {
-            gamemode = new BinarySelect();
+    public static Gamemode parseGamemode(String gamemode) {
+        if (gamemode.startsWith("binarySelect")) {
+            return new BinarySelect();
+        } else if (gamemode.startsWith("matrixSelect")) {
+            String[] args = gamemode.split(",");
+            return new MatrixSelect(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        } else {
+            return null;
         }
-        return gamemode;
     }
 }

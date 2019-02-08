@@ -5,6 +5,8 @@ import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
+import com.csselect.parser.GamemodeParser;
+import com.csselect.parser.TerminationParser;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,8 +56,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 options.setTitle(set.getString("gameTitle"));
                 options.setDescription(set.getString("description"));
                 options.setResultDatabaseName(set.getString("databasename"));
-                options.setTermination(parseTermination(set.getString("termination")));
-                options.setGamemode(parseGamemode(set.getString("gamemode")));
+                options.setTermination(TerminationParser.parseTermination(set.getString("termination")));
+                options.setGamemode(GamemodeParser.parseGamemode(set.getString("gamemode")));
                 options.addInvitedEmails(emailCollectionFromString(set.getString("invitedPlayers")));
                 patterns.add(new Pattern(options, set.getString("title")));
             }

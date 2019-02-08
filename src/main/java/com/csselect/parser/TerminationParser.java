@@ -2,9 +2,11 @@ package com.csselect.parser;
 
 import com.csselect.game.NumberOfRoundsTermination;
 import com.csselect.game.Termination;
+import com.csselect.game.TerminationComposite;
 import com.csselect.game.TimeTermination;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -17,22 +19,33 @@ public final class TerminationParser {
     }
 
     /**
-     * Creates a {@link Termination} object out of a String
-     * @param args String array of parameters for a termination
-     * @return Termination object
+     * Parses a database saved {@link Termination} into a termination object
+     * @param termination termination string to parse
+     * @return created termination
      */
-    public static Termination getTermination(String[] args) {
-        assert args.length == 2;
-        String type = args[0];
-        String value = args[1];
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Syntax = '2011-12-03T10:15:30'
-        Termination termination = null;
-        if (type.equals(new TimeTermination(LocalDateTime.now()).getName())) {
-            termination = new TimeTermination(LocalDateTime.parse(value, formatter));
+    public static Termination parseTermination(String termination) {
+        String[] terminationArray = termination.split(",");
+        if (terminationArray.length > 1) {
+            TerminationComposite term = new TerminationComposite();
+            for (String t : terminationArray) {
+                if (t.startsWith("time")) {
+                    term.add(new TimeTermination(LocalDateTime.ofEpochSecond(
+                            Long.parseLong(t.replace("time:", "")), 0, ZoneOffset.UTC)));
+                } else if (t.startsWith("rounds")) {
+                    term.add(
+                            new NumberOfRoundsTermination(Integer.parseInt(t.replace("rounds:", ""))));
+                }
+            }
+            return term;
+        } else {
+            if (terminationArray[0].startsWith("time")) {
+                return new TimeTermination(LocalDateTime.ofEpochSecond(
+                        Long.parseLong(terminationArray[0].replace("time:", "")), 0, ZoneOffset.UTC));
+            } else if (terminationArray[0].startsWith("rounds")) {
+                return new NumberOfRoundsTermination(Integer.parseInt(terminationArray[0].replace("rounds:", "")));
+            } else {
+                return null;
+            }
         }
-        if (type.equals(new NumberOfRoundsTermination(0).getName())) {
-            termination = new NumberOfRoundsTermination(Integer.parseInt(value));
-        }
-        return termination;
     }
 }
