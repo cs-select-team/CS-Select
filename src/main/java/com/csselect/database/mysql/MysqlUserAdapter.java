@@ -14,6 +14,8 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance()
             .getDatabaseAdapter();
 
+    static final String DEFAULT_LANGUAGE = "en";
+
     /**
      * Creates a new {@link MysqlUserAdapter} with the given id
      * @param id id of the adapter

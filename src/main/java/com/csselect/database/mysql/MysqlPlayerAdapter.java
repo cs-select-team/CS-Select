@@ -44,7 +44,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
         super(DATABASE_ADAPTER.getNextIdOfTable("players"));
         DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (username,email,hash,salt,language)"
                 + "VALUES (?,?,?,?,?);", new StringParam(username), new StringParam(email),
-                new StringParam(hash), new StringParam(salt), new StringParam("de"));
+                new StringParam(hash), new StringParam(salt), new StringParam(DEFAULT_LANGUAGE));
     }
 
     @Override
