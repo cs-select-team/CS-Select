@@ -14,7 +14,7 @@ public class LeaderboardTests extends TestClass {
 
     @Override
     public void setUp() {
-        leaderboard = Leaderboard.getInstance();
+        leaderboard = Leaderboard.INSTANCE;
         mockDatabaseAdapter = Injector.getInstance().getDatabaseAdapter();
     }
 
