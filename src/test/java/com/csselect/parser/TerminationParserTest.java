@@ -1,9 +1,7 @@
 package com.csselect.parser;
 
 import com.csselect.TestClass;
-import com.csselect.game.NumberOfRoundsTermination;
 import com.csselect.game.Termination;
-import com.csselect.game.TimeTermination;
 import org.junit.Assert;
 import org.junit.Test;
 

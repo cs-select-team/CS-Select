@@ -1,9 +1,7 @@
 package com.csselect.parser;
 
 import com.csselect.TestClass;
-import com.csselect.game.BinarySelect;
 import com.csselect.game.Gamemode;
-import com.csselect.game.MatrixSelect;
 import org.junit.Assert;
 import org.junit.Test;
 
