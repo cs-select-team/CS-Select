@@ -73,8 +73,7 @@ public class User {
      */
     public void changePassword(String password) {
         String salt = Encrypter.getRandomSalt();
-        String concatenated = password + salt;
-        userAdapter.setPassword(Encrypter.encrypt(concatenated), salt);
+        userAdapter.setPassword(Encrypter.encrypt(password, salt), salt);
     }
 
     /**

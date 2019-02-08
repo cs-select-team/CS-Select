@@ -22,8 +22,7 @@ public final class OrganiserManagement extends UserManagement {
 
         if (config.getOrganiserPassword().equals(globalPassword)) {
             String salt = Encrypter.getRandomSalt();
-            password += salt;
-            String encryptedPassword = Encrypter.encrypt(password);
+            String encryptedPassword = Encrypter.encrypt(password, salt);
             Organiser organiser = DATABASE_ADAPTER.createOrganiser(email, encryptedPassword, salt);
             if (organiser != null) {
                 organiser.login();
@@ -42,9 +41,7 @@ public final class OrganiserManagement extends UserManagement {
         }
         String savedEncryptedPassword = DATABASE_ADAPTER.getOrganiserHash(organiser.getId());
         String salt = DATABASE_ADAPTER.getOrganiserSalt(organiser.getId());
-        String concatenated = password + salt;
-
-        if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
+        if (Encrypter.compareStringToHash(password, salt, savedEncryptedPassword)) {
             organiser.login();
             return organiser;
         } else {

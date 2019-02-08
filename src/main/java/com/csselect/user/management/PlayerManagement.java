@@ -17,10 +17,8 @@ public final class PlayerManagement extends UserManagement {
         String email = parameters[0];
         String password = parameters[1];
         String username = parameters[2];
-
         String salt = Encrypter.getRandomSalt();
-        password += salt;
-        String encryptedPassword = Encrypter.encrypt(password);
+        String encryptedPassword = Encrypter.encrypt(password, salt);
         Player player = DATABASE_ADAPTER.createPlayer(email, encryptedPassword, salt, username);
         if (player != null) {
             player.login();
@@ -36,9 +34,7 @@ public final class PlayerManagement extends UserManagement {
         }
         String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
         String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
-        String concatenated = password + salt;
-
-        if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
+        if (Encrypter.compareStringToHash(password, salt, savedEncryptedPassword)) {
             player.login();
             return player;
         } else {
