@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
+    private static final int NUMBER_OF_DAILIES = 4;
     private final PlayerStatsAdapter playerStatsAdapter;
     private final Streak streak;
     private DailyChallenge activeDaily;
@@ -198,25 +199,32 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Chooses a daily challenge randomly from the list of dailies.
+     * Chooses a daily challenge randomly.
      * @return The chosen daily.
      */
     private DailyChallenge chooseRandomDaily() {
-        List<DailyChallenge> dailies = loadDailies();
-        int randomIndex = (int) (Math.random() * dailies.size()); // Index between 0 and dailies.size() - 1
-        return dailies.get(randomIndex);
-    }
+        /* If you add a new daily, do not
+           forget to update the field NUMBER_OF_DAILIES
+           and to modify the switch case. */
+        int randomIndex = (int) (Math.random() * NUMBER_OF_DAILIES);
 
-    /**
-     * Loads the available dailies and puts them into the list.
-     */
-    private List<DailyChallenge> loadDailies() {
-        List<DailyChallenge> allDailies = new LinkedList<>();
-        allDailies.add(new DailyGetStreakThree());
-        allDailies.add(new DailyPlayThreeRounds());
-        allDailies.add(new DailyReachRoundScoreEighty());
-        allDailies.add(new DailyReachScoreHundredFifty());
-        return allDailies;
+        switch (randomIndex) {
+            case 0:
+                return new DailyGetStreakThree();
+
+            case 1:
+                return new DailyPlayThreeRounds();
+
+            case 2:
+                return new DailyReachRoundScoreEighty();
+
+            case 3:
+                return new DailyReachScoreHundredFifty();
+
+            default:
+                assert false;
+                return null;
+        }
     }
 
 }
