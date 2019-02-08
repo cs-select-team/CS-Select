@@ -172,6 +172,8 @@ var creation = new Vue({
             this.title = gameOptions.title;
             this.databaseName = gameOptions.database;
             this.gameModeConfigString = gameOptions.gamemodeConf;
+            this.terminationConfigString = gameOptions.termination;
+            this.invitedPlayers = gameOptions.invites;
         },
         checkFeatureSet: function() {
             var self = this;

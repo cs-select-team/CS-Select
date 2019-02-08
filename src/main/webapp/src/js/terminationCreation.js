@@ -3,9 +3,9 @@ Vue.component('termination-config', {
     props: ['termination-config-str'],
     data: function(){
         return {
-           listOfTerminations: [{title: "Time termination", value:"TimeTermination"},
-                                {title: "Rounds termination", value:"NumberOfRoundsTermination"}],
-            currentTermination: 'NumberOfRoundsTermination'
+           listOfTerminations: [{title: "Time termination", value:"time"},
+                                {title: "Rounds termination", value:"rounds"}],
+            currentTermination: 'rounds'
         }
     },
     template: "<div>" +
@@ -29,11 +29,11 @@ Vue.component('termination-config', {
     }
 })
 
-Vue.component('termination-config-NumberOfRoundsTermination', {
+Vue.component('termination-config-rounds', {
     props: ['termination-config-str'],
     data: function() {
         return {
-            conf: this.terminationConfigStr.split(':')[0] == "NumberOfRoundsTermination"?this.terminationConfigStr:"NumberOfRoundsTermination:1"
+            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"rounds:1"
         }
     },
     mounted: function () {
@@ -45,17 +45,22 @@ Vue.component('termination-config-NumberOfRoundsTermination', {
           this.$emit('update-termination', newVal)
       }
     },
-
+    methods: {
+        isValidConf: function(string) {
+            var args = string.split(':');
+            if (args[0] !== 'rounds') return false;
+            if (args.length !== 2) return false;
+        }
+    },
     computed: {
         number: {
             get: function() {
                 return parseInt(this.conf.split(':')[1])
             },
             set: function(newVal) {
-                var newConf = '';
-                newConf += this.conf.split(':')[0] + ':';
-                newConf += newVal;
-                this.conf = newConf;
+                var args = this.conf.split(':');
+                args[1] = newVal;
+                this.conf = args.join(':')
             }
         }
     },
@@ -68,16 +73,23 @@ Vue.component('termination-config-NumberOfRoundsTermination', {
 
 });
 
-Vue.component('termination-config-TimeTermination', {
+Vue.component('termination-config-time', {
     props: ['termination-config-str'],
     data: function() {
         return {
-            conf: this.terminationConfigStr.split(':')[0] == "TimeTermination"?this.terminationConfigStr:"TimeTermination:1"
+            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"time:2019-02-08T12:27:18.232Z"
         }
     },
     watch: {
         date: function(newVal) {
             this.$emit('update-termination', newVal)
+        }
+    },
+    methods: {
+        isValidConf: function (string) {
+            var args = string.split(':');
+            if (args[0] !== 'time') return false;
+            if (args.length !== 2) return false;
         }
     },
     computed: {
