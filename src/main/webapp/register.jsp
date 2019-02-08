@@ -7,6 +7,8 @@
                     <form id="registerForm">
                         <div class="alert alert-danger" v-bind:class="{ collapse: !alert }">
                             <fmt:message key="noRegister"/></div>
+                        <div class="alert alert-danger" v-bind:class="{ collapse: !missingConfig }">
+                            <fmt:message key="noConfig"/></div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress" v-model="email">
