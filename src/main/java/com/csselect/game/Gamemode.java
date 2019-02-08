@@ -23,7 +23,4 @@ public abstract class Gamemode {
     public String getName() {
         return this.getClass().getSimpleName();
     }
-
-    @Override
-    public abstract String toString();
 }
