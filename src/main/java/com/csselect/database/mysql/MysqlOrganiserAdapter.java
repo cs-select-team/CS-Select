@@ -55,6 +55,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));
                 options.setDescription(set.getString("description"));
+                options.setDataset(set.getString("dataset"));
                 options.setResultDatabaseName(set.getString("databasename"));
                 options.setTermination(TerminationParser.parseTermination(set.getString("termination")));
                 options.setGamemode(GamemodeParser.parseGamemode(set.getString("gamemode")));
@@ -75,13 +76,13 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         String emails = joiner.toString();
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO patterns"
-                    + "(organiserId,title,gameTitle,description,databasename,termination,gamemode,invitedPlayers)"
-                    + " VALUES (?,?,?,?,?,?,?,?)", new IntParam(getID()), new StringParam(pattern.getTitle()),
-                    new StringParam(gameOptions.getTitle()), new StringParam(gameOptions.getDescription()),
+                    + "(organiserId,title,gameTitle,description,dataset,databasename,termination,gamemode,"
+                            + "invitedPlayers) VALUES (?,?,?,?,?,?,?,?,?)", new IntParam(getID()),
+                    new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
+                    new StringParam(gameOptions.getDescription()), new StringParam(gameOptions.getDataset()),
                     new StringParam(gameOptions.getResultDatabaseName()),
                     new StringParam(gameOptions.getTermination().toString()),
                     new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
