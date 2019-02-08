@@ -77,12 +77,19 @@ Vue.component('termination-config-time', {
     props: ['termination-config-str'],
     data: function() {
         return {
-            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"time:2019-02-08T12:27:18.232Z"
+            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"time:2019-02-08T12:27:18.232Z",
+            date: null
         }
     },
+    mounted: function () {
+        this.$emit('update-termination', this.conf)
+    },
     watch: {
-        date: function(newVal) {
+        conf: function(newVal) {
             this.$emit('update-termination', newVal)
+        },
+        date: function(newVal) {
+            this.conf = "time:" + newVal
         }
     },
     methods: {
@@ -93,18 +100,7 @@ Vue.component('termination-config-time', {
         }
     },
     computed: {
-        date: {
-            get: function() {
-                return new Date(this.conf.split(':')[1])
-            },
-            set: function(newVal) {
-                var newConf = '';
-                newConf += this.conf.split(':')[0] + ':';
-                newConf += new Date(newVal).toISOString();
-                this.conf = newConf;
-            }
-        }
     },
-    template: '<input type="text" v-model="date"></input>'
+    template: '<date-picker v-model="date"></date-picker>'
 
 });

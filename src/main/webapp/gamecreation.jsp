@@ -3,6 +3,17 @@
     <div>
          <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
 
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.22"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/js/bootstrap-datetimepicker.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue-bootstrap-datetimepicker@5"></script>
+
+        <script>
+            // Initialize as global component
+            Vue.component('date-picker', VueBootstrapDatetimePicker);
+        </script>
 
         <div class="container" id="gamecreation">
             <div class="row mt-2">
