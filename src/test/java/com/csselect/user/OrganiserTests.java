@@ -52,8 +52,14 @@ public class OrganiserTests extends TestClass {
     }
 
     @Test
+    public void testSetFeaturesSet() {
+        organiser.setGameOption("featureSet", "example");
+        Assert.assertEquals(organiser.getGameOptions().getDataset(), "example");
+    }
+
+    @Test
     public void testSetDatabaseName() {
-        organiser.setGameOption("title", "TEST");
+        organiser.setGameOption("addressOrganiserDatabase", "TEST");
         Assert.assertEquals(organiser.getGameOptions().getResultDatabaseName(), "TEST");
     }
 
@@ -82,7 +88,7 @@ public class OrganiserTests extends TestClass {
 
     @Test
     public void testSetGamemodeMatrix() {
-        organiser.setGameOption("gamemode", "MatrixSelect:num=20~min=2~max=10");
+        organiser.setGameOption("gamemode", "MatrixSelect:num~20-min~2-max~10");
         Gamemode mode = organiser.getGameOptions().getGamemode();
         Assert.assertEquals(mode.getName(), "MatrixSelect");
     }
