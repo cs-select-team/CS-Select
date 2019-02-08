@@ -8,7 +8,10 @@ Vue.component('termination-config', {
             currentTermination: 'rounds'
         }
     },
-    template: "<div>" +
+    template: "<div class=\"input-group mb-3\">" +
+        "      <div class=\"input-group-prepend\">\n" +
+        "    <span class=\"input-group-text\" >{{localisation.termination}}</span>\n" +
+        "  </div>     " +
         "<select class='custom-select' v-model='currentTermination' >\n" +
         "    <option v-for='(term,index) in listOfTerminations' v-bind:key='index'" +
         "               :value='term.value'>{{term.title}}</option>\n" +
@@ -66,7 +69,7 @@ Vue.component('termination-config-rounds', {
     },
     template: '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">Rounds</span>\n' +
+        '    <span class="input-group-text">{{localisation.rounds}}</span>\n' +
         '  </div>\n' +
         '  <input type="number" min="0" class="form-control" v-model="number">\n' +
         '</div>'
@@ -101,6 +104,11 @@ Vue.component('termination-config-time', {
     },
     computed: {
     },
-    template: '<date-picker v-model="date"></date-picker>'
+    template: '<div class="input-group mb-3">\n' +
+        '  <div class="input-group-prepend">\n' +
+        '    <span class="input-group-text" id="basic-addon1">{{localisation.endDate}}</span>\n' +
+        '  </div>\n' +
+        '  <date-picker v-model="date"></date-picker>' +
+        '</div>'
 
 });

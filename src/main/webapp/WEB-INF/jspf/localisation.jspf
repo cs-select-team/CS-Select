@@ -39,7 +39,17 @@
                             binarySelectHelp: '<fmt:message key="binarySelectHelp"/>',
                             matrixSelectHelp: '<fmt:message key="matrixSelectHelp"/>',
                             playerHelp: '<fmt:message key="playerHelp"/>',
-                            gameHelp: '<fmt:message key="gameHelp"/>'
+                            gameHelp: '<fmt:message key="gameHelp"/>',
+                            enterEmailSingle: '<fmt:message key="enterEmailSingle"/>',
+                            enterEmailMultiple: '<fmt:message key="enterEmailMultiple"/>',
+                            gamemode: '<fmt:message key="gamemode"/>',
+                            numberOfFeatures: '<fmt:message key="numberOfFeatures"/>',
+                            maxNumberOfFeatures: '<fmt:message key="maxNumberOfFeatures"/>',
+                            minNumberOfFeatures: '<fmt:message key="minNumberOfFeatures"/>',
+                            termination: '<fmt:message key="termination"/>',
+                            endDate: '<fmt:message key="endData"/>',
+                            rounds: '<fmt:message key="roundsInput"/>',
+                            pattern: '<fmt:message key="pattern"/>'
                         }
                     }
                 }

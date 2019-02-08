@@ -10,7 +10,7 @@ Vue.component('player-invite-single', {
         '       v-model="email" aria-describedby="inviteButton">\n' +
         '  <div class="input-group-append">\n' +
         '    <button class="btn btn-outline-secondary" type="button" :disabled="!this.validateEmail"' +
-        ' v-on:click="newEmail" id="inviteButton">Button</button>\n' +
+        ' v-on:click="newEmail" id="inviteButton">{{ localisation.invite }}</button>\n' +
         '  </div>\n' +
         '</div>',
 
@@ -96,7 +96,7 @@ Vue.component('pattern-selection', {
     },
     template: '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <label class="input-group-text" >Patterns</label>\n' +
+        '    <label class="input-group-text" >{{localisation.pattern}}</label>\n' +
         '  </div>\n' +
         '  <select class="custom-select" v-model="selectedPattern">\n' +
         '    <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>' +
@@ -121,7 +121,8 @@ var creation = new Vue({
     el: '#gamecreation',
     data: {
         invitedPlayers: [],
-        playerInputType: [{title: 'single', value: 'single'}, {title: 'textarea', value: 'textarea'}],
+        playerInputType: [{title: 'Single', value: 'single'},
+            {title: 'Mass', value: 'textarea'}],
         title: '',
         desc: '',
         currentTab: 'single',

@@ -20,21 +20,21 @@ Vue.component('gamemode-config-matrixSelect', {
     template: '<div>\n' +
         '  <div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text" >Number of Features</span>\n' +
+        '    <span class="input-group-text" >{{localisation.numberOfFeatures}}</span>\n' +
         '  </div>\n' +
-        '  <input type="number" min="0" class="form-control" placeholder="Number of Features" v-model="numberOfFeatures">' +
+        '  <input type="number" min="0" class="form-control"  v-model="numberOfFeatures">' +
         '</div>' +
         '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">Max</span>\n' +
+        '    <span class="input-group-text">{{localisation.maxNumberOfFeatures}}</span>\n' +
         '  </div>\n' +
-        '  <input type="number" :min="min" :max="numberOfFeatures" class="form-control" placeholder="Maximum selected features" v-model="max">\n' +
+        '  <input type="number" :min="min" :max="numberOfFeatures" class="form-control"  v-model="max">\n' +
         '</div>\n' +
         '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">Min</span>\n' +
+        '    <span class="input-group-text">{{localisation.minNumberOfFeatures}}</span>\n' +
         '  </div>\n' +
-        '  <input type="number" min="0" :max="max" class="form-control" placeholder="Minimum selected features" v-model="min">\n' +
+        '  <input type="number" min="0" :max="max" class="form-control"  v-model="min">\n' +
         '</div>\n' +
         '</div>',
 
@@ -102,7 +102,11 @@ Vue.component('gamemode-config', {
         }
     },
     // language=HTML
-    template: '<div><select class="custom-select" v-model="currentGm">' +
+    template: '<div  class="input-group mb-3">' +
+        '<div class="input-group-prepend">\n' +
+        '    <span class="input-group-text">{{localisation.gamemode}}</span>\n' +
+        '  </div>' +
+        '<select class="custom-select" v-model="currentGm">' +
         '<option v-for="(gm, index) in listOfGamemodes" v-bind:key="index"' +
         '   v-bind:config-string="gamemodeConfigStr" :value="gm.value">{{gm.title}}</option>' +
         '</select> ' +
