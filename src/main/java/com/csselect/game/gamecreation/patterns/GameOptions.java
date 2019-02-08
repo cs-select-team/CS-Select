@@ -163,6 +163,7 @@ public class GameOptions implements Cloneable {
             GameOptions copyObject = (GameOptions) super.clone();
             copyObject.setTitle(this.title);
             copyObject.setDescription(this.description);
+            copyObject.setDataset(this.dataset);
             copyObject.setGamemode(this.gamemode);
             copyObject.addInvitedEmails(this.invitedEmails);
             copyObject.setResultDatabaseName(this.getResultDatabaseName());
