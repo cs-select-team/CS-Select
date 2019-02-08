@@ -2,19 +2,19 @@
  * to implement a new gamemode in the creation you need to create a new component that takes a configString prop
  * and that raises the update-config-str event if the config string changes
  */
-Vue.component('gamemode-config-BinarySelect', {
+Vue.component('gamemode-config-binarySelect', {
     props: ['configString'],
     template: '<div></div>',
 
     mounted: function (newVal) {
-        this.$emit('update-config-str', "BinarySelect:")
+        this.$emit('update-config-str', "binarySelect")
     }
 });
-Vue.component('gamemode-config-MatrixSelect', {
+Vue.component('gamemode-config-matrixSelect', {
     props: ['config-string'],
     data: function () {
         return {
-            conf: this.configString.split(':')[0] != "MatrixSelect" ? "MatrixSelect:num~0-min~0-max~0" : this.configString
+            conf: this.isValidConfig(this.configString)?this.configString:'matrixSelect,0,0,0'
         }
     },
     template: '<div>\n' +
@@ -39,57 +39,47 @@ Vue.component('gamemode-config-MatrixSelect', {
         '</div>',
 
     methods: {
-        getArgByName: function (name) {
-            var arguments = this.conf.split(':')[1];
-            var args = arguments.split('-');
-            var returnVal = "";
-            args.forEach(function (value) {
-                var type = value.split('~')[0];
-                if (type == name) {
-                    returnVal = value.split('~')[1];
-                }
-            });
-            return returnVal;
+        getArgByIndex: function (index) {
+            var args = this.conf.split(',');
+
+            return args[index + 1];
         },
-        setArgByName: function (name, newVal) {
-            var newConf = '';
-            var arguments = this.conf.split(':');
-            newConf += arguments[0] + ':';
-            var args = arguments[1].split('-');
-            args.forEach(function (value, index) {
-                var type = value.split('~')[0];
-                if (type == name) {
-                    newConf += value.split('~')[0] + '~';
-                    newConf += newVal;
-                } else newConf += value;
-                if (index < args.length - 1) newConf += "-"
-            });
-            this.conf = newConf
+        setArgByIndex: function (index, newVal) {
+            var arguments = this.conf.split(',');
+            arguments[index + 1] = newVal;
+            this.conf = arguments.join(',');
+
+        },
+        isValidConfig: function (string) {
+            var args = string.split(',');
+            if (args[0] !== 'matrixSelect') return false;
+            return args.length === 4;
+
         }
     },
     computed: {
         numberOfFeatures: {
             get: function () {
-                return parseInt(this.getArgByName("num"))
+                return parseInt(this.getArgByIndex(0))
             },
             set: function (newVal) {
-                this.setArgByName("num", newVal)
+                this.setArgByIndex(0, newVal)
             }
         },
         min: {
             get: function () {
-                return parseInt(this.getArgByName("min"))
+                return parseInt(this.getArgByIndex(1))
             },
             set: function (newVal) {
-                this.setArgByName("min", newVal)
+                this.setArgByIndex(1, newVal)
             }
         },
         max: {
             get: function () {
-                return parseInt(this.getArgByName("max"))
+                return parseInt(this.getArgByIndex(2))
             },
             set: function (newVal) {
-                this.setArgByName("max", newVal)
+                this.setArgByIndex(2, newVal)
             }
         }
     },
@@ -103,8 +93,7 @@ Vue.component('gamemode-config', {
     props: ['gamemode-config-str'],
     data: function () {
         return {
-            listOfGamemodes: [{title: "Matrix Select", value: 'MatrixSelect'}, {title: "Binary Select", value: 'BinarySelect'}],
-            currentGm: 'BinarySelect'
+            listOfGamemodes: [{title: "Matrix Select", value: 'matrixSelect'}, {title: "Binary Select", value: 'binarySelect'}]
         }
     },
     methods: {
@@ -123,6 +112,15 @@ Vue.component('gamemode-config', {
     computed: {
         componentName: function () {
             return 'gamemode-config-' + this.currentGm;
+        },
+        currentGm: {
+            get: function() {
+                if (this.gamemodeConfigStr == '') return 'binarySelect'
+                return this.gamemodeConfigStr.split(',')[0];
+            },
+            set: function (newVal) {
+                this.updateConfString(newVal + ',')
+            }
         }
     }
 })

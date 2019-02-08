@@ -103,11 +103,12 @@ Vue.component('pattern-selection', {
         '  </select>\n' +
         '</div>',
     mounted: function() {
+        var self = this;
         axios({
             method: 'get',
             url: 'create/patterns'
         }).then(function (response) {
-            this.listOfPatterns = response.data
+            self.listOfPatterns = response.data
         })
     },
     watch: {
@@ -165,7 +166,12 @@ var creation = new Vue({
             this.terminationConfigString = newVal;
         },
         loadPattern: function(newVal) {
-            // TODO load pattern in newVal
+            var gameOptions = newVal.gameOptions;
+            this.featureSet = gameOptions.featureset;
+            this.desc = gameOptions.desc;
+            this.title = gameOptions.title;
+            this.databaseName = gameOptions.database;
+            this.gameModeConfigString = gameOptions.gamemodeConf;
         },
         checkFeatureSet: function() {
             var self = this;
