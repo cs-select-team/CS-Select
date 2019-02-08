@@ -39,6 +39,11 @@ public class GamemodeComposite extends Gamemode {
         return this.gamemodes.get(randomMode).createRound(player);
     }
 
+    @Override
+    public String toString() {
+        return "";
+    }
+
     /**
      * Adds a game mode {@link Gamemode} to the set of game modes {@link Gamemode}
      * @param gamemode the game mode {@link Gamemode} to be added
