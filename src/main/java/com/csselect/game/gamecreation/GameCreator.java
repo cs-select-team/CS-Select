@@ -72,7 +72,8 @@ public class GameCreator {
                 assert this.gameOptions.getGamemode() != null;
                 break;
             case "addPlayers":
-                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(arguments)));
+                String[] emails = arguments[0].split(",");
+                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(emails)));
                 break;
             default:
                 break;
