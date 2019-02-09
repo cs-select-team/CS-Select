@@ -1,7 +1,6 @@
 package com.csselect.gamification;
 
 import com.csselect.inject.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Player;
 
 import java.util.LinkedList;
@@ -15,14 +14,14 @@ import java.util.Map;
 public enum Leaderboard {
 
     /**
-     * Instance of the LeaderBoard
+     * Instance of the Leaderboard.
      */
     INSTANCE;
 
     private LeaderboardSortingStrategy strategy;
 
     /**
-     * Creates a new {@link Leaderboard}
+     * Creates a new {@link Leaderboard} and sets the default sorting strategy SortScoreLastWeek.
      */
     Leaderboard() {
         setSortingStrategy(new SortScoreLastWeek());
