@@ -56,7 +56,7 @@ props -->
                             enterDatabaseName: '<fmt:message key="enterDatabaseName"/>',
                             enterFeatureset: '<fmt:message key="enterFeatureset"/>',
                             creationSuccess: '<fmt:message key="creationSuccess"/>',
-                            enterTermination: '<fmt:message key="enterTermination"/>'
+                            enterTermination: '<fmt:message key="enterTermination"/>',
                             completed: '<fmt:message key="completed"/>',
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
                             dailyFinished: '<fmt:message key="dailyFinished"/>'
