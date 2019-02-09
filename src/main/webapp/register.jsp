@@ -14,9 +14,10 @@
                 <div class="login-form">
                     <img class="login-form-img" src="src/img/cs_select.svg" alt="CS:Select">
                     <div class="form-group login-form-div">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress"
-                               v-model="email">
+                        <label for="email"><fmt:message
+                                key="email"/></label>
+                        <input type="email" class="form-control" name="email" id="email"
+                               placeholder="<fmt:message key="emailAddress"/>" v-model="email">
                         <small id="login" class="form-text text-muted"><a href="index.jsp"><fmt:message
                                 key="loginPrompt"/></a></small>
                     </div>
