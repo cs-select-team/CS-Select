@@ -17,6 +17,8 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="Email-Adress"
                                v-model="email">
+                        <small id="login" class="form-text text-muted"><a href="index.jsp"><fmt:message
+                                key="loginPrompt"/></a></small>
                     </div>
                     <div class="form-group login-form-div">
                         <label for="password"><fmt:message key="password"/></label>
