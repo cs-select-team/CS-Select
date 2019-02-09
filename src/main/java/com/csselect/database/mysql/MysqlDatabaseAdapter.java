@@ -6,6 +6,7 @@ import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
+import com.csselect.inject.Injector;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import com.mysql.cj.jdbc.MysqlDataSource;
@@ -40,7 +41,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private final Map<Integer, GameAdapter> gameAdapterMap;
 
     /**
-     * Creates a new MysqlDatabaseAdapter. Only to be used by the {@link com.csselect.Injector}
+     * Creates a new MysqlDatabaseAdapter. Only to be used by the {@link Injector}
      * @param configuration configuration to use
      */
     public MysqlDatabaseAdapter(Configuration configuration) {

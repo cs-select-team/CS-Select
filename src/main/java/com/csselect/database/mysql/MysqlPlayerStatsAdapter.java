@@ -1,6 +1,6 @@
 package com.csselect.database.mysql;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.sql.ResultSet;

@@ -1,7 +1,6 @@
 package com.csselect.user;
 
-import com.csselect.Injector;
-import com.csselect.database.DatabaseAdapter;
+import com.csselect.inject.Injector;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.GameCreator;

@@ -1,4 +1,4 @@
-package com.csselect;
+package com.csselect.inject;
 
 import org.junit.After;
 import org.junit.Before;

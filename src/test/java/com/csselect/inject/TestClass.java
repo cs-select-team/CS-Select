@@ -1,7 +1,8 @@
-package com.csselect;
+package com.csselect.inject;
 
 import com.csselect.database.mock.MockPlayerAdapter;
 import com.csselect.gamification.Leaderboard;
+import com.csselect.inject.Injector;
 import org.junit.After;
 import org.junit.Before;
 

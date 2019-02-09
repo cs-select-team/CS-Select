@@ -1,7 +1,7 @@
 package com.csselect.API;
 
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.user.Organiser;

@@ -1,6 +1,6 @@
 package com.csselect.database.mock;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.database.PlayerStatsAdapter;
 import com.csselect.game.Game;

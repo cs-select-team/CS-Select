@@ -1,6 +1,6 @@
 package com.csselect.gamification;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Player;
 

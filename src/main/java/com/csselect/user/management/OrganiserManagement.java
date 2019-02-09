@@ -1,6 +1,6 @@
 package com.csselect.user.management;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.configuration.Configuration;
 import com.csselect.user.Organiser;
 import com.csselect.user.management.safety.Encrypter;

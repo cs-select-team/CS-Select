@@ -1,6 +1,6 @@
 package com.csselect.database.mock;
 
-import com.csselect.TestClass;
+import com.csselect.inject.TestClass;
 import com.csselect.database.UserAdapter;
 import org.junit.Assert;
 import org.junit.Test;

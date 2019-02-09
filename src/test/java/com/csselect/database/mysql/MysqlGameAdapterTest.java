@@ -1,8 +1,7 @@
 package com.csselect.database.mysql;
 
-import com.csselect.Injector;
-import com.csselect.MysqlTestClass;
-import com.csselect.database.DatabaseAdapter;
+import com.csselect.inject.Injector;
+import com.csselect.inject.MysqlTestClass;
 import com.csselect.database.GameAdapter;
 import com.csselect.user.Player;
 import org.junit.Assert;

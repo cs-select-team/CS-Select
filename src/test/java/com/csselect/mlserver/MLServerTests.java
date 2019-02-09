@@ -1,7 +1,7 @@
 package com.csselect.mlserver;
 
-import com.csselect.Injector;
-import com.csselect.TestClass;
+import com.csselect.inject.Injector;
+import com.csselect.inject.TestClass;
 import com.csselect.configuration.Configuration;
 import com.csselect.game.Feature;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package com.csselect.gamification;
 
-import com.csselect.TestClass;
+import com.csselect.inject.TestClass;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Test;

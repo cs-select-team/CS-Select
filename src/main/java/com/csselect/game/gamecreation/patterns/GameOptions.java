@@ -1,6 +1,6 @@
 package com.csselect.game.gamecreation.patterns;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Termination;
 

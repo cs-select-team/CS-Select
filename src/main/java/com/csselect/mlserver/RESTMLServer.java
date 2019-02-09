@@ -3,6 +3,7 @@ package com.csselect.mlserver;
 import com.csselect.configuration.Configuration;
 import com.csselect.game.Feature;
 import com.csselect.game.FeatureSet;
+import com.csselect.inject.Injector;
 import com.csselect.utils.FeatureSetUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
@@ -33,8 +34,8 @@ public class RESTMLServer implements MLServer {
     private final String homeDir;
 
     /**
-     * Constructor to instantiate a {@link RESTMLServer} Only to be used by the {@link com.csselect.Injector}
-     * @param configuration configuration to be used by the server. Injected by our {@link com.csselect.Injector}
+     * Constructor to instantiate a {@link RESTMLServer} Only to be used by the {@link Injector}
+     * @param configuration configuration to be used by the server. Injected by our {@link Injector}
      */
     public RESTMLServer(Configuration configuration) {
         this.client = ClientBuilder.newClient();

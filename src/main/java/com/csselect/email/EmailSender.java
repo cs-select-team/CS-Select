@@ -1,6 +1,6 @@
 package com.csselect.email;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.configuration.Configuration;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;

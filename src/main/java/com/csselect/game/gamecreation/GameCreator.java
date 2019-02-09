@@ -1,6 +1,6 @@
 package com.csselect.game.gamecreation;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.email.EmailSender;
 import com.csselect.game.Game;

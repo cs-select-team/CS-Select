@@ -1,6 +1,6 @@
 package com.csselect.game;
 
-import com.csselect.Injector;
+import com.csselect.inject.Injector;
 import com.csselect.user.Player;
 
 import java.time.LocalDateTime;

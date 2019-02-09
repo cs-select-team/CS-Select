@@ -1,8 +1,7 @@
 package com.csselect.user;
 
-import com.csselect.Injector;
-import com.csselect.TestClass;
-import com.csselect.configuration.Configuration;
+import com.csselect.inject.Injector;
+import com.csselect.inject.TestClass;
 import com.csselect.user.management.OrganiserManagement;
 import com.csselect.user.management.PlayerManagement;
 import org.junit.Assert;

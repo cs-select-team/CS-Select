@@ -1,5 +1,6 @@
 package com.csselect.configuration;
 
+import com.csselect.inject.Injector;
 import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -18,7 +19,7 @@ public final class ApacheCommonsConfiguration implements Configuration {
     private FileBasedConfiguration configuration;
 
     /**
-     * Creates a new {@link ApacheCommonsConfiguration}. Only to be used by the {@link com.csselect.Injector}
+     * Creates a new {@link ApacheCommonsConfiguration}. Only to be used by the {@link Injector}
      */
     public ApacheCommonsConfiguration() {
         this(DEFAULT_CONFIG_PATH);

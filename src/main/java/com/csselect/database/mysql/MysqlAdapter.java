@@ -1,19 +1,10 @@
 package com.csselect.database.mysql;
 
-import com.csselect.Injector;
-import com.csselect.game.BinarySelect;
-import com.csselect.game.Gamemode;
-import com.csselect.game.MatrixSelect;
-import com.csselect.game.NumberOfRoundsTermination;
-import com.csselect.game.Termination;
-import com.csselect.game.TerminationComposite;
-import com.csselect.game.TimeTermination;
+import com.csselect.inject.Injector;
 import org.intellij.lang.annotations.Language;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 /**
  * Abstract superclass for mysql-adapters that provides basic mysql getters and setters

@@ -1,6 +1,6 @@
 package com.csselect.game.gamecreation;
 
-import com.csselect.TestClass;
+import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
 

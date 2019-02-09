@@ -1,4 +1,4 @@
-package com.csselect;
+package com.csselect.inject;
 
 
 import com.csselect.configuration.Configuration;

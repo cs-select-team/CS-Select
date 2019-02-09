@@ -1,8 +1,7 @@
 package com.csselect.database.mock;
 
-import com.csselect.Injector;
-import com.csselect.TestClass;
-import com.csselect.database.DatabaseAdapter;
+import com.csselect.inject.Injector;
+import com.csselect.inject.TestClass;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
 import com.csselect.user.Organiser;
