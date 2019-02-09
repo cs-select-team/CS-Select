@@ -9,6 +9,11 @@ import java.time.ZoneOffset;
  */
 public class TimeTermination extends Termination {
 
+    /**
+     * Type-String used in parsing from/to String
+     */
+    public static final String TYPE = "time";
+
     private final LocalDateTime date;
 
     /**
@@ -30,6 +35,6 @@ public class TimeTermination extends Termination {
     
     @Override
     public String toString() {
-        return "time:" + date.toEpochSecond(ZoneOffset.UTC);
+        return TYPE + ":" + date.toEpochSecond(ZoneOffset.UTC);
     }
 }

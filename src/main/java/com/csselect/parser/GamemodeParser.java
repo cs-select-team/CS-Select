@@ -20,9 +20,9 @@ public final class GamemodeParser {
      * @return created gamemode
      */
     public static Gamemode parseGamemode(String gamemode) {
-        if (gamemode.startsWith("binarySelect")) {
+        if (gamemode.startsWith(BinarySelect.TYPE)) {
             return new BinarySelect();
-        } else if (gamemode.startsWith("matrixSelect")) {
+        } else if (gamemode.startsWith(MatrixSelect.TYPE)) {
             String[] args = gamemode.split(",");
             return new MatrixSelect(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
         } else {

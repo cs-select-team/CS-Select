@@ -10,6 +10,11 @@ import com.csselect.user.Player;
 public class MatrixSelect extends Gamemode {
 
     /**
+     * Type-String used in parsing from/to String
+     */
+    public static final String TYPE = "matrixSelect";
+
+    /**
      * The number of selections of features in the MatrixSelect game mode
      */
     private static final int NUMBER_OF_SELECTIONS = 1;
@@ -41,6 +46,6 @@ public class MatrixSelect extends Gamemode {
   
     @Override
     public String toString() {
-        return "matrixSelect," + numberOfFeatures + "," + minSelect + "," + maxSelect;
+        return TYPE + "," + numberOfFeatures + "," + minSelect + "," + maxSelect;
     }
 }

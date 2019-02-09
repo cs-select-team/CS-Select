@@ -9,6 +9,11 @@ import com.csselect.user.Player;
 public class BinarySelect extends Gamemode {
 
     /**
+     * Type-String used in parsing from/to String
+     */
+    public static final String TYPE = "binarySelect";
+
+    /**
      * The number of selections of features in the BinarySelect game mode
      */
     private static final int NUMBER_OF_SELECTIONS = 5;
@@ -46,6 +51,6 @@ public class BinarySelect extends Gamemode {
 
     @Override
     public String toString() {
-        return "binarySelect";
+        return TYPE;
     }
 }

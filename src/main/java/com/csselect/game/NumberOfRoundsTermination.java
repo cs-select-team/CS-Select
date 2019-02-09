@@ -6,6 +6,11 @@ package com.csselect.game;
  */
 public class NumberOfRoundsTermination extends Termination {
 
+    /**
+     * Type-String used in parsing from/to String
+     */
+    public static final String TYPE = "rounds";
+
     private final int number;
     /**
      * Constructor for a number of rounds termination object
@@ -22,6 +27,6 @@ public class NumberOfRoundsTermination extends Termination {
     
     @Override
     public String toString() {
-        return "rounds:" + number;
+        return TYPE + ":" + number;
     }
 }
