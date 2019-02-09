@@ -4,7 +4,8 @@ var app1 = new Vue({
         email: '',
         password: '',
         organiser: false,
-        alert: true
+        alert: true,
+        missingConfig: false
     },
     methods: {
         submit: function(event) {
@@ -23,7 +24,10 @@ var app1 = new Vue({
                 }
 
             }).catch(function (error) {
-                  if (error.response) {
+                if (error.response.status == 550) {
+                    app1.missingConfig = true;
+                }
+                 else if (error.response) {
                     app1.alert = false;
                   }
                 });

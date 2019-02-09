@@ -2,7 +2,6 @@ package com.csselect.user.management;
 
 import com.csselect.Injector;
 import com.csselect.configuration.Configuration;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Organiser;
 import com.csselect.user.management.safety.Encrypter;
 
@@ -10,7 +9,6 @@ import com.csselect.user.management.safety.Encrypter;
  * Management class for registration and login of {@link Organiser}
  */
 public final class OrganiserManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Register an organiser with 3 parameters email, password and global password
@@ -27,7 +25,7 @@ public final class OrganiserManagement {
         if (config.getOrganiserPassword().equals(globalPassword)) {
             String salt = Encrypter.getRandomSalt();
             String encryptedPassword = Encrypter.encrypt(password, salt);
-            Organiser organiser = DATABASE_ADAPTER.createOrganiser(email, encryptedPassword, salt);
+            Organiser organiser = Injector.getInstance().getDatabaseAdapter().createOrganiser(email, encryptedPassword, salt);
             if (organiser != null) {
                 organiser.login();
             }
@@ -45,12 +43,12 @@ public final class OrganiserManagement {
      * @return {@link Organiser} object or null
      */
     public Organiser login(String email, String password) {
-        Organiser organiser = DATABASE_ADAPTER.getOrganiser(email);
+        Organiser organiser = Injector.getInstance().getDatabaseAdapter().getOrganiser(email);
         if (organiser == null) {
             return null; //email not found
         }
-        String savedEncryptedPassword = DATABASE_ADAPTER.getOrganiserHash(organiser.getId());
-        String salt = DATABASE_ADAPTER.getOrganiserSalt(organiser.getId());
+        String savedEncryptedPassword = Injector.getInstance().getDatabaseAdapter().getOrganiserHash(organiser.getId());
+        String salt = Injector.getInstance().getDatabaseAdapter().getOrganiserSalt(organiser.getId());
         if (Encrypter.compareStringToHash(password, salt, savedEncryptedPassword)) {
             organiser.login();
             return organiser;

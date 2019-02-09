@@ -1,4 +1,6 @@
 package com.csselect.API.httpAPI;
+import com.csselect.configuration.ConfigurationException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,10 +31,14 @@ public class Login extends Servlet {
     }
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
-        if (req.getPathInfo() == null) {
-            login(req, resp);
-        } else if (req.getPathInfo().equals("/register")) {
-            register(req, resp);
+        try {
+            if (req.getPathInfo() == null) {
+                login(req, resp);
+            } else if (req.getPathInfo().equals("/register")) {
+                register(req, resp);
+            }
+        } catch (ConfigurationException e) {
+            resp.sendError(550); // tell the frontend that the config file is missing
         }
     }
 
@@ -56,6 +62,7 @@ public class Login extends Servlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         updateLanguage();
+
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {

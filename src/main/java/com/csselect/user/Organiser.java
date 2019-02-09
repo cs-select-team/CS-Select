@@ -18,7 +18,6 @@ import java.util.Collection;
  * for creating games.
  */
 public class Organiser extends User implements Comparable {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 
@@ -113,7 +112,7 @@ public class Organiser extends User implements Comparable {
     public void deleteGame(int gameId) {
         organiserAdapter.getTerminatedGames().forEach((Game game) -> {
             if (game.getId() == gameId && game.isTerminated()) {
-                DATABASE_ADAPTER.removeGame(game);
+                Injector.getInstance().getDatabaseAdapter().removeGame(game);
             }
         });
     }

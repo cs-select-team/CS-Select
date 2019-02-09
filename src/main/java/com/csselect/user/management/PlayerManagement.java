@@ -9,7 +9,6 @@ import com.csselect.user.management.safety.Encrypter;
  * Management class for registration and login of {@link Player}
  */
 public final class PlayerManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
 
     /**
      * Register a player with parameters email, password and username
@@ -23,7 +22,7 @@ public final class PlayerManagement {
         String username = parameters[2];
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
-        Player player = DATABASE_ADAPTER.createPlayer(email, encryptedPassword, salt, username);
+        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer(email, encryptedPassword, salt, username);
         if (player != null) {
             player.login();
         }
@@ -38,12 +37,12 @@ public final class PlayerManagement {
      * @return {@link Player} object or null
      */
     public Player login(String email, String password) {
-        Player player = DATABASE_ADAPTER.getPlayer(email);
+        Player player = Injector.getInstance().getDatabaseAdapter().getPlayer(email);
         if (player == null) {
             return null; //email not found
         }
-        String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
-        String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
+        String savedEncryptedPassword = Injector.getInstance().getDatabaseAdapter().getPlayerHash(player.getId());
+        String salt = Injector.getInstance().getDatabaseAdapter().getPlayerSalt(player.getId());
         if (Encrypter.compareStringToHash(password, salt, savedEncryptedPassword)) {
             player.login();
             return player;

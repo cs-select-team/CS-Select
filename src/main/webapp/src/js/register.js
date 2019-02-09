@@ -6,7 +6,8 @@ var app1 = new Vue({
             passwordRepeat: '',
             organiser: 'player', // so that the player is the default option for registering
             thirdParam: '',
-            alert: false
+            alert: false,
+            missingConfig: false
         },
     watch:{
         organiser: function () {
@@ -34,7 +35,9 @@ var app1 = new Vue({
                     // if (response.status == 202) window.open("login.jsp","_self")
 
                 }).catch(function (error) {
-                      app1.alert = true;
+                    if (error.response.status == 550) {
+                        app1.missingConfig = true;
+                    } else app1.alert = true;
                     });
             }
         }
