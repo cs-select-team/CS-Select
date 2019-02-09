@@ -3,7 +3,7 @@ var gameFrame = new Vue({
     data: {
         featureList: [],
         options: {},
-        gameType: 'BinarySelect',
+        gameType: '',
         forceUpdate: 1,
         counter: 0,
         buttonState: true

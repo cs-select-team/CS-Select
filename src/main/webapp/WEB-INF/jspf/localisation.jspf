@@ -1,10 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- File for strings that need to be inside of a vue component, when you dont want to add them as
-    props -->
+props -->
 <fmt:bundle basename="locale.Locale">
     <script>
         Vue.mixin({
-            data: function() {
+            data: function () {
                 return {
                     get localisation() {
                         return {
@@ -57,6 +57,9 @@
                             enterFeatureset: '<fmt:message key="enterFeatureset"/>',
                             creationSuccess: '<fmt:message key="creationSuccess"/>',
                             enterTermination: '<fmt:message key="enterTermination"/>'
+                            completed: '<fmt:message key="completed"/>',
+                            roundsPlayed: '<fmt:message key="roundPlayed"/>',
+                            dailyFinished: '<fmt:message key="dailyFinished"/>'
                         }
                     }
                 }

@@ -27,12 +27,16 @@ public final class Injector {
      */
     public static Injector getInstance() {
         if (injector == null) {
-            if (testMode) {
-                injector = new Injector(new CSSelectTestModule());
-            } else if (mysqlTestMode) {
-                injector = new Injector(new CSSelectMysqlTestModule(new MockConfiguration()));
-            } else {
-                injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
+            synchronized (Injector.class) {
+                if (injector == null) {
+                    if (testMode) {
+                        injector = new Injector(new CSSelectTestModule());
+                    } else if (mysqlTestMode) {
+                        injector = new Injector(new CSSelectMysqlTestModule(new MockConfiguration()));
+                    } else {
+                        injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
+                    }
+                }
             }
         }
         return injector;

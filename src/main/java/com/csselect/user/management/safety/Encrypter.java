@@ -27,22 +27,24 @@ public final class Encrypter {
     }
 
     /**
-     * Encrypts a String using an specified algorithm
+     * Encrypts a String using sha256
      * @param word String to encrypt
+     * @param salt to use when encrypting
      * @return Encrypted String
      */
-    public static String encrypt(String word) {
-        return DigestUtils.sha256Hex(word);
+    public static String encrypt(String word, String salt) {
+        return DigestUtils.sha256Hex(word + salt);
     }
 
     /**
      * Compares if a String equals a hash. Therefore, we encrypt the String and compare it to the Hash
      * @param word String which is not hashed
+     * @param salt salt to use while encrypting
      * @param hash Hash to compare String to
      * @return If hashed value of word equals Hash
      */
-    public static boolean compareStringToHash(String word, String hash) {
-        String encrypted = encrypt(word);
+    public static boolean compareStringToHash(String word, String salt, String hash) {
+        String encrypted = encrypt(word, salt);
         return encrypted.equals(hash);
     }
 }

@@ -34,7 +34,7 @@ public interface MLServer {
      * greater than 0.5
      * @param dataset dataset to which the feature selection belongs
      * @param selectedFeatures feature selection to be evaluated
-     * @return score out of [0-1]
+     * @return score out of [0,1]
      * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
     double getScore(String dataset, Collection<Feature> selectedFeatures) throws IOException;

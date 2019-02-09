@@ -14,8 +14,8 @@ final class Query {
             + "hash VARCHAR(255),"
             + "salt VARCHAR(255),"
             + "email VARCHAR(255),"
-            + "language VARCHAR(40),"
-            + "username VARCHAR(40));";
+            + "language VARCHAR(255),"
+            + "username VARCHAR(255));";
 
     @Language("sql")
     static final String CREATE_ORGANISER_TABLE
@@ -24,7 +24,7 @@ final class Query {
             + "hash VARCHAR(255),"
             + "salt VARCHAR(255),"
             + "email VARCHAR(255),"
-            + "language VARCHAR(40));";
+            + "language VARCHAR(255));";
 
     @Language("sql")
     static final String CREATE_GAME_TABLE
@@ -33,13 +33,13 @@ final class Query {
             + "organiserId INT,"
             + "INDEX organiser_ind (organiserId),"
             + "FOREIGN KEY (organiserId) REFERENCES organisers(id) ON DELETE CASCADE,"
-            + "title VARCHAR(40),"
+            + "title VARCHAR(255),"
             + "description VARCHAR(255),"
-            + "databasename VARCHAR(40),"
+            + "databasename VARCHAR(255),"
             + "isTerminated BOOLEAN,"
             + "dataset VARCHAR(255),"
             + "termination VARCHAR(255),"
-            + "gamemode VARCHAR(40));";
+            + "gamemode VARCHAR(255));";
 
     @Language("sql")
     static final String CREATE_PATTERN_TABLE
@@ -48,13 +48,13 @@ final class Query {
             + "organiserId INT,"
             + "INDEX organiser_ind (organiserId),"
             + "FOREIGN KEY (organiserId) REFERENCES organisers(id) ON DELETE CASCADE,"
-            + "title VARCHAR(40),"
-            + "gameTitle VARCHAR(40),"
+            + "title VARCHAR(255),"
+            + "gameTitle VARCHAR(255),"
             + "description VARCHAR(255),"
             + "dataset VARCHAR(255),"
             + "databasename VARCHAR(40),"
             + "termination VARCHAR(255),"
-            + "gamemode VARCHAR(40),"
+            + "gamemode VARCHAR(255),"
             + "invitedPlayers VARCHAR(255));";
 
     @Language("sql")

@@ -90,6 +90,7 @@ public class Users extends Servlet {
             jsonObject.addProperty("id", invite.getId());
             jsonObject.addProperty("type", invite.getGamemode().getName());
             jsonObject.addProperty("roundsPlayed", invite.getNumberOfRounds());
+            jsonObject.addProperty("desc", invite.getDescription());
             array.add(jsonObject);
         }
         returnAsJson(resp, array);

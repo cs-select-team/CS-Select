@@ -42,7 +42,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
     MysqlOrganiserAdapter(String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable("organisers"));
         DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers (email,hash,salt,language) VALUES (?,?,?,?);",
-                new StringParam(email), new StringParam(hash), new StringParam(salt), new StringParam("de"));
+                new StringParam(email), new StringParam(hash), new StringParam(salt),
+                new StringParam(DEFAULT_LANGUAGE));
     }
 
     @Override

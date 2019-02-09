@@ -88,4 +88,24 @@ public final class ApacheCommonsConfiguration implements Configuration {
     public String getHomeDirectory() {
         return configuration.getString("homedirectory");
     }
+
+    @Override
+    public String getEmailHostname() {
+        return configuration.getString("email.hostname");
+    }
+
+    @Override
+    public int getEmailPort() {
+        return configuration.getInt("email.port");
+    }
+
+    @Override
+    public String getEmailAddress() {
+        return configuration.getString("email.address");
+    }
+
+    @Override
+    public String getEmailPassword() {
+        return configuration.getString("email.password");
+    }
 }

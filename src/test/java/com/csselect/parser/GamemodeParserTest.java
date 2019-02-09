@@ -34,3 +34,4 @@ public class GamemodeParserTest extends TestClass {
         Assert.assertNotNull(gamemode);
     }
 }
+

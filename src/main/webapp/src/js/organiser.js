@@ -11,6 +11,7 @@ Vue.component('active-games-display', {
         '           <div class="row">' +
         '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
+        '                   <div>{{game.desc}}</div>' +
         '               </div>' +
         '               <div class="col">' +
         '                   <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"' +
@@ -105,10 +106,7 @@ Vue.component('stats-display', {
 var activeGames = new Vue({
     el: "#active",
     data: {
-        listOfGames: [{title:"myCoolGame", type:"Matrix", termination:0, id: 1},
-            {title:"myRatherAmusingGame", type:"Binär", termination:0, id: 2},
-            {title:"myUnderwhelmingGame", type:"Matrix", termination:0, id: 3},
-            {title:"myDisappointingGame", type:"Matrix", termination:0, id: 4}]
+        listOfGames: []
     },
     mounted: function () {
         axios({
@@ -136,7 +134,7 @@ var activeGames = new Vue({
 var terminatedGames = new Vue({
     el: "#terminated",
     data: {
-        listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, id: 1}]
+        listOfGames: []
     },
     mounted: function () {
         axios({

@@ -3,7 +3,8 @@ Vue.component('game-display', {
     template: '<div class="card mt-1"><div class="card-body"><div class="row">' +
         '                <div class="col"><div>{{ game.title }}</div>' +
         '                <div>{{ game.type }}</div>' +
-        '                <div>{{ game.roundsPlayed  }}</div></div>' +
+        '                <div>{{ localisation.roundsPlayed + \': \' + game.roundsPlayed  }}</div>' +
+        '               <div>{{game.desc}}</div></div>' +
         '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
         '            </div></div></div>',
     methods: {
@@ -16,11 +17,16 @@ Vue.component('game-display', {
 
 Vue.component('daily-challenge', {
     props:['daily'],
-    template: '<div class="card" v-bind:class="{\'disabled-div\': daily.finished}">' +
-        '<h5 class="card-title">{{daily.title}}</h5>' +
-        '<div class="card-body">' +
-        '   {{localisation.points}}: {{daily.points}}' +
-        '</div>' +
+    template:
+        '<div class="card p-2" v-bind:class="{\'disabled-div\': daily.finished, \'bg-success\': daily.finished}">' +
+        '  <div class="card-body">' +
+        '    <h5 class="card-title">{{daily.title}}</h5>' +
+        '    <div class="card-text">' +
+        '     {{localisation.points}}: {{daily.points}}' +
+        '    </div>' +
+        '    <div class="card-text" v-if="daily.finished">' +
+        '       {{localisation.dailyFinished}}</div>' +
+        '  </div>' +
         '</div>'
 })
 
@@ -46,7 +52,7 @@ Vue.component('invite-element', {
         '            <div class="card-body">\n' +
         '            <div class="row">\n' +
         '                <div class="col">\n' +
-        '                <div class="float-left">{{title}} {{gameId}}</div>\n' +
+        '                <div class="float-left">{{title}}</div>\n' +
         '                </div>\n' +
         '                <div class="col">\n' +
         '                <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">\n' +
@@ -85,7 +91,7 @@ Vue.component('invite-element', {
 var invites = new Vue({
     el: '#invites',
     data: {
-        listOfInvites: [{id:1, title: "asdf", type:"mom", roundsPlayed: 0}]
+        listOfInvites: []
     },
     mounted: function () {
         axios({
@@ -100,8 +106,8 @@ var invites = new Vue({
 var stats = new Vue({
     el: '#stats',
     data: {
-        username: 'Bendix',
-        points: 1234
+        username: '',
+        points: 0
     },
     mounted: function () {
         axios({

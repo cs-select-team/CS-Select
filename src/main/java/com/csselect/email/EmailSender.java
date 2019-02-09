@@ -1,5 +1,7 @@
 package com.csselect.email;
 
+import com.csselect.Injector;
+import com.csselect.configuration.Configuration;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
@@ -21,17 +23,18 @@ public final class EmailSender {
      * @param message the emails message
      */
     public static void sendEmail(String recipient, String header, String message) {
+        Configuration config = Injector.getInstance().getConfiguration();
         Email email = new SimpleEmail();
         email.setStartTLSRequired(true);
-        email.setHostName("mail.gmx.net");
-        email.setSslSmtpPort("465");
-        email.setAuthenticator(new DefaultAuthenticator("csselect@gmx.de", "PSEWs2018/19"));
+        email.setHostName(config.getEmailHostname());
+        email.setSslSmtpPort("" + config.getEmailPort());
+        email.setAuthenticator(new DefaultAuthenticator(config.getEmailAddress(), config.getEmailPassword()));
         email.setSSLOnConnect(true);
         try {
             email.getMailSession().getProperties().put("mail.smtp.auth", "true");
             email.getMailSession().getProperties().put("mail.smtp.**ssl.enable", "true");
             email.getMailSession().getProperties().put("mail.smtp.**ssl.required", "true");
-            email.setFrom("csselect@gmx.de");
+            email.setFrom(config.getEmailAddress());
             email.setSubject(header);
             email.setMsg(message);
             email.addTo(recipient);

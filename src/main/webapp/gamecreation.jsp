@@ -33,7 +33,6 @@
                         </div>
                         <textarea class="form-control"  v-model="desc"></textarea>
                     </div>
-
                     <ul class="nav nav-tabs">
                         <player-invite-nav-tab v-for="(value, index) in playerInputType" v-bind:key="index"
                                                v-bind:title="value.title" v-bind:value="value.value"
@@ -63,10 +62,10 @@
                             <div class="input-group-text">
                                 <input type="checkbox" v-model="saveAsPattern" >
                             </div>
+
                         </div>
                         <input type="text" class="form-control" :disabled="!saveAsPattern" v-model="patternName" :placeholder="localisation.patternTitle">
                     </div>
-
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="">{{localisation.inputFeatures}}</span>
@@ -77,6 +76,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">{{localisation.inputDatabase}}</span>
+
                         </div>
                         <input type="text" class="form-control" v-model="databaseName">
                     </div>
@@ -90,6 +90,7 @@
     <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>
+
     <script src="src/js/gamecreation.js"></script>
 </fmt:bundle>
 <%@ include file="WEB-INF/jspf/footer.jspf" %>
