@@ -34,7 +34,7 @@ public class RESTMLServer implements MLServer {
 
     /**
      * Constructor to instantiate a {@link RESTMLServer} Only to be used by the {@link com.csselect.Injector}
-     * @param configuration configuration to be used by the server. Injected by guice
+     * @param configuration configuration to be used by the server. Injected by our {@link com.csselect.Injector}
      */
     public RESTMLServer(Configuration configuration) {
         this.client = ClientBuilder.newClient();

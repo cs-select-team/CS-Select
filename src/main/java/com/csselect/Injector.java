@@ -8,7 +8,8 @@ import com.csselect.database.DatabaseAdapter;
 import com.csselect.mlserver.MLServer;
 
 /**
- * Class used for retrieving the guice injector
+ * Class used for retrieving the Injector which is responsible for delivering the
+ * correct implementations for our singletons
  */
 public final class Injector {
 

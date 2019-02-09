@@ -5,7 +5,7 @@ import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.mlserver.MockMLServer;
 
 /**
- * This class manages which implementations should be injected by guice while testing
+ * This class manages which implementations should be injected by our {@link Injector} while testing
  */
 class CSSelectTestModule extends Module {
 
