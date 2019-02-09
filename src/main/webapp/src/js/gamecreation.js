@@ -223,6 +223,7 @@ var creation = new Vue({
             // language=RegExp
             if (this.databaseName.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDatabaseName, type: 0});
             if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
+            if (this.terminationConfigString.split(':').length < 2) this.alerts.push({message: this.localisation.enterTermination, type: 0})
             return this.alerts.length === 0;
         },
         invitePlayers: function() {

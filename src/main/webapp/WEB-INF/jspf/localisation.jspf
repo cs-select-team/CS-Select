@@ -55,7 +55,8 @@
                             enterDescription: '<fmt:message key="enterDescription"/>',
                             enterDatabaseName: '<fmt:message key="enterDatabaseName"/>',
                             enterFeatureset: '<fmt:message key="enterFeatureset"/>',
-                            creationSuccess: '<fmt:message key="creationSuccess"/>'
+                            creationSuccess: '<fmt:message key="creationSuccess"/>',
+                            enterTermination: '<fmt:message key="enterTermination"/>'
                         }
                     }
                 }
