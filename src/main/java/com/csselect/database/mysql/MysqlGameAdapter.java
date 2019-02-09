@@ -178,6 +178,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public void setFeatures(FeatureSet featureSet) {
         setString("dataset", featureSet.getIdentifier());
+        //We only set the name of the featureset as the featureset itself is saved on the disk and we load it from there
     }
 
     @Override
