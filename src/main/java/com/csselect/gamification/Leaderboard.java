@@ -14,13 +14,17 @@ import java.util.Map;
  */
 public enum Leaderboard {
 
+    /**
+     * Instance of the LeaderBoard
+     */
     INSTANCE;
 
-    private final DatabaseAdapter databaseAdapter;
     private LeaderboardSortingStrategy strategy;
 
+    /**
+     * Creates a new {@link Leaderboard}
+     */
     Leaderboard() {
-        databaseAdapter =  Injector.getInstance().getDatabaseAdapter();
         setSortingStrategy(new SortScoreLastWeek());
     }
 
@@ -54,7 +58,7 @@ public enum Leaderboard {
      * @return The list of players.
      */
     private List<Player> getPlayersFromDatabase() {
-        return new LinkedList<>(databaseAdapter.getPlayers());
+        return new LinkedList<>(Injector.getInstance().getDatabaseAdapter().getPlayers());
     }
 
 }
