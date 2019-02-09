@@ -16,7 +16,8 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" v-model="password" class="form-control" placeholder="New Password">
+            <input type="password" v-model="password" class="form-control"
+                   placeholder="<fmt:message key="newPassword"></fmt:message>">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password==''}" type="button"
                         v-on:click="setPassword"><fmt:message key="update"></fmt:message></button>
