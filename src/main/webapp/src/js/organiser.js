@@ -134,7 +134,7 @@ var activeGames = new Vue({
 var terminatedGames = new Vue({
     el: "#terminated",
     data: {
-        listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, id: 1}]
+        listOfGames: []
     },
     mounted: function () {
         axios({
