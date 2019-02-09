@@ -253,6 +253,9 @@ var creation = new Vue({
                 self.createButtonEnabled = true;
                 self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
+                if (error.status == 551) { // game has not been created
+                    self.alerts.push({message: self.localisation.creationFail, type: 0})
+                }
             });
         }
 
