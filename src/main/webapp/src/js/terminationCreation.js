@@ -1,11 +1,10 @@
-
 Vue.component('termination-config', {
     props: ['termination-config-str'],
-    data: function(){
+    data: function () {
         return {
-           listOfTerminations: [{title: "Time termination", value:"time"},
-                                {title: "Rounds termination", value:"rounds"}],
-            currentTermination: 'rounds'
+            listOfTerminations: [{title: "Time termination", value: "time"},
+                {title: "Rounds termination", value: "rounds"},
+                {title: "Composite termination", value: "composite"}]
         }
     },
     template: "<div class=\"input-group mb-3\">" +
@@ -17,39 +16,127 @@ Vue.component('termination-config', {
         "               :value='term.value'>{{term.title}}</option>\n" +
         "  </select>" +
         "   <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'" +
-        "               v-on:update-termination='updateTermination'></component>" +
+        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(0,2)'></component>" +
         "</div>",
     methods: {
-        updateTermination: function(newVal) {
+        updateTermination: function (newVal) {
             this.$emit('update-termination-str', newVal);
         }
     },
-    computed: {
-        componentName: function() {
-
-            return "termination-config-" + this.currentTermination
+    watch: {
+        terminationConfigStr: function(newVal) {
+            this.$forceUpdate()
         }
     }
+    ,
+
+    computed: {
+        componentName: function () {
+
+            return "termination-config-" + this.currentTermination
+        },
+        currentTermination: {
+            get: function() {
+                if (this.terminationConfigStr.split(',').length < 2) {
+                    return this.terminationConfigStr.split(':')[0];
+                } else {
+                    return 'composite'; // special case for composite termination
+                }
+            },
+            set: function (newVal) {
+                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,rounds:1');
+                else this.$emit('update-termination-str', newVal + ':');
+            }
+        }
+    }
+});
+Vue.component('termination-config-composite', {
+    props: ['list-of-possible-terminations', 'termination-config-str'],
+    data: function () {
+        return {
+            terminations: [],
+            currentTermination: {},
+            terminationStrings: []
+        }
+    },
+    methods: {
+        addTermination: function (term) {
+            this.terminations.push(term);
+            this.terminationStrings.push('')
+        },
+        removeTerminationByIndex: function (index) {
+            this.terminations.splice(index, 1);
+            this.terminationConfigString.splice(index, 1);
+        },
+        addTerminationStringByIndex: function (event, index) {
+            this.terminationStrings[index] = event;
+            this.$emit('update-termination', this.terminationStrings.join(','))
+        }
+
+    },
+    mounted: function () {
+        var self = this;
+        Vue.nextTick(function() {
+            self.terminationStrings = self.terminationConfigStr.split(',');
+            self.terminationStrings.forEach(function (value, index) {
+                var termination = {};
+                self.listOfPossibleTerminations.forEach(function (term) {
+                    if (term.value === value.split(':')[0]) termination = term;
+                })
+                self.terminations.push(termination)
+            })
+        })
+
+
+    },
+    watch: {
+        terminationConfigStr: function(newVal) {
+            var self = this
+            self.terminationStrings = newVal.split(',');
+            self.terminationStrings.forEach(function (value, index) {
+                var termination = {};
+                self.listOfPossibleTerminations.forEach(function (term) {
+                    if (term.value === value.split(':')[0]) termination = term;
+                })
+                self.terminations.push(termination)
+            })
+        }
+    },
+
+    template: '<div>' +
+        '     <div class="input-group mb-3">\n' +
+        '  <select class="custom-select" v-model="currentTermination">\n' +
+        '    <option v-for="(termination, index) in listOfPossibleTerminations" v-bind:key="index"' +
+        '               :value="termination" >{{termination.title}}</option>' +
+        '  </select>\n' +
+        ' <div class="input-group-append">\n' +
+        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">Add</button>\n' +
+        '  </div>' +
+        '</div>' +
+        '<div v-for="(term, index) in terminations" class="row" >' +
+        '<div class="col-10">' +
+        '<component  v-bind:key="index" ' +
+        '           v-bind:is="\'termination-config-\' + term.value" v-bind:termination-config-str="terminationStrings[index]"' +
+        '           v-on:update-termination="addTerminationStringByIndex($event, index)"></component></div>' +
+        '<div class="col-2"> ' +
+        '<button type="button" class="close" v-on:click="removeTerminationByIndex(index)">\n' +
+        '          <span aria-hidden="true">&times;</span>\n' +
+        '        </button>\n' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+
 })
 
 Vue.component('termination-config-rounds', {
     props: ['termination-config-str'],
-    data: function() {
-        return {
-            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"rounds:1"
+    watch: {
+        terminationConfigStr: function (newVal) {
+            this.$forceUpdate()
         }
     },
-    mounted: function () {
-        this.$emit('update-termination', this.conf)
-    },
-
-    watch: {
-      conf: function(newVal) {
-          this.$emit('update-termination', newVal)
-      }
-    },
     methods: {
-        isValidConf: function(string) {
+        isValidConf: function (string) {
             var args = string.split(':');
             if (args[0] !== 'rounds') return false;
             if (args.length !== 2) return false;
@@ -57,13 +144,15 @@ Vue.component('termination-config-rounds', {
     },
     computed: {
         number: {
-            get: function() {
-                return parseInt(this.conf.split(':')[1])
+            get: function () {
+                if (this.terminationConfigStr == undefined || this.terminationConfigStr === '') this.$emit('update-termination', 'rounds:1');
+                return parseInt(this.terminationConfigStr.split(':')[1])
             },
-            set: function(newVal) {
-                var args = this.conf.split(':');
+            set: function (newVal) {
+                var args = this.terminationConfigStr.split(':');
                 args[1] = newVal;
-                this.conf = args.join(':')
+
+                this.$emit('update-termination', args.join(':'))
             }
         }
     },
@@ -78,21 +167,10 @@ Vue.component('termination-config-rounds', {
 
 Vue.component('termination-config-time', {
     props: ['termination-config-str'],
-    data: function() {
-        return {
-            conf: this.isValidConf(this.terminationConfigStr)?this.terminationConfigStr:"time:2019-02-08T12:27:18.232Z",
-            date: null
-        }
-    },
-    mounted: function () {
-        this.$emit('update-termination', this.conf)
-    },
     watch: {
-        conf: function(newVal) {
-            this.$emit('update-termination', newVal)
-        },
-        date: function(newVal) {
-            this.conf = "time:" + new Date(newVal).getTime()
+        terminationConfigStr: function (newVal) {
+            this.$forceUpdate();
+
         }
     },
     methods: {
@@ -103,10 +181,23 @@ Vue.component('termination-config-time', {
         }
     },
     computed: {
+        date: {
+            get: function() {
+                var args = this.terminationConfigStr.split(':');
+                var date = new Date(Number(args[1]));
+                var dateString = date.toString();
+                return dateString;
+            },
+            set: function (newVal) {
+                var args = this.terminationConfigStr.split(':');
+                args[1] = new Date(newVal).getTime();
+                this.$emit('update-termination', args.join(':'))
+            }
+        }
     },
     template: '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text" id="basic-addon1">{{localisation.endDate}}</span>\n' +
+        '    <span class="input-group-text" >{{localisation.endDate}}</span>\n' +
         '  </div>\n' +
         '  <date-picker v-model="date"></date-picker>' +
         '</div>'
