@@ -68,10 +68,11 @@ public class Games extends Servlet {
     }
 
 
-    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        String uselessString = getParameter("useless", req);
-        int[] useless = new Gson().fromJson(uselessString, (Type) int.class);
+        String body = getBody(req);
+        JsonObject json = new Gson().fromJson(body, JsonObject.class);
+        int[] useless = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("useless"));
         getPlayerFacade().skipRound(useless);
     }
 
