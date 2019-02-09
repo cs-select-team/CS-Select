@@ -42,8 +42,9 @@ var gameFrame = new Vue({
                     }
                 }).then(function (response) {
                     gameFrame.points = response.data
+                    gameFrame.getNextRound();
                 })
-                this.getNextRound();
+
             }
         },
         skip: function() {
@@ -53,8 +54,10 @@ var gameFrame = new Vue({
                 data: {
                     useless: JSON.stringify(this.getUselessFeaturesById())
                 }
+            }).then(function (value) {
+                gameFrame.getNextRound();
             })
-            this.getNextRound();
+
         },
         getNextRound: function() {
             axios({
