@@ -66,9 +66,11 @@ public class Organiser extends User implements Comparable {
     /**
      * Creating a game is easier than configure it before construction.
      * We just call according method on {@link GameCreator}.
+     * @return true if the game was created successfully, false otherwise
      */
-    public void createGame() {
+    public boolean createGame() {
         Game game = gameBuilder.doCreate();
+        return game != null;
     }
 
     /**
