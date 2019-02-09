@@ -212,6 +212,10 @@ var creation = new Vue({
                                 self.savePattern()
                             }
                             self.createGame();
+            }).catch(function (reason) {
+                if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
+                    self.alerts.push({message: self.localisation.MLServerDown, type: 0})
+                }
             })
         },
         checkParameters: function() {

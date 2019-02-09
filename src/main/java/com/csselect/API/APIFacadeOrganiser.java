@@ -175,7 +175,8 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param name name of the feature set to look up
      * @return true if a feature set does exist , false otherwise
      */
-    public boolean checkFeatureSet(String name) {
+    public boolean checkFeatureSet(String name) throws IOException {
+        if (!Injector.getInstance().getMLServer().isOnline()) throw new IOException("can not connect to ml server");
         return Injector.getInstance().getMLServer().isValidDataset(name);
     }
     /** checks if a batabse with the given name exists

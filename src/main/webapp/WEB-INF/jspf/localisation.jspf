@@ -62,7 +62,8 @@ props -->
                             dailyFinished: '<fmt:message key="dailyFinished"/>',
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
-                            streakTimesTwo: '<fmt:message key="streakTimesTwo"/>'
+                            streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
+                            MLServerDown: '<fmt:message key="MLServerDown"/>'
                         }
                     }
                 }

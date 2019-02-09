@@ -45,7 +45,14 @@ public class GameManagement extends Servlet {
 
     private void checkExist(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         String name = getParameter("name", req);
-        returnAsJson(resp, getOrganiserFacade().checkFeatureSet(name));
+        try {
+            boolean exists = getOrganiserFacade().checkFeatureSet(name);
+            returnAsJson(resp, exists );
+        } catch (IOException e) {
+            resp.sendError(HttpServletResponse.SC_GATEWAY_TIMEOUT);
+        }
+
+
     }
 
 
