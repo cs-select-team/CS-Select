@@ -2,9 +2,9 @@
 <fmt:bundle basename="locale.Locale">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="col-md-3 col-lg-4">
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <form id="loginForm">
                     <div class="alert alert-danger mt-3" v-bind:class="{ invisible: alert }">
                         <fmt:message key="noLogin"/>
@@ -36,7 +36,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="col-md-3 col-lg-4">
             </div>
         </div>
 
