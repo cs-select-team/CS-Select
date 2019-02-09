@@ -6,7 +6,8 @@ var gameFrame = new Vue({
         gameType: '',
         forceUpdate: 1,
         counter: 0,
-        buttonState: true
+        buttonState: true,
+        points: undefined
     },
     mounted: function () {
       this.getNextRound();
@@ -39,6 +40,8 @@ var gameFrame = new Vue({
                         useless: JSON.stringify(this.getUselessFeaturesById()),
                         selected: JSON.stringify(this.getSelectedFeaturesById())
                     }
+                }).then(function (response) {
+                    gameFrame.points = response.data
                 })
                 this.getNextRound();
             }

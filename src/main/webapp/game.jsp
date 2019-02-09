@@ -18,6 +18,7 @@
                            value="<fmt:message key="quit"/>"/>
 
                     <streak-display v-bind:counter="counter"></streak-display>
+                    <points-display v-bind:points="points"></points-display>
                 </div>
             </div>
         </div>
@@ -25,6 +26,8 @@
 
     <script src="src/js/featureDisplay.js"></script>
     <script src="src/js/streak.js"></script>
+    <script src="src/js/pointsDisplay.js"></script>
+
 
     <script src="src/js/binarySelect.js"></script>
     <script src="src/js/matrixSelect.js"></script>
