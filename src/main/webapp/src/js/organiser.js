@@ -11,6 +11,7 @@ Vue.component('active-games-display', {
         '           <div class="row">' +
         '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
         '                   <div>{{ game.type }}</div>' +
+        '                   <div>{{game.desc}}</div>' +
         '               </div>' +
         '               <div class="col">' +
         '                   <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"' +
@@ -133,7 +134,7 @@ var activeGames = new Vue({
 var terminatedGames = new Vue({
     el: "#terminated",
     data: {
-        listOfGames: [{title:"myOldGame", type:"Matrix", termination:0, id: 1}]
+        listOfGames: []
     },
     mounted: function () {
         axios({

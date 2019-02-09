@@ -122,26 +122,34 @@ public class Games extends Servlet {
         int gameId = getId(req.getPathInfo());
         JsonObject jsonObject = new JsonObject();
         JsonArray featureList = new JsonArray();
-        Collection<Feature> featureCollection = getPlayerFacade().startRound(gameId);
-        if (featureCollection == null) { // if game has been terminated
+        Collection<Feature> featureCollection;
+        try {
+            featureCollection = getPlayerFacade().startRound(gameId);
+            if (featureCollection == null) {
+                resp.sendError(HttpServletResponse.SC_NO_CONTENT);
+                return;
+            }
+            for (Feature feature: featureCollection) {
+                JsonObject jsonFeature = new JsonObject();
+                jsonFeature.addProperty("id", feature.getID());
+                jsonFeature.addProperty("desc", feature.getDescription(lang));
+                jsonFeature.addProperty("name", feature.getName(lang));
+                jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
+                jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
+                featureList.add(jsonFeature);
+            }
+            jsonObject.add("listOfFeatures", featureList);
+            Gamemode gm = getPlayerFacade().getGame(gameId).getGamemode();
+            JsonObject options = new Gson().fromJson(new Gson().toJson(gm), JsonObject.class);
+            jsonObject.add("options", options);
+            jsonObject.addProperty("gameType", gm.getName());
+            returnJson(resp, jsonObject);
+        } catch (IllegalArgumentException e) {
             resp.sendError(HttpServletResponse.SC_NO_CONTENT);
             return;
         }
-        for (Feature feature: featureCollection) {
-            JsonObject jsonFeature = new JsonObject();
-            jsonFeature.addProperty("id", feature.getID());
-            jsonFeature.addProperty("desc", feature.getDescription(lang));
-            jsonFeature.addProperty("name", feature.getName(lang));
-            jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
-            jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
-            featureList.add(jsonFeature);
-        }
-        jsonObject.add("listOfFeatures", featureList);
-        Gamemode gm = getPlayerFacade().getGame(gameId).getGamemode();
-        JsonObject options = new Gson().fromJson(new Gson().toJson(gm), JsonObject.class);
-        jsonObject.add("options", options);
-        jsonObject.addProperty("gameType", gm.getName());
-        returnJson(resp, jsonObject);
+
+
     }
 
 
@@ -158,6 +166,7 @@ public class Games extends Servlet {
             jsonObject.addProperty("title", game.getTitle());
             jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
             jsonObject.addProperty("type", game.getGamemode().getName());
+            jsonObject.addProperty("desc", game.getDescription());
             json.add(jsonObject);
         }
         returnJson(resp, json);
