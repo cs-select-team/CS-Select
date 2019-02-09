@@ -59,7 +59,10 @@ props -->
                             enterTermination: '<fmt:message key="enterTermination"/>',
                             completed: '<fmt:message key="completed"/>',
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
-                            dailyFinished: '<fmt:message key="dailyFinished"/>'
+                            dailyFinished: '<fmt:message key="dailyFinished"/>',
+                            streakTimesOne: '<fmt:message key="streakTimesOne"/>',
+                            streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
+                            streakTimesTwo: '<fmt:message key="streakTimesTwo"/>'
                         }
                     }
                 }
