@@ -2,6 +2,7 @@ package com.csselect;
 
 import com.csselect.configuration.ApacheCommonsConfiguration;
 import com.csselect.configuration.Configuration;
+import com.csselect.configuration.ConfigurationException;
 import com.csselect.configuration.MockConfiguration;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.mlserver.MLServer;
@@ -32,7 +33,12 @@ public final class Injector {
             } else if (mysqlTestMode) {
                 injector = new Injector(new CSSelectMysqlTestModule(new MockConfiguration()));
             } else {
-                injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
+                try {
+                    injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
+                } catch (ConfigurationException | NoClassDefFoundError e) {
+                    injector = null;
+                    throw new ConfigurationException();
+                }
             }
         }
         return injector;

@@ -37,7 +37,7 @@ public class Login extends Servlet {
             } else if (req.getPathInfo().equals("/register")) {
                 register(req, resp);
             }
-        } catch (ExceptionInInitializerError e) {
+        } catch (ConfigurationException e) {
             resp.sendError(550); // tell the frontend that the config file is missing
         }
     }

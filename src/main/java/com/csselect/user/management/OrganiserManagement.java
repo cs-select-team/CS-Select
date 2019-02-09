@@ -2,7 +2,6 @@ package com.csselect.user.management;
 
 import com.csselect.Injector;
 import com.csselect.configuration.Configuration;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Organiser;
 import com.csselect.user.management.safety.Encrypter;
 
@@ -10,8 +9,7 @@ import com.csselect.user.management.safety.Encrypter;
  * {@link UserManagement} class for {@link Organiser}
  */
 public final class OrganiserManagement extends UserManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
-
+    
     @Override
     public Organiser register(String[] parameters) {
         assert parameters.length == 3;
@@ -24,7 +22,7 @@ public final class OrganiserManagement extends UserManagement {
             String salt = Encrypter.getRandomSalt();
             password += salt;
             String encryptedPassword = Encrypter.encrypt(password);
-            Organiser organiser = DATABASE_ADAPTER.createOrganiser(email, encryptedPassword, salt);
+            Organiser organiser = Injector.getInstance().getDatabaseAdapter().createOrganiser(email, encryptedPassword, salt);
             if (organiser != null) {
                 organiser.login();
             }
@@ -36,12 +34,12 @@ public final class OrganiserManagement extends UserManagement {
 
     @Override
     public Organiser login(String email, String password) {
-        Organiser organiser = DATABASE_ADAPTER.getOrganiser(email);
+        Organiser organiser = Injector.getInstance().getDatabaseAdapter().getOrganiser(email);
         if (organiser == null) {
             return null; //email not found
         }
-        String savedEncryptedPassword = DATABASE_ADAPTER.getOrganiserHash(organiser.getId());
-        String salt = DATABASE_ADAPTER.getOrganiserSalt(organiser.getId());
+        String savedEncryptedPassword = Injector.getInstance().getDatabaseAdapter().getOrganiserHash(organiser.getId());
+        String salt = Injector.getInstance().getDatabaseAdapter().getOrganiserSalt(organiser.getId());
         String concatenated = password + salt;
 
         if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {

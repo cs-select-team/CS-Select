@@ -10,7 +10,7 @@ public class ConfigurationException extends RuntimeException {
     /**
      * Creates a new {@link ConfigurationException}
      */
-    ConfigurationException() {
+    public ConfigurationException() {
         super(MESSAGE);
     }
 }

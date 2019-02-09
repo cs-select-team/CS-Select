@@ -9,8 +9,7 @@ import com.csselect.user.management.safety.Encrypter;
  * {@link UserManagement} class for {@link Player}
  */
 public final class PlayerManagement extends UserManagement {
-    private static final DatabaseAdapter DATABASE_ADAPTER = Injector.getInstance().getDatabaseAdapter();
-
+    
     @Override
     public Player register(String[] parameters) {
         assert parameters.length == 3;
@@ -21,7 +20,7 @@ public final class PlayerManagement extends UserManagement {
         String salt = Encrypter.getRandomSalt();
         password += salt;
         String encryptedPassword = Encrypter.encrypt(password);
-        Player player = DATABASE_ADAPTER.createPlayer(email, encryptedPassword, salt, username);
+        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer(email, encryptedPassword, salt, username);
         if (player != null) {
             player.login();
         }
@@ -30,12 +29,12 @@ public final class PlayerManagement extends UserManagement {
 
     @Override
     public Player login(String email, String password) {
-        Player player = DATABASE_ADAPTER.getPlayer(email);
+        Player player = Injector.getInstance().getDatabaseAdapter().getPlayer(email);
         if (player == null) {
             return null; //email not found
         }
-        String savedEncryptedPassword = DATABASE_ADAPTER.getPlayerHash(player.getId());
-        String salt = DATABASE_ADAPTER.getPlayerSalt(player.getId());
+        String savedEncryptedPassword = Injector.getInstance().getDatabaseAdapter().getPlayerHash(player.getId());
+        String salt = Injector.getInstance().getDatabaseAdapter().getPlayerSalt(player.getId());
         String concatenated = password + salt;
 
         if (Encrypter.compareStringToHash(concatenated, savedEncryptedPassword)) {
