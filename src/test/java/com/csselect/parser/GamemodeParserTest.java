@@ -1,35 +1,37 @@
 package com.csselect.parser;
 
 import com.csselect.TestClass;
-import com.csselect.game.Gamemode;
+import com.csselect.game.BinarySelect;
+import com.csselect.game.MatrixSelect;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class GamemodeParserTest extends TestClass {
-    private String[] input;
+    private String input;
 
     @Override
     public void setUp() {
-        input = new String[2];
+        input = new String();
     }
 
     @Override
     public void reset() {
-        input = new String[2];
+        input = new String();
     }
 
     @Test //there for debugging
     public void testMatrixParsing() {
-        input[0] = "MatrixSelect";
-        input[1] = "num~10-min~2-max~6";
-        Gamemode gamemode = GamemodeParser.getGamemode(input);
-        Assert.assertEquals("MatrixSelect", gamemode.getName());
+        input = "matrixSelect:10,2,6";
+
+        MatrixSelect gamemode = (MatrixSelect) GamemodeParser.parseGamemode(input);
+        Assert.assertNotNull(gamemode);
     }
 
     @Test
     public void testBinaryParsing() {
-        input[0] = "BinarySelect";
-        Gamemode gamemode = GamemodeParser.getGamemode(input);
-        Assert.assertEquals("BinarySelect", gamemode.getName());
+        input = "binarySelect";
+        BinarySelect gamemode = (BinarySelect) GamemodeParser.parseGamemode(input);
+        Assert.assertNotNull(gamemode);
     }
 }
+

@@ -7,6 +7,8 @@ import com.csselect.game.FeatureSet;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Round;
 import com.csselect.game.Termination;
+import com.csselect.parser.GamemodeParser;
+import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 
@@ -155,12 +157,12 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public Gamemode getGamemode() {
-        return parseGamemode(getString("gamemode"));
+        return GamemodeParser.parseGamemode(getString("gamemode"));
     }
 
     @Override
     public Termination getTermination() {
-        return parseTermination(getString("termination"));
+        return TerminationParser.parseTermination(getString("termination"));
     }
 
     @Override

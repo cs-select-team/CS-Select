@@ -51,7 +51,8 @@ final class Query {
             + "title VARCHAR(255),"
             + "gameTitle VARCHAR(255),"
             + "description VARCHAR(255),"
-            + "databasename VARCHAR(255),"
+            + "dataset VARCHAR(255),"
+            + "databasename VARCHAR(40),"
             + "termination VARCHAR(255),"
             + "gamemode VARCHAR(255),"
             + "invitedPlayers VARCHAR(255));";

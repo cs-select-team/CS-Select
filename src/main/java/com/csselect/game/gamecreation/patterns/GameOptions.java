@@ -157,12 +157,22 @@ public class GameOptions implements Cloneable {
                 && Injector.getInstance().getMLServer().isValidDataset(dataset);
     }
 
+    /**
+     * Empties the complete HashSet which holds all invited Emails. Do this after creating a game with
+     * {@link com.csselect.game.gamecreation.GameCreator}, otherwise
+     * it could be that players get invited by accident next time.
+     */
+    public void resetEmails() {
+        this.invitedEmails = new HashSet<>();
+    }
+
     @Override
     public Object clone() {
         try {
             GameOptions copyObject = (GameOptions) super.clone();
             copyObject.setTitle(this.title);
             copyObject.setDescription(this.description);
+            copyObject.setDataset(this.dataset);
             copyObject.setGamemode(this.gamemode);
             copyObject.addInvitedEmails(this.invitedEmails);
             copyObject.setResultDatabaseName(this.getResultDatabaseName());

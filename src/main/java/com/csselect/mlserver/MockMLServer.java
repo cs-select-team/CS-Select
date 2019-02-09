@@ -40,4 +40,9 @@ public final class MockMLServer implements MLServer {
     public boolean isValidDataset(String dataset) {
         return dataset.equalsIgnoreCase("populationGender");
     }
+
+    @Override
+    public boolean isOnline() {
+        return true;
+    }
 }

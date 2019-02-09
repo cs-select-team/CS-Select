@@ -45,8 +45,13 @@ public class MLServerTests extends TestClass {
     }
 
     @Test
-    public void validDatasetTest() throws IOException {
+    public void validDatasetTest() {
         Assert.assertTrue(mlServer.isValidDataset("populationGender"));
         Assert.assertFalse(mlServer.isValidDataset("test"));
+    }
+
+    @Test
+    public void testIsOnline() {
+        Assert.assertTrue(mlServer.isOnline());
     }
 }

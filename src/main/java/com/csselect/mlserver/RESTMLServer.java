@@ -6,7 +6,6 @@ import com.csselect.game.FeatureSet;
 import com.csselect.utils.FeatureSetUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -14,6 +13,7 @@ import javax.ws.rs.client.WebTarget;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -26,6 +26,8 @@ import java.util.zip.ZipFile;
  */
 public class RESTMLServer implements MLServer {
 
+    private static final int TIMEOUT = 1000;
+    private static final String GET_VERSION = "/version";
     private final Client client;
     private final String mlserverUrl;
     private final String homeDir;
@@ -42,7 +44,7 @@ public class RESTMLServer implements MLServer {
 
     @Override
     public String getVersion() {
-        String response = get("/version").get(String.class);
+        String response = get(GET_VERSION).get(String.class);
         Gson gson = new Gson();
         Properties data = gson.fromJson(response, Properties.class);
         return data.getProperty("APIVersion");
@@ -80,6 +82,19 @@ public class RESTMLServer implements MLServer {
         }
     }
 
+    @Override
+    public boolean isOnline() {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(mlserverUrl + GET_VERSION).openConnection();
+            connection.setConnectTimeout(TIMEOUT);
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            return (200 <= responseCode && responseCode <= 399);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     private Invocation.Builder get(String request) {
         WebTarget target = client.target(mlserverUrl + request);
         return target.request();
@@ -93,7 +108,7 @@ public class RESTMLServer implements MLServer {
     private void writeDataset(String datasetIdentifier) throws IOException {
         File tmpZipFile = new File(homeDir + File.separator + datasetIdentifier + File.separator + "dataset.zip");
         FileUtils.copyURLToFile(
-                new URL(mlserverUrl + "/features?dataset=" + datasetIdentifier), tmpZipFile, 1000, 1000);
+                new URL(mlserverUrl + "/features?dataset=" + datasetIdentifier), tmpZipFile, TIMEOUT, TIMEOUT);
         ZipFile zipFile = new ZipFile(tmpZipFile);
         String datasetPathname = homeDir + File.separator + datasetIdentifier;
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -103,6 +118,7 @@ public class RESTMLServer implements MLServer {
             FileUtils.copyInputStreamToFile(is, new File(datasetPathname + File.separator + entry.getName()));
         }
         zipFile.close();
+        //noinspection ResultOfMethodCallIgnored
         tmpZipFile.delete();
     }
 

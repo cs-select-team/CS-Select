@@ -1,212 +1,183 @@
-Vue.component('invite', {
-    props: [''],
-    template: '<div>' +
-        '           <input type="text" id="emailToAdd" :placeholder="localisation.emailGC"/>' +
-        '           <input type="button" class="btn btn-primary" ' +
-        '               v-on:click="invite()" :value="localisation.invite"/>' +
-        '      </div>',
+Vue.component('player-invite-single', {
+    data: function () {
+        return {
+            email: ''
+        }
+    },
+
+    template: '<div class="input-group mb-3">\n' +
+        '  <input type="email" class="form-control" placeholder="" aria-label="" ' +
+        '       v-model="email" aria-describedby="inviteButton">\n' +
+        '  <div class="input-group-append">\n' +
+        '    <button class="btn btn-outline-secondary" type="button" :disabled="!this.validateEmail"' +
+        ' v-on:click="newEmail" id="inviteButton">{{ localisation.invite }}</button>\n' +
+        '  </div>\n' +
+        '</div>',
+
     methods: {
-        invite: function() {
-            if(document.getElementById("emailToAdd").value.toString() != '') {
-                creation.addPlayer(document.getElementById("emailToAdd").value.toString());
-                document.getElementById("emailToAdd").value = '';
-                alert("Successfully added Email")
+        newEmail: function () {
+            this.$emit('new-email', this.email)
+            this.email = "";
+        }
+    },
+    computed: {
+        validateEmail: function () {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(this.email).toLowerCase());
+        }
+    }
+});
+Vue.component('player-invite-textarea', {
+    props: ['invited-players'],
+    data: function () {
+        return {
+            rawText: this.joinedWith(this.invitedPlayers, ',')
+        }
+    },
+    template: '<div class="input-group">\n' +
+        '  <textarea class="form-control" aria-label="" v-model="rawText"></textarea>\n' +
+        '</div>',
+    methods: {
+        joinedWith: function (array, char) {
+            var string = '';
+            array.forEach(function (value, index) {
+                string += value;
+                if (index < array.length - 1) {
+                    string += char
+                }
+            })
+            return string;
+        },
+        validateEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+    },
+    watch: {
+        rawText: function (newVal) {
+            var self = this;
+            var wrongEmail = false;
+            newVal = newVal.replace(/\s/g, '');
+            var array = newVal.split(',');
+            var newArray = [];
+            array.forEach(function (value, index) {
+                if (value == '') {
+
+                    return
+                } // trailing comma will cause one empty string
+                else {
+                    newArray.push(value)
+                }
+                if (!self.validateEmail(value)) {
+                    wrongEmail = true;
+                }
+            });
+            if (wrongEmail) {
+                // TODO inform user
             } else {
-                alert("Please type in Email")
+                this.$emit('update-invited', newArray);
             }
         }
     }
 });
-
-Vue.component('pat', {
-    props: [''],
-    template: '<input type="button" class="btn btn-primary" :value="localisation.loadPattern" ' +
-        'v-on:click="loadPattern()">',
-    methods: {
-        loadPattern: function() {
-            creation.loadPattern();
+Vue.component('player-invite-nav-tab', {
+    props: ['title', 'value', 'current-tab'],
+    template: '<li class="nav-item">\n' +
+        '                            <a class="nav-link" v-bind:class="{active: currentTab == value}"\n' +
+        '                                v-on:click="$emit(\'update-tab\', value)" href="#" v-on>{{title}}</a>\n' +
+        '                        </li>'
+});
+Vue.component('pattern-selection', {
+    data: function() {
+        return {
+            listOfPatterns: [],
+            selectedPattern: {}
+        }
+    },
+    template: '<div class="input-group mb-3">\n' +
+        '  <div class="input-group-prepend">\n' +
+        '    <label class="input-group-text" >{{localisation.pattern}}</label>\n' +
+        '  </div>\n' +
+        '  <select class="custom-select" v-model="selectedPattern">\n' +
+        '    <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>' +
+        '  </select>\n' +
+        '</div>',
+    mounted: function() {
+        var self = this;
+        axios({
+            method: 'get',
+            url: 'create/patterns'
+        }).then(function (response) {
+            self.listOfPatterns = response.data
+        })
+    },
+    watch: {
+        selectedPattern: function(newVal) {
+            this.$emit('load-pattern', newVal)
         }
     }
-});
-
-Vue.component('control', {
-    props: ['creationdisabled'],
-    template: '<div class="container">' +
-        '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="abort()"' +
-        ':value="localisation.abort">' +
-        '           <input type="button" class="btn btn-primary float-right btn-space" v-on:click="create()"' +
-        ':value="localisation.create" :disabled="creationdisabled">' +
-        '       </div>',
-    methods: {
-        abort : function() {
-            creation.emptyStore();
-        },
-        create : function() {
-            creation.fail = false;
-            creation.creationenabled = true;
-            axios.all([creation.submitTitle(), creation.submitDescription(), creation.submitDatabaseName(),
-                creation.checkFeatureSet(), creation.invitePlayers(),
-                creation.submitTermination(), creation.submitGamemode(), creation.submitFeatureSet()]).
-                        then(function (response) {
-                    if (!response[3].data) {
-                        alert("Feature set does not exist");
-                        return;
-                    }
-                    if (creation.savePattern) {
-                        creation.saveP();
-                    }
-                    creation.createGame();
-            });
-        }
-    }
-});
-
+})
 var creation = new Vue({
     el: '#gamecreation',
     data: {
+        invitedPlayers: [],
+        playerInputType: [{title: 'Single', value: 'single'},
+            {title: 'Mass', value: 'textarea'}],
         title: '',
-        invites: [],
-        mode: '',
-        numberFeatures: '',
-        minSelect: '',
-        maxSelect: '',
-        patternName: '',
-        description: '',
-        terminationtype: '',
-        terminationvalue: '',
-        featureSet: '',
+        desc: '',
+        currentTab: 'single',
+        gameModeConfigString: '',
+        terminationConfigString: '',
         databaseName: '',
-        savePattern: false,
-        savedPatterns: ["pattern 1"],
-        selectedPattern: null,
-        callbackCounter: 1 ,// very primitive sephamore
-        creationenabled: true,
-        success: false // success message for the use
+        featureSet: '',
+        saveAsPattern: false,
+        patternName: '',
+
+
+        createButtonEnabled: true,
+        alerts: []
     },
     methods: {
-        emptyStore: function() {
-            this.title = '';
-            this.invites = [];
-            this.mode = '';
-            this.numberFeatures = '';
-            this.minSelect = '';
-            this.maxSelect = '';
-            this.patternName = '';
-            this.description = '';
-            this.terminationtype = '';
-            this.terminationvalue = '';
-            this.featureSet = '';
-            this.databaseName = '';
-            this.savePattern = false;
-            this.selectedPattern = null;
-        },
-        submitTitle: function() {
-            if (this.title == '') {
-                alert("Please set title");
-                return;
-            }
+        /** submits a new parameter to the api
+         *
+         * @param name name of the parameter
+         * @param value value of that parameter
+         */
+        submitParameter: function (name, value) {
             axios({
                 method: 'post',
                 url: 'create/setParam',
                 params: {
-                    option: "title",
-                    data: this.title,
+                    option: name,
+                    data: value
                 }
             })
         },
-        submitDescription: function() {
-            if (this.description == '') {
-                alert("Please set description");
-                return;
-            }
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "description",
-                    data: this.description,
-                }
-            })
+        addInvitedPlayer: function (email) {
+            this.invitedPlayers.push(email);
         },
-        submitDatabaseName: function() {
-            if (this.databaseName == '') {
-                alert("Please set database address");
-                return;
-            }
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "addressOrganiserDatabase",
-                    data: this.databaseName,
-                }
-            })
+        updateInvited: function (array) {
+
+            this.invitedPlayers = array;
         },
-        addPlayer: function(email) {
-            this.invites.push(email.toString());
+        updateTab: function (newVal) {
+            this.currentTab = newVal;
         },
-        invitePlayers: function() {
-            if (this.invites.length == 0) {
-                alert("You did not invite any players. Invite them later to your game")
-            }
-            this.players = '';
-            var self = this;
-            this.invites.forEach(function(email, index) {
-                if (index == 0) {
-                    self.players = email;
-                } else {
-                    self.players += "_" + email;
-                }
-            });
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "addPlayers",
-                    data: this.players,
-                }
-            })
+        updateConfString: function (newVal) {
+            this.gameModeConfigString = newVal;
         },
-        submitTermination: function() {
-            if (this.terminationtype == '') {
-                alert("Please set termination type");
-                return;
-            }
-            if (this.terminationvalue == '') {
-                alert("Please set a value for your termination");
-                return;
-            }
-            this.callbackCounter++;
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "termination",
-                    data: this.terminationtype + ":" + this.terminationvalue,
-                }
-            })
+        updateTerminationString: function (newVal) {
+            this.terminationConfigString = newVal;
         },
-        submitGamemode: function() {
-            if (this.mode == '') {
-                alert("Please set gamemmode");
-                return;
-            }
-            if (this.mode == "matrix" && (this.numberFeatures == '' || this.maxSelect == '' || this.minSelect == '')) {
-                alert("Please configure matrix select mode");
-                return;
-            }
-            this.callbackCounter++;
-            axios({
-                method: 'post',
-                url: 'create/setParam',
-                params: {
-                    option: "gamemode",
-                    data: this.mode + ":" +
-                        "num~" + this.numberFeatures + "-" +
-                        "min~" + this.minSelect + "-" +
-                        "max~" + this.maxSelect,
-                }
-            })
+        loadPattern: function(newVal) {
+            var gameOptions = newVal.gameOptions;
+            this.featureSet = gameOptions.featureset;
+            this.desc = gameOptions.desc;
+            this.title = gameOptions.title;
+            this.databaseName = gameOptions.database;
+            this.gameModeConfigString = gameOptions.gamemodeConf;
+            this.terminationConfigString = gameOptions.termination;
+            this.invitedPlayers = gameOptions.invites;
         },
         checkFeatureSet: function() {
             var self = this;
@@ -224,25 +195,42 @@ var creation = new Vue({
                 })
             }
         },
-        submitFeatureSet: function() {
-                    axios({
-                        method: 'post',
-                        url: 'create/setParam',
-                        params: {
-                            option: "featureSet",
-                            data: this.featureSet
 
-                        }
-                    })
+        submitGame: function() {
+
+            var self = this;
+            if (!this.checkParameters()) return
+            axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
+                        this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
+                        this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
+                        this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.playersString)]).then(function(response){
+                            if(!response[0].data) {
+                                self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
+                                return;
+                            }
+                            if (self.saveAsPattern) {
+                                self.savePattern()
+                            }
+                            self.createGame();
+            })
+        },
+        checkParameters: function() {
+            this.alerts = [];
+            // language=RegExp
+            if (this.title.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterTitle, type: 0});
+            // language=RegExp
+            if (this.desc.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDescription, type: 0});
+            // language=RegExp
+            if (this.databaseName.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDatabaseName, type: 0});
+            if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
+            if (this.terminationConfigString.split(':').length < 2) this.alerts.push({message: this.localisation.enterTermination, type: 0})
+            return this.alerts.length === 0;
+        },
+        invitePlayers: function() {
 
 
         },
-        saveP: function() {
-           if (this.patternName == '') {
-               alert("Please name your pattern");
-               return;
-           }
-           this.callbackCounter++;
+        savePattern: function() {
             axios({
                 method: 'post',
                 url: 'create/savePattern',
@@ -251,43 +239,35 @@ var creation = new Vue({
                 }
             })
         },
-        loadPattern: function() {
-            this.title = this.selectedPattern.gameOptions.title;
-            this.description = this.selectedPattern.gameOptions.desc;
-            this.featureSet = this.selectedPattern.gameOptions.featureset;
-            this.databaseName = this.selectedPattern.gameOptions.database;
-            this.terminationtype = this.selectedPattern.gameOptions.termination.type;
-            this.mode = this.selectedPattern.gameOptions.gamemode;
-            this.terminationvalue = JSON.parse(this.selectedPattern.gameOptions.termination.value);
-            this.invites = this.selectedPattern.gameOptions.invites;
-
-        },
         createGame: function() {
             var self = this;
-            self.creationenabled = false;
-            if (this.fail) {
-                self.creationenabled = true;
-                return;
-            }
+            this.createButtonEnabled = false;
             axios({
                 method: 'post',
                 url: 'create'
             }).then(function (response) {
-                self.creationenabled = true;
-                self.success = true;
+                self.createButtonEnabled = true;
+                self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
-                self.creationenabled = true;
-                self.alert = true;
             });
-        },
+        }
+
     },
-    mounted: function() {
-        var self = this;
-        axios({
-            method: 'get',
-            url: 'create/patterns',
-        }).then(function (response) {
-            self.savedPatterns = response.data;
-        });
+    computed: {
+        currentTabComponent: function () {
+            return 'player-invite-' + this.currentTab
+        },
+        playersString: function() {
+            var players = ''
+            this.invitedPlayers.forEach(function(value, index) {
+                if (index == 0) {
+                    players = value;
+                }
+                else {
+                    players += '_' + value;
+                }
+            })
+            return players;
+        }
     }
 });
