@@ -4,7 +4,6 @@ import com.csselect.Injector;
 import com.csselect.configuration.Configuration;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Organiser;
-import com.csselect.user.User;
 import com.csselect.user.management.safety.Encrypter;
 
 /**
