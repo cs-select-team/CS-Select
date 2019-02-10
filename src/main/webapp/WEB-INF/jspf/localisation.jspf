@@ -63,7 +63,13 @@ props -->
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
-                            MLServerDown: '<fmt:message key="MLServerDown"/>'
+                            MLServerDown: '<fmt:message key="MLServerDown"/>',
+
+                            inviteTooltip: '<fmt:message key="inviteTooltip"/>',
+                            closeTooltip: '<fmt:message key="closeTooltip"/>',
+                            inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',
+                            playGameTooltip: '<fmt:message key="playGameTooltip"/>',
+                            gamecreationMassInviteTooltip: '<fmt:message key="gamecreationMassInviteTooltip"/>'
                         }
                     }
                 }

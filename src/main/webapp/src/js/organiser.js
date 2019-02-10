@@ -26,15 +26,15 @@ Vue.component('active-games-display', {
                 '    <div class="modal-content">\n' +
                 '      <div class="modal-header">\n' +
                 '        <h5 class="modal-title" id="modalLabel">{{ localisation.invite }}</h5>\n' +
-                '        <button :title="localisation.invitePlayerHelp" type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
-                '          <span aria-hidden="true">&times;</span>\n' +
+                '        <button :title="localisation.closeTooltip" type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                '          <span aria-hidden="true" >&times;</span>\n' +
                 '        </button>\n' +
                 '      </div>\n' +
                 '      <div class="modal-body">' +
         '                   <div class="input-group mb-3">\n' +
         '                       <input type="text" class="form-control" :placeholder="localisation.emailGC" v-model="email">\n' +
         '                   <div class="input-group-append">\n' +
-        '                   <button class="btn btn-outline-secondary" type="button" v-on:click="invitePlayer(game.id)">{{ localisation.invite }}</button>\n' +
+        '                   <button class="btn btn-outline-secondary" :title="localisation.inviteTooltip" type="button" v-on:click="invitePlayer(game.id)">{{ localisation.invite }}</button>\n' +
         '                   </div>' +
         '                   </div>' +
                 '      </div>\n' +

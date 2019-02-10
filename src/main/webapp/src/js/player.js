@@ -5,7 +5,7 @@ Vue.component('game-display', {
         '                <div>{{ game.type }}</div>' +
         '                <div>{{ localisation.roundsPlayed + \': \' + game.roundsPlayed  }}</div>' +
         '               <div>{{game.desc}}</div></div>' +
-        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
+        '                <div class="col"><input type="button" :title="localisation.playGameTooltip" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
         '            </div></div></div>',
     methods: {
         startGame: function(gameId) {
