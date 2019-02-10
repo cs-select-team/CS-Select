@@ -51,6 +51,14 @@ public abstract class Round {
     }
 
     /**
+     * Checks whether this round was skipped or not
+     * @return true if round was skipped, false otherwise
+     */
+    public boolean isSkipped() {
+        return this.skipped;
+    }
+
+    /**
      * Setter for the game to which a round belongs
      * @param game the game of the round
      */
@@ -122,14 +130,6 @@ public abstract class Round {
      */
     public Player getPlayer() {
         return this.player;
-    }
-
-    /**
-     * Getter that returns if the round was skipped.
-     * @return True if round was skipped, otherwise false
-     */
-    public boolean getSkipped() {
-        return this.skipped;
     }
 
     /**
