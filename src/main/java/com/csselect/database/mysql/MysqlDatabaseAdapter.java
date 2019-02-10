@@ -266,9 +266,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             e.printStackTrace();
             return null;
         }
-        adapter.setEmail(email);
-        adapter.setPassword(hash, salt);
-        adapter.setUsername(username);
         return new Player(adapter);
     }
 
