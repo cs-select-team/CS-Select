@@ -84,6 +84,11 @@ public class PlayerStats implements Gamification {
         return activeDaily;
     }
 
+    @Override
+    public void logout() {
+        streak.setZero();
+    }
+
     /**
      * Gets the amount of played rounds of the player.
      * @return The amount of played rounds of the player.
