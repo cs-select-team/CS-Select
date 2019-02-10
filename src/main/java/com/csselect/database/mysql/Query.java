@@ -76,6 +76,7 @@ final class Query {
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "playerId INT,"
             + "time DATETIME,"
+            + "skipped BOOLEAN,"
             + "quality DOUBLE,"
             + "points INT,"
             + "uselessFeatures VARCHAR(255),"

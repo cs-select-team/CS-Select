@@ -95,11 +95,12 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public int getNumberOfRounds() {
         ResultSet set;
         try {
-            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT MAX(id) AS id FROM rounds;", getDatabaseName());
+            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT COUNT(*) AS count FROM rounds WHERE skipped=0;",
+                    getDatabaseName());
             if (!set.next()) {
                 return 0;
             } else {
-                return set.getInt("id");
+                return set.getInt("count");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,7 +142,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public Collection<Round> getRounds() {
         Collection<Round> rounds = new HashSet<>();
         try {
-            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM rounds", getDatabaseName());
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM rounds WHERE skipped=0",
+                    getDatabaseName());
             while (set.next()) {
                 Round round = getGamemode().createRound(new Player(new MysqlPlayerAdapter(
                         set.getInt("playerId"))));
@@ -231,10 +233,10 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public void addRound(Round round) {
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO rounds ("
-                    + "playerId,time,quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
-                    + "VALUES (?,NOW(),?,?,?,?,?);", getDatabaseName(), new IntParam(round.getPlayer().getId()),
-                    new DoubleParam(round.getQuality()), new IntParam(round.getPoints()),
-                    new StringParam(featuresToString(round.getUselessFeatures())),
+                    + "playerId,time,skipped,quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
+                    + "VALUES (?,NOW(),?,?,?,?,?,?);", getDatabaseName(), new IntParam(round.getPlayer().getId()),
+                    new BooleanParam(round.isSkipped()), new DoubleParam(round.getQuality()),
+                    new IntParam(round.getPoints()), new StringParam(featuresToString(round.getUselessFeatures())),
                     new StringParam(featuresToString(round.getChosenFeatures())),
                     new StringParam(featuresToString(round.getShownFeatures())));
         } catch (SQLException e) {
