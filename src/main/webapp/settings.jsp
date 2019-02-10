@@ -22,17 +22,9 @@
             <input type="password" v-model="password" class="form-control"
                    placeholder="<fmt:message key="newPassword"></fmt:message>">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password == '' ||
-                                                    password != '' && password != repeatpassword }" type="button"
+                <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password==''}" type="button"
                         v-on:click="setPassword"><fmt:message key="update"></fmt:message></button>
             </div>
-        </div>
-        <div class="input-group mb-3" v-bind:class="{collapse: password == '' }">
-            <input type="password" v-model="repeatpassword" class="form-control" placeholder="Repeat Password">
-        </div>
-        <div class="input-group alert alert-danger" v-bind:class="{collapse: repeatpassword == password ||
-            password != '' && repeatpassword == '' }">
-            <fmt:message key="passwordNoMatch"/>
         </div>
         <div class="input-group mb-3">
             <select class="custom-select" id="Lang" v-model="language">
