@@ -40,6 +40,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     @Override
     public void logout() {
+        organiser.logout();
         organiser = null;
     }
 

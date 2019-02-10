@@ -49,6 +49,7 @@ public class APIFacadePlayer extends APIFacadeUser {
 
     @Override
     public void logout() {
+        player.logout();
         player = null;
     }
 
