@@ -9,6 +9,7 @@ import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
+import org.pmw.tinylog.Logger;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -110,7 +111,7 @@ public class GameCreator {
         try {
             game.setFeatureSet(Injector.getInstance().getMLServer().getFeatures(gameOptions.getDataset()));
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         if (!gameOptions.getInvitedEmails().isEmpty()) {
             game.invitePlayers(gameOptions.getInvitedEmails());

@@ -11,6 +11,7 @@ import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import org.pmw.tinylog.Logger;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -89,7 +90,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 return null;
             }
         } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -106,7 +107,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 return set.getInt("count");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return 0;
         }
     }
@@ -122,7 +123,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 emails.add(resultSet.getString("email"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return emails;
     }
@@ -138,7 +139,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 players.add(DATABASE_ADAPTER.getPlayer(resultSet.getString("email")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return players;
     }
@@ -157,7 +158,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 rounds.add(round);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return rounds;
     }
@@ -215,7 +216,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                 createRoundsTable();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -245,7 +246,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                     new StringParam(featuresToString(round.getChosenFeatures())),
                     new StringParam(featuresToString(round.getShownFeatures())));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -264,7 +265,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (email,invited) VALUES " + values
                     + " ON DUPLICATE KEY UPDATE email=email;", getDatabaseName(), params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -283,7 +284,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             DATABASE_ADAPTER.executeMysqlUpdate(
                     "REPLACE INTO players (email,invited) VALUES " + values + ";", getDatabaseName(), params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -294,19 +295,19 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
             DATABASE_ADAPTER.executeMysqlUpdate(
                             "REPLACE INTO players (email,invited) VALUES (?,0);", getDatabaseName(), email);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
     @Override
     public void removeInvitedPlayers(Collection<String> emails) {
-        emails.forEach(e -> {
+        emails.forEach(email -> {
             try {
                 DATABASE_ADAPTER.executeMysqlUpdate(
                         "DELETE FROM " + PLAYERS_TABLE_NAME + " WHERE email=? AND invited=1;", getDatabaseName(),
-                        new StringParam(e));
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+                        new StringParam(email));
+            } catch (SQLException e) {
+                Logger.error(e);
             }
         });
     }
@@ -318,7 +319,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
                             + " WHERE shownFeatures=?", getDatabaseName(), new StringParam(featuresToString(features)));
             return set.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return false;
         }
     }

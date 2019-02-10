@@ -2,6 +2,7 @@ package com.csselect.database.mysql;
 
 import com.csselect.inject.Injector;
 import com.csselect.database.UserAdapter;
+import org.pmw.tinylog.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,7 +54,7 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
                 throw new IllegalArgumentException("Email is already in use!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             throw new IllegalArgumentException("Error occurred setting the email-address");
         }
         setString("email", email);
@@ -65,7 +66,7 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
             DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
                     + " SET hash='" + hash + "', salt='" + salt + "' WHERE (id='" + getID() + "');");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 

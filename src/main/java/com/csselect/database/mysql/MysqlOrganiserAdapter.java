@@ -7,6 +7,7 @@ import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
+import org.pmw.tinylog.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,7 +66,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 patterns.add(new Pattern(options, set.getString("title")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return patterns;
     }
@@ -86,7 +87,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                     new StringParam(gameOptions.getTermination().toString()),
                     new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
