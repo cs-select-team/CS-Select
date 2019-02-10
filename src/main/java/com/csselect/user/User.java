@@ -84,12 +84,7 @@ public class User {
      * @throws IllegalArgumentException Throws error if something is not right with the input email address
      */
     public void changeEmail(String email) throws IllegalArgumentException {
-        try {
-            userAdapter.setEmail(email);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Email taken");
-        }
+        userAdapter.setEmail(email);
     }
 
     /**
