@@ -20,6 +20,7 @@ public abstract class Round {
     protected int points;
     protected final Player player;
     protected Game game;
+    private boolean skipped;
 
     private final Collection<Feature> uselessFeatures;
     private final Collection<Feature> chosenFeatures;
@@ -35,6 +36,7 @@ public abstract class Round {
         this.player = player;
 
         this.time = LocalDateTime.now();
+        this.skipped = false;
 
         this.uselessFeatures = new ArrayList<>();
         this.chosenFeatures = new ArrayList<>();
@@ -123,6 +125,14 @@ public abstract class Round {
     }
 
     /**
+     * Getter that returns if the round was skipped.
+     * @return True if round was skipped, otherwise false
+     */
+    public boolean getSkipped() {
+        return this.skipped;
+    }
+
+    /**
      * Starts the round, uses provideFeatures to select the features {@link Feature} that are to be shown to the
      * player {@link Player} and returns these.
      * @return the features {@link Feature} that are to be shown to the player {@link Player}
@@ -141,6 +151,7 @@ public abstract class Round {
      */
     public void skip(int[] uselessFeatures) {
         this.addUselessFeatures(uselessFeatures);
+        this.skipped = true;
         this.player.getStats().skipRound();
         this.game.addFinishedRound(this);
         this.player.setActiveRound(null);
