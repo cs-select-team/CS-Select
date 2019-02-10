@@ -2,6 +2,7 @@ package com.csselect.game;
 
 import com.csselect.inject.Injector;
 import com.csselect.user.Player;
+import org.pmw.tinylog.Logger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -179,7 +180,7 @@ public abstract class Round {
         try {
             this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
         } catch (java.io.IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
 
         this.points = this.player.getStats().finishRound(this.quality);

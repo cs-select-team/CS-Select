@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.pmw.tinylog.Logger;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -202,7 +203,7 @@ public class Games extends Servlet {
 
             bos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return BASE_64_PNG_PREFIX + imageString;
     }

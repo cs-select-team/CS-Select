@@ -5,6 +5,7 @@ import com.csselect.database.PlayerAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.PlayerStats;
+import org.pmw.tinylog.Logger;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -74,7 +75,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
                 return stats;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
