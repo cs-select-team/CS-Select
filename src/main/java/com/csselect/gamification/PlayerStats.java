@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
-    private static final int NUMBER_OF_DAILIES = 4;
+    private final static int NUMBER_OF_DAILIES = 4;
     private final PlayerStatsAdapter playerStatsAdapter;
     private final Streak streak;
     private DailyChallenge activeDaily;
 
     /**
-     * Creates a new {@link PlayerStats} object with the given {@link PlayerStatsAdapter}
-     * @param playerStatsAdapter playerstatsadapter for connection to the database
+     * Creates a new {@link PlayerStats} object with the given {@link PlayerStatsAdapter}.
+     * @param playerStatsAdapter PlayerstatsAdapter for connection to the database.
      */
     public PlayerStats(PlayerStatsAdapter playerStatsAdapter) {
         this.playerStatsAdapter = playerStatsAdapter;
@@ -45,8 +45,7 @@ public class PlayerStats implements Gamification {
 
         int gamificationScore = addStreakBonus(newStreak, commutedScore);
 
-        selectDaily();
-        gamificationScore = addDailyBonus(activeDaily, gamificationScore);
+        gamificationScore = addDailyBonus(getDaily(), gamificationScore);
 
         playerStatsAdapter.playRound();
         playerStatsAdapter.addScore(gamificationScore);
@@ -131,12 +130,14 @@ public class PlayerStats implements Gamification {
     /**
      * Algorithm to convert the score given by the ML-Server into the points that the player
      * will receive (without gamification mechanics). If the ML-Server score was originally lower
-     * than 0.5, the player will obtain less points.
+     * than 0.5, the player will obtain less points. Otherwise it is multiplied by 100.
      * @param score Score given by the ML-Server.
      * @return Points the player will receive.
      */
     private int commuteScore(double score) {
         if (score < 0 || score > 1) {
+            // Score should always be in [0,1].
+            assert false;
             return 0;
         }
 
@@ -148,7 +149,8 @@ public class PlayerStats implements Gamification {
     }
 
     /**
-     * Calculates bonus points if the streak is high enough.
+     * Calculates bonus points if the streak is high enough. Score is multiplied by 1.5 if streak is at least 3
+     * and doubled if streak is at least 5.
      * @param currentStreak The current streak.
      * @param oldScore The current score.
      * @return The new score. If the streak is too low, the score stays the same.

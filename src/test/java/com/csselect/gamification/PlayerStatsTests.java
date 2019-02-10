@@ -1,7 +1,7 @@
 package com.csselect.gamification;
 
-import com.csselect.inject.TestClass;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
+import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,12 +60,13 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.8);
         Assert.assertEquals(1, stats.getRoundsPlayed());
         stats.finishRound(0.44);
-        Assert.assertEquals(stats.getRoundsPlayed(), 2);
+        Assert.assertEquals(2, stats.getRoundsPlayed());
         stats.finishRound(0.92);
         stats.finishRound(0.77);
         stats.finishRound(0.47);
         Assert.assertEquals(5, stats.getRoundsPlayed());
         stats.skipRound();
+        // Skipping a round does not count as playing a round.
         Assert.assertEquals(5, stats.getRoundsPlayed());
     }
 
@@ -77,6 +78,7 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.2);
         Assert.assertEquals(2, stats.getHighestStreak());
         stats.skipRound();
+        // Current streak resets.
         stats.finishRound(0.44);
         Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.9);
@@ -87,6 +89,10 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(4, stats.getHighestStreak());
     }
 
+    /**
+     * This test only works with the four dailies that currently exist, every one of them would be completed
+     * after this simulation of played rounds.
+     */
     @Test
     public void testDailiesCompleted() {
         Assert.assertEquals(0, stats.getDailiesCompleted());
@@ -97,6 +103,7 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
+        // Daily was already completed on this day.
         Assert.assertEquals(1, stats.getDailiesCompleted());
     }
 
@@ -104,10 +111,11 @@ public class PlayerStatsTests extends TestClass {
     public void testDailies() {
         Assert.assertNotNull(stats.getDaily());
         Assert.assertEquals(stats.getDaily().getDate(), LocalDate.now());
+        Assert.assertFalse(stats.getDaily().isCompleted());
     }
 
     @Test
-    public void testStreaks() {
+    public void testStreak() {
         Assert.assertNotNull(stats.getStreak());
         Assert.assertEquals(0, stats.getStreak().getCounter());
         stats.finishRound(0.2);
@@ -120,6 +128,9 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(1, stats.getStreak().getCounter());
     }
 
+    /**
+     * If you add achievements, the number of achievements has to be adjusted.
+     */
     @Test
     public void testAchievements() {
         Assert.assertNotNull(stats.getAchievements());
@@ -133,6 +144,7 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(1, stats.getStreak().getCounter());
         Assert.assertEquals(15, stats.getScore());
         stats.skipRound();
+        // Score stays the same, but the streak resets.
         Assert.assertEquals(0, stats.getStreak().getCounter());
         Assert.assertEquals(15, stats.getScore());
     }
@@ -146,13 +158,11 @@ public class PlayerStatsTests extends TestClass {
         Assert.assertEquals(70, stats.getScore());
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void testWrongScore() {
-        Assert.assertEquals(0, stats.getScore());
-        stats.finishRound(-1);
-        Assert.assertEquals(0, stats.getScore());
-        stats.finishRound(44);
-        Assert.assertEquals(0, stats.getScore());
+        Assert.assertEquals(0, stats.finishRound(-1));
+        Assert.assertEquals(0, stats.finishRound(0));
+        Assert.assertEquals(0, stats.finishRound(44));
     }
 
 }
