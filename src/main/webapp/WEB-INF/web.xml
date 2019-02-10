@@ -6,6 +6,9 @@
     <display-name>CS-Select</display-name>
     <description>This is an application to help with Feature Subset Selection</description>
 
+    <listener>
+        <listener-class>com.csselect.utils.LoggerConfigurator</listener-class>
+    </listener>
 
     <!-- Servlet mapping -->
     <servlet>
