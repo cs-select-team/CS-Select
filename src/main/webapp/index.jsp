@@ -6,6 +6,9 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <form id="loginForm">
+                    <div class="alert alert-danger mt-3" v-bind:class="{ collapse: !(autoLogout() == 'true') }">
+                        <fmt:message key="autoLogout"/>
+                    </div>
                     <div class="alert alert-danger mt-3" v-bind:class="{ invisible: alert }">
                         <fmt:message key="noLogin"/>
                     </div>
