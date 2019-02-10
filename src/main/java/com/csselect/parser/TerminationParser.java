@@ -1,6 +1,7 @@
 package com.csselect.parser;
 
 import com.csselect.game.NumberOfRoundsTermination;
+import com.csselect.game.OrganiserTermination;
 import com.csselect.game.Termination;
 import com.csselect.game.TerminationComposite;
 import com.csselect.game.TimeTermination;
@@ -45,7 +46,7 @@ public final class TerminationParser {
                 return new NumberOfRoundsTermination(Integer.parseInt(
                         terminationArray[0].replace(NumberOfRoundsTermination.TYPE + ":", "")));
             } else {
-                return null;
+                return new OrganiserTermination(); //Organiser-Termination is the fallback we use
             }
         }
     }
