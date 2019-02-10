@@ -57,8 +57,12 @@ public class Users extends Servlet {
         }
     }
 
-    private void setEmail(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
-        getUserFacade().changeEmail(getParameter("email", req));
+    private void setEmail(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+        try {
+            getUserFacade().changeEmail(getParameter("email", req));
+        } catch (IllegalArgumentException e) {
+            resp.sendError(HttpServletResponse.SC_CONFLICT);
+        }
     }
 
     private void setPassword(HttpServletRequest req, HttpServletResponse resp) throws HttpError {

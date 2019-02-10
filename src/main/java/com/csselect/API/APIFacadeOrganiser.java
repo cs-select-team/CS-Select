@@ -44,13 +44,9 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     }
 
     @Override
-    public void changeEmail(String email) {
-        try {
+    public void changeEmail(String email) throws IllegalArgumentException{
             organiser.changeEmail(email);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e.getMessage());
-        }
+
     }
 
     @Override
