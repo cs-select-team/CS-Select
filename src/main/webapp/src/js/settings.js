@@ -8,10 +8,12 @@ var app = new Vue({
         repeatpassword: '',
         languageOptions: ['de', 'en'],
         language: '',
-        alert: false
+        alert: false,
+        emailFalse: false
     },
     methods: {
         setEmail: function () {
+            this.emailFalse = false;
             if (this.email != '')
             axios({
                 method: 'post',
@@ -19,7 +21,11 @@ var app = new Vue({
                 params: {
                     email: this.email
                 }
-            }).then(function () { app.alert = true })
+            }).then(function () { app.alert = true }).catch(function (reason) {
+                if (reason.response.status == 409) { // Conflict has happend
+                    app.emailFalse = true;
+                }
+            })
         },
         setPassword: function () {
             if (this.password != '')
