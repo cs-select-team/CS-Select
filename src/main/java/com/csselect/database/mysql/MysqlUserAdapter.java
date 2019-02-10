@@ -45,7 +45,17 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     }
 
     @Override
-    public final void setEmail(String email) {
+    public final void setEmail(String email) throws IllegalArgumentException {
+        try {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE email=?;",
+                    new StringParam(email));
+            if (set.next()) {
+                throw new IllegalArgumentException("Email is already in use!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Error occurred setting the email-address");
+        }
         setString("email", email);
     }
 
