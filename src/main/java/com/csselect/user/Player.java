@@ -39,8 +39,8 @@ public class Player extends User implements Comparable {
 
     @Override
     public void logout() {
-        this.loggedIn = false;
         getStats().logout();
+        super.logout();
     }
 
     /**
