@@ -7,8 +7,14 @@ package com.csselect.game;
  */
 public class OrganiserTermination extends Termination {
 
+    private static final String TYPE = "organiser";
     @Override
     public boolean checkTermination() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return TYPE;
     }
 }
