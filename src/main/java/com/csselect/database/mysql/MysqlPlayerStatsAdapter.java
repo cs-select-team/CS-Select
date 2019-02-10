@@ -13,6 +13,7 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance()
             .getDatabaseAdapter();
+    private static final String TABLE_NAME = "playerstats";
 
     /**
      * Creates a new {@link MysqlPlayerStatsAdapter}
@@ -22,8 +23,8 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
      */
     MysqlPlayerStatsAdapter(int id) throws SQLException {
         super(id);
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO playerstats "
-                + "(id,score,roundsPlayed,dailiesCompleted,maxRoundScore,lastScore,highestStreak) "
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TABLE_NAME
+                + " (id,score,roundsPlayed,dailiesCompleted,maxRoundScore,lastScore,highestStreak) "
                 + "VALUES (" + id + ",0,0,0,0,0,0) ON DUPLICATE KEY UPDATE id = id;");
     }
 
@@ -89,11 +90,11 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
 
     @Override
     final ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (id=" + getID() + ");");
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TABLE_NAME + " WHERE (id=" + getID() + ");");
     }
 
     @Override
     String getTableName() {
-        return "playerstats";
+        return TABLE_NAME;
     }
 }

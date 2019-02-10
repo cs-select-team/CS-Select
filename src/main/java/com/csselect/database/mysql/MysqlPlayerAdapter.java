@@ -22,6 +22,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    private static final String TABLE_NAME = "players";
 
     /**
      * Creates a new {@link MysqlPlayerAdapter} with the given id
@@ -41,8 +42,8 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
      * @throws SQLException Thrown if an error occurs while communicating with the database
      */
     MysqlPlayerAdapter(String username, String email, String hash, String salt) throws SQLException {
-        super(DATABASE_ADAPTER.getNextIdOfTable("players"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO players (username,email,hash,salt,language)"
+        super(DATABASE_ADAPTER.getNextIdOfTable(TABLE_NAME));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TABLE_NAME + " (username,email,hash,salt,language)"
                 + "VALUES (?,?,?,?,?);", new StringParam(username), new StringParam(email),
                 new StringParam(hash), new StringParam(salt), new StringParam(DEFAULT_LANGUAGE));
     }
@@ -96,7 +97,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     String getTableName() {
-        return "players";
+        return TABLE_NAME;
     }
 
     @Override

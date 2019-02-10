@@ -26,6 +26,9 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    private static final String TABLE_NAME = "games";
+    private static final String ROUNDS_TABLE_NAME = "rounds";
+    private static final String PLAYERS_TABLE_NAME = "players";
 
     private String databaseName;
     private String title;
@@ -45,7 +48,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
      */
     MysqlGameAdapter() throws SQLException {
         super(DATABASE_ADAPTER.getNextGameID());
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO games (isTerminated) VALUES (0);");
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TABLE_NAME + " (isTerminated) VALUES (0);");
     }
 
     @Override
@@ -79,7 +82,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public FeatureSet getFeatures() {
         try {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
-                    "SELECT dataset AS dataset FROM games WHERE id=" + getID());
+                    "SELECT dataset AS dataset FROM " + TABLE_NAME + " WHERE id=" + getID());
             if (set.next()) {
                 return Injector.getInstance().getMLServer().getFeatures(set.getString("dataset"));
             } else {
@@ -95,8 +98,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public int getNumberOfRounds() {
         ResultSet set;
         try {
-            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT COUNT(*) AS count FROM rounds WHERE skipped=0;",
-                    getDatabaseName());
+            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT COUNT(*) AS count FROM " + ROUNDS_TABLE_NAME
+                            + " WHERE skipped=0;", getDatabaseName());
             if (!set.next()) {
                 return 0;
             } else {
@@ -113,7 +116,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         Collection<String> emails = new HashSet<>();
         try {
             ResultSet resultSet = DATABASE_ADAPTER
-                    .executeMysqlQuery("SELECT email FROM players WHERE invited=1", getDatabaseName());
+                    .executeMysqlQuery("SELECT email FROM " + PLAYERS_TABLE_NAME + " WHERE invited=1",
+                            getDatabaseName());
             while (resultSet.next()) {
                 emails.add(resultSet.getString("email"));
             }
@@ -128,7 +132,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         Collection<Player> players = new HashSet<>();
         try {
             ResultSet resultSet = DATABASE_ADAPTER
-                    .executeMysqlQuery("SELECT email FROM players WHERE invited=0", getDatabaseName());
+                    .executeMysqlQuery("SELECT email FROM " + PLAYERS_TABLE_NAME + " WHERE invited=0",
+                            getDatabaseName());
             while (resultSet.next()) {
                 players.add(DATABASE_ADAPTER.getPlayer(resultSet.getString("email")));
             }
@@ -142,8 +147,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public Collection<Round> getRounds() {
         Collection<Round> rounds = new HashSet<>();
         try {
-            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM rounds WHERE skipped=0",
-                    getDatabaseName());
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + ROUNDS_TABLE_NAME
+                            + " WHERE skipped=0", getDatabaseName());
             while (set.next()) {
                 Round round = getGamemode().createRound(new Player(new MysqlPlayerAdapter(
                         set.getInt("playerId"))));
@@ -202,7 +207,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public void setDatabase(String name) {
         try {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
-                    "SELECT * FROM games WHERE databaseName=?", new StringParam(databaseName));
+                    "SELECT * FROM " + TABLE_NAME + " WHERE databaseName=?", new StringParam(databaseName));
             if (!set.next()) {
                 databaseName = name;
                 setString("databaseName", name);
@@ -298,7 +303,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         emails.forEach(e -> {
             try {
                 DATABASE_ADAPTER.executeMysqlUpdate(
-                        "DELETE FROM players WHERE email=? AND invited=1;", getDatabaseName(), new StringParam(e));
+                        "DELETE FROM " + PLAYERS_TABLE_NAME + " WHERE email=? AND invited=1;", getDatabaseName(),
+                        new StringParam(e));
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -308,8 +314,8 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public boolean checkDuplicateFeatureProvision(Collection<Feature> features) {
         try {
-            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT id FROM rounds WHERE shownFeatures=?",
-                    getDatabaseName(), new StringParam(featuresToString(features)));
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT id FROM " + ROUNDS_TABLE_NAME
+                            + " WHERE shownFeatures=?", getDatabaseName(), new StringParam(featuresToString(features)));
             return set.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -319,12 +325,12 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM games WHERE (id=" + getID() + ");");
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TABLE_NAME + " WHERE (id=" + getID() + ");");
     }
 
     @Override
     String getTableName() {
-        return "games";
+        return TABLE_NAME;
     }
 
     private void createRoundsTable() throws SQLException {

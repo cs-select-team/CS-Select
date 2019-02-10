@@ -22,6 +22,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    private static final String TABLE_NAME = "organisers";
 
     /**
      * Creates a new {@link MysqlOrganiserAdapter} with the given id
@@ -40,8 +41,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
      * @throws SQLException Thrown if an error occurs while communicating with the database server
      */
     MysqlOrganiserAdapter(String email, String hash, String salt) throws SQLException {
-        super(DATABASE_ADAPTER.getNextIdOfTable("organisers"));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO organisers (email,hash,salt,language) VALUES (?,?,?,?);",
+        super(DATABASE_ADAPTER.getNextIdOfTable(TABLE_NAME));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TABLE_NAME + " (email,hash,salt,language) VALUES (?,?,?,?);",
                 new StringParam(email), new StringParam(hash), new StringParam(salt),
                 new StringParam(DEFAULT_LANGUAGE));
     }
@@ -91,7 +92,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     @Override
     String getTableName() {
-        return "organisers";
+        return TABLE_NAME;
     }
 
     @Override
