@@ -60,11 +60,6 @@ public final class ApacheCommonsConfiguration implements Configuration {
     }
 
     @Override
-    public String getDatabaseType() {
-        return configuration.getString("database.type");
-    }
-
-    @Override
     public String getDatabaseHostname() {
         return configuration.getString("database.hostname");
     }
