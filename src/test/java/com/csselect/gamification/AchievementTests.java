@@ -1,11 +1,9 @@
 package com.csselect.gamification;
 
-import com.csselect.inject.TestClass;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
+import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.List;
 
 public class AchievementTests extends TestClass {
 
@@ -23,174 +21,198 @@ public class AchievementTests extends TestClass {
 
     @Test
     public void loadingTest() {
-        Assert.assertNotNull(stats);
-        Assert.assertNotNull(stats.getAchievements());
-        Assert.assertFalse(stats.getAchievements().isEmpty());
-        Assert.assertEquals(21, stats.getAchievements().size());
+        Assert.assertNotNull(AchievementType.values());
+        Assert.assertEquals(21, AchievementType.values().length); // Currently 21 achievements.
     }
 
+    /**
+     * Testing the five achievements that are finished by playing rounds.
+     */
     @Test
     public void testPlayRounds() {
-        List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(0).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(1).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(2).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(3).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(4).getState());
+        AchievementType playOne = AchievementType.PLAY_ROUND_ONE;
+        AchievementType playFive = AchievementType.PLAY_ROUND_FIVE;
+        AchievementType playTen = AchievementType.PLAY_ROUND_TEN;
+        AchievementType playFortytwo = AchievementType.PLAY_ROUND_FORTYTWO;
+        AchievementType playHundred = AchievementType.PLAY_ROUND_HUNDRED;
 
+        Assert.assertEquals(AchievementState.SHOWN, playOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, playFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, playTen.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, playFortytwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, playHundred.checkProgress(stats).getState());
+
+        // Simulate one round.
         stats.finishRound(0.4);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(0).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(1).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(2).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(3).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(4).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, playFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, playTen.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, playFortytwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, playHundred.checkProgress(stats).getState());
 
+        // Simulate 40 rounds. Total: 41
         for (int i = 0; i < 40; i++) {
             stats.finishRound(0.3);
         }
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(0).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(1).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(2).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(3).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(4).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playTen.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, playFortytwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, playHundred.checkProgress(stats).getState());
 
+        // Simulate one round. Total: 42
         stats.finishRound(0.1);
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(0).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(1).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(2).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(3).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(4).getState());
+
+        Assert.assertEquals(AchievementState.FINISHED, playOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playTen.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, playFortytwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, playHundred.checkProgress(stats).getState());
     }
 
+    /**
+     * Testing the three achievements that are finished by reaching streaks.
+     */
     @Test
     public void testGetStreak() {
-        List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(5).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(6).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(7).getState());
+        AchievementType streakTwo = AchievementType.STREAK_TWO;
+        AchievementType streakFive = AchievementType.STREAK_FIVE;
+        AchievementType streakTen = AchievementType.STREAK_TEN;
 
+        Assert.assertEquals(AchievementState.SHOWN, streakTwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, streakFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, streakTen.checkProgress(stats).getState());
+
+        // Simulate two rounds in a row. Streak: 2
         stats.finishRound(0.4);
         stats.finishRound(0.66);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(5).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(6).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(7).getState());
+        Assert.assertEquals(AchievementState.FINISHED, streakTwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, streakFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, streakTen.checkProgress(stats).getState());
 
+        // Simulate seven rounds in a row. Streak: 9
         for (int i = 0; i < 7; i++) {
             stats.finishRound(0.3);
         }
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(5).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(6).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(7).getState());
+        Assert.assertEquals(AchievementState.FINISHED, streakTwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, streakFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, streakTen.checkProgress(stats).getState());
 
+        // Simulate one round. Streak: 10
         stats.finishRound(0.1);
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(5).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(6).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(7).getState());
+
+        Assert.assertEquals(AchievementState.FINISHED, streakTwo.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, streakFive.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, streakTen.checkProgress(stats).getState());
     }
 
+    /**
+     * Testing the five achievements that are finished by completing dailies.
+     */
     @Test
     public void testCompleteDaily() {
-        List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(8).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(9).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(10).getState());
+        AchievementType dailyOne = AchievementType.DAILY_ONE;
+        AchievementType dailyThree = AchievementType.DAILY_THREE;
+        AchievementType dailySeven = AchievementType.DAILY_SEVEN;
 
+        Assert.assertEquals(AchievementState.SHOWN, dailyOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, dailyThree.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, dailySeven.checkProgress(stats).getState());
+
+        // Simulating three rounds in a row. Every daily is now completed.
         for (int i = 0; i < 3; i++) {
             stats.finishRound(0.99);
         }
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(8).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(9).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(10).getState());
+        Assert.assertEquals(AchievementState.FINISHED, dailyOne.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, dailyThree.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, dailySeven.checkProgress(stats).getState());
     }
 
+    /**
+     * Testing the six achievements that are finished by reaching a certain total score.
+     */
     @Test
     public void testTotalScore() {
-        List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(11).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(12).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(13).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(14).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(15).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(15).getState());
+        AchievementType scoreHundred = AchievementType.TOTAL_SCORE_HUNDRED;
+        AchievementType scoreTwoHundredFifty = AchievementType.TOTAL_SCORE_TWOHUNDREDFIFTY;
+        AchievementType scoreFiveHundred = AchievementType.TOTAL_SCORE_FIVEHUNDRED;
+        AchievementType scoreThousand = AchievementType.TOTAL_SCORE_THOUSAND;
+        AchievementType scoreTwoThousand = AchievementType.TOTAL_SCORE_TWOTHOUSAND;
+        AchievementType scoreFiveThousand = AchievementType.TOTAL_SCORE_FIVETHOUSAND;
 
+        Assert.assertEquals(AchievementState.SHOWN, scoreHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, scoreTwoHundredFifty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreFiveHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreTwoThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreFiveThousand.checkProgress(stats).getState());
+
+        // Reach score of at least 100.
         stats.finishRound(1);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(11).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(12).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(13).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(14).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(15).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(15).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, scoreTwoHundredFifty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, scoreFiveHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreTwoThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, scoreFiveThousand.checkProgress(stats).getState());
 
-        for (int i = 0; i < 12; i++) {
+        // Reach score that is higher than 5000.
+        for (int i = 0; i < 30; i++) {
             stats.finishRound(1);
         }
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(11).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(12).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(13).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(14).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(15).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(16).getState());
-
-        for (int i = 0; i < 20; i++) {
-            stats.finishRound(1);
-        }
-
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(11).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(12).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(13).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(14).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(15).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(16).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreTwoHundredFifty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreFiveHundred.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreTwoThousand.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, scoreFiveThousand.checkProgress(stats).getState());
     }
 
+    /**
+     * Testing the four achievements that are finished by reaching a certain round score.
+     */
     @Test
     public void testRoundScore() {
-        List<Achievement> ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(17).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(18).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(19).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(20).getState());
+        AchievementType roundScoreSixty = AchievementType.ROUND_SCORE_SIXTY;
+        AchievementType roundScoreSeventy = AchievementType.ROUND_SCORE_SEVENTY;
+        AchievementType roundScoreEighty = AchievementType.ROUND_SCORE_EIGHTY;
+        AchievementType roundScoreNinety = AchievementType.ROUND_SCORE_NINETY;
 
+        Assert.assertEquals(AchievementState.SHOWN, roundScoreSixty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, roundScoreSeventy.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, roundScoreEighty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, roundScoreNinety.checkProgress(stats).getState());
+
+        // Round scores are too low. No achievements finished.
         stats.finishRound(0.4);
         stats.finishRound(0.57);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(17).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(18).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(19).getState());
-        Assert.assertEquals(AchievementState.INVISIBLE, ach.get(20).getState());
+        Assert.assertEquals(AchievementState.SHOWN, roundScoreSixty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, roundScoreSeventy.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, roundScoreEighty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.INVISIBLE, roundScoreNinety.checkProgress(stats).getState());
 
+        // Round score: 74
         stats.finishRound(0.74);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(17).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(18).getState());
-        Assert.assertEquals(AchievementState.SHOWN, ach.get(19).getState());
-        Assert.assertEquals(AchievementState.CONCEALED, ach.get(20).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreSixty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreSeventy.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.SHOWN, roundScoreEighty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.CONCEALED, roundScoreNinety.checkProgress(stats).getState());
 
+        // Round score: 90
         stats.finishRound(0.9);
 
-        ach = stats.getAchievements();
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(17).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(18).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(19).getState());
-        Assert.assertEquals(AchievementState.FINISHED, ach.get(20).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreSixty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreSeventy.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreEighty.checkProgress(stats).getState());
+        Assert.assertEquals(AchievementState.FINISHED, roundScoreNinety.checkProgress(stats).getState());
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class PlayerStats implements Gamification {
 
-    private final static int NUMBER_OF_DAILIES = 4;
+    private static final int NUMBER_OF_DAILIES = 4;
     private final PlayerStatsAdapter playerStatsAdapter;
     private final Streak streak;
     private DailyChallenge activeDaily;
