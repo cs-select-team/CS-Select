@@ -95,6 +95,9 @@
     margin-left: 2.5rem!important;
     margin-right: 2.5rem!important;
 }
+.feature-display {
+    width: 350px;
+}
 body {
     overflow: scroll;
 }

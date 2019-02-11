@@ -14,7 +14,7 @@ Vue.component('feature-box', {
             return this.feature.desc.replace(/(\\n)+/g, '<br>');
         }
     },
-    template: '                <div class="card" :title="localisation.gameHelp" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
+    template: '                <div class="card feature-display" :title="localisation.gameHelp" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
         '                        <div class="card-body">' +
         '                         <h5 class="card-title">{{ feature.name }}</h5>' +
         '                         <p class="card-text" v-html="desc"></p>' +
@@ -23,7 +23,7 @@ Vue.component('feature-box', {
         '                        <button type="button" class="btn btn-secondary" data-toggle="modal" :data-target="\'#graphModal\' + feature.id" :disabled="feature.useless">' +
         '                                {{ localisation.showGraphs }}' +
         '                        </button>' +
-        '                        <button type="button" class="btn btn-primary" v-on:click="toggleMarked">{{ localisation.selectFeature}}</button>' +
+        '                        <button type="button" class="btn btn-primary" v-on:click="toggleMarked" :disabled="feature.useless">{{ localisation.selectFeature}}</button>' +
         '                        <button type="button" class="btn btn-secondary" v-on:click="toggleUseless">{{ localisation.toggleUseless}}</button>' +
         '                        </div>' +
         '                        <div class="modal fade" :id="\'graphModal\' + feature.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
