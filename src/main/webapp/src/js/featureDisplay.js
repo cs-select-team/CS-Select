@@ -14,7 +14,7 @@ Vue.component('feature-box', {
             return this.feature.desc.replace(/(\\n)+/g, '<br>');
         }
     },
-    template: '                <div class="card" :title="localisation.gameHelp" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
+    template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
         '                        <div class="card-body">' +
         '                         <h5 class="card-title">{{ feature.name }}</h5>' +
         '                         <p class="card-text" v-html="desc"></p>' +
@@ -30,7 +30,7 @@ Vue.component('feature-box', {
         '                                <div class="modal-dialog modal-lg" role="document">' +
         '                                        <div class="modal-content">' +
         '                                                <div class="modal-header">' +
-        '                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+        '                                                        <button type="button" :title="localisation.close" class="close" data-dismiss="modal" aria-label="Close">' +
         '                                                                <span aria-hidden="true">&times;</span>' +
         '                                                        </button>' +
         '                                                </div>' +
