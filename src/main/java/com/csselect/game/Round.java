@@ -180,11 +180,14 @@ public abstract class Round {
             }
         }
 
-        String identifier = this.game.getFeatureSet().getIdentifier();
-        try {
-            this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
-        } catch (java.io.IOException e) {
-            Logger.error(e);
+        if (this.chosenFeatures.size() != 0) {
+
+            String identifier = this.game.getFeatureSet().getIdentifier();
+            try {
+                this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
+            } catch (java.io.IOException e) {
+                Logger.error(e);
+            }
         }
 
         this.points = this.player.getStats().finishRound(this.quality);
