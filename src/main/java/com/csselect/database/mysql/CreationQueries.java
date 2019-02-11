@@ -5,11 +5,11 @@ import org.intellij.lang.annotations.Language;
 /**
  * Class containing queries for the Database
  */
-final class Query {
+final class CreationQueries {
 
     @Language("sql")
     static final String CREATE_PLAYER_TABLE
-            = "CREATE TABLE IF NOT EXISTS players("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.PLAYERS + "("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "hash VARCHAR(255),"
             + "salt VARCHAR(255),"
@@ -19,7 +19,7 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_ORGANISER_TABLE
-            = "CREATE TABLE IF NOT EXISTS organisers("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.ORGANISERS + "("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "hash VARCHAR(255),"
             + "salt VARCHAR(255),"
@@ -28,7 +28,7 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_GAME_TABLE
-            = "CREATE TABLE IF NOT EXISTS games("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.GAMES + "("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "organiserId INT,"
             + "INDEX organiser_ind (organiserId),"
@@ -43,7 +43,7 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_PATTERN_TABLE
-            = "CREATE TABLE IF NOT EXISTS patterns("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.PATTERNS + "("
             + "organiserId INT,"
             + "INDEX organiser_ind (organiserId),"
             + "FOREIGN KEY (organiserId) REFERENCES organisers(id) ON DELETE CASCADE,"
@@ -59,7 +59,7 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_PLAYERSTATS_TABLE
-            = "CREATE TABLE IF NOT EXISTS playerstats("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.PLAYERSTATS + "("
             + "id INT PRIMARY KEY ,"
             + "INDEX player_ind (id),"
             + "FOREIGN KEY (id) REFERENCES players(id) ON DELETE CASCADE,"
@@ -72,7 +72,7 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_ROUNDS_TABLE
-            = "CREATE TABLE IF NOT EXISTS rounds("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.GAME_ROUNDS + "("
             + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "playerId INT,"
             + "time DATETIME,"
@@ -85,11 +85,11 @@ final class Query {
 
     @Language("sql")
     static final String CREATE_GAMES_PLAYERS_TABLE
-            = "CREATE TABLE IF NOT EXISTS players("
+            = "CREATE TABLE IF NOT EXISTS " + TableNames.GAME_PLAYERS + "("
             + "email VARCHAR(255) PRIMARY KEY,"
             + "invited BOOLEAN);";
 
-    private Query() {
+    private CreationQueries() {
         //Utility-classes shouldn't be instantiated
     }
 }

@@ -56,11 +56,11 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         this.dataSources = new ConcurrentHashMap<>();
         this.dataSources.put(PRODUCT_DATABASE_NAME, createDataSource(PRODUCT_DATABASE_NAME));
         try {
-            executeMysqlUpdate(Query.CREATE_PLAYER_TABLE);
-            executeMysqlUpdate(Query.CREATE_ORGANISER_TABLE);
-            executeMysqlUpdate(Query.CREATE_GAME_TABLE);
-            executeMysqlUpdate(Query.CREATE_PATTERN_TABLE);
-            executeMysqlUpdate(Query.CREATE_PLAYERSTATS_TABLE);
+            executeMysqlUpdate(CreationQueries.CREATE_PLAYER_TABLE);
+            executeMysqlUpdate(CreationQueries.CREATE_ORGANISER_TABLE);
+            executeMysqlUpdate(CreationQueries.CREATE_GAME_TABLE);
+            executeMysqlUpdate(CreationQueries.CREATE_PATTERN_TABLE);
+            executeMysqlUpdate(CreationQueries.CREATE_PLAYERSTATS_TABLE);
         } catch (SQLException e) {
             Logger.error(e);
             System.exit(1);
@@ -101,7 +101,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player getPlayer(String email) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS + " WHERE (email=?);",
+                    new StringParam(email));
             return getPlayer(set);
         } catch (SQLException e) {
             Logger.error(e);
@@ -112,7 +113,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player getPlayer(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (id=?);", new IntParam(id));
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS + " WHERE (id=?);",
+            new IntParam(id));
             return getPlayer(set);
         } catch (SQLException e) {
             Logger.error(e);
@@ -131,7 +133,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Organiser getOrganiser(String email) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);",
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.ORGANISERS + " WHERE (email=?);",
                     new StringParam(email));
             if (set.next()) {
                 return new Organiser(new MysqlOrganiserAdapter(set.getInt("id")));
@@ -147,7 +149,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private Map<Integer, Organiser> getOrganisers() {
         Map<Integer, Organiser> organisers = new HashMap<>();
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM organisers;");
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.ORGANISERS + ";");
             while (set.next()) {
                 organisers.put(set.getInt("id"),
                         new Organiser(new MysqlOrganiserAdapter(set.getInt("id"))));
@@ -162,7 +164,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public Collection<Player> getPlayers() {
         Collection<Player> players = new HashSet<>();
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players");
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS + ";");
             while (set.next()) {
                 players.add(new Player(new MysqlPlayerAdapter(set.getInt("id"))));
             }
@@ -185,7 +187,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getPlayerHash(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM players WHERE (id=?);", new IntParam(id));
+            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM " + TableNames.PLAYERS + " WHERE (id=?);",
+                    new IntParam(id));
             String hash;
             if (set.next()) {
                 hash = set.getString("hash");
@@ -202,7 +205,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getPlayerSalt(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM players WHERE (id=?);", new IntParam(id));
+            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM " + TableNames.PLAYERS + " WHERE (id=?);",
+                    new IntParam(id));
             String salt;
             if (set.next()) {
                 salt = set.getString("salt");
@@ -219,7 +223,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getOrganiserHash(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM organisers WHERE (id=?);", new IntParam(id));
+            ResultSet set = executeMysqlQuery("SELECT hash AS hash FROM " + TableNames.ORGANISERS + " WHERE (id=?);",
+                    new IntParam(id));
             String hash;
             if (set.next()) {
                 hash = set.getString("hash");
@@ -236,7 +241,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public String getOrganiserSalt(int id) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM organisers WHERE (id=?);", new IntParam(id));
+            ResultSet set = executeMysqlQuery("SELECT salt AS salt FROM " + TableNames.ORGANISERS + " WHERE (id=?);",
+                    new IntParam(id));
             String salt;
             if (set.next()) {
                 salt = set.getString("salt");
@@ -253,7 +259,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         try {
-            ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
+            ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS + " WHERE (email=?);",
+                    new StringParam(email));
             if (set.next()) {
                 return null;
             }
@@ -275,7 +282,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public Organiser createOrganiser(String email, String hash, String salt) {
         try {
             ResultSet set
-                    = executeMysqlQuery("SELECT * FROM organisers WHERE (email=?);", new StringParam(email));
+                    = executeMysqlQuery("SELECT * FROM " + TableNames.ORGANISERS + " WHERE (email=?);",
+                    new StringParam(email));
             if (set.next()) {
                 return null;
             }
@@ -299,7 +307,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             try {
-                executeMysqlUpdate("UPDATE games SET organiserId=" + organiser.getId() + " WHERE id=?;",
+                executeMysqlUpdate("UPDATE " + TableNames.GAMES + " SET organiserId=" + organiser.getId()
+                        + " WHERE id=?;",
                         new IntParam(game.getId()));
             } catch (SQLException e) {
                 Logger.error(e);
@@ -312,7 +321,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public void removeGame(Game game) {
         gameMap.remove(game);
         try {
-            executeMysqlUpdate("DELETE FROM games WHERE (id=?);", new IntParam(game.getId()));
+            executeMysqlUpdate("DELETE FROM " + TableNames.GAMES + " WHERE (id=?);", new IntParam(game.getId()));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -515,7 +524,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     private void populateGameMap() {
         try {
-            ResultSet gameSet = executeMysqlQuery("SELECT * FROM games");
+            ResultSet gameSet = executeMysqlQuery("SELECT * FROM " + TableNames.GAMES + ";");
             Map<Integer, Organiser> organisers = getOrganisers();
             while (gameSet.next()) {
                 gameMap.put(new Game(gameSet.getInt("id")),
