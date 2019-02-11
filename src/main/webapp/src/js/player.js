@@ -173,7 +173,9 @@ var playerAlerts = new Vue({
         gameTerminated: false
     },
     mounted: function () {
-        this.gameTerminated = localStorage.getItem("gameTerminated");
+        if (localStorage.hasOwnProperty("gameTerminated")) {
+            this.gameTerminated = localStorage.getItem("gameTerminated") == "true";
+        }
         localStorage.setItem("gameTerminated", false);
 
     }
