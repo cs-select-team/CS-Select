@@ -12,7 +12,7 @@ props -->
                             selectFeature: '<fmt:message key="selectFeature"/>',
                             toggleUseless: '<fmt:message key="toggleUseless"/>',
                             play: '<fmt:message key="play"/>',
-                            add: '<fmt:message key="add"/>'
+                            add: '<fmt:message key="add"/>',
                             del: '<fmt:message key="delete"/>',
                             invite: '<fmt:message key="invite"/>',
                             terminate: '<fmt:message key="terminate"/>',
@@ -68,7 +68,10 @@ props -->
                             MLServerDown: '<fmt:message key="MLServerDown"/>',
                             matrixSelectMin: '<fmt:message key="matrixSelectMin"/>',
                             matrixSelectMax: '<fmt:message key="matrixSelectMax"/>',
-                            matrixSelectEnd: '<fmt:message key="matrixSelectEnd"/>'
+                            matrixSelectEnd: '<fmt:message key="matrixSelectEnd"/>',
+                            timeTermination: '<fmt:message key="timeTermination"/>',
+                            roundsTermination: '<fmt:message key="roundsTermination"/>',
+                            compositeTermination: '<fmt:message key="compositeTermination"/>'
                         }
                     }
                 }

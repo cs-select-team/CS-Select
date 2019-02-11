@@ -2,9 +2,7 @@ Vue.component('termination-config', {
     props: ['termination-config-str'],
     data: function () {
         return {
-            listOfTerminations: [{title: "Time termination", value: "time"},
-                {title: "Rounds termination", value: "rounds"},
-                {title: "Composite termination", value: "composite"}]
+            listOfTerminations: []
         }
     },
     template: "<div class=\"input-group mb-3\">" +
@@ -29,6 +27,11 @@ Vue.component('termination-config', {
         }
     }
     ,
+    mounted: function() {
+        this.listOfTerminations = [{title: this.localisation.timeTermination, value: "time"},
+            {title: this.localisation.roundsTermination, value: "rounds"},
+            {title: this.localisation.compositeTermination, value: "composite"}]
+    },
 
     computed: {
         componentName: function () {
