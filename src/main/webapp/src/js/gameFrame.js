@@ -7,12 +7,19 @@ var gameFrame = new Vue({
         forceUpdate: 1,
         counter: 0,
         buttonState: true,
-        points: undefined
+        points: undefined,
+        alerts: [] // alerts are cleared on nextRound
     },
     mounted: function () {
       this.getNextRound();
     },
     methods: {
+        addAlert: function(alert) {
+          this.alerts.push(alert);
+        },
+        clearAlerts: function() {
+            this.alerts = []
+        },
         unlockButton: function (done) {
             this.buttonState = !done
         },
@@ -60,6 +67,7 @@ var gameFrame = new Vue({
 
         },
         getNextRound: function() {
+            this.clearAlerts();
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
@@ -87,7 +95,8 @@ var gameFrame = new Vue({
         quit: function() {
             localStorage.setItem("gameTerminated", true);
             window.location.href = 'player.jsp'
-        }
+        },
+
     }
 
 
