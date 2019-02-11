@@ -262,16 +262,7 @@ var creation = new Vue({
             return 'player-invite-' + this.currentTab
         },
         playersString: function() {
-            var players = ''
-            this.invitedPlayers.forEach(function(value, index) {
-                if (index == 0) {
-                    players = value;
-                }
-                else {
-                    players += '_' + value;
-                }
-            })
-            return players;
+            return this.invitedPlayers.join(',')
         }
     }
 });
