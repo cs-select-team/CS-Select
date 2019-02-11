@@ -81,8 +81,9 @@ public class User {
      * It is assured in our implementation that we can call this method only after the user correctly logged
      * into our system.
      * @param email New email to which the user ID will refer in our database.
+     * @throws IllegalArgumentException Throws error if something is not right with the input email address
      */
-    public void changeEmail(String email) {
+    public void changeEmail(String email) throws IllegalArgumentException {
         userAdapter.setEmail(email);
     }
 

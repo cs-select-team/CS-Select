@@ -3,7 +3,7 @@ package com.csselect.gamification;
 import java.util.List;
 
 /**
- * This interface is an abstraction of the implementaion of gamification mechanics.
+ * This interface is an abstraction of the implementation of gamification mechanics.
  */
 public interface Gamification {
 
@@ -43,4 +43,9 @@ public interface Gamification {
      * @return The active daily challenge.
      */
     DailyChallenge getDaily();
+
+    /**
+     * Simulates the impacts of a player logging out to the gamification mechanics.
+     */
+    void logout();
 }

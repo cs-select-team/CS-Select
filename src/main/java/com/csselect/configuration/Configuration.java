@@ -25,12 +25,6 @@ public interface Configuration {
     String getTimezone();
 
     /**
-     * Gets the type of database used
-     * @return database type
-     */
-    String getDatabaseType();
-
-    /**
      * Gets the hostname under which the database-server is located
      * @return hostname of the database-server
      */

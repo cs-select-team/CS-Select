@@ -40,12 +40,14 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     @Override
     public void logout() {
+        organiser.logout();
         organiser = null;
     }
 
     @Override
-    public void changeEmail(String email) {
-        organiser.changeEmail(email);
+    public void changeEmail(String email) throws IllegalArgumentException{
+            organiser.changeEmail(email);
+
     }
 
     @Override

@@ -18,6 +18,9 @@
                                    v-bind:points="points"></stats-display>
                 </div>
                 <div class="col-md-5 overflow-auto" id="leaderboard">
+                    <div class="container h-10 title">
+                        <fmt:message key="topFiveLastWeek"/>
+                    </div>
                     <table class="table">
                         <thead>
                         <tr>

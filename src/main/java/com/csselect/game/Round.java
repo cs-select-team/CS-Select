@@ -2,6 +2,7 @@ package com.csselect.game;
 
 import com.csselect.inject.Injector;
 import com.csselect.user.Player;
+import org.pmw.tinylog.Logger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public abstract class Round {
     protected int points;
     protected final Player player;
     protected Game game;
+    private boolean skipped;
 
     private final Collection<Feature> uselessFeatures;
     private final Collection<Feature> chosenFeatures;
@@ -35,6 +37,7 @@ public abstract class Round {
         this.player = player;
 
         this.time = LocalDateTime.now();
+        this.skipped = false;
 
         this.uselessFeatures = new ArrayList<>();
         this.chosenFeatures = new ArrayList<>();
@@ -46,6 +49,14 @@ public abstract class Round {
      */
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    /**
+     * Checks whether this round was skipped or not
+     * @return true if round was skipped, false otherwise
+     */
+    public boolean isSkipped() {
+        return this.skipped;
     }
 
     /**
@@ -141,6 +152,7 @@ public abstract class Round {
      */
     public void skip(int[] uselessFeatures) {
         this.addUselessFeatures(uselessFeatures);
+        this.skipped = true;
         this.player.getStats().skipRound();
         this.game.addFinishedRound(this);
         this.player.setActiveRound(null);
@@ -168,7 +180,7 @@ public abstract class Round {
         try {
             this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
         } catch (java.io.IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
 
         this.points = this.player.getStats().finishRound(this.quality);

@@ -1,46 +1,40 @@
 package com.csselect.gamification;
 
 import com.csselect.inject.Injector;
-import com.csselect.database.DatabaseAdapter;
 import com.csselect.user.Player;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a leaderboard and consists of a list of players.
- * This class is realised as a singleton.
+ * Represents a leaderboard.
+ * This is an enum in order to follow the singleton design pattern.
  */
-public final class Leaderboard {
+public enum Leaderboard {
 
-    private final DatabaseAdapter databaseAdapter;
-    private List<Player> players;
+    /**
+     * Instance of the Leaderboard.
+     */
+    INSTANCE;
+
     private LeaderboardSortingStrategy strategy;
-    private static Leaderboard instance;
 
-    private Leaderboard() {
-        this.players = new LinkedList<>();
-        databaseAdapter =  Injector.getInstance().getDatabaseAdapter();
+    /**
+     * Creates a new {@link Leaderboard} and sets the default sorting strategy SortScoreLastWeek.
+     */
+    Leaderboard() {
         setSortingStrategy(new SortScoreLastWeek());
     }
 
-    /**
-     * Gets the {@link Leaderboard}.
-     * @return Instance of the Leaderboard
-     */
-    public static Leaderboard getInstance() {
-        if (Leaderboard.instance == null) {
-            Leaderboard.instance = new Leaderboard();
-        }
-        return Leaderboard.instance;
-    }
 
     /**
      * Gets the current sorting strategy.
      * @return The current sorting strategy.
      */
-    public LeaderboardSortingStrategy getStrategy() {
+    public synchronized LeaderboardSortingStrategy getStrategy() {
         return strategy;
     }
 
@@ -48,17 +42,17 @@ public final class Leaderboard {
      * Sets the strategy that is supposed to be used to sort the list of players.
      * @param strategy The strategy to use.
      */
-    public void setSortingStrategy(LeaderboardSortingStrategy strategy) {
+    public synchronized void setSortingStrategy(LeaderboardSortingStrategy strategy) {
         this.strategy = strategy;
     }
 
     /**
-     * Gets the sorted list of players.
-     * @return The sorted list of players.
+     * Gets the sorted Map of players and their points cut to the first five entries.
+     * @return The sorted Map of players and their points.
      */
     public Map<Player, Integer> getPlayers() {
-        players = getPlayersFromDatabase();
-        return strategy.sort(players);
+        Map<Player, Integer> sortedMap = strategy.sort(getPlayersFromDatabase());
+        return cutToFive(sortedMap);
     }
 
     /**
@@ -66,7 +60,25 @@ public final class Leaderboard {
      * @return The list of players.
      */
     private List<Player> getPlayersFromDatabase() {
-        return new LinkedList<>(databaseAdapter.getPlayers());
+        return new LinkedList<>(Injector.getInstance().getDatabaseAdapter().getPlayers());
+    }
+
+    /**
+     * Cuts the map to the first five players (or less if less players exist).
+     * @param sortedMap The sorted map that is to be cut.
+     * @return A new sorted LinkedHashMap containing five entries.
+     */
+    private Map<Player, Integer> cutToFive(Map<Player, Integer> sortedMap) {
+        Iterator<Map.Entry<Player, Integer>> iterator = sortedMap.entrySet().iterator();
+        Map<Player, Integer> mapFive = new LinkedHashMap<>();
+        int i = 0;
+
+        while (iterator.hasNext() && i < 5) {
+            Map.Entry<Player, Integer> entry = iterator.next();
+            mapFive.put(entry.getKey(), entry.getValue());
+            i++;
+        }
+        return mapFive;
     }
 
 }

@@ -37,6 +37,12 @@ public class Player extends User implements Comparable {
         this.activeRound = null;
     }
 
+    @Override
+    public void logout() {
+        getStats().logout();
+        super.logout();
+    }
+
     /**
      * If a player is invited to a {@link Game}, he has to accept said invitation before he is allowed to play it.
      * Game objects representing games the player is invited to are stored as an attribute (array) in the Player object.
@@ -142,7 +148,7 @@ public class Player extends User implements Comparable {
      * @return List of Players in leaderboard's order
      */
     public Map<Player, Integer> getLeaderboard() {
-        return Leaderboard.getInstance().getPlayers();
+        return Leaderboard.INSTANCE.getPlayers();
     }
 
     /**

@@ -7,6 +7,8 @@ import com.csselect.inject.Injector;
 import com.csselect.utils.FeatureSetUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
+import org.pmw.tinylog.Logger;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -77,7 +79,7 @@ public class RESTMLServer implements MLServer {
                 writeDataset(dataset);
                 return true;
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.error(e);
                 return false;
             }
         }

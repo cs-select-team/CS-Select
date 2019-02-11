@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.pmw.tinylog.Logger;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -68,10 +69,11 @@ public class Games extends Servlet {
     }
 
 
-    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
-        String uselessString = getParameter("useless", req);
-        int[] useless = new Gson().fromJson(uselessString, (Type) int.class);
+        String body = getBody(req);
+        JsonObject json = new Gson().fromJson(body, JsonObject.class);
+        int[] useless = convertJsonPrimitiveToIntArray(json.getAsJsonPrimitive("useless"));
         getPlayerFacade().skipRound(useless);
     }
 
@@ -201,7 +203,7 @@ public class Games extends Servlet {
 
             bos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return BASE_64_PNG_PREFIX + imageString;
     }

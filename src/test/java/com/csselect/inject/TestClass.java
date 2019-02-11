@@ -1,8 +1,6 @@
 package com.csselect.inject;
 
 import com.csselect.database.mock.MockPlayerAdapter;
-import com.csselect.gamification.Leaderboard;
-import com.csselect.inject.Injector;
 import org.junit.After;
 import org.junit.Before;
 
@@ -28,7 +26,7 @@ public abstract class TestClass {
     public void resetInjector() throws Exception {
         reset();
         resetStaticFinal(MockPlayerAdapter.class.getDeclaredField("PLAYERSTATS_ADAPTERS"), new HashMap<>());
-        resetStaticFinal(Leaderboard.class.getDeclaredField("instance"), null);
+
         Injector.resetInjector();
     }
 

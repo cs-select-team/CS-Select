@@ -7,6 +7,9 @@
         <div class="alert alert-success" v-bind:class="{collapse: !alert}" role="alert">
             <fmt:message key="settingsUpdated"></fmt:message>
         </div>
+        <div class="alert alert-danger" v-bind:class="{collapse: !emailFalse}" role="alert">
+            <fmt:message key="emailTaken"></fmt:message>
+        </div>
         <div class="input-group mb-3">
             <input type="email" v-model="email" class="form-control"
                    placeholder="<fmt:message key="newEmail"></fmt:message>">
@@ -16,7 +19,8 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" v-model="password" class="form-control" placeholder="New Password">
+            <input type="password" v-model="password" class="form-control"
+                   placeholder="<fmt:message key="newPassword"></fmt:message>">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password==''}" type="button"
                         v-on:click="setPassword"><fmt:message key="update"></fmt:message></button>

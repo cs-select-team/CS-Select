@@ -70,8 +70,10 @@
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
+    width: 100%;
 }
 .login-form-div {
+    width: 100%;
     text-align: center;
 }
 .login-form-button {
@@ -83,6 +85,18 @@
     display: block;
     margin: 0 auto 10px;
     width: 100%;
+}
+.login-form-entry {
+    width: 100%;
+}
+.login-form-absolute {
+    left: 0;
+    right: 0;
+    margin-left: 2.5rem!important;
+    margin-right: 2.5rem!important;
+}
+.feature-display {
+    width: 350px;
 }
 body {
     overflow: scroll;

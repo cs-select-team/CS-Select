@@ -1,5 +1,6 @@
 package com.csselect.API.httpAPI;
 import com.csselect.configuration.ConfigurationException;
+import org.pmw.tinylog.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,10 @@ public class Login extends Servlet {
     private void logout(HttpServletResponse resp) throws IOException {
         if (isPlayer()) {
             getPlayerFacade().logout();
-            System.out.println("player logged out");
+            Logger.debug("player logged out");
         } else {
             getOrganiserFacade().logout();
-            System.out.println("player logged out");
+            Logger.debug("organiser logged out");
         }
 
         resp.sendError(HttpServletResponse.SC_ACCEPTED);

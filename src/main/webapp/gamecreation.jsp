@@ -10,6 +10,9 @@
 
         <script src="https://cdn.jsdelivr.net/npm/vue-bootstrap-datetimepicker@5"></script>
 
+
+        <script src="https://use.fontawesome.com/ea33c7e9d8.js"></script>
+
         <script>
             // Initialize as global component
             Vue.component('date-picker', VueBootstrapDatetimePicker);

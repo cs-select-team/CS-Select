@@ -1,8 +1,8 @@
 package com.csselect.gamification;
 
+import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.inject.Injector;
 import com.csselect.inject.TestClass;
-import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
@@ -52,9 +52,9 @@ public class SortScoreAllTimeTests extends TestClass {
         playersMap = allTime.sort(playersList);
         Assert.assertNotNull(playersMap);
         Assert.assertEquals(3, playersMap.size());
-        Assert.assertEquals(Integer.valueOf(10), playersMap.get(player));
-        Assert.assertEquals(Integer.valueOf(60), playersMap.get(player1));
-        Assert.assertEquals(Integer.valueOf(0), playersMap.get(player2));
+        Assert.assertEquals(Integer.valueOf(player.getStats().getScore()), playersMap.get(player));
+        Assert.assertEquals(Integer.valueOf(player1.getStats().getScore()), playersMap.get(player1));
+        Assert.assertEquals(Integer.valueOf(player2.getStats().getScore()), playersMap.get(player2));
     }
 
     @Test
@@ -69,31 +69,33 @@ public class SortScoreAllTimeTests extends TestClass {
         player.getStats().finishRound(0.2);
         player2.getStats().finishRound(0.4);
         player1.getStats().finishRound(0.6);
+
         playersMap = allTime.sort(playersList);
-        Object[] points = playersMap.values().toArray();
-        Object[] players = playersMap.keySet().toArray();
 
-        Assert.assertEquals(60, points[0]);
-        Assert.assertEquals(20, points[1]);
-        Assert.assertEquals(10, points[2]);
+        Integer[] points = playersMap.values().toArray(new Integer[0]);
+        Assert.assertTrue(points[0] >= points[1]);
+        Assert.assertTrue(points[1] >= points[2]);
 
-        Assert.assertEquals(player1, players[0]);
-        Assert.assertEquals(player2, players[1]);
-        Assert.assertEquals(player, players[2]);
+        Assert.assertEquals(Integer.valueOf(player.getStats().getScore()), playersMap.get(player));
+        Assert.assertEquals(Integer.valueOf(player1.getStats().getScore()), playersMap.get(player1));
+        Assert.assertEquals(Integer.valueOf(player2.getStats().getScore()), playersMap.get(player2));
+
+        Integer scorePlayer1 = playersMap.get(player1);
 
         player.getStats().finishRound(0.4);
-        player2.getStats().finishRound(0.0);
-        player1.getStats().finishRound(0.59);
+        player2.getStats().finishRound(0.1);
+
         playersMap = allTime.sort(playersList);
-        points = playersMap.values().toArray();
-        players = playersMap.keySet().toArray();
 
-        Assert.assertEquals(119, points[0]);
-        Assert.assertEquals(30, points[1]);
-        Assert.assertEquals(20, points[2]);
+        points = playersMap.values().toArray(new Integer[0]);
+        Assert.assertTrue(points[0] >= points[1]);
+        Assert.assertTrue(points[1] >= points[2]);
 
-        Assert.assertEquals(player1, players[0]);
-        Assert.assertEquals(player, players[1]);
-        Assert.assertEquals(player2, players[2]);
+        Assert.assertEquals(Integer.valueOf(player.getStats().getScore()), playersMap.get(player));
+        Assert.assertEquals(Integer.valueOf(player1.getStats().getScore()), playersMap.get(player1));
+        Assert.assertEquals(Integer.valueOf(player2.getStats().getScore()), playersMap.get(player2));
+
+        // Checks if score of player1 has been untouched.
+        Assert.assertEquals(scorePlayer1, playersMap.get(player1));
     }
 }
