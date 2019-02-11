@@ -204,7 +204,7 @@ Vue.component('termination-config-time', {
         '  <div class="input-group-prepend">\n' +
         '    <span class="input-group-text" >{{localisation.endDate}}</span>\n' +
         '  </div>\n' +
-        '  <date-picker v-model="date"></date-picker>' +
+        '  <date-picker v-bind:config="{format: \'DD/MM/YYYY HH:mm\'}" v-model="date"></date-picker>' +
         '</div>'
 
 });
