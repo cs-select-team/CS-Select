@@ -14,13 +14,10 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class User {
 
-    private static final int MIN_TEMP_PASSWORD_LENGTH = 8;
-    private static final int MAX_TEMP_PASSWORD_LENGTH = 12;
-    private static final int MIN_SALT_LENGTH = 40;
-    private static final int MAX_SALT_LENGTH = 70;
     private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
-    private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password was submitted."
-            + " Your temporary password is '%s'! Please change this password to an own safe one as fast as possible!";
+    private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password"
+            + " was submitted. Your temporary password is '%s'! Please change this password to an own safe one"
+            + " as fast as possible!";
 
     private final UserAdapter userAdapter;
     protected boolean loggedIn;
@@ -83,12 +80,12 @@ public class User {
     /**
      * Resets the password of the {@link User} to a randomly generated password and sends the
      * temporary password to the users email address
+     * @param tempPassword temporary password of the user
+     * @param encryptedTempPassword encrypted temporary password
+     * @param salt salt used while encrypting
      */
-    public final void resetPassword() {
-        String tempPassword = RandomStringUtils.randomAlphanumeric(MIN_TEMP_PASSWORD_LENGTH, MAX_TEMP_PASSWORD_LENGTH);
-        String salt = RandomStringUtils.randomAlphanumeric(MIN_SALT_LENGTH, MAX_SALT_LENGTH);
-        String encryptedPasswort = Encrypter.encrypt(tempPassword, salt);
-        userAdapter.setPassword(encryptedPasswort, salt);
+    public final void resetPassword(String tempPassword, String encryptedTempPassword, String salt) {
+        userAdapter.setPassword(encryptedTempPassword, salt);
         EmailSender.sendEmail(this.userAdapter.getEmail(), RESET_EMAIL_HEADER,
                 String.format(RESET_EMAIL_MESSAGE, tempPassword));
     }

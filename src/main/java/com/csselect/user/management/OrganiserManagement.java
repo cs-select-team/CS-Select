@@ -3,12 +3,13 @@ package com.csselect.user.management;
 import com.csselect.inject.Injector;
 import com.csselect.configuration.Configuration;
 import com.csselect.user.Organiser;
+import com.csselect.user.User;
 import com.csselect.user.management.safety.Encrypter;
 
 /**
  * Management class for registration and login of {@link Organiser}
  */
-public final class OrganiserManagement {
+public final class OrganiserManagement extends UserManagement {
 
     /**
      * Register an organiser with 3 parameters email, password and global password
@@ -55,5 +56,10 @@ public final class OrganiserManagement {
         } else {
             return null;
         }
+    }
+
+    @Override
+    User getUser(String email) {
+        return Injector.getInstance().getDatabaseAdapter().getOrganiser(email);
     }
 }

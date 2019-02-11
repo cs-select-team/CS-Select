@@ -2,12 +2,13 @@ package com.csselect.user.management;
 
 import com.csselect.inject.Injector;
 import com.csselect.user.Player;
+import com.csselect.user.User;
 import com.csselect.user.management.safety.Encrypter;
 
 /**
  * Management class for registration and login of {@link Player}
  */
-public final class PlayerManagement {
+public final class PlayerManagement extends UserManagement {
 
     /**
      * Register a player with parameters email, password and username
@@ -48,5 +49,10 @@ public final class PlayerManagement {
         } else {
             return null;
         }
+    }
+
+    @Override
+    User getUser(String email) {
+        return Injector.getInstance().getDatabaseAdapter().getPlayer(email);
     }
 }
