@@ -54,10 +54,10 @@
                     </termination-config>
                 </div>
                 <div class="col-4">
-                    <pattern-selection v-on:load-pattern="loadPattern"></pattern-selection>
+                    <pattern-selection :title="localisation.selectPatternTooltip" v-on:load-pattern="loadPattern"></pattern-selection>
 
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="checkbox" v-model="saveAsPattern" >
@@ -73,7 +73,7 @@
                         <input type="text" class="form-control" v-model="featureSet">
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" :title="localisation.databaseNameTooltip">
                         <div class="input-group-prepend">
                             <span class="input-group-text">{{localisation.inputDatabase}}</span>
 
