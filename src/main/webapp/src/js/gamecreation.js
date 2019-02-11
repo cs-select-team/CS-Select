@@ -121,8 +121,7 @@ var creation = new Vue({
     el: '#gamecreation',
     data: {
         invitedPlayers: [],
-        playerInputType: [{title: 'Single', value: 'single'},
-            {title: 'Mass', value: 'textarea'}],
+        playerInputType: [],
         title: '',
         desc: '',
         currentTab: 'single',
@@ -136,6 +135,10 @@ var creation = new Vue({
 
         createButtonEnabled: true,
         alerts: []
+    },
+    mounted: function() {
+        this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
+            {title: this.localisation.invitePlayerMass, value: 'textarea'}];
     },
     methods: {
         /** submits a new parameter to the api
