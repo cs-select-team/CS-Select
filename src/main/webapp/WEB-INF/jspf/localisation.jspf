@@ -64,7 +64,10 @@ props -->
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
-                            MLServerDown: '<fmt:message key="MLServerDown"/>'
+                            MLServerDown: '<fmt:message key="MLServerDown"/>',
+                            matrixSelectMin: '<fmt:message key="matrixSelectMin"/>',
+                            matrixSelectMax: '<fmt:message key="matrixSelectMax"/>',
+                            matrixSelectEnd: '<fmt:message key="matrixSelectEnd"/>'
                         }
                     }
                 }

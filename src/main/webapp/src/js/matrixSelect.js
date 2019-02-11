@@ -18,6 +18,12 @@ Vue.component('MatrixSelect', {
             count: 0 // number of selected features
         }
     },
+    mounted: function() { // giving the player information about this game
+        var messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd
+        var alert = {message: messageString, type: 2}
+        this.$emit("add-alert", alert)
+
+    },
     computed: {
         col: function () {
             return Math.floor(document.getElementsByClassName("col-10")[0].offsetWidth / 350);
