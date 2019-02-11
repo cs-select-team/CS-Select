@@ -96,7 +96,7 @@
     margin-right: 2.5rem!important;
 }
 .feature-display {
-    width: 350px;
+    max-width: 350px;
 }
 body {
     overflow: scroll;
