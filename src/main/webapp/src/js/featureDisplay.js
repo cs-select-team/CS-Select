@@ -61,6 +61,7 @@ Vue.component('feature-box', {
             this.feature.useless = !this.feature.useless;
             this.feature.toggled = false;
             this.$forceUpdate()
+            this.$emit("useless-toggle", this.feature.useless)
         }
     }
 })

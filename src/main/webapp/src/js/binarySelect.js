@@ -23,9 +23,20 @@ Vue.component('BinarySelect', {
                 this.disabled = true
             }
         },
+        uselessToggle: function(newVal) {
+            if (this.feature1.useless && this.feature2.useless) { // in case both features are selected as useless
+                this.nextRound();
+                var alert = {message: "Round was skipped, because both features were marked useless", type: 1}
+                this.$emit("clear-alerts")
+                this.$emit("add-alert", alert)
+            }
+        },
         toggled: function (newVal, oldVal) {
-            if(newVal)
+            if(newVal){
                 this.nextRound()
+                this.$emit("clear-alerts")
+            }
+
         }
 
     },
@@ -36,10 +47,10 @@ Vue.component('BinarySelect', {
 
     template: '<div class="row" :title="binarySelectHelp" v-bind:class="{\'disabled-div\': disabled}">\n' +
         '                                <div class="col-sm" >\n' +
-        '                                        <feature-box v-bind:feature="feature1" v-on:toggled="toggled"></feature-box>\n' +
+        '                                        <feature-box v-bind:feature="feature1" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>\n' +
         '                                </div>\n' +
         '                                <div class="col-sm">\n' +
-        '                                        <feature-box v-bind:feature="feature2" v-on:toggled="toggled"></feature-box>\n' +
+        '                                        <feature-box v-bind:feature="feature2" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>\n' +
         '                                </div>\n' +
         '                        </div>'
 })
