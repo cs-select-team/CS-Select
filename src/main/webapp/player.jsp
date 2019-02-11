@@ -4,6 +4,11 @@
         <%@ include file="WEB-INF/jspf/playerNavbar.jspf" %>
         <div class="top-buffer"></div>
         <div class="container">
+            <div id="playerAlerts">
+            <div class="alert alert-success" v-bind:class="{collapse: !gameTerminated}" role="alert">
+                <fmt:message key="gameTerminated"/>
+            </div>
+            </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="container h-10 title">

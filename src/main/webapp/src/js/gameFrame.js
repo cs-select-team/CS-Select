@@ -85,6 +85,7 @@ var gameFrame = new Vue({
 
         },
         quit: function() {
+            localStorage.setItem("gameTerminated", true);
             window.location.href = 'player.jsp'
         }
     }

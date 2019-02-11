@@ -166,3 +166,15 @@ var daily = new Vue({
         })
     }
 })
+
+var playerAlerts = new Vue({
+    el: '#playerAlerts',
+    data: {
+        gameTerminated: false
+    },
+    mounted: function () {
+        this.gameTerminated = localStorage.getItem("gameTerminated");
+        localStorage.setItem("gameTerminated", false);
+
+    }
+})
