@@ -56,6 +56,12 @@ If you want to expand CS:Select with your own additions, use the following setup
  - email.address: The email address to use for sending invitations
  - email.password: The password to the email account
  
+ ## Logger Configuration
+ The Logger used by CS:Select is the [tinylog-framework](https://tinylog.org/). Tinylog can be configured in a multitude
+ of ways through a properties file. If you don't want to use our default way of logging (to console and log.txt in the
+ CS:Select home directory) you can create a logger.properties file in the `conf/Catalina/cs_select` directory and fill
+ it with values as described in detail in the [tinylog documentation](https://tinylog.org/configuration#settings)
+ 
  # Known issues
  - Only works with MySql Version 5.7.20
  - pattern loading doesn't load termination value
