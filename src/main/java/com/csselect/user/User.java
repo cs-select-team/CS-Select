@@ -1,7 +1,9 @@
 package com.csselect.user;
 
 import com.csselect.database.UserAdapter;
+import com.csselect.email.EmailSender;
 import com.csselect.user.management.safety.Encrypter;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * This class represents an user in our system. All users, despite their role, have access to those methods.
@@ -11,15 +13,17 @@ import com.csselect.user.management.safety.Encrypter;
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public class User {
-    private UserAdapter userAdapter;
-    protected boolean loggedIn;
 
-    /**
-     * Default constructor
-     */
-    User() {
-        //does not do anything
-    }
+    private static final int MIN_TEMP_PASSWORD_LENGTH = 8;
+    private static final int MAX_TEMP_PASSWORD_LENGTH = 12;
+    private static final int MIN_SALT_LENGTH = 40;
+    private static final int MAX_SALT_LENGTH = 70;
+    private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
+    private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password was submitted."
+            + " Your temporary password is '%s'! Please change this password to an own safe one as fast as possible!";
+
+    private final UserAdapter userAdapter;
+    protected boolean loggedIn;
 
     /**
      * Constructor for an User object. Database adapter is set to allow communication with our database
@@ -74,6 +78,19 @@ public class User {
     public void changePassword(String password) {
         String salt = Encrypter.getRandomSalt();
         userAdapter.setPassword(Encrypter.encrypt(password, salt), salt);
+    }
+
+    /**
+     * Resets the password of the {@link User} to a randomly generated password and sends the
+     * temporary password to the users email address
+     */
+    public final void resetPassword() {
+        String tempPassword = RandomStringUtils.randomAlphanumeric(MIN_TEMP_PASSWORD_LENGTH, MAX_TEMP_PASSWORD_LENGTH);
+        String salt = RandomStringUtils.randomAlphanumeric(MIN_SALT_LENGTH, MAX_SALT_LENGTH);
+        String encryptedPasswort = Encrypter.encrypt(tempPassword, salt);
+        userAdapter.setPassword(encryptedPasswort, salt);
+        EmailSender.sendEmail(this.userAdapter.getEmail(), RESET_EMAIL_HEADER,
+                String.format(RESET_EMAIL_MESSAGE, tempPassword));
     }
 
     /**
