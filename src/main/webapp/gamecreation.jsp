@@ -90,6 +90,7 @@
     <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>
+    <script src="src/js/playerInvite.js"></script>
 
     <script src="src/js/gamecreation.js"></script>
 </fmt:bundle>
