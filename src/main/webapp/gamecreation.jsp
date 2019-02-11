@@ -66,7 +66,7 @@
                         </div>
                         <input type="text" class="form-control" :disabled="!saveAsPattern" v-model="patternName" :placeholder="localisation.patternTitle">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" :title="localisation.featureSetTooltip">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="">{{localisation.inputFeatures}}</span>
                         </div>

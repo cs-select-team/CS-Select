@@ -72,6 +72,8 @@ props -->
                             inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',
                             playGameTooltip: '<fmt:message key="playGameTooltip"/>',
                             gamecreationMassInviteTooltip: '<fmt:message key="gamecreationMassInviteTooltip"/>',
+                            featureSetTooltip: '<fmt:message key="featureSetTooltip"/>',
+                            saveAsPatternTooltip: '<fmt:message key="saveAsPatternTooltip"/>'
 
                         }
                     }
