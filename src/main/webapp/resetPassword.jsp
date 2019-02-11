@@ -5,12 +5,15 @@
             <div class="col-md-3 col-lg-4">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                <form id="loginForm">
-                    <div class="alert alert-danger mt-3" v-bind:class="{ invisible: alert }">
+                <form id="resetForm">
+                    <div class="alert alert-danger mt-3" v-bind:class="{ invisible: !alert }">
                         <fmt:message key="missingEmail"/>
                     </div>
                     <div class="alert alert-danger" v-bind:class="{ collapse: !missingConfig }">
                         <fmt:message key="noConfig"/>
+                    </div>
+                    <div class="alert alert-danger" v-bind:class="{ collapse: !emailSent }">
+                        <fmt:message key="emailSent"/>
                     </div>
                     <div class="login-form">
                         <img class="login-form-img" src="src/img/cs_select.svg" alt="CS:Select">
