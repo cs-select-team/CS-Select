@@ -76,7 +76,8 @@ props -->
                             saveAsPatternTooltip: '<fmt:message key="saveAsPatternTooltip"/>',
                             databaseNameTooltip: '<fmt:message key="databaseTooltip"/>',
                             selectPatternTooltip: '<fmt:message key="selectPatternTooltip"/>',
-                            selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>'
+                            selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
+                            totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>'
 
                         }
                     }

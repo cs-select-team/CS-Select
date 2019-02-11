@@ -43,7 +43,7 @@ Vue.component('stats-display', {
     props: ['points', 'username'],
     template: '        <div>\n' +
         '            <b class="text">{{username}}</b>\n' +
-        '            <p class="text">{{points}}</p>\n' +
+        '            <p class="text" :title="localisation.totalScoreTooltip">{{points}}</p>\n' +
         '        </div>'
 })
 Vue.component('invite-element', {
