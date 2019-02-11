@@ -111,7 +111,7 @@ Vue.component('termination-config-composite', {
         '               :value="termination" >{{termination.title}}</option>' +
         '  </select>\n' +
         ' <div class="input-group-append">\n' +
-        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">Add</button>\n' +
+        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">{{localisation.add}}</button>\n' +
         '  </div>' +
         '</div>' +
         '<div v-for="(term, index) in terminations" class="row" >' +

@@ -12,6 +12,7 @@ props -->
                             selectFeature: '<fmt:message key="selectFeature"/>',
                             toggleUseless: '<fmt:message key="toggleUseless"/>',
                             play: '<fmt:message key="play"/>',
+                            add: '<fmt:message key="add"/>'
                             del: '<fmt:message key="delete"/>',
                             invite: '<fmt:message key="invite"/>',
                             terminate: '<fmt:message key="terminate"/>',
