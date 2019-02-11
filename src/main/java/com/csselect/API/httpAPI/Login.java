@@ -1,6 +1,8 @@
 package com.csselect.API.httpAPI;
 import com.csselect.configuration.ConfigurationException;
 import org.pmw.tinylog.Logger;
+import com.csselect.user.management.OrganiserManagement;
+import com.csselect.user.management.PlayerManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +39,20 @@ public class Login extends Servlet {
                 login(req, resp);
             } else if (req.getPathInfo().equals("/register")) {
                 register(req, resp);
+            } else if (req.getPathInfo().equals("/reset")) {
+                reset(req, resp);
             }
         } catch (ConfigurationException e) {
             resp.sendError(550); // tell the frontend that the config file is missing
+        }
+    }
+
+    private void reset(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+        String email = getParameter("email", req);
+        if (isSet("organiser", req)) {
+            new OrganiserManagement().resetPassword(email);
+        } else {
+            new PlayerManagement().resetPassword(email);
         }
     }
 
