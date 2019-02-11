@@ -185,9 +185,13 @@ Vue.component('termination-config-time', {
         date: {
             get: function() {
                 var args = this.terminationConfigStr.split(':');
-                var date = new Date(Number(args[1]));
-                var dateString = date.toString();
-                return dateString;
+                var date;
+                if (args[1] === '') {
+                    date = Date.now();
+                } else {
+                     date = new Date(Number(args[1]));
+                }
+                return date.toString();
             },
             set: function (newVal) {
                 var args = this.terminationConfigStr.split(':');
