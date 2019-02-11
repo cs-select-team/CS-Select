@@ -195,7 +195,7 @@ Vue.component('termination-config-time', {
             },
             set: function (newVal) {
                 var args = this.terminationConfigStr.split(':');
-                args[1] = new Date(newVal).getTime();
+                args[1] = moment(newVal, 'DD/MM/YYYY HH:mm')._d.getTime();
                 this.$emit('update-termination', args.join(':'))
             }
         }
