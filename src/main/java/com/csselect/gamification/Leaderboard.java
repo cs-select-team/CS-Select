@@ -3,6 +3,8 @@ package com.csselect.gamification;
 import com.csselect.inject.Injector;
 import com.csselect.user.Player;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,11 +47,12 @@ public enum Leaderboard {
     }
 
     /**
-     * Gets the sorted list of players.
-     * @return The sorted list of players.
+     * Gets the sorted Map of players and their points cut to the first five entries.
+     * @return The sorted Map of players and their points.
      */
     public Map<Player, Integer> getPlayers() {
-        return strategy.sort(getPlayersFromDatabase());
+        Map<Player, Integer> sortedMap = strategy.sort(getPlayersFromDatabase());
+        return cutToFive(sortedMap);
     }
 
     /**
@@ -58,6 +61,24 @@ public enum Leaderboard {
      */
     private List<Player> getPlayersFromDatabase() {
         return new LinkedList<>(Injector.getInstance().getDatabaseAdapter().getPlayers());
+    }
+
+    /**
+     * Cuts the map to the first five players (or less if less players exist).
+     * @param sortedMap The sorted map that is to be cut.
+     * @return A new sorted LinkedHashMap containing five entries.
+     */
+    private Map<Player, Integer> cutToFive(Map<Player, Integer> sortedMap) {
+        Iterator<Map.Entry<Player, Integer>> iterator = sortedMap.entrySet().iterator();
+        Map<Player, Integer> mapFive = new LinkedHashMap<>();
+        int i = 0;
+
+        while (iterator.hasNext() && i < 5) {
+            Map.Entry<Player, Integer> entry = iterator.next();
+            mapFive.put(entry.getKey(), entry.getValue());
+            i++;
+        }
+        return mapFive;
     }
 
 }

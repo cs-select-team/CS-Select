@@ -44,7 +44,7 @@ Vue.component('termination-config', {
                 }
             },
             set: function (newVal) {
-                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,rounds:1');
+                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,time:');
                 else this.$emit('update-termination-str', newVal + ':');
             }
         }
