@@ -9,8 +9,8 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public abstract class UserManagement {
 
-    private static final int MIN_TEMP_PASSWORD_LENGTH = 8;
-    private static final int MAX_TEMP_PASSWORD_LENGTH = 12;
+    private static final int MIN_TEMP_PASSWORD_LENGTH = 16;
+    private static final int MAX_TEMP_PASSWORD_LENGTH = 20;
     private static final int MIN_SALT_LENGTH = 40;
     private static final int MAX_SALT_LENGTH = 70;
 
