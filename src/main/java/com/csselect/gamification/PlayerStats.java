@@ -30,7 +30,7 @@ public class PlayerStats implements Gamification {
 
     @Override
     public int finishRound(double score) {
-        int commutedScore = commuteScore(score);
+        int commutedScore = computeScore(score);
         playerStatsAdapter.setLastScore(commutedScore);
 
         if (playerStatsAdapter.getMaxRoundScore() < commutedScore) {
@@ -139,7 +139,7 @@ public class PlayerStats implements Gamification {
      * @param score Score given by the ML-Server.
      * @return Points the player will receive.
      */
-    private int commuteScore(double score) {
+    int computeScore(double score) {
         if (score < 0 || score > 1) {
             // Score should always be in [0,1].
             assert false;

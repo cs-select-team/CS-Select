@@ -18,7 +18,7 @@ public class Streak {
     /**
      * Sets the counter of the streak back to zero.
      */
-    public void setZero() {
+    void setZero() {
         counter = 0;
     }
 
