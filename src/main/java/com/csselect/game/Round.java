@@ -153,7 +153,11 @@ public abstract class Round {
     public void skip(int[] uselessFeatures) {
         this.addUselessFeatures(uselessFeatures);
         this.skipped = true;
-        this.player.getStats().skipRound();
+
+        if (this.shownFeatures.size() != uselessFeatures.length) {
+            this.player.getStats().skipRound();
+        }
+
         this.game.addFinishedRound(this);
         this.player.setActiveRound(null);
     }
