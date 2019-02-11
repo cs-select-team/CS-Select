@@ -23,7 +23,6 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
-    private static final String TABLE_NAME = "organisers";
 
     /**
      * Creates a new {@link MysqlOrganiserAdapter} with the given id
@@ -42,10 +41,10 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
      * @throws SQLException Thrown if an error occurs while communicating with the database server
      */
     MysqlOrganiserAdapter(String email, String hash, String salt) throws SQLException {
-        super(DATABASE_ADAPTER.getNextIdOfTable(TABLE_NAME));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TABLE_NAME + " (email,hash,salt,language) VALUES (?,?,?,?);",
-                new StringParam(email), new StringParam(hash), new StringParam(salt),
-                new StringParam(DEFAULT_LANGUAGE));
+        super(DATABASE_ADAPTER.getNextIdOfTable(TableNames.ORGANISERS));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.ORGANISERS + " (email,hash,salt,language) "
+                        + "VALUES (?,?,?,?);", new StringParam(email), new StringParam(hash), new StringParam(salt),
+                        new StringParam(DEFAULT_LANGUAGE));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         Collection<Pattern> patterns = new HashSet<>();
         try {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
-                    "SELECT * FROM patterns WHERE organiserId=" + getID() + ";");
+                    "SELECT * FROM " + TableNames.PATTERNS + " WHERE organiserId=" + getID() + ";");
             while (set.next()) {
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));
@@ -78,8 +77,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         gameOptions.getInvitedEmails().forEach(joiner::add);
         String emails = joiner.toString();
         try {
-            DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO patterns"
-                    + "(organiserId,title,gameTitle,description,dataset,databasename,termination,gamemode,"
+            DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO " + TableNames.PATTERNS
+                    + " (organiserId,title,gameTitle,description,dataset,databasename,termination,gamemode,"
                             + "invitedPlayers) VALUES (?,?,?,?,?,?,?,?,?)", new IntParam(getID()),
                     new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
                     new StringParam(gameOptions.getDescription()), new StringParam(gameOptions.getDataset()),
@@ -105,7 +104,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
 
     @Override
     String getTableName() {
-        return TABLE_NAME;
+        return TableNames.ORGANISERS;
     }
 
     @Override
