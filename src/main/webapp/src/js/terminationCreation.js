@@ -92,6 +92,7 @@ Vue.component('termination-config-composite', {
     watch: {
         terminationConfigStr: function(newVal) {
             var self = this
+            this.terminations = [];
             self.terminationStrings = newVal.split(',');
             self.terminationStrings.forEach(function (value, index) {
                 var termination = {};
