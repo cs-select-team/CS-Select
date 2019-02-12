@@ -9,8 +9,8 @@ Vue.component('matrix-row', {
         toggled: function (newVal, oldVal) {
             this.$emit("toggled", newVal, oldVal)
         },
-        uselessToggle: function (newVal) {
-            this.$emit('useless-toggle', newVal)
+        uselessToggle: function (newVal, toggled) {
+            this.$emit('useless-toggle', newVal, toggled)
         }
     }
 })
@@ -46,8 +46,8 @@ Vue.component('MatrixSelect', {
             if (!newVal && oldVal) this.count--;
             this.checkDone();
         },
-        uselessToggle: function (newVal) {
-            if (newVal) this.count--;
+        uselessToggle: function (newVal, toggled) {
+            if (newVal && toggled) this.count--;
             this.checkDone();
         },
         checkDone: function () {
