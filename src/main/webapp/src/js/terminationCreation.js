@@ -14,7 +14,7 @@ Vue.component('termination-config', {
         "               :value='term.value'>{{term.title}}</option>\n" +
         "  </select>" +
         "   <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'" +
-        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(0,2)'></component>" +
+        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(1,3)'></component>" +
         "</div>",
     methods: {
         updateTermination: function (newVal) {
@@ -28,9 +28,11 @@ Vue.component('termination-config', {
     }
     ,
     mounted: function() {
-        this.listOfTerminations = [{title: this.localisation.timeTermination, value: "time"},
-            {title: this.localisation.roundsTermination, value: "rounds"},
-            {title: this.localisation.compositeTermination, value: "composite"}]
+        this.listOfTerminations = [{title: this.localisation.compositeTermination, value: "composite"},
+            {title: this.localisation.timeTermination, value: "time"},
+            {title: this.localisation.organiserTermination, value:'organiser'},
+            {title: this.localisation.roundsTermination, value: "rounds"}
+            ]
     },
 
     computed: {
@@ -53,6 +55,9 @@ Vue.component('termination-config', {
         }
     }
 });
+Vue.component('termination-config-organiser', {
+    template: '<div>Only terminated by the organiser</div>'
+})
 Vue.component('termination-config-composite', {
     props: ['list-of-possible-terminations', 'termination-config-str'],
     data: function () {
