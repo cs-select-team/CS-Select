@@ -35,7 +35,7 @@ Vue.component('MatrixSelect', {
             return Math.ceil(this.options.numberOfFeatures / this.col);
         }
     },
-    template: '        <div ref="matrix">' +
+    template: '        <div ref="matrix" id="matrixSelect">' +
         '<matrix-row  v-on:toggled="toggled" v-on:useless-toggle="uselessToggle" v-for="i in [...Array(row).keys()]"\n' +
         '                    v-bind:key="i"\n' +
         '                    v-bind:feature-list="featureList.slice(i * col, (i+1) * col)">\n' +
