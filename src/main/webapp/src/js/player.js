@@ -35,7 +35,7 @@ Vue.component('leaderboard-element', {
     template: '<tr>\n' +
         '                    <th>{{ place }}</th>\n' +
         '                    <th>{{ username }}</th>\n' +
-        '                    <th>{{ points }}</th>\n' +
+        '                    <th :title="localisation.lastWeekScoreTooltip">{{ points }}</th>\n' +
         '                </tr>'
 })
 

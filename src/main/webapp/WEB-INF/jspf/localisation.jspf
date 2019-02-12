@@ -88,7 +88,8 @@ props -->
                             databaseNameTooltip: '<fmt:message key="databaseTooltip"/>',
                             selectPatternTooltip: '<fmt:message key="selectPatternTooltip"/>',
                             selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
-                            totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>'
+                            totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>',
+                            lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>'
                         }
                     }
                 }
