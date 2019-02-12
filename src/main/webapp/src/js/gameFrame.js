@@ -73,6 +73,7 @@ var gameFrame = new Vue({
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
             }).then (function (response) {
                 if (response.status == 204) {
+                    localStorage.setItem("gameTerminated", true);
                     gameFrame.quit()
                 }
                 gameFrame.featureList = response.data.listOfFeatures;
@@ -93,7 +94,7 @@ var gameFrame = new Vue({
 
         },
         quit: function() {
-            localStorage.setItem("gameTerminated", true);
+
             window.location.href = 'player.jsp'
         },
 
