@@ -62,6 +62,7 @@ props -->
                             completed: '<fmt:message key="completed"/>',
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
                             dailyFinished: '<fmt:message key="dailyFinished"/>',
+                            reward: '<fmt:message key="reward"/>',
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',

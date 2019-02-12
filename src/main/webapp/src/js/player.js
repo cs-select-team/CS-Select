@@ -22,7 +22,7 @@ Vue.component('daily-challenge', {
         '  <div class="card-body">' +
         '    <h5 class="card-title">{{daily.title}}</h5>' +
         '    <div class="card-text">' +
-        '     {{localisation.points}}: {{daily.points}}' +
+        '     {{localisation.reward}}: {{daily.points}} {{localisation.points}}' +
         '    </div>' +
         '    <div class="card-text" v-if="daily.finished">' +
         '       {{localisation.dailyFinished}}</div>' +
