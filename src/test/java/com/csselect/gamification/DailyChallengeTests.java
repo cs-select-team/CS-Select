@@ -1,7 +1,7 @@
 package com.csselect.gamification;
 
-import com.csselect.inject.TestClass;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
+import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,21 +25,23 @@ public class DailyChallengeTests extends TestClass {
     public void testDailyGetStreakThree() {
         DailyChallenge daily = new DailyGetStreakThree();
         Assert.assertNotNull(daily);
-        // Assert.assertEquals("Spiele drei Runden am Stück.", daily.getDescription("de"));
-        // Assert.assertEquals("Play three rounds in a row.", daily.getDescription("en"));
         Assert.assertEquals(50, daily.getReward());
         Assert.assertEquals(LocalDate.now(), daily.getDate());
-        Assert.assertFalse(daily.checkFinished(stats));
+
+        // Streak: 0
         Assert.assertFalse(daily.isCompleted());
 
+        // Streak: 1
         stats.finishRound(0.2);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Streak: 2
         stats.finishRound(0.4);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Streak: 3
         stats.finishRound(0.4);
         Assert.assertTrue(daily.checkFinished(stats));
         Assert.assertTrue(daily.isCompleted());
@@ -49,21 +51,23 @@ public class DailyChallengeTests extends TestClass {
     public void testDailyPlayThreeRounds() {
         DailyChallenge daily = new DailyPlayThreeRounds();
         Assert.assertNotNull(daily);
-        // Assert.assertEquals("Spiele heute drei Runden.", daily.getDescription("de"));
-        // Assert.assertEquals("Play three rounds today.", daily.getDescription("en"));
         Assert.assertEquals(50, daily.getReward());
         Assert.assertEquals(LocalDate.now(), daily.getDate());
 
+        // Rounds played: 0
         Assert.assertFalse(daily.isCompleted());
 
+        // Rounds played: 1
         stats.finishRound(0.2);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Rounds played: 2
         stats.finishRound(0.4);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Rounds played: 3
         stats.finishRound(0.4);
         Assert.assertTrue(daily.checkFinished(stats));
         Assert.assertTrue(daily.isCompleted());
@@ -73,21 +77,23 @@ public class DailyChallengeTests extends TestClass {
     public void testDailyReachRoundScoreEighty() {
         DailyChallenge daily = new DailyReachRoundScoreEighty();
         Assert.assertNotNull(daily);
-        // Assert.assertEquals("Erreiche 80 Punkte nach einer einzelnen Runde.", daily.getDescription("de"));
-        // Assert.assertEquals("Reach a score of 80 after a single round.", daily.getDescription("en"));
         Assert.assertEquals(50, daily.getReward());
         Assert.assertEquals(LocalDate.now(), daily.getDate());
-        Assert.assertFalse(daily.checkFinished(stats));
+
+        // Round score: 0
         Assert.assertFalse(daily.isCompleted());
 
+        // Round score: 10
         stats.finishRound(0.2);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Round score: 20
         stats.finishRound(0.4);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Round score: 80
         stats.finishRound(0.8);
         Assert.assertTrue(daily.checkFinished(stats));
         Assert.assertTrue(daily.isCompleted());
@@ -97,21 +103,23 @@ public class DailyChallengeTests extends TestClass {
     public void testDailyReachScoreHundredFifty() {
         DailyChallenge daily = new DailyReachScoreHundredFifty();
         Assert.assertNotNull(daily);
-        // Assert.assertEquals("Erreiche heute insgesamt 150 Punkte.", daily.getDescription("de"));
-        // Assert.assertEquals("Achieve a total score of 150 today.", daily.getDescription("en"));
         Assert.assertEquals(50, daily.getReward());
         Assert.assertEquals(LocalDate.now(), daily.getDate());
-        Assert.assertFalse(daily.checkFinished(stats));
+
+        // Total daily score: 0
         Assert.assertFalse(daily.isCompleted());
 
+        // Total daily score: 60
         stats.finishRound(0.6);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Total daily score: 80
         stats.finishRound(0.4);
         Assert.assertFalse(daily.checkFinished(stats));
         Assert.assertFalse(daily.isCompleted());
 
+        // Total daily score: > 150
         stats.finishRound(0.9);
         Assert.assertTrue(daily.checkFinished(stats));
         Assert.assertTrue(daily.isCompleted());

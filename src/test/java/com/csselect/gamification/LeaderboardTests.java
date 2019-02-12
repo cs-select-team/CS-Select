@@ -1,6 +1,6 @@
 package com.csselect.gamification;
 
-import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.mock.MockDatabaseAdapter;
 import com.csselect.inject.Injector;
 import com.csselect.inject.TestClass;
 import com.csselect.user.Player;
@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public class LeaderboardTests extends TestClass {
 
-    private DatabaseAdapter mockDatabaseAdapter;
+    private MockDatabaseAdapter mockDatabaseAdapter;
     private Leaderboard leaderboard;
 
     @Override
     public void setUp() {
         leaderboard = Leaderboard.INSTANCE;
-        mockDatabaseAdapter = Injector.getInstance().getDatabaseAdapter();
+        mockDatabaseAdapter = (MockDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
     }
 
     @Override

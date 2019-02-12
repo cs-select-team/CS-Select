@@ -41,11 +41,6 @@ public class ConfigurationTests extends TestClass {
     }
 
     @Test
-    public void testDatabaseType() {
-        testString("mysql", config.getDatabaseType());
-    }
-
-    @Test
     public void testDatabaseHostname() {
         testString("127.0.0.1", config.getDatabaseHostname());
     }

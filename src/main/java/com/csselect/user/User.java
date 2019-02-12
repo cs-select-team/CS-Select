@@ -1,7 +1,9 @@
 package com.csselect.user;
 
 import com.csselect.database.UserAdapter;
+import com.csselect.email.EmailSender;
 import com.csselect.user.management.safety.Encrypter;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * This class represents an user in our system. All users, despite their role, have access to those methods.
@@ -11,15 +13,14 @@ import com.csselect.user.management.safety.Encrypter;
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
 public class User {
-    private UserAdapter userAdapter;
-    protected boolean loggedIn;
 
-    /**
-     * Default constructor
-     */
-    User() {
-        //does not do anything
-    }
+    private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
+    private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password"
+            + " was submitted. Your temporary password is '%s'! Please change this password to an own safe one"
+            + " as fast as possible!";
+
+    private final UserAdapter userAdapter;
+    protected boolean loggedIn;
 
     /**
      * Constructor for an User object. Database adapter is set to allow communication with our database
@@ -77,12 +78,26 @@ public class User {
     }
 
     /**
+     * Resets the password of the {@link User} to a randomly generated password and sends the
+     * temporary password to the users email address
+     * @param tempPassword temporary password of the user
+     * @param encryptedTempPassword encrypted temporary password
+     * @param salt salt used while encrypting
+     */
+    public final void resetPassword(String tempPassword, String encryptedTempPassword, String salt) {
+        userAdapter.setPassword(encryptedTempPassword, salt);
+        EmailSender.sendEmail(this.userAdapter.getEmail(), RESET_EMAIL_HEADER,
+                String.format(RESET_EMAIL_MESSAGE, tempPassword));
+    }
+
+    /**
      * Changing an users's email means to call this method on an object with the according {@link UserAdapter}.
      * It is assured in our implementation that we can call this method only after the user correctly logged
      * into our system.
      * @param email New email to which the user ID will refer in our database.
+     * @throws IllegalArgumentException Throws error if something is not right with the input email address
      */
-    public void changeEmail(String email) {
+    public void changeEmail(String email) throws IllegalArgumentException {
         userAdapter.setEmail(email);
     }
 

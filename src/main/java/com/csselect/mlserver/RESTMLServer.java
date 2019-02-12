@@ -7,6 +7,8 @@ import com.csselect.inject.Injector;
 import com.csselect.utils.FeatureSetUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
+import org.pmw.tinylog.Logger;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -18,6 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -32,6 +36,7 @@ public class RESTMLServer implements MLServer {
     private final Client client;
     private final String mlserverUrl;
     private final String homeDir;
+    private final Map<String, FeatureSet> featureSetMap;
 
     /**
      * Constructor to instantiate a {@link RESTMLServer} Only to be used by the {@link Injector}
@@ -41,6 +46,7 @@ public class RESTMLServer implements MLServer {
         this.client = ClientBuilder.newClient();
         this.mlserverUrl = "http://" + configuration.getMLServerURL();
         this.homeDir = configuration.getHomeDirectory();
+        this.featureSetMap = new HashMap<>();
     }
 
     @Override
@@ -53,10 +59,14 @@ public class RESTMLServer implements MLServer {
 
     @Override
     public FeatureSet getFeatures(String dataset) throws IOException {
-        if (!datasetExists(dataset)) {
+        if (featureSetMap.containsKey(dataset)) {
+            return featureSetMap.get(dataset);
+        } else if (!datasetExists(dataset)) {
             writeDataset(dataset);
         }
-        return FeatureSetUtils.loadFeatureSet(dataset);
+        FeatureSet set = FeatureSetUtils.loadFeatureSet(dataset);
+        featureSetMap.put(dataset, set);
+        return set;
     }
 
     @Override
@@ -77,7 +87,7 @@ public class RESTMLServer implements MLServer {
                 writeDataset(dataset);
                 return true;
             } catch (IOException e) {
-                e.printStackTrace();
+                Logger.error(e);
                 return false;
             }
         }

@@ -2,6 +2,7 @@ package com.csselect.database.mysql;
 
 import com.csselect.inject.Injector;
 import org.intellij.lang.annotations.Language;
+import org.pmw.tinylog.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,7 +54,7 @@ public abstract class MysqlAdapter {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -69,7 +70,7 @@ public abstract class MysqlAdapter {
             String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
             DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -87,7 +88,7 @@ public abstract class MysqlAdapter {
                 return -1;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return -1;
         }
     }
@@ -103,7 +104,7 @@ public abstract class MysqlAdapter {
             String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
             DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -127,7 +128,7 @@ public abstract class MysqlAdapter {
                     + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (id=" + id + ");";
             DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -142,7 +143,7 @@ public abstract class MysqlAdapter {
             String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
             DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value));
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -160,7 +161,7 @@ public abstract class MysqlAdapter {
                 return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return false;
         }
     }

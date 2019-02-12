@@ -11,6 +11,7 @@ import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
+import org.pmw.tinylog.Logger;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
@@ -60,7 +61,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             executeMysqlUpdate(Query.CREATE_PATTERN_TABLE);
             executeMysqlUpdate(Query.CREATE_PLAYERSTATS_TABLE);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             System.exit(1);
         }
     }
@@ -91,7 +92,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         try {
             return new MysqlGameAdapter();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -102,7 +103,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (email=?);", new StringParam(email));
             return getPlayer(set);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -113,7 +114,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set = executeMysqlQuery("SELECT * FROM players WHERE (id='" + id + "';");
             return getPlayer(set);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -137,7 +138,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -151,7 +152,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                         new Organiser(new MysqlOrganiserAdapter(set.getInt("id"))));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return organisers;
     }
@@ -165,7 +166,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 players.add(new Player(new MysqlPlayerAdapter(set.getInt("id"))));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         return players;
     }
@@ -175,7 +176,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         try {
             return getNextIdOfTable("games");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return 1;
         }
     }
@@ -192,7 +193,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             }
             return hash;
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -209,7 +210,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             }
             return salt;
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -226,7 +227,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             }
             return hash;
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -243,7 +244,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             }
             return salt;
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
     }
@@ -256,19 +257,16 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
         MysqlPlayerAdapter adapter;
         try {
             adapter = new MysqlPlayerAdapter(username, email, hash, salt);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
-        adapter.setEmail(email);
-        adapter.setPassword(hash, salt);
-        adapter.setUsername(username);
         return new Player(adapter);
     }
 
@@ -281,14 +279,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
         MysqlOrganiserAdapter adapter;
         try {
             adapter = new MysqlOrganiserAdapter(email, hash, salt);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return null;
         }
         return new Organiser(adapter);
@@ -303,7 +301,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 executeMysqlUpdate("UPDATE games SET organiserId=" + organiser.getId() + " WHERE"
                         + " id=" + game.getId() + ";");
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.error(e);
             }
         }
         return game;
@@ -315,7 +313,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         try {
             executeMysqlUpdate("DELETE FROM games WHERE (id=" + game.getId() + ");");
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 
@@ -325,7 +323,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet set = executeMysqlQuery("SHOW DATABASES LIKE ?", new StringParam(databaseName));
             return set.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
             return true; //We don't want to overwrite anything in case of errors
         }
     }
@@ -402,7 +400,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             source.setServerTimezone("CET");
             source.setCreateDatabaseIfNotExist(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
         dataSources.put(databaseName, source);
         return source;
@@ -523,7 +521,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                         organisers.get(gameSet.getInt("organiserId")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e);
         }
     }
 }

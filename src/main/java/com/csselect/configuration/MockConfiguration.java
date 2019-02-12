@@ -33,11 +33,6 @@ public final class MockConfiguration implements Configuration {
     }
 
     @Override
-    public String getDatabaseType() {
-        return "mysql";
-    }
-
-    @Override
     public String getDatabaseHostname() {
         return "127.0.0.1";
     }

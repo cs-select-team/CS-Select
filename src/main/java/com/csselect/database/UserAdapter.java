@@ -43,8 +43,9 @@ public interface UserAdapter {
     /**
      * Sets the {@link com.csselect.user.User}s email-address
      * @param email email-address to set
+     * @throws IllegalArgumentException thrown if an error occurs setting the email (e.g. email already in use)
      */
-    void setEmail(String email);
+    void setEmail(String email) throws IllegalArgumentException;
 
     /**
      * Sets the {@link com.csselect.user.User}s password-hash and -salt

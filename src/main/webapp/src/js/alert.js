@@ -1,6 +1,19 @@
+// type alert-*
+// 0    danger
+// 1    success
+// 2    info
 Vue.component('alert-box', {
     props: ['alert-message', 'type'],
-    template: '<div class="alert" v-bind:class="{\'alert-danger\': type==0, \'alert-success\': type==1}" role="alert">\n' +
+    data: function() {
+        return {
+            alertClasses: [
+                "alert-danger",
+                "alert-success",
+                "alert-info"
+            ]
+        }
+    },
+    template: '<div class="alert" v-bind:class="alertClasses[type]" role="alert">\n' +
         '  {{alertMessage}}\n' +
         '</div>'
 });

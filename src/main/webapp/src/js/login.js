@@ -7,6 +7,9 @@ var app1 = new Vue({
         alert: true,
         missingConfig: false
     },
+    computed: {
+
+    },
     methods: {
         submit: function(event) {
             event.preventDefault();
@@ -31,5 +34,10 @@ var app1 = new Vue({
                     app1.alert = false;
                   }
                 });
+        },
+        autoLogout: function() {
+            var val = localStorage.getItem('autoLogout');
+            localStorage.setItem("autoLogout", false);
+            return val;
         }
     }})

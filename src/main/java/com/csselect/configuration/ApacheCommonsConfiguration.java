@@ -5,6 +5,7 @@ import org.apache.commons.configuration2.FileBasedConfiguration;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.pmw.tinylog.Logger;
 
 import java.io.File;
 
@@ -38,8 +39,8 @@ public final class ApacheCommonsConfiguration implements Configuration {
         try {
             this.configuration = builder.getConfiguration();
         } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
-            System.err.println("Reading of configuration-file failed! Stacktrace:");
-            e.printStackTrace();
+            Logger.error("Reading of configuration-file failed!");
+            Logger.error(e);
             throw new ConfigurationException();
         }
     }
@@ -57,11 +58,6 @@ public final class ApacheCommonsConfiguration implements Configuration {
     @Override
     public String getTimezone() {
         return configuration.getString("timezone");
-    }
-
-    @Override
-    public String getDatabaseType() {
-        return configuration.getString("database.type");
     }
 
     @Override

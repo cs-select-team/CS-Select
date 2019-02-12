@@ -22,7 +22,7 @@ Vue.component('daily-challenge', {
         '  <div class="card-body">' +
         '    <h5 class="card-title">{{daily.title}}</h5>' +
         '    <div class="card-text">' +
-        '     {{localisation.points}}: {{daily.points}}' +
+        '     {{localisation.reward}}: {{daily.points}} {{localisation.points}}' +
         '    </div>' +
         '    <div class="card-text" v-if="daily.finished">' +
         '       {{localisation.dailyFinished}}</div>' +
@@ -164,5 +164,19 @@ var daily = new Vue({
         }).then(function (response) {
             daily.daily = response.data
         })
+    }
+})
+
+var playerAlerts = new Vue({
+    el: '#playerAlerts',
+    data: {
+        gameTerminated: false
+    },
+    mounted: function () {
+        if (localStorage.hasOwnProperty("gameTerminated")) {
+            this.gameTerminated = localStorage.getItem("gameTerminated") == "true";
+        }
+        localStorage.setItem("gameTerminated", false);
+
     }
 })

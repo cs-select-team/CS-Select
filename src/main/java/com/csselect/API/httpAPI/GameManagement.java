@@ -169,7 +169,7 @@ public class GameManagement extends Servlet {
         if (getOrganiserFacade().createGame()) {
             resp.sendError(HttpServletResponse.SC_ACCEPTED);
         } else {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(551);
         }
     }
 

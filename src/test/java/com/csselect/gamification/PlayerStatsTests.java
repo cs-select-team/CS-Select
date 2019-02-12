@@ -1,7 +1,7 @@
 package com.csselect.gamification;
 
-import com.csselect.inject.TestClass;
 import com.csselect.database.mock.MockPlayerStatsAdapter;
+import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,68 +28,73 @@ public class PlayerStatsTests extends TestClass {
 
     @Test
     public void testLastScore() {
-        Assert.assertEquals(0, stats.getLastScore());
+        Assert.assertEquals(0, stats.getLastScore()); // Initialised with 0.
         stats.finishRound(0.8);
-        Assert.assertEquals(80, stats.getLastScore());
+        Assert.assertEquals(stats.computeScore(0.8), stats.getLastScore());
         stats.finishRound(0.44);
-        Assert.assertEquals(22, stats.getLastScore());
+        Assert.assertEquals(stats.computeScore(0.44), stats.getLastScore());
         stats.finishRound(0.9);
-        Assert.assertEquals(90, stats.getLastScore());
+        Assert.assertEquals(stats.computeScore(0.9), stats.getLastScore());
     }
 
     @Test
     public void testMaxRoundScore() {
-        Assert.assertEquals(0, stats.getMaxRoundScore());
+        Assert.assertEquals(0, stats.getMaxRoundScore()); // Initialised with 0.
         stats.finishRound(0.8);
-        Assert.assertEquals(80, stats.getMaxRoundScore());
-        stats.finishRound(0.44);
-        Assert.assertEquals(80, stats.getMaxRoundScore());
+        int firstComputedScore = stats.computeScore(0.8);
+        Assert.assertEquals(firstComputedScore, stats.getMaxRoundScore());
+        stats.finishRound(0.44); // Score is lower, maxRoundScore should not change.
+        Assert.assertEquals(firstComputedScore, stats.getMaxRoundScore());
+
         stats.finishRound(0.9);
-        Assert.assertEquals(90, stats.getMaxRoundScore());
-        stats.finishRound(0.9);
-        Assert.assertEquals(90, stats.getMaxRoundScore());
-        stats.finishRound(0.55);
-        Assert.assertEquals(90, stats.getMaxRoundScore());
-        stats.finishRound(0.91);
-        Assert.assertEquals(91, stats.getMaxRoundScore());
+        int secondComputedScore = stats.computeScore(0.9);
+        Assert.assertEquals(secondComputedScore, stats.getMaxRoundScore());
+        stats.finishRound(0.9); // Score is the same, maxRoundScore should not change.
+        Assert.assertEquals(secondComputedScore, stats.getMaxRoundScore());
+        stats.finishRound(0.55); // Score is lower, maxRoundScore should not change.
+        Assert.assertEquals(secondComputedScore, stats.getMaxRoundScore());
     }
 
     @Test
     public void testRoundsPlayed() {
-        Assert.assertEquals(0, stats.getRoundsPlayed());
+        Assert.assertEquals(0, stats.getRoundsPlayed()); // Initialised with 0.
         stats.finishRound(0.8);
         Assert.assertEquals(1, stats.getRoundsPlayed());
         stats.finishRound(0.44);
-        Assert.assertEquals(stats.getRoundsPlayed(), 2);
+        Assert.assertEquals(2, stats.getRoundsPlayed());
         stats.finishRound(0.92);
         stats.finishRound(0.77);
         stats.finishRound(0.47);
         Assert.assertEquals(5, stats.getRoundsPlayed());
         stats.skipRound();
+        // Skipping a round does not count as playing a round.
         Assert.assertEquals(5, stats.getRoundsPlayed());
     }
 
     @Test
     public void testHighestStreak() {
-        Assert.assertEquals(0, stats.getHighestStreak());
+        Assert.assertEquals(0, stats.getHighestStreak()); // Initialised with 0.
         stats.finishRound(0.8);
         Assert.assertEquals(1, stats.getHighestStreak());
         stats.finishRound(0.2);
         Assert.assertEquals(2, stats.getHighestStreak());
-        stats.skipRound();
+        stats.getStreak().setZero();
+        // Current streak resets, e.g. by logging out.
         stats.finishRound(0.44);
         Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.9);
         Assert.assertEquals(2, stats.getHighestStreak());
         stats.finishRound(0.82);
         Assert.assertEquals(3, stats.getHighestStreak());
-        stats.finishRound(0.81);
-        Assert.assertEquals(4, stats.getHighestStreak());
     }
 
+    /**
+     * This test only works with the four dailies that currently exist, every one of them would be completed
+     * after this simulation of played rounds.
+     */
     @Test
     public void testDailiesCompleted() {
-        Assert.assertEquals(0, stats.getDailiesCompleted());
+        Assert.assertEquals(0, stats.getDailiesCompleted()); // Initialised with 0.
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
@@ -97,6 +102,7 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.84);
         stats.finishRound(0.2);
         stats.finishRound(0.75);
+        // Daily was already completed on this day.
         Assert.assertEquals(1, stats.getDailiesCompleted());
     }
 
@@ -104,55 +110,66 @@ public class PlayerStatsTests extends TestClass {
     public void testDailies() {
         Assert.assertNotNull(stats.getDaily());
         Assert.assertEquals(stats.getDaily().getDate(), LocalDate.now());
+        Assert.assertFalse(stats.getDaily().isCompleted());
     }
 
     @Test
-    public void testStreaks() {
+    public void testStreak() {
         Assert.assertNotNull(stats.getStreak());
         Assert.assertEquals(0, stats.getStreak().getCounter());
         stats.finishRound(0.2);
         Assert.assertEquals(1, stats.getStreak().getCounter());
         stats.finishRound(0.9);
         Assert.assertEquals(2, stats.getStreak().getCounter());
-        stats.skipRound();
-        Assert.assertEquals(0, stats.getStreak().getCounter());
-        stats.finishRound(0.33);
-        Assert.assertEquals(1, stats.getStreak().getCounter());
     }
 
     @Test
     public void testAchievements() {
         Assert.assertNotNull(stats.getAchievements());
-        Assert.assertFalse(stats.getAchievements().isEmpty());
-        Assert.assertEquals(21, stats.getAchievements().size());
+        Assert.assertEquals(AchievementType.values().length, stats.getAchievements().size());
     }
 
     @Test
     public void testSkipRound() {
         stats.finishRound(0.3);
-        Assert.assertEquals(1, stats.getStreak().getCounter());
-        Assert.assertEquals(15, stats.getScore());
+        int computedScore = stats.computeScore(0.3);
+
+        Assert.assertEquals(computedScore, stats.getScore());
         stats.skipRound();
+        // Score stays the same, but the streak resets.
         Assert.assertEquals(0, stats.getStreak().getCounter());
-        Assert.assertEquals(15, stats.getScore());
+        Assert.assertEquals(computedScore, stats.getScore());
     }
 
     @Test
-    public void testScore() {
-        Assert.assertEquals(0, stats.getScore());
-        stats.finishRound(0.2);
-        Assert.assertEquals(10, stats.getScore());
-        stats.finishRound(0.6);
-        Assert.assertEquals(70, stats.getScore());
+    public void testLogout() {
+        stats.finishRound(0.3);
+        int computedScore = stats.computeScore(0.3);
+
+        Assert.assertEquals(1, stats.getStreak().getCounter());
+        Assert.assertEquals(computedScore, stats.getScore());
+
+        stats.logout();
+        // Score stays the same, but the streak resets.
+        Assert.assertEquals(0, stats.getStreak().getCounter());
+        Assert.assertEquals(computedScore, stats.getScore());
     }
 
     @Test
-    public void testWrongScore() {
-        Assert.assertEquals(0, stats.getScore());
-        stats.finishRound(-1);
-        Assert.assertEquals(0, stats.getScore());
-        stats.finishRound(44);
-        Assert.assertEquals(0, stats.getScore());
+    public void testComputeScore() {
+        Assert.assertEquals(0, stats.computeScore(0));
+        Assert.assertEquals(10, stats.computeScore(0.2));
+        Assert.assertEquals(25, stats.computeScore(0.5));
+        Assert.assertEquals(70, stats.computeScore(0.7));
+        Assert.assertEquals(98, stats.computeScore(0.98));
+        Assert.assertEquals(100, stats.computeScore(1));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testComputeWrongScore() {
+        stats.computeScore(-1);
+        stats.computeScore(0);
+        stats.computeScore(44);
     }
 
 }

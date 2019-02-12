@@ -12,6 +12,7 @@ props -->
                             selectFeature: '<fmt:message key="selectFeature"/>',
                             toggleUseless: '<fmt:message key="toggleUseless"/>',
                             play: '<fmt:message key="play"/>',
+                            add: '<fmt:message key="add"/>',
                             del: '<fmt:message key="delete"/>',
                             invite: '<fmt:message key="invite"/>',
                             terminate: '<fmt:message key="terminate"/>',
@@ -56,17 +57,27 @@ props -->
                             enterDatabaseName: '<fmt:message key="enterDatabaseName"/>',
                             enterFeatureset: '<fmt:message key="enterFeatureset"/>',
                             creationSuccess: '<fmt:message key="creationSuccess"/>',
+                            creationFail: '<fmt:message key="creationFail"/>',
                             enterTermination: '<fmt:message key="enterTermination"/>',
                             completed: '<fmt:message key="completed"/>',
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
                             dailyFinished: '<fmt:message key="dailyFinished"/>',
+                            reward: '<fmt:message key="reward"/>',
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
                             MLServerDown: '<fmt:message key="MLServerDown"/>',
+                            matrixSelectMin: '<fmt:message key="matrixSelectMin"/>',
+                            matrixSelectMax: '<fmt:message key="matrixSelectMax"/>',
+                            matrixSelectEnd: '<fmt:message key="matrixSelectEnd"/>',
+                            timeTermination: '<fmt:message key="timeTermination"/>',
+                            roundsTermination: '<fmt:message key="roundsTermination"/>',
+                            compositeTermination: '<fmt:message key="compositeTermination"/>',
+
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
 
+                            // tooltips
                             inviteTooltip: '<fmt:message key="inviteTooltip"/>',
                             closeTooltip: '<fmt:message key="closeTooltip"/>',
                             inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',
@@ -78,7 +89,6 @@ props -->
                             selectPatternTooltip: '<fmt:message key="selectPatternTooltip"/>',
                             selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
                             totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>'
-
                         }
                     }
                 }

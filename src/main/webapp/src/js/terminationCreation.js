@@ -2,9 +2,7 @@ Vue.component('termination-config', {
     props: ['termination-config-str'],
     data: function () {
         return {
-            listOfTerminations: [{title: "Time termination", value: "time"},
-                {title: "Rounds termination", value: "rounds"},
-                {title: "Composite termination", value: "composite"}]
+            listOfTerminations: []
         }
     },
     template: "<div class=\"input-group mb-3\">" +
@@ -29,6 +27,11 @@ Vue.component('termination-config', {
         }
     }
     ,
+    mounted: function() {
+        this.listOfTerminations = [{title: this.localisation.timeTermination, value: "time"},
+            {title: this.localisation.roundsTermination, value: "rounds"},
+            {title: this.localisation.compositeTermination, value: "composite"}]
+    },
 
     computed: {
         componentName: function () {
@@ -44,7 +47,7 @@ Vue.component('termination-config', {
                 }
             },
             set: function (newVal) {
-                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,rounds:1');
+                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,time:');
                 else this.$emit('update-termination-str', newVal + ':');
             }
         }
@@ -92,6 +95,7 @@ Vue.component('termination-config-composite', {
     watch: {
         terminationConfigStr: function(newVal) {
             var self = this
+            this.terminations = [];
             self.terminationStrings = newVal.split(',');
             self.terminationStrings.forEach(function (value, index) {
                 var termination = {};
@@ -110,7 +114,7 @@ Vue.component('termination-config-composite', {
         '               :value="termination" >{{termination.title}}</option>' +
         '  </select>\n' +
         ' <div class="input-group-append">\n' +
-        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">Add</button>\n' +
+        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">{{localisation.add}}</button>\n' +
         '  </div>' +
         '</div>' +
         '<div v-for="(term, index) in terminations" class="row" >' +
@@ -184,13 +188,17 @@ Vue.component('termination-config-time', {
         date: {
             get: function() {
                 var args = this.terminationConfigStr.split(':');
-                var date = new Date(Number(args[1]));
-                var dateString = date.toString();
-                return dateString;
+                var date;
+                if (args[1] === '') {
+                    date = Date.now();
+                } else {
+                     date = new Date(Number(args[1]));
+                }
+                return date.toString();
             },
             set: function (newVal) {
                 var args = this.terminationConfigStr.split(':');
-                args[1] = new Date(newVal).getTime();
+                args[1] = moment(newVal, 'DD/MM/YYYY HH:mm')._d.getTime();
                 this.$emit('update-termination', args.join(':'))
             }
         }
@@ -199,7 +207,7 @@ Vue.component('termination-config-time', {
         '  <div class="input-group-prepend">\n' +
         '    <span class="input-group-text" >{{localisation.endDate}}</span>\n' +
         '  </div>\n' +
-        '  <date-picker v-model="date"></date-picker>' +
+        '  <date-picker v-bind:config="{format: \'DD/MM/YYYY HH:mm\'}" v-model="date"></date-picker>' +
         '</div>'
 
 });
