@@ -157,7 +157,7 @@ var creation = new Vue({
                 listOfPatterns = response.data
             });
             listOfPatterns.forEach(function(pattern) {
-               if(pattern.title == self.patternName) {
+               if(pattern == self.patternName) {
                    isOverwriting = true;
                }
             });
@@ -171,6 +171,14 @@ var creation = new Vue({
                         }
                     })
                 }
+            } else {
+                axios({
+                    method: 'post',
+                    url: 'create/savePattern',
+                    params: {
+                        title: this.patternName,
+                    }
+                })
             }
         },
         createGame: function() {
