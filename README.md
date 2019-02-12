@@ -5,6 +5,7 @@
 1. Install tomcat-9 from official [Tomcat Website](http://tomcat.apache.org/)
 1. Install MySql-Server version 5.7.20 from the official [MySql Website](https://downloads.mysql.com/archives/installer/)
 1. (Optional but recommended) Install MySql-Workbench from the official [MySql Website](https://dev.mysql.com/downloads/workbench/)
+1. Install (maven)[https://maven.apache.org/] for your system
 1. Edit values in example-conf.properties and move the new file to `$CATALINA_HOME/conf/Catalina/cs_select/config.properties`
    (Where `$CATALINA_HOME` is the Tomcat homedirectory)
 1. (Optional) If you don't want to use the default logging settings, refer to the [Logger configuration section](#Logger Configuration)
@@ -21,7 +22,7 @@
 
 ## Developer setup
 If you want to expand CS:Select with your own additions, use the following setup explanation (Or just use the docker-repository)
-- Follow steps 1-6 from the manual setup
+- Follow steps 1-7 from the manual setup
 - In your Tomcat installation folder edit `conf/tomcat-users.xml`.
     Add the following before the `</tomcat-users>` line at the end of the file
     ``` xml
