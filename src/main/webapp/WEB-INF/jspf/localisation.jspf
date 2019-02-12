@@ -90,7 +90,8 @@ props -->
                             selectPatternTooltip: '<fmt:message key="selectPatternTooltip"/>',
                             selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
                             totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>',
-                            lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>'
+                            lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>',
+                            patternOverwrite: '<fmt:message key="patternOverwrite"/>'
                         }
                     }
                 }

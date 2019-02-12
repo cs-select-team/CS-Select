@@ -147,13 +147,31 @@ var creation = new Vue({
 
         },
         savePattern: function() {
+            var self = this;
+            var listOfPatterns = [];
+            var isOverwriting = false;
             axios({
-                method: 'post',
-                url: 'create/savePattern',
-                params: {
-                    title: this.patternName,
+                method: 'get',
+                url: 'create/patterns'
+            }).then(function (response) {
+                listOfPatterns = response.data
+            });
+            listOfPatterns.forEach(function(pattern) {
+               if(pattern.title == self.patternName) {
+                   isOverwriting = true;
+               }
+            });
+            if (isOverwriting) {
+                if (confirm(self.localisation.patternOverwrite)) {
+                    axios({
+                        method: 'post',
+                        url: 'create/savePattern',
+                        params: {
+                            title: this.patternName,
+                        }
+                    })
                 }
-            })
+            }
         },
         createGame: function() {
             var self = this;
