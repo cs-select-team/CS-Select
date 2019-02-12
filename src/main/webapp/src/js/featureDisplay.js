@@ -14,7 +14,7 @@ Vue.component('feature-box', {
             return this.feature.desc.replace(/(\\n)+/g, '<br>');
         }
     },
-    template: '                <div class="card" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
+    template: '                <div class="card feature-display" v-bind:class="{ \'bg-primary\': feature.toggled, \'gray-out\': feature.useless}" >' +
         '                        <div class="card-body">' +
         '                         <h5 class="card-title">{{ feature.name }}</h5>' +
         '                         <p class="card-text" v-html="desc"></p>' +
