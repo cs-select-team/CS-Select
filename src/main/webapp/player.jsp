@@ -19,6 +19,9 @@
                     </div>
                 </div>
                 <div class="col-md-4" id="stats">
+                    <div class="container h-10 title">
+                        <fmt:message key="playerInformation"/>
+                    </div>
                     <stats-display v-bind:username="username"
                                    v-bind:points="points"></stats-display>
                 </div>
