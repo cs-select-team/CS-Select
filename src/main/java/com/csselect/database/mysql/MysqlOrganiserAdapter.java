@@ -78,7 +78,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         gameOptions.getInvitedEmails().forEach(joiner::add);
         String emails = joiner.toString();
         try {
-            DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO patterns"
+            DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO patterns"
                     + "(organiserId,title,gameTitle,description,dataset,databasename,termination,gamemode,"
                             + "invitedPlayers) VALUES (?,?,?,?,?,?,?,?,?)", new IntParam(getID()),
                     new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
