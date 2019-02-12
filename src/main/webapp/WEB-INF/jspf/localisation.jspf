@@ -74,6 +74,7 @@ props -->
                             roundsTermination: '<fmt:message key="roundsTermination"/>',
                             compositeTermination: '<fmt:message key="compositeTermination"/>',
                             organiserTermination: '<fmt:message key="organiserTermination"/>',
+                            organiserTerminationInfo: '<fmt:message key="organiserTerminationInfo"/>',
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',

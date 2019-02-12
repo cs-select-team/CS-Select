@@ -56,7 +56,7 @@ Vue.component('termination-config', {
     }
 });
 Vue.component('termination-config-organiser', {
-    template: '<div>Only terminated by the organiser</div>'
+    template: '<div>{{localisation.organiserTerminationInfo}}</div>'
 })
 Vue.component('termination-config-composite', {
     props: ['list-of-possible-terminations', 'termination-config-str'],
