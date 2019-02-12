@@ -35,7 +35,7 @@ Vue.component('player-invite-textarea', {
         }
     },
     template: '<div class="input-group">\n' +
-        '  <textarea class="form-control" aria-label="" v-model="rawText"></textarea>\n' +
+        '  <textarea class="form-control" aria-label="" :title="localisation.gamecreationMassInviteTooltip" v-model="rawText"></textarea>\n' +
         '</div>',
     methods: {
         joinedWith: function (array, char) {

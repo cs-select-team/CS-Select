@@ -72,7 +72,23 @@ props -->
                             matrixSelectEnd: '<fmt:message key="matrixSelectEnd"/>',
                             timeTermination: '<fmt:message key="timeTermination"/>',
                             roundsTermination: '<fmt:message key="roundsTermination"/>',
-                            compositeTermination: '<fmt:message key="compositeTermination"/>'
+                            compositeTermination: '<fmt:message key="compositeTermination"/>',
+
+                            invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
+                            invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
+
+                            // tooltips
+                            inviteTooltip: '<fmt:message key="inviteTooltip"/>',
+                            closeTooltip: '<fmt:message key="closeTooltip"/>',
+                            inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',
+                            playGameTooltip: '<fmt:message key="playGameTooltip"/>',
+                            gamecreationMassInviteTooltip: '<fmt:message key="gamecreationMassInviteTooltip"/>',
+                            featureSetTooltip: '<fmt:message key="featureSetTooltip"/>',
+                            saveAsPatternTooltip: '<fmt:message key="saveAsPatternTooltip"/>',
+                            databaseNameTooltip: '<fmt:message key="databaseTooltip"/>',
+                            selectPatternTooltip: '<fmt:message key="selectPatternTooltip"/>',
+                            selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
+                            totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>'
                         }
                     }
                 }

@@ -5,7 +5,7 @@ Vue.component('game-display', {
         '                <div>{{ game.type }}</div>' +
         '                <div>{{ localisation.roundsPlayed + \': \' + game.roundsPlayed  }}</div>' +
         '               <div>{{game.desc}}</div></div>' +
-        '                <div class="col"><input type="button" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
+        '                <div class="col"><input type="button" :title="localisation.playGameTooltip" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
         '            </div></div></div>',
     methods: {
         startGame: function(gameId) {
@@ -43,7 +43,7 @@ Vue.component('stats-display', {
     props: ['points', 'username'],
     template: '        <div>\n' +
         '            <b class="text">{{username}}</b>\n' +
-        '            <p class="text">{{points}}</p>\n' +
+        '            <p class="text" :title="localisation.totalScoreTooltip">{{points}}</p>\n' +
         '        </div>'
 })
 Vue.component('invite-element', {

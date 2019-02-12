@@ -108,7 +108,7 @@ Vue.component('termination-config-composite', {
     },
 
     template: '<div>' +
-        '     <div class="input-group mb-3">\n' +
+        '     <div class="input-group mb-3" :title="localisation.selectTerminationTooltip">\n' +
         '  <select class="custom-select" v-model="currentTermination">\n' +
         '    <option v-for="(termination, index) in listOfPossibleTerminations" v-bind:key="index"' +
         '               :value="termination" >{{termination.title}}</option>' +
