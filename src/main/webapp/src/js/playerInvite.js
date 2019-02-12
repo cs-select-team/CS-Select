@@ -28,26 +28,16 @@ Vue.component('player-invite-single', {
     }
 });
 Vue.component('player-invite-textarea', {
-    props: ['invited-players'],
+    props: ['invite-string'],
     data: function () {
         return {
-            rawText: this.joinedWith(this.invitedPlayers, ',')
-        }
-    },
+            rawText: this.inviteString
+            }
+        },
     template: '<div class="input-group">\n' +
         '  <textarea class="form-control" aria-label="" :title="localisation.gamecreationMassInviteTooltip" v-model="rawText"></textarea>\n' +
         '</div>',
     methods: {
-        joinedWith: function (array, char) {
-            var string = '';
-            array.forEach(function (value, index) {
-                string += value;
-                if (index < array.length - 1) {
-                    string += char
-                }
-            })
-            return string;
-        },
         validateEmail: function (email) {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
@@ -75,7 +65,7 @@ Vue.component('player-invite-textarea', {
             if (wrongEmail) {
                 // TODO inform user
             } else {
-                this.$emit('update-invited', newArray);
+                this.$emit('update-invited', newArray.join(','));
             }
         }
     }
@@ -87,3 +77,55 @@ Vue.component('player-invite-nav-tab', {
         '                                v-on:click="$emit(\'update-tab\', value)" href="#" v-on>{{title}}</a>\n' +
         '                        </li>'
 });
+Vue.component('player-invite-box', {
+    props: ['invite-string'],
+    data: function () {
+        return {
+            playerInputType: [],
+            currentTab: 'single'
+        }
+    },
+    mounted: function () {
+        this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
+            {title: this.localisation.invitePlayerMass, value: 'textarea'}]
+    },
+    computed:{
+        invitedPlayers: {
+            get: function () {
+                var array = this.inviteString.split(',');
+                var newArray = [];
+                array.forEach(function(value) { // removing empty strings
+                   if (value !== '') {
+                       newArray.push(value)
+                   }
+                });
+                return newArray;
+            }
+        },
+        currentTabComponent: function () {
+            return 'player-invite-' + this.currentTab
+        },
+    }, methods: {
+        addPlayer: function (email) {
+            var players = this.invitedPlayers;
+            players.push(email);
+            this.$emit('update-invite-string', players.join(','))
+        },
+        updateInviteString: function (newVal) {
+            this.$emit('update-invite-string', newVal)
+        },
+        updateTab: function(value) {
+            this.currentTab = value;
+        }
+    },
+    template: '<div>' +
+        '<ul class="nav nav-tabs">\n' +
+        '<player-invite-nav-tab v-for="(value, index) in playerInputType" v-bind:key="index"\n' +
+        '                       v-bind:title="value.title" v-bind:value="value.value"\n' +
+        '                       v-on:update-tab="updateTab">\n' +
+        '</player-invite-nav-tab>\n' +
+        '</ul>\n' +
+        '<component v-bind:is="currentTabComponent" v-on:new-email="addPlayer" v-bind:invite-string="inviteString"\n' +
+        '           v-on:update-invited="updateInviteString"></component>' +
+        '</div>'
+})

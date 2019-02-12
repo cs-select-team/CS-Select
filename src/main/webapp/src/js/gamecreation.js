@@ -32,12 +32,10 @@ Vue.component('pattern-selection', {
 var creation = new Vue({
     el: '#gamecreation',
     data: {
-        invitedPlayers: [],
-        playerInputType: [{title: 'Single', value: 'single'},
-            {title: 'Mass', value: 'textarea'}],
+
         title: '',
         desc: '',
-        currentTab: 'single',
+        inviteString: '',
         gameModeConfigString: '',
         terminationConfigString: '',
         databaseName: '',
@@ -65,15 +63,8 @@ var creation = new Vue({
                 }
             })
         },
-        addInvitedPlayer: function (email) {
-            this.invitedPlayers.push(email);
-        },
-        updateInvited: function (array) {
-
-            this.invitedPlayers = array;
-        },
-        updateTab: function (newVal) {
-            this.currentTab = newVal;
+        updateInviteString: function(newVal) {
+          this.inviteString = newVal;
         },
         updateConfString: function (newVal) {
             this.gameModeConfigString = newVal;
@@ -89,7 +80,7 @@ var creation = new Vue({
             this.databaseName = gameOptions.database;
             this.gameModeConfigString = gameOptions.gamemodeConf;
             this.terminationConfigString = gameOptions.termination;
-            this.invitedPlayers = gameOptions.invites;
+            this.invitedPlayers = gameOptions.invites.join(',');
         },
         checkFeatureSet: function() {
             var self = this;
@@ -115,7 +106,7 @@ var creation = new Vue({
             axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
                         this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
                         this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
-                        this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.playersString)]).then(function(response){
+                        this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function(response){
                             if(!response[0].data) {
                                 self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
                                 return;
@@ -141,10 +132,6 @@ var creation = new Vue({
             if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
             if (this.terminationConfigString.split(':').length < 2) this.alerts.push({message: this.localisation.enterTermination, type: 0})
             return this.alerts.length === 0;
-        },
-        invitePlayers: function() {
-
-
         },
         savePattern: function() {
             axios({
@@ -173,11 +160,5 @@ var creation = new Vue({
 
     },
     computed: {
-        currentTabComponent: function () {
-            return 'player-invite-' + this.currentTab
-        },
-        playersString: function() {
-            return this.invitedPlayers.join(',')
-        }
     }
 });
