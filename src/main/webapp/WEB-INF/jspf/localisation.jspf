@@ -80,7 +80,7 @@ props -->
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
                             sendInvitations: '<fmt:message key="sendInvitations"/>',
 
-                            // tooltips
+                            // tooltips and help tips
                             inviteTooltip: '<fmt:message key="inviteTooltip"/>',
                             closeTooltip: '<fmt:message key="closeTooltip"/>',
                             inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',

@@ -41,6 +41,7 @@ Vue.component('BinarySelect', {
 
     },
     mounted: function() {
+        this.$emit('add-alert', {message: this.localisation.binarySelectHelp, type: 2})
         this.currentRound= -1;
         this.nextRound();
     },
