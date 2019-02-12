@@ -77,6 +77,7 @@ props -->
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
+                            sendInvitations: '<fmt:message key="sendInvitations"/>',
 
                             // tooltips
                             inviteTooltip: '<fmt:message key="inviteTooltip"/>',
