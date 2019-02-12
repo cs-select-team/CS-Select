@@ -26,15 +26,15 @@ Vue.component('gamemode-config-matrixSelect', {
         '</div>' +
         '<div class="input-group mb-3">\n' +
         '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">{{localisation.maxNumberOfFeatures}}</span>\n' +
-        '  </div>\n' +
-        '  <input type="number" :min="min" :max="numberOfFeatures" class="form-control"  v-model="max">\n' +
-        '</div>\n' +
-        '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
         '    <span class="input-group-text">{{localisation.minNumberOfFeatures}}</span>\n' +
         '  </div>\n' +
         '  <input type="number" min="0" :max="max" class="form-control"  v-model="min">\n' +
+        '</div>\n' +
+        '<div class="input-group mb-3">\n' +
+        '  <div class="input-group-prepend">\n' +
+        '    <span class="input-group-text">{{localisation.maxNumberOfFeatures}}</span>\n' +
+        '  </div>\n' +
+        '  <input type="number" :min="min" :max="numberOfFeatures" class="form-control"  v-model="max">\n' +
         '</div>\n' +
         '</div>',
 
