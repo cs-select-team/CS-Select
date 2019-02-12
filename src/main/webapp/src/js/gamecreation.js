@@ -157,7 +157,7 @@ var creation = new Vue({
                 listOfPatterns = response.data
             });
             listOfPatterns.forEach(function(pattern) {
-               if(pattern == self.patternName) {
+               if(pattern.title == self.patternName) {
                    isOverwriting = true;
                }
             });
