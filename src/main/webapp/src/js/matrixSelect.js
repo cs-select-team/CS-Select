@@ -1,13 +1,16 @@
 Vue.component('matrix-row', {
     props: ['feature-list'],
     template: '<div class="mt-2 row" :title="localisation.matrixSelectHelp">\n' +
-        '            <feature-box  v-on:toggled="toggled" class="col p-0 mr-2" v-for="feature in featureList" ' +
+        '            <feature-box  v-on:toggled="toggled" v-on:useless-toggle="uselessToggle" class="col p-0 mr-2" v-for="feature in featureList" ' +
         '                           v-bind:key="feature.id"' +
         '                           v-bind:feature="feature"></feature-box>' +
         '        </div>',
     methods: {
         toggled: function (newVal, oldVal) {
             this.$emit("toggled", newVal, oldVal)
+        },
+        uselessToggle: function (newVal) {
+            this.$emit('useless-toggle', newVal)
         }
     }
 })
@@ -33,7 +36,7 @@ Vue.component('MatrixSelect', {
         }
     },
     template: '        <div ref="matrix">' +
-        '<matrix-row  v-on:toggled="toggled" v-for="i in [...Array(row).keys()]"\n' +
+        '<matrix-row  v-on:toggled="toggled" v-on:useless-toggle="uselessToggle" v-for="i in [...Array(row).keys()]"\n' +
         '                    v-bind:key="i"\n' +
         '                    v-bind:feature-list="featureList.slice(i * col, (i+1) * col)">\n' +
         '        </matrix-row></div>',
@@ -41,6 +44,13 @@ Vue.component('MatrixSelect', {
         toggled: function(newVal, oldVal) {
             if (newVal && !oldVal) this.count++;
             if (!newVal && oldVal) this.count--;
+            this.checkDone();
+        },
+        uselessToggle: function (newVal) {
+            if (newVal) this.count--;
+            this.checkDone();
+        },
+        checkDone: function () {
             if (this.count >= this.options.minSelect && this.count <= this.options.maxSelect) {
                 this.$emit("done", true)
             }
