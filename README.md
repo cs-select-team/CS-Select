@@ -20,21 +20,18 @@
 1. Refer to [https://github.com/bendixsonnenberg/CS-Select-Docker](https://github.com/bendixsonnenberg/CS-Select-Docker)
 
 ## Developer setup
-If you want to expand CS:Select with your own additions, use the following setup explanation
-- Install tomcat-9 from the official [Tomcat Website](http://tomcat.apache.org/) 
+If you want to expand CS:Select with your own additions, use the following setup explanation (Or just use the docker-repository)
+- Follow steps 1-6 from the manual setup
 - In your Tomcat installation folder edit `conf/tomcat-users.xml`.
-    Add the following at the end of the file 
-    ```xml
-    <tomcat-users>
+    Add the following before the `</tomcat-users>` line at the end of the file
+    ``` xml
         <role rolename="manager-gui"/>
         <role rolename="manager-script"/>
         <user username="admin" password="password" roles="manager-gui,manager-script" />
-    </tomcat-users>
     ```
 - Start Tomcat with either `bin/startup.sh` or `bin/startup.bat` (in Tomcat folder) depending on your OS.
-- Clone the repository to your local machine
-- Put the default configuration file into the `conf/Catalina/cs_select directory` inside your tomcat home directory and edit it as you see fit. If the directory doesn't exist, create the folders.
-- Deploy the project from the command line by typing `mvn tomcat7:deploy` whilst in the repository folder
+- Start the ML-Server on the hostname and port specified in the config
+- Deploy the project from the command line by typing `mvn tomcat7:redeploy` whilst in the repository folder
 - Access the server from a browser under the address [http://localhost:8080/CS-Select/](http://localhost:8080/CS-Select/) (If you used the default settings in
  Tomcat)
  
