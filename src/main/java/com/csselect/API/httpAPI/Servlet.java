@@ -3,6 +3,7 @@ package com.csselect.API.httpAPI;
 import com.csselect.API.APIFacadeOrganiser;
 import com.csselect.API.APIFacadePlayer;
 import com.csselect.API.APIFacadeUser;
+import com.csselect.utils.Languages;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
@@ -23,7 +24,7 @@ public abstract  class Servlet extends HttpServlet {
     private static final String PLAYERFACADE_ATTR_NAME = "playerFacade";
     private static final String ORGANISERFACADE_ATTR_NAME = "organiserFacade";
     private static final String IS_PLAYER = "player";
-    private static final String DEFAULT_LANGUAGE = "de";
+    private static final String DEFAULT_LANGUAGE = Languages.ENGLISH;
     HttpSession session;
     protected String lang;
 

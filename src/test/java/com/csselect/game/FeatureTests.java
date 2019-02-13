@@ -1,13 +1,14 @@
 package com.csselect.game;
 
 import com.csselect.inject.TestClass;
+import com.csselect.utils.Languages;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.image.BufferedImage;
 
 public class FeatureTests extends TestClass {
-    
+
     private static final String INTERNAL_NAME = "ab";
     @Override
     public void setUp() {
@@ -22,22 +23,22 @@ public class FeatureTests extends TestClass {
     @Test
     public void descriptionTest() {
         Feature feature = new Feature(1, INTERNAL_NAME);
-        feature.setEnglishDescription("desc");
-        feature.setGermanDescription("beschr");
-        Assert.assertEquals(feature.getDescription("en"), "desc");
-        Assert.assertEquals(feature.getDescription("de"), "beschr");
-        Assert.assertEquals(feature.getDescription("es"), "desc");
+        feature.setDescription(Languages.ENGLISH, "desc");
+        feature.setDescription(Languages.GERMAN, "beschr");
+        Assert.assertEquals(feature.getDescription(Languages.ENGLISH), "desc");
+        Assert.assertEquals(feature.getDescription(Languages.GERMAN), "beschr");
+        Assert.assertEquals(feature.getDescription(Languages.ENGLISH), "desc");
 
     }
 
     @Test
     public void nameTest() {
         Feature feature = new Feature(1, INTERNAL_NAME);
-        feature.setEnglishName("name");
-        feature.setGermanName("Merkmal");
-        Assert.assertEquals(feature.getName("en"), "name");
-        Assert.assertEquals(feature.getName("de"), "Merkmal");
-        Assert.assertEquals(feature.getName("es"), "name");
+        feature.setName(Languages.ENGLISH, "name");
+        feature.setName(Languages.GERMAN, "Merkmal");
+        Assert.assertEquals(feature.getName(Languages.ENGLISH), "name");
+        Assert.assertEquals(feature.getName(Languages.GERMAN), "Merkmal");
+        Assert.assertEquals(feature.getName(Languages.ENGLISH), "name");
     }
 
     @Test
@@ -47,7 +48,7 @@ public class FeatureTests extends TestClass {
         Assert.assertEquals(feature.getName("de"), "");
         Assert.assertEquals(feature.getName("es"), "");
     }
-    
+
     @Test
     public void testInternalName() {
         Feature feature = new Feature(1, INTERNAL_NAME);
