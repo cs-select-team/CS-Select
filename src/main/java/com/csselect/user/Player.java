@@ -19,7 +19,7 @@ import java.util.Map;
  * invited them to and see information about their statistics,
  * more precisely their score over time, their achievements and daily challenges.
  */
-public class Player extends User implements Comparable {
+public class Player extends User implements Comparable<Player> {
     private PlayerAdapter playerAdapter;
     private Game gameToReturn;
     private Round activeRound;
@@ -191,13 +191,12 @@ public class Player extends User implements Comparable {
 
     /**
      * Assuming a player only is compared to another player, this object is compared to another object
-     * @param o Object to compare (class player)
+     * @param p Object to compare (class player)
      * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
      */
     @Override
-    public int compareTo(@NotNull Object o) {
-        Player otherPlayer = (Player) o;
-        return Integer.compare(playerAdapter.getID(), otherPlayer.getId());
+    public int compareTo(@NotNull Player p) {
+        return Integer.compare(playerAdapter.getID(), p.getId());
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.Collection;
  * This class represents an organiser in our system and is connected to an {@link GameCreator} object, which is there
  * for creating games.
  */
-public class Organiser extends User implements Comparable {
+public class Organiser extends User implements Comparable<Organiser> {
     private OrganiserAdapter organiserAdapter;
     private GameCreator gameBuilder;
 
@@ -158,9 +158,8 @@ public class Organiser extends User implements Comparable {
      * @return int representing if this id is greater (1), equal (0) or smaller (-1) than object's id
      */
     @Override
-    public int compareTo(@NotNull Object o) {
-        Organiser otherOrganiser = (Organiser) o;
-        return Integer.compare(organiserAdapter.getID(), otherOrganiser.getId());
+    public int compareTo(@NotNull Organiser o) {
+        return Integer.compare(organiserAdapter.getID(), o.getId());
     }
 
     @Override
