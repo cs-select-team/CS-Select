@@ -23,6 +23,18 @@ import java.util.HashSet;
 public class GameCreator {
 
     private static final String EMPTY_STRING = "";
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String FEATURESET = "featureSet";
+    private static final String ADDRESS_ORGANISER_DATABASE = "addressOrganiserDatabase";
+    private static final String TERMINATION = "termination";
+    private static final String GAMEMODE = "gamemode";
+    private static final String ADD_PLAYERS = "addPlayers";
+    private static final String EMAIL_SEPARATOR = ",";
+
+    private static final String INVITATION_HEADER = "CS:Select Invitation";
+    private static final String INVITATION_TEXT = "Your knowledge is needed in a CS:Select game. "
+            + "Log in and check your notifications!";
 
     private Organiser organiser;
     private GameOptions gameOptions;
@@ -51,31 +63,31 @@ public class GameCreator {
      */
     public void setOption(String option, String data) {
         switch(option) {
-            case "title":
+            case TITLE:
                 gameOptions.setTitle(data);
                 break;
-            case "description":
+            case DESCRIPTION:
                 gameOptions.setDescription(data);
                 break;
-            case "featureSet":
+            case FEATURESET:
                 gameOptions.setDataset(data);
                 break;
-            case "addressOrganiserDatabase":
+            case ADDRESS_ORGANISER_DATABASE:
                 gameOptions.setResultDatabaseName(data);
                 break;
-            case "termination":
+            case TERMINATION:
                 gameOptions.setTermination(TerminationParser.parseTermination(data));
                 assert this.gameOptions.getTermination() != null;
                 break;
-            case "gamemode":
+            case GAMEMODE:
                 gameOptions.setGamemode(GamemodeParser.parseGamemode(data));
                 assert this.gameOptions.getGamemode() != null;
                 break;
-            case "addPlayers":
+            case ADD_PLAYERS:
                 if (data.equals(EMPTY_STRING)) {
                     return; //if no emails are entered we don't want to add "" to the email list
                 }
-                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(data.split(","))));
+                gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(data.split(EMAIL_SEPARATOR))));
                 break;
             default:
                 break;
@@ -122,8 +134,7 @@ public class GameCreator {
         if (!gameOptions.getInvitedEmails().isEmpty()) {
             game.invitePlayers(gameOptions.getInvitedEmails());
             for (String mail : gameOptions.getInvitedEmails()) {
-                EmailSender.sendEmail(mail, "CS:Select Invitation",
-                        "Your knowledge is needed in a CS:Select game. Log in and check your notifications!");
+                EmailSender.sendEmail(mail, INVITATION_HEADER, INVITATION_TEXT);
             }
             gameOptions.resetEmails();
         }
