@@ -74,11 +74,13 @@ props -->
                             roundsTermination: '<fmt:message key="roundsTermination"/>',
                             compositeTermination: '<fmt:message key="compositeTermination"/>',
                             organiserTermination: '<fmt:message key="organiserTermination"/>',
+                            organiserTerminationInfo: '<fmt:message key="organiserTerminationInfo"/>',
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
+                            sendInvitations: '<fmt:message key="sendInvitations"/>',
 
-                            // tooltips
+                            // tooltips and help tips
                             inviteTooltip: '<fmt:message key="inviteTooltip"/>',
                             closeTooltip: '<fmt:message key="closeTooltip"/>',
                             inviteEmailInputTooltip: '<fmt:message key="inviteEmailInputTooltip"/>',
@@ -92,6 +94,7 @@ props -->
                             totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>',
                             lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>',
                             patternOverwrite: '<fmt:message key="patternOverwrite"/>'
+                            gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>'
                         }
                     }
                 }

@@ -22,6 +22,7 @@ Vue.component('MatrixSelect', {
         }
     },
     mounted: function() { // giving the player information about this game
+        this.$emit("add-alert", {message: this.localisation.matrixSelectHelp, type: 2});
         var messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd
         var alert = {message: messageString, type: 2}
         this.$emit("add-alert", alert)
@@ -35,7 +36,7 @@ Vue.component('MatrixSelect', {
             return Math.ceil(this.options.numberOfFeatures / this.col);
         }
     },
-    template: '        <div ref="matrix">' +
+    template: '        <div ref="matrix" id="matrixSelect">' +
         '<matrix-row  v-on:toggled="toggled" v-on:useless-toggle="uselessToggle" v-for="i in [...Array(row).keys()]"\n' +
         '                    v-bind:key="i"\n' +
         '                    v-bind:feature-list="featureList.slice(i * col, (i+1) * col)">\n' +

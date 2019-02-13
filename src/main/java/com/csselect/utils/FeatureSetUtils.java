@@ -8,9 +8,11 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public final class FeatureSetUtils {
         Gson gson = new Gson();
         String datasetDir = HOMEDIR + File.separator + dataset + File.separator;
         File summaryFile = new File(datasetDir + "summary.json");
-        JsonReader reader = new JsonReader(new FileReader(summaryFile));
+        JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(summaryFile), StandardCharsets.UTF_8));
         Type type = new TypeToken<List<Map<String, Object>>>() { } .getType();
         List<Map<String, Object>> summary = gson.fromJson(reader, type);
         FeatureSet featureSet = new FeatureSet(dataset);

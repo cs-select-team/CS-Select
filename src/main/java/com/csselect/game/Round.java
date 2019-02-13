@@ -169,6 +169,12 @@ public abstract class Round {
      * @return returns the points earned in this round
      */
     public int selectFeatures(int[] selectedFeatures, int[] uselessFeatures) {
+
+        if (selectedFeatures.length == 0) {
+            this.skip(uselessFeatures);
+            return 0;
+        }
+
         this.player.setActiveRound(null);
         this.addUselessFeatures(uselessFeatures);
 
@@ -180,15 +186,13 @@ public abstract class Round {
             }
         }
 
-        if (this.chosenFeatures.size() != 0) {
-
-            String identifier = this.game.getFeatureSet().getIdentifier();
-            try {
-                this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
-            } catch (java.io.IOException e) {
-                Logger.error(e);
-            }
+        String identifier = this.game.getFeatureSet().getIdentifier();
+        try {
+            this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
+        } catch (java.io.IOException e) {
+            Logger.error(e);
         }
+
 
         this.points = this.player.getStats().finishRound(this.quality);
 

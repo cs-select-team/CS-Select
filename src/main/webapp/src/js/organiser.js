@@ -2,7 +2,8 @@ Vue.component('active-games-display', {
     props: ['game', ],
     data: function () {
         return {
-            email: ''
+            email: '',
+            inviteString: '',
         }
     }
     ,
@@ -31,12 +32,9 @@ Vue.component('active-games-display', {
                 '        </button>\n' +
                 '      </div>\n' +
                 '      <div class="modal-body">' +
-        '                   <div class="input-group mb-3">\n' +
-        '                       <input type="text" class="form-control" :placeholder="localisation.emailGC" v-model="email">\n' +
-        '                   <div class="input-group-append">\n' +
-        '                   <button class="btn btn-outline-secondary" :title="localisation.inviteTooltip" type="button" v-on:click="invitePlayer(game.id)">{{ localisation.invite }}</button>\n' +
-        '                   </div>' +
-        '                   </div>' +
+                '               ' +
+                '       <player-invite-box v-bind:invite-string="inviteString" v-on:update-invite-string="updateInviteString"></player-invite-box>' +
+        '               <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">{{localisation.sendInvitations}}</button>' +
                 '      </div>\n' +
                 '      <div class="modal-footer">\n' +
                 '      </div>\n' +
@@ -55,15 +53,22 @@ Vue.component('active-games-display', {
             })
             this.$emit("terminate", gameId);
         },
-        invitePlayer: function(gameId) {
-            axios({
-                method: 'post',
-                url: 'create/invite',
-                params: {
-                    gameId: gameId,
-                    email: this.email
+        invitePlayers: function(gameId) {
+            this.inviteString.split(',').forEach(function (value) {
+                if (value != '') {
+                    axios({
+                        method: 'post',
+                        url: 'create/invite',
+                        params: {
+                            gameId: gameId,
+                            email: value
+                        }
+                    })
                 }
             })
+        },
+        updateInviteString: function (newVal) {
+            this.inviteString = newVal;
         }
     }
 });

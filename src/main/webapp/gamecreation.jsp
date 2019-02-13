@@ -36,15 +36,9 @@
                         </div>
                         <textarea class="form-control"  v-model="desc"></textarea>
                     </div>
-                    <ul class="nav nav-tabs">
-                        <player-invite-nav-tab v-for="(value, index) in playerInputType" v-bind:key="index"
-                                               v-bind:title="value.title" v-bind:value="value.value"
-                                                v-on:update-tab="updateTab">
+                    <player-invite-box v-bind:invite-string="inviteString" v-on:update-invite-string="updateInviteString">
 
-                        </player-invite-nav-tab>
-                    </ul>
-                    <component v-bind:is="currentTabComponent" v-on:new-email="addInvitedPlayer" v-bind:invited-players="invitedPlayers"
-                                          v-on:update-invited="updateInvited"></component>
+                    </player-invite-box>
                 </div>
                 <div class="col-4">
                     <gamemode-config v-bind:gamemode-config-str="gameModeConfigString"

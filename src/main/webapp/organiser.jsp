@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+    <script src="src/js/playerInvite.js"></script>
     <script src="src/js/organiser.js"></script>
 </fmt:bundle>
 <%@ include file="WEB-INF/jspf/footer.jspf" %>
