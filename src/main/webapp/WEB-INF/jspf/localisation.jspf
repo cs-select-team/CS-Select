@@ -39,6 +39,7 @@ props -->
                             gamecreationHelp: '<fmt:message key="gamecreationHelp"/>',
                             binarySelectHelp: '<fmt:message key="binarySelectHelp"/>',
                             matrixSelectHelp: '<fmt:message key="matrixSelectHelp"/>',
+                            binaryRoundSkipped: '<fmt:message key="binaryRoundSkipped"/>',
                             playerHelp: '<fmt:message key="playerHelp"/>',
                             gameHelp: '<fmt:message key="gameHelp"/>',
                             enterEmailSingle: '<fmt:message key="enterEmailSingle"/>',
