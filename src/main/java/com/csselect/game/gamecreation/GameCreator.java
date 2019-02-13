@@ -21,6 +21,9 @@ import java.util.HashSet;
  * GameCreator is used by an {@link Organiser} object to load settings he already chose or create a new game object.
  */
 public class GameCreator {
+
+    private static final String EMPTY_STRING = "";
+
     private Organiser organiser;
     private GameOptions gameOptions;
 
@@ -69,6 +72,9 @@ public class GameCreator {
                 assert this.gameOptions.getGamemode() != null;
                 break;
             case "addPlayers":
+                if (data.equals(EMPTY_STRING)) {
+                    return; //if no emails are entered we don't want to add "" to the email list
+                }
                 gameOptions.addInvitedEmails(new HashSet<>(Arrays.asList(data.split(","))));
                 break;
             default:
