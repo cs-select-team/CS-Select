@@ -66,6 +66,11 @@ var creation = new Vue({
         updateInviteString: function(newVal) {
           this.inviteString = newVal;
         },
+        removePlayerByIndex: function(index) {
+            var playerArray = this.inviteString.split(',');
+            playerArray.splice(index, 1)
+            this.inviteString = playerArray.join(',')
+        },
         updateConfString: function (newVal) {
             this.gameModeConfigString = newVal;
         },

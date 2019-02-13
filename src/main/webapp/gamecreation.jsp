@@ -39,6 +39,16 @@
                     <player-invite-box v-bind:invite-string="inviteString" v-on:update-invite-string="updateInviteString">
 
                     </player-invite-box>
+                    <table class="table">
+                        <thead>
+                        <th> Player Emails </th>
+                        <th> Remove </th>
+                        </thead>
+                        <tr v-if="inviteString != ''" v-for="(email,index) in inviteString.split(',')">
+                            <td>{{email}}</td>
+                            <td  ><a href="#" v-on:click="removePlayerByIndex(index)" >Delete</a></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="col-4">
                     <gamemode-config v-bind:gamemode-config-str="gameModeConfigString"
