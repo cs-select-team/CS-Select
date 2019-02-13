@@ -20,7 +20,7 @@
                            value="<fmt:message key="quit"/>"/>
 
                     <streak-display v-bind:counter="counter"></streak-display>
-                    <points-display v-bind:points="points"></points-display>
+                    <points-display :title="localisation.gamificationPointsTooltip" v-bind:points="points"></points-display>
                 </div>
             </div>
         </div>
