@@ -14,7 +14,7 @@ Vue.component('termination-config', {
         "               :value='term.value'>{{term.title}}</option>\n" +
         "  </select>" +
         "   <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'" +
-        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(1,4)'></component>" +
+        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(2,4)'></component>" +
         "</div>",
     methods: {
         updateTermination: function (newVal) {
@@ -29,8 +29,8 @@ Vue.component('termination-config', {
     ,
     mounted: function() {
         this.listOfTerminations = [{title: this.localisation.compositeTermination, value: "composite"},
-            {title: this.localisation.timeTermination, value: "time"},
             {title: this.localisation.organiserTermination, value:'organiser'},
+            {title: this.localisation.timeTermination, value: "time"},
             {title: this.localisation.roundsTermination, value: "rounds"}
             ]
     },
@@ -69,12 +69,16 @@ Vue.component('termination-config-composite', {
     },
     methods: {
         addTermination: function (term) {
-            this.terminations.push(term);
-            this.terminationStrings.push('')
+            if (!this.terminations.includes(term)) {
+                this.terminationStrings.push(term.value + ':')
+                this.terminations.push(term);
+            }
+            this.$emit('update-termination', this.terminationStrings.join(','))
         },
         removeTerminationByIndex: function (index) {
             this.terminations.splice(index, 1);
-            this.terminationConfigString.splice(index, 1);
+            this.terminationStrings.splice(index, 1);
+            this.$emit('update-termination', this.terminationStrings.join(','))
         },
         addTerminationStringByIndex: function (event, index) {
             this.terminationStrings[index] = event;
