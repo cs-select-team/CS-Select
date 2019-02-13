@@ -36,6 +36,11 @@ public class ConfigurationTests extends TestClass {
     }
 
     @Test
+    public void testCSSelectURL() {
+        testString("http://localhost:8080/CS-Select", config.getCSSelectURL());
+    }
+
+    @Test
     public void testTimezone() {
         testString("CET", config.getTimezone());
     }

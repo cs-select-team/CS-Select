@@ -28,6 +28,11 @@ public final class MockConfiguration implements Configuration {
     }
 
     @Override
+    public String getCSSelectURL() {
+        return "http://localhost:8080/CS-Select";
+    }
+
+    @Override
     public String getTimezone() {
         return "CET";
     }

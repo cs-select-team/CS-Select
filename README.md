@@ -45,6 +45,7 @@ If you want to expand CS:Select with your own additions, use the following setup
  - organiserpassword: The password an organiser has to supply to be able to register a new account
  - mlserverurl: The URL the ML-Server is available under
  - homedirectory: The directory path in which CS:Select will save downloaded featuresets from the ML-Server
+ - csselecturl: The URL CS:Select will be accessible under. Used e.g. in invitation mails
  - timezone: The timezone your server uses
  - database.hostname: The hostname of your database server
  - database.port: The port of your database server
