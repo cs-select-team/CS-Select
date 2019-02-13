@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import com.csselect.utils.Languages;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
@@ -21,9 +22,7 @@ public class Feature implements Comparable<Feature> {
     private BufferedImage classGraph;
 
 
-    private static final String ENGLISH_LANGUAGE_CODE = "en";
-    private static final String GERMAN_LANGUAGE_CODE = "de";
-    private static final String DEFAULT_LANGUAGE_CODE = ENGLISH_LANGUAGE_CODE;
+    private static final String DEFAULT_LANGUAGE_CODE = Languages.ENGLISH;
 
 
     /**
@@ -104,34 +103,21 @@ public class Feature implements Comparable<Feature> {
 
     /**
      * Setter for the german name of the feature
+     * @param langCode langCode of the language to set the title for
      * @param germanName the german name
      */
-    public void setGermanName(String germanName) {
-        this.nameMap.put(GERMAN_LANGUAGE_CODE, germanName);
+    public void setName(String langCode, String germanName) {
+        this.nameMap.put(langCode, germanName);
     }
 
-    /**
-     * Setter for the english name of the feature
-     * @param englishName the english name
-     */
-    public void setEnglishName(String englishName) {
-        this.nameMap.put(ENGLISH_LANGUAGE_CODE, englishName);
-    }
 
     /**
      * Setter for the german description of the feature
+     * @param langCode langCode of the language to set the description for
      * @param germanDescription the german description
      */
-    public void setGermanDescription(String germanDescription) {
-        this.descriptionMap.put(GERMAN_LANGUAGE_CODE, germanDescription);
-    }
-
-    /**
-     * Setter for the english description of the feature
-     * @param englishDescription the english description
-     */
-    public void setEnglishDescription(String englishDescription) {
-        this.descriptionMap.put(ENGLISH_LANGUAGE_CODE, englishDescription);
+    public void setDescription(String langCode, String germanDescription) {
+        this.descriptionMap.put(langCode, germanDescription);
     }
 
     /**

@@ -43,8 +43,8 @@ public final class FeatureSetUtils {
         FeatureSet featureSet = new FeatureSet(dataset);
         for (Map<String, Object> e : summary) {
             Feature feature = new Feature((int) (double) e.get("id"), (String) e.get("name"));
-            feature.setEnglishName((String) e.get("name_en"));
-            feature.setGermanName((String) e.get("name_de"));
+            feature.setName(Languages.ENGLISH, (String) e.get("name_en"));
+            feature.setName(Languages.GERMAN, (String) e.get("name_de"));
             String values = e.get("values").toString();
             values = values.substring(1, values.length() - 1);
             String stats;
@@ -54,9 +54,9 @@ public final class FeatureSetUtils {
             } else {
                 stats = null;
             }
-            feature.setEnglishDescription(e.get("description_en") + "\\n Values: " + values
+            feature.setDescription(Languages.ENGLISH, e.get("description_en") + "\\n Values: " + values
                     + (stats != null ? "\\n" + stats : ""));
-            feature.setGermanDescription(e.get("description_de") + "\\n Werte : " + values
+            feature.setDescription(Languages.GERMAN, e.get("description_de") + "\\n Werte : " + values
                     + (stats != null ? "\\n" + stats : ""));
             feature.setTotalGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + ".png")));
             feature.setClassGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + "_class.png")));
