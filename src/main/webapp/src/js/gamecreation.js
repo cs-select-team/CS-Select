@@ -20,8 +20,9 @@ Vue.component('pattern-selection', {
             method: 'get',
             url: 'create/patterns'
         }).then(function (response) {
-            self.listOfPatterns = response.data
-        })
+            self.listOfPatterns = response.data;
+            self.$emit('set-patterns' ,response.data);
+        });
     },
     watch: {
         selectedPattern: function(newVal) {
@@ -44,6 +45,7 @@ var creation = new Vue({
         featureSet: '',
         saveAsPattern: false,
         patternName: '',
+        listOfPatterns: [],
 
 
         createButtonEnabled: true,
@@ -111,7 +113,7 @@ var creation = new Vue({
         submitGame: function() {
 
             var self = this;
-            if (!this.checkParameters()) return
+            if (!this.checkParameters()) return;
             axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
                         this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
                         this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
@@ -148,16 +150,9 @@ var creation = new Vue({
         },
         savePattern: function() {
             var self = this;
-            var listOfPatterns = [];
             var isOverwriting = false;
-            axios({
-                method: 'get',
-                url: 'create/patterns'
-            }).then(function (response) {
-                listOfPatterns = response.data
-            });
-            listOfPatterns.forEach(function(pattern) {
-               if(pattern.title == self.patternName) {
+            self.listOfPatterns.forEach(function(pattern) {
+               if(pattern.title === self.patternName) {
                    isOverwriting = true;
                }
             });
@@ -195,8 +190,10 @@ var creation = new Vue({
                     self.alerts.push({message: self.localisation.creationFail, type: 0})
                 }
             });
+        },
+        setPatterns: function(list) {
+            this.listOfPatterns = list;
         }
-
     },
     computed: {
         currentTabComponent: function () {
@@ -205,5 +202,5 @@ var creation = new Vue({
         playersString: function() {
             return this.invitedPlayers.join(',')
         }
-    }
+    },
 });

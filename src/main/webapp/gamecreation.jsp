@@ -57,7 +57,9 @@
                     </termination-config>
                 </div>
                 <div class="col-4">
-                    <pattern-selection :title="localisation.selectPatternTooltip" v-on:load-pattern="loadPattern"></pattern-selection>
+                    <pattern-selection :title="localisation.selectPatternTooltip" v-on:set-patterns="setPatterns"
+                        v-on:load-pattern="loadPattern">
+                    </pattern-selection>
 
 
                     <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
