@@ -80,7 +80,7 @@ var creation = new Vue({
             this.databaseName = gameOptions.database;
             this.gameModeConfigString = gameOptions.gamemodeConf;
             this.terminationConfigString = gameOptions.termination;
-            this.invitedPlayers = gameOptions.invites.join(',');
+            this.inviteString = gameOptions.invites.join(',');
         },
         checkFeatureSet: function() {
             var self = this;
