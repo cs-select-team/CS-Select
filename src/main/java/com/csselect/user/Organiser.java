@@ -153,13 +153,14 @@ public class Organiser extends User {
     }
 
     @Override
-    public boolean equals(@NotNull Object o) {
-        try {
-            Organiser otherOrganiser = (Organiser) o;
-            return organiserAdapter.getID() == otherOrganiser.getId();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
+    public final boolean equals(@NotNull Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof Organiser)) {
             return false;
+        } else {
+            Organiser organiser = (Organiser) o;
+            return this.organiserAdapter.getID() == organiser.getId();
         }
     }
 }

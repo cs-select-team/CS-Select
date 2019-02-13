@@ -190,13 +190,14 @@ public class Player extends User {
     }
 
     @Override
-    public boolean equals(@NotNull Object o) {
-        try {
-            Player otherPlayer = (Player) o;
-            return playerAdapter.getID() == otherPlayer.getId();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
+    public final boolean equals(@NotNull Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof Player)) {
             return false;
+        } else {
+            Player player = (Player) o;
+            return this.playerAdapter.getID() == player.getId();
         }
     }
 }
