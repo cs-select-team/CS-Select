@@ -64,7 +64,11 @@ var creation = new Vue({
             })
         },
         updateInviteString: function(newVal) {
-          this.inviteString = newVal;
+            var clearedString = newVal.split(',').filter(function(item, index, allItems){
+                return index === allItems.indexOf(item);
+            }).join(',');
+            $('#output').append(clearedString);
+          this.inviteString = clearedString;
         },
         removePlayerByIndex: function(index) {
             var playerArray = this.inviteString.split(',');
