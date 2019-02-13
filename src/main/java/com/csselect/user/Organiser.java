@@ -135,6 +135,15 @@ public class Organiser extends User implements Comparable {
     }
 
     /**
+     * Checks whether the given {@link Game} title is already used by the organiser
+     * @param title title of the game
+     * @return true if title is in use, false otherwise
+     */
+    public boolean gameTitleInUse(String title) {
+        return this.organiserAdapter.gameTitleInUse(title);
+    }
+
+    /**
      * Sets options for the game that the organiser is currently creating
      *
      * @param option name of the option

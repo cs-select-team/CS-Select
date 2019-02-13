@@ -21,4 +21,11 @@ public interface OrganiserAdapter extends UserAdapter {
      * @param pattern pattern to save
      */
     void addPattern(Pattern pattern);
+
+    /**
+     * Checks whether the given {@link com.csselect.game.Game} title is already used by the organiser
+     * @param title title of the game
+     * @return true if title is in use, false otherwise
+     */
+    boolean gameTitleInUse(String title);
 }

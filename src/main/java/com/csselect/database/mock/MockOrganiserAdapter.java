@@ -37,6 +37,11 @@ public class MockOrganiserAdapter extends MockUserAdapter implements OrganiserAd
     }
 
     @Override
+    public boolean gameTitleInUse(String title) {
+        return getActiveGames().stream().anyMatch(game -> game.getTitle().equals(title));
+    }
+
+    @Override
     public Collection<Game> getActiveGames() {
         return mockDatabaseAdapter.getActiveGames(this);
     }
