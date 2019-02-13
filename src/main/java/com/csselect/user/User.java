@@ -4,6 +4,7 @@ import com.csselect.database.UserAdapter;
 import com.csselect.email.EmailSender;
 import com.csselect.user.management.safety.Encrypter;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class represents an user in our system. All users, despite their role, have access to those methods.
@@ -12,7 +13,7 @@ import org.apache.commons.lang3.RandomStringUtils;
  * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
-public class User {
+public class User implements Comparable<User>{
 
     private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
     private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password"
@@ -121,5 +122,10 @@ public class User {
     @Override
     public int hashCode() {
         return userAdapter.getID();
+    }
+
+    @Override
+    public int compareTo(@NotNull User o) {
+        return Integer.compare(userAdapter.getID(), o.getId());
     }
 }
