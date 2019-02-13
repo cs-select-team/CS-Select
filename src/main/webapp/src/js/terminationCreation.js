@@ -14,7 +14,7 @@ Vue.component('termination-config', {
         "               :value='term.value'>{{term.title}}</option>\n" +
         "  </select>" +
         "   <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'" +
-        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(1,3)'></component>" +
+        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(1,4)'></component>" +
         "</div>",
     methods: {
         updateTermination: function (newVal) {
