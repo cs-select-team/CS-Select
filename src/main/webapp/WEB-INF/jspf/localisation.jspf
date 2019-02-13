@@ -64,6 +64,7 @@ props -->
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
                             dailyFinished: '<fmt:message key="dailyFinished"/>',
                             reward: '<fmt:message key="reward"/>',
+                            unknownAchievement: '<fmt:message key="unknownAchievement"/>',
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
@@ -94,7 +95,8 @@ props -->
                             selectTerminationTooltip: '<fmt:message key="selectTeminationTooltip"/>',
                             totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>',
                             lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>',
-                            gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>'
+                            gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>',
+                            unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>'
                         }
                     }
                 }
