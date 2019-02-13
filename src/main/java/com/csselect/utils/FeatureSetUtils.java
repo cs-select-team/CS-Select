@@ -21,6 +21,25 @@ import java.util.Map;
  */
 public final class FeatureSetUtils {
 
+    private static final String SUMMARY_FILE_NAME = "summary.json";
+    private static final String FEATURE_ID = "id";
+    private static final String FEATURE_NAME = "name";
+    private static final String FEATURE_NAME_EN = "name_en";
+    private static final String FEATURE_NAME_DE = "name_de";
+    private static final String FEATURE_DESC_EN = "description_en";
+    private static final String FEATURE_DESC_DE = "description_de";
+    private static final String FEATURE_VALUES = "values";
+
+    private static final String IMG_TYPE = ".png";
+    private static final String IMG_CLASS_TYPE = "_class" + IMG_TYPE;
+
+    private static final String STAT_MIN = "Min.";
+    private static final String STAT_1QU = "1st Qu.";
+    private static final String STAT_MEDIAN = " Median";
+    private static final String STAT_MEAN = "Mean";
+    private static final String STAT_3QU = "3rd Qu.";
+    private static final String STAT_MAX = "Max.";
+
     private FeatureSetUtils() {
         //Utility classes shouldn't be instantiated
     }
@@ -36,30 +55,30 @@ public final class FeatureSetUtils {
     public static FeatureSet loadFeatureSet(String dataset) throws IOException {
         Gson gson = new Gson();
         String datasetDir = HOMEDIR + File.separator + dataset + File.separator;
-        File summaryFile = new File(datasetDir + "summary.json");
-        JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(summaryFile), StandardCharsets.UTF_8));
+        File summaryFile = new File(datasetDir + SUMMARY_FILE_NAME);
+        JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(summaryFile),
+                StandardCharsets.UTF_8));
         Type type = new TypeToken<List<Map<String, Object>>>() { } .getType();
         List<Map<String, Object>> summary = gson.fromJson(reader, type);
         FeatureSet featureSet = new FeatureSet(dataset);
         for (Map<String, Object> e : summary) {
-            Feature feature = new Feature((int) (double) e.get("id"), (String) e.get("name"));
-            feature.setName(Languages.ENGLISH, (String) e.get("name_en"));
-            feature.setName(Languages.GERMAN, (String) e.get("name_de"));
-            String values = e.get("values").toString();
+            Feature feature = new Feature((int) (double) e.get(FEATURE_ID), (String) e.get(FEATURE_NAME));
+            feature.setName(Languages.ENGLISH, (String) e.get(FEATURE_NAME_EN));
+            feature.setName(Languages.GERMAN, (String) e.get(FEATURE_NAME_DE));
+            String values = e.get(FEATURE_VALUES).toString();
             values = values.substring(1, values.length() - 1);
-            String stats;
-            if (e.get("Min.") != null) {
-                stats = "Min. " + e.get("Min.") + ", 1st Qu. " + e.get("1st Qu.") + ", Median " + e.get("Median")
-                        + ", Mean " + e.get("Mean") + ", 3rd Qu. " + e.get("3rd Qu.") + ", Max. " + e.get("Max.");
-            } else {
-                stats = null;
+            if (e.get(STAT_MIN) != null) {
+                feature.addValue(STAT_MIN, (String) e.get(STAT_MIN));
+                feature.addValue(STAT_1QU, (String) e.get(STAT_1QU));
+                feature.addValue(STAT_MEDIAN, (String) e.get(STAT_MEDIAN));
+                feature.addValue(STAT_MEAN, (String) e.get(STAT_MEAN));
+                feature.addValue(STAT_3QU, (String) e.get(STAT_3QU));
+                feature.addValue(STAT_MAX, (String) e.get(STAT_MAX));
             }
-            feature.setDescription(Languages.ENGLISH, e.get("description_en") + "\\n Values: " + values
-                    + (stats != null ? "\\n" + stats : ""));
-            feature.setDescription(Languages.GERMAN, e.get("description_de") + "\\n Werte : " + values
-                    + (stats != null ? "\\n" + stats : ""));
-            feature.setTotalGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + ".png")));
-            feature.setClassGraph(ImageUtils.readImage(new File(datasetDir + e.get("name") + "_class.png")));
+            feature.setDescription(Languages.ENGLISH, (String) e.get(FEATURE_DESC_EN));
+            feature.setDescription(Languages.GERMAN, (String) e.get(FEATURE_DESC_DE));
+            feature.setTotalGraph(ImageUtils.readImage(new File(datasetDir + e.get(FEATURE_NAME) + IMG_TYPE)));
+            feature.setClassGraph(ImageUtils.readImage(new File(datasetDir + e.get(FEATURE_NAME) + IMG_CLASS_TYPE)));
             featureSet.addFeature(feature);
         }
         reader.close();

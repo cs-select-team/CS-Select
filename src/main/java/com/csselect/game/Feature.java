@@ -16,10 +16,11 @@ public class Feature implements Comparable<Feature> {
 
     private final int id;
     private final String internalName;
-    private Map<String, String> nameMap;
-    private Map<String, String> descriptionMap;
+    private final Map<String, String> nameMap;
+    private final Map<String, String> descriptionMap;
     private BufferedImage totalGraph;
     private BufferedImage classGraph;
+    private final Map<String, String> valueMap;
 
 
     private static final String DEFAULT_LANGUAGE_CODE = Languages.ENGLISH;
@@ -36,6 +37,7 @@ public class Feature implements Comparable<Feature> {
 
         this.nameMap = new HashMap<>();
         this.descriptionMap = new HashMap<>();
+        this.valueMap = new HashMap<>();
     }
     /**
      * Getter for the ID of the feature
@@ -134,6 +136,23 @@ public class Feature implements Comparable<Feature> {
      */
     public void setClassGraph(BufferedImage classGraph) {
         this.classGraph = classGraph;
+    }
+
+    /**
+     * Stores a value for extra information about the {@link Feature} under the given key
+     * @param key key to store the value under
+     * @param value value to store
+     */
+    public void addValue(String key, String value) {
+        valueMap.put(key, value);
+    }
+
+    /**
+     * Gets the value stored under the given key
+     * @param key key to get value for
+     */
+    public String getValue(String key) {
+        return valueMap.get(key);
     }
 
     @Override
