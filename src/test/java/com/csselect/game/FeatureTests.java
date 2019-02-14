@@ -75,4 +75,23 @@ public class FeatureTests extends TestClass {
         Assert.assertEquals(img2, feature.getTotalGraph());
     }
 
+    @SuppressWarnings("SimplifiableJUnitAssertion") // The last assertion can't be simplified because the method doesn't
+    @Test                                           // exist but IntelliJ will somehow still try to do so
+    public void featureSetEqualsTest() {
+        FeatureSet featureSet1 = new FeatureSet(INTERNAL_NAME);
+        FeatureSet featureSet2 = new FeatureSet(INTERNAL_NAME);
+        Object o = new Object();
+        Assert.assertEquals(featureSet1, featureSet1);
+        Assert.assertEquals(featureSet1, featureSet2);
+        Assert.assertEquals(featureSet2, featureSet1);
+        Assert.assertFalse(featureSet1.equals(o));
+    }
+
+    @Test
+    public void featureSetHashCodeTest() {
+        FeatureSet featureSet1 = new FeatureSet(INTERNAL_NAME);
+        FeatureSet featureSet2 = new FeatureSet(INTERNAL_NAME);
+        Assert.assertEquals(featureSet1.hashCode(), featureSet2.hashCode());
+    }
+
 }

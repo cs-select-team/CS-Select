@@ -53,4 +53,21 @@ public class FeatureSet {
 
         this.features.add(feature);
     }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof FeatureSet)) {
+            return false;
+        } else {
+            FeatureSet featureSet = (FeatureSet) o;
+            return this.identifier.equals(featureSet.identifier);
+        }
+    }
+
+    @Override
+    public final int hashCode() {
+        return identifier.hashCode();
+    }
 }
