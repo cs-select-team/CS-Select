@@ -60,13 +60,14 @@ public final class FeatureSetUtils {
             feature.setName(Languages.GERMAN, (String) e.get(FEATURE_NAME_DE));
             String values = e.get(FEATURE_VALUES).toString();
             values = values.substring(1, values.length() - 1);
+            feature.addValue(FEATURE_VALUES, values);
             if (e.get(Feature.STAT_MIN_KEY) != null) {
-                feature.addValue(Feature.STAT_MIN_KEY, (String) e.get(Feature.STAT_MIN_KEY));
-                feature.addValue(Feature.STAT_1QU_KEY, (String) e.get(Feature.STAT_1QU_KEY));
-                feature.addValue(Feature.STAT_MEDIAN_KEY, (String) e.get(Feature.STAT_MEDIAN_KEY));
-                feature.addValue(Feature.STAT_MEAN_KEY, (String) e.get(Feature.STAT_MEAN_KEY));
-                feature.addValue(Feature.STAT_3QU_KEY, (String) e.get(Feature.STAT_3QU_KEY));
-                feature.addValue(Feature.STAT_MAX_KEY, (String) e.get(Feature.STAT_MAX_KEY));
+                feature.addValue(Feature.STAT_MIN_KEY, "" + e.get(Feature.STAT_MIN_KEY));
+                feature.addValue(Feature.STAT_1QU_KEY, "" + e.get(Feature.STAT_1QU_KEY));
+                feature.addValue(Feature.STAT_MEDIAN_KEY, "" + e.get(Feature.STAT_MEDIAN_KEY));
+                feature.addValue(Feature.STAT_MEAN_KEY, "" + e.get(Feature.STAT_MEAN_KEY));
+                feature.addValue(Feature.STAT_3QU_KEY, "" + e.get(Feature.STAT_3QU_KEY));
+                feature.addValue(Feature.STAT_MAX_KEY, "" + e.get(Feature.STAT_MAX_KEY));
             }
             feature.setDescription(Languages.ENGLISH, (String) e.get(FEATURE_DESC_EN));
             feature.setDescription(Languages.GERMAN, (String) e.get(FEATURE_DESC_DE));
