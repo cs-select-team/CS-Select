@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class MysqlUserAdapterTest extends MysqlTestClass {
 
     private static final String TEST_EMAIL = "test@test.de";
+    private static final String TEST_EMAIL_2 = "test2@test.de";
     private static final String TEST_HASH = "hash";
     private static final String TEST_SALT = "salt";
     private static final String TEST_LANGCODE = "haskell";
@@ -44,8 +45,13 @@ public class MysqlUserAdapterTest extends MysqlTestClass {
 
     @Test
     public void testEmail() {
+        adapter.setEmail(TEST_EMAIL_2);
+        Assert.assertEquals(TEST_EMAIL_2, adapter.getEmail());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDuplicateEmail() {
         adapter.setEmail(TEST_EMAIL);
-        Assert.assertEquals(TEST_EMAIL, adapter.getEmail());
     }
 
     @Test
