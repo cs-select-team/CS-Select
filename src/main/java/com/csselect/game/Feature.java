@@ -185,6 +185,15 @@ public class Feature implements Comparable<Feature> {
         return valueMap.get(key);
     }
 
+    /**
+     * Checks whether the given key exists in the {@link Feature}s values
+     * @param key key to check
+     * @return true if key exists, false otherwise
+     */
+    public boolean hasValue(String key) {
+        return valueMap.containsKey(key);
+    }
+
     @Override
     public int compareTo(@NotNull Feature feature) {
         return  this.id - feature.id;
