@@ -138,6 +138,12 @@ public class Games extends Servlet {
                 jsonFeature.addProperty("name", feature.getName(lang));
                 jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
                 jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
+                jsonFeature.addProperty(Feature.STAT_MIN_KEY, feature.getValue(Feature.STAT_MIN_KEY));
+                jsonFeature.addProperty(Feature.STAT_1QU_KEY, feature.getValue(Feature.STAT_1QU_KEY));
+                jsonFeature.addProperty(Feature.STAT_MEDIAN_KEY, feature.getValue(Feature.STAT_MEDIAN_KEY));
+                jsonFeature.addProperty(Feature.STAT_MEAN_KEY, feature.getValue(Feature.STAT_MEAN_KEY));
+                jsonFeature.addProperty(Feature.STAT_3QU_KEY, feature.getValue(Feature.STAT_3QU_KEY));
+                jsonFeature.addProperty(Feature.STAT_MAX_KEY, feature.getValue(Feature.STAT_MAX_KEY));
                 featureList.add(jsonFeature);
             }
             jsonObject.add("listOfFeatures", featureList);
