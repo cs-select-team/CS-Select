@@ -1,8 +1,10 @@
 package com.csselect.API.httpAPI;
+
 import com.csselect.API.APIFacadePlayer;
 import com.csselect.game.Feature;
 import com.csselect.game.Game;
 import com.csselect.game.Gamemode;
+import com.csselect.utils.Localisation;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -15,11 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Base64;
 
 /**
  * only request from players.
@@ -132,18 +133,22 @@ public class Games extends Servlet {
                 return;
             }
             for (Feature feature: featureCollection) {
+                String desc = feature.getDescription(lang) + "<br>"
+                        + Localisation.get(lang, "statvalues") + feature.getValue("values") + "<br>";
+                if (feature.hasValue(Feature.STAT_MIN_KEY)) {
+                    desc = desc + Localisation.get(lang, "statmin") + feature.getValue(Feature.STAT_MIN_KEY) + " "
+                                + Localisation.get(lang, "stat1q") + feature.getValue(Feature.STAT_1QU_KEY) + " "
+                                + Localisation.get(lang, "statmedian") + feature.getValue(Feature.STAT_MEDIAN_KEY) + " "
+                                + Localisation.get(lang, "statmean") + feature.getValue(Feature.STAT_MEAN_KEY) + " "
+                                + Localisation.get(lang, "stat3q") + feature.getValue(Feature.STAT_3QU_KEY) + " "
+                                + Localisation.get(lang, "statmax") + feature.getValue(Feature.STAT_MAX_KEY);
+                }
                 JsonObject jsonFeature = new JsonObject();
                 jsonFeature.addProperty("id", feature.getID());
-                jsonFeature.addProperty("desc", feature.getDescription(lang));
+                jsonFeature.addProperty("desc", desc);
                 jsonFeature.addProperty("name", feature.getName(lang));
                 jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
                 jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
-                jsonFeature.addProperty(Feature.STAT_MIN_KEY, feature.getValue(Feature.STAT_MIN_KEY));
-                jsonFeature.addProperty(Feature.STAT_1QU_KEY, feature.getValue(Feature.STAT_1QU_KEY));
-                jsonFeature.addProperty(Feature.STAT_MEDIAN_KEY, feature.getValue(Feature.STAT_MEDIAN_KEY));
-                jsonFeature.addProperty(Feature.STAT_MEAN_KEY, feature.getValue(Feature.STAT_MEAN_KEY));
-                jsonFeature.addProperty(Feature.STAT_3QU_KEY, feature.getValue(Feature.STAT_3QU_KEY));
-                jsonFeature.addProperty(Feature.STAT_MAX_KEY, feature.getValue(Feature.STAT_MAX_KEY));
                 featureList.add(jsonFeature);
             }
             jsonObject.add("listOfFeatures", featureList);
