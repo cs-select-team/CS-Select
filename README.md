@@ -68,7 +68,8 @@ If you want to expand CS:Select with your own additions, use the following setup
  ### Add new languages 
  1. Add new Locale file to the resource path mentioned above. Name it accordingly (`Locale_xx.properties`). If the ML server does not supply the feature description in this language(same country code), the english version will be used.
  2. Add new option to [setting.js](src/main/webapp/src/js/settings.js). (data.languageoptions array has to be extended)
-  
+ 3. (Optional) Add new constant to `com/csselect/utils/Languages.java` instead of directly using the language code to allow for easy refactoring of language codes in the java code
+ 
  - For non ascii characters you will have to use the `native2ascii` tool by Oracle, or an alternative that converts UTF-8 to ISO-8859-1 standart ([native2ascii](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/native2ascii.html)).
  It converts characters like `ü` to the `\uxxxx` notation.
  
