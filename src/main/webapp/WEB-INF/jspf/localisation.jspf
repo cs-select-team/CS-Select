@@ -96,7 +96,10 @@ props -->
                             totalScoreTooltip: '<fmt:message key="totalScoreTooltip"/>',
                             lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>',
                             gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>',
-                            unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>'
+                            unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>',
+                            confirmToolTip: '<fmt:message key="confirmToolTip"/>',
+                            skipToolTip: '<fmt:message key="skipToolTip"/>',
+                            quitToolTip: '<fmt:message key="quitToolTip"/>'
                         }
                     }
                 }
