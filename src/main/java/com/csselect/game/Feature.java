@@ -134,22 +134,22 @@ public class Feature implements Comparable<Feature> {
     }
 
     /**
-     * Setter for the german name of the feature
+     * Setter for the name of the feature with the given langCode
      * @param langCode langCode of the language to set the title for
-     * @param germanName the german name
+     * @param name the name
      */
-    public void setName(String langCode, String germanName) {
-        this.nameMap.put(langCode, germanName);
+    public void setName(String langCode, String name) {
+        this.nameMap.put(langCode, name);
     }
 
 
     /**
-     * Setter for the german description of the feature
+     * Setter for the description of the feature with the given langCode
      * @param langCode langCode of the language to set the description for
-     * @param germanDescription the german description
+     * @param description the description
      */
-    public void setDescription(String langCode, String germanDescription) {
-        this.descriptionMap.put(langCode, germanDescription);
+    public void setDescription(String langCode, String description) {
+        this.descriptionMap.put(langCode, description);
     }
 
     /**
@@ -180,6 +180,7 @@ public class Feature implements Comparable<Feature> {
     /**
      * Gets the value stored under the given key
      * @param key key to get value for
+     * @return stored value
      */
     public String getValue(String key) {
         return valueMap.get(key);
