@@ -21,7 +21,7 @@ public class GamemodeParserTest extends TestClass {
 
     @Test //there for debugging
     public void testMatrixParsing() {
-        input = "matrixSelect:10,2,6";
+        input = "matrixSelect,10,2,6";
 
         MatrixSelect gamemode = (MatrixSelect) GamemodeParser.parseGamemode(input);
         Assert.assertNotNull(gamemode);
