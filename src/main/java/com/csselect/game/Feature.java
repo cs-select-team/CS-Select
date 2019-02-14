@@ -14,6 +14,36 @@ import java.util.Map;
 
 public class Feature implements Comparable<Feature> {
 
+    /**
+     * Key identifying the Minimum
+     */
+    public static final String STAT_MIN_KEY = "Min.";
+
+    /**
+     * Key identifying the 1st Quartile
+     */
+    public static final String STAT_1QU_KEY = "1st Qu.";
+
+    /**
+     * Key identifying the Median
+     */
+    public static final String STAT_MEDIAN_KEY = " Median";
+
+    /**
+     * Key identifying the Mean
+     */
+    public static final String STAT_MEAN_KEY = "Mean";
+
+    /**
+     * Key identifying the 3rd Quartile
+     */
+    public static final String STAT_3QU_KEY = "3rd Qu.";
+
+    /**
+     * Key identifying the Maximum
+     */
+    public static final String STAT_MAX_KEY = "Max.";
+
     private final int id;
     private final String internalName;
     private final Map<String, String> nameMap;
