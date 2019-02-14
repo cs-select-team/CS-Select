@@ -13,6 +13,7 @@ import java.util.LinkedList;
 
 public class MLServerTests extends TestClass {
 
+    private static final String DATASET = "populationGender";
     private MLServer mlServer;
 
     @Override
@@ -33,7 +34,7 @@ public class MLServerTests extends TestClass {
 
     @Test
     public void testGetFeatures() throws IOException {
-        mlServer.getFeatures("populationGender");
+        mlServer.getFeatures(DATASET);
     }
 
     @Test
@@ -41,12 +42,12 @@ public class MLServerTests extends TestClass {
         Collection<Feature> features = new LinkedList<>();
         features.add(new Feature(1, "1"));
         features.add(new Feature(1, "2"));
-        Assert.assertEquals(0.5473, mlServer.getScore("populationGender", features), Double.MIN_VALUE);
+        Assert.assertEquals(0.5473, mlServer.getScore(DATASET, features), Double.MIN_VALUE);
     }
 
     @Test
     public void validDatasetTest() {
-        Assert.assertTrue(mlServer.isValidDataset("populationGender"));
+        Assert.assertTrue(mlServer.isValidDataset(DATASET));
         Assert.assertFalse(mlServer.isValidDataset("test"));
     }
 
