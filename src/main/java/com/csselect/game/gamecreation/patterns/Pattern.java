@@ -32,4 +32,21 @@ public class Pattern {
     public GameOptions getGameOptions() {
         return (GameOptions) gameOptions.clone();
     }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof Pattern)) {
+            return false;
+        } else {
+            Pattern pattern = (Pattern) o;
+            return title.equals(pattern.title);
+        }
+    }
+
+    @Override
+    public final int hashCode() {
+        return title.hashCode();
+    }
 }
