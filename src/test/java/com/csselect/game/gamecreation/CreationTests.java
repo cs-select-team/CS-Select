@@ -1,6 +1,7 @@
 package com.csselect.game.gamecreation;
 
 import com.csselect.game.BinarySelect;
+import com.csselect.game.Game;
 import com.csselect.game.NumberOfRoundsTermination;
 import com.csselect.game.gamecreation.patterns.Pattern;
 import com.csselect.inject.TestClass;
@@ -21,6 +22,10 @@ public class CreationTests extends TestClass {
     private static final String GAMEMODE_KEY = "gamemode";
     private static final String TERMINATION_KEY = "termination";
     private static final String ADD_PLAYERS_KEY = "addPlayers";
+
+    private static final String EMAIL1 = "test@test.de";
+    private static final String EMAIL2 = "test2@test.de";
+    private static final String EMAIL_STRING = EMAIL1 + "," + EMAIL2;
 
     @Override
     public void setUp() {
@@ -116,6 +121,33 @@ public class CreationTests extends TestClass {
         Assert.assertTrue(builder.getGameOptions().isComplete());
     }
 
+    @Test
+    public void testAddNoPlayers() {
+        builder.setOption(ADD_PLAYERS_KEY, "");
+        Assert.assertTrue(builder.getGameOptions().getInvitedEmails().isEmpty());
+    }
+
+    @Test
+    public void testDoCreate() {
+        fullySetOptions();
+        Game game = builder.doCreate();
+        Assert.assertNotNull(game);
+        Assert.assertEquals(builder.getGameOptions().getTitle(), game.getTitle());
+        Assert.assertEquals(builder.getGameOptions().getDescription(), game.getDescription());
+        Assert.assertEquals(builder.getGameOptions().getResultDatabaseName(), game.getNameOrganiserDatabase());
+        Assert.assertEquals(builder.getGameOptions().getGamemode(), game.getGamemode());
+        Assert.assertEquals(builder.getGameOptions().getTermination(), game.getTermination());
+        Assert.assertTrue(game.getInvitedPlayers().contains(EMAIL1));
+        Assert.assertTrue(game.getInvitedPlayers().contains(EMAIL2));
+        Assert.assertTrue(builder.getGameOptions().getInvitedEmails().isEmpty());
+    }
+
+    @Test
+    public void testIncompleteDoCreate() {
+        Game game = builder.doCreate();
+        Assert.assertNull(game);
+    }
+
     private void fullySetOptions() {
         builder.setOption(TITLE_KEY, "title");
         builder.setOption(DESCRIPTION_KEY, "description");
@@ -123,6 +155,7 @@ public class CreationTests extends TestClass {
         builder.setOption(FEATURESET_KEY, "populationGender");
         builder.setOption(GAMEMODE_KEY, BinarySelect.TYPE + ":50");
         builder.setOption(TERMINATION_KEY, NumberOfRoundsTermination.TYPE + ":50");
+        builder.setOption(ADD_PLAYERS_KEY, EMAIL_STRING);
     }
 
     private Collection<String> getEmails() {
