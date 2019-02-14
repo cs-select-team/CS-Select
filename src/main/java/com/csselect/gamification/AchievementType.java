@@ -439,7 +439,7 @@ public enum AchievementType {
     }
 
     /**
-     * Gets the current state of the achievement type determined by the players'
+     * Gets the current state of the achievement type determined by the player's
      * progress.
      * @param stats The player's stats.
      * @return The current state of the achievement.
