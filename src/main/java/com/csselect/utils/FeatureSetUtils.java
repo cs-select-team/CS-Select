@@ -33,13 +33,6 @@ public final class FeatureSetUtils {
     private static final String IMG_TYPE = ".png";
     private static final String IMG_CLASS_TYPE = "_class" + IMG_TYPE;
 
-    private static final String STAT_MIN = "Min.";
-    private static final String STAT_1QU = "1st Qu.";
-    private static final String STAT_MEDIAN = " Median";
-    private static final String STAT_MEAN = "Mean";
-    private static final String STAT_3QU = "3rd Qu.";
-    private static final String STAT_MAX = "Max.";
-
     private FeatureSetUtils() {
         //Utility classes shouldn't be instantiated
     }
@@ -67,13 +60,13 @@ public final class FeatureSetUtils {
             feature.setName(Languages.GERMAN, (String) e.get(FEATURE_NAME_DE));
             String values = e.get(FEATURE_VALUES).toString();
             values = values.substring(1, values.length() - 1);
-            if (e.get(STAT_MIN) != null) {
-                feature.addValue(STAT_MIN, (String) e.get(STAT_MIN));
-                feature.addValue(STAT_1QU, (String) e.get(STAT_1QU));
-                feature.addValue(STAT_MEDIAN, (String) e.get(STAT_MEDIAN));
-                feature.addValue(STAT_MEAN, (String) e.get(STAT_MEAN));
-                feature.addValue(STAT_3QU, (String) e.get(STAT_3QU));
-                feature.addValue(STAT_MAX, (String) e.get(STAT_MAX));
+            if (e.get(Feature.STAT_MIN_KEY) != null) {
+                feature.addValue(Feature.STAT_MIN_KEY, (String) e.get(Feature.STAT_MIN_KEY));
+                feature.addValue(Feature.STAT_1QU_KEY, (String) e.get(Feature.STAT_1QU_KEY));
+                feature.addValue(Feature.STAT_MEDIAN_KEY, (String) e.get(Feature.STAT_MEDIAN_KEY));
+                feature.addValue(Feature.STAT_MEAN_KEY, (String) e.get(Feature.STAT_MEAN_KEY));
+                feature.addValue(Feature.STAT_3QU_KEY, (String) e.get(Feature.STAT_3QU_KEY));
+                feature.addValue(Feature.STAT_MAX_KEY, (String) e.get(Feature.STAT_MAX_KEY));
             }
             feature.setDescription(Languages.ENGLISH, (String) e.get(FEATURE_DESC_EN));
             feature.setDescription(Languages.GERMAN, (String) e.get(FEATURE_DESC_DE));
