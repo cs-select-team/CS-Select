@@ -34,7 +34,7 @@ public enum Leaderboard {
      * Gets the current sorting strategy.
      * @return The current sorting strategy.
      */
-    public synchronized LeaderboardSortingStrategy getStrategy() {
+    LeaderboardSortingStrategy getStrategy() {
         return strategy;
     }
 
@@ -42,7 +42,7 @@ public enum Leaderboard {
      * Sets the strategy that is supposed to be used to sort the list of players.
      * @param strategy The strategy to use.
      */
-    public synchronized void setSortingStrategy(LeaderboardSortingStrategy strategy) {
+    void setSortingStrategy(LeaderboardSortingStrategy strategy) {
         this.strategy = strategy;
     }
 
@@ -50,7 +50,7 @@ public enum Leaderboard {
      * Gets the sorted Map of players and their points cut to the first five entries.
      * @return The sorted Map of players and their points.
      */
-    public Map<Player, Integer> getPlayers() {
+    public synchronized Map<Player, Integer> getPlayers() {
         Map<Player, Integer> sortedMap = strategy.sort(getPlayersFromDatabase());
         return cutToFive(sortedMap);
     }

@@ -1,8 +1,8 @@
 package com.csselect.gamification;
 
+import com.csselect.utils.Localisation;
+
 import java.time.LocalDate;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Represents an abstract DailyChallenge. This is a task that a player
@@ -30,9 +30,7 @@ public abstract class DailyChallenge {
      * @return The description in the specified language. Assertion error if language code is not known.
      */
     public final String getDescription(String lang) {
-        ResourceBundle bundle = ResourceBundle.getBundle("locale/Locale", new Locale(lang),
-                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
-        return bundle.getString(descriptionKey);
+        return Localisation.get(lang, descriptionKey);
     }
 
     /**

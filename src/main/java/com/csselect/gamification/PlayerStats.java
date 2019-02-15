@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Implements the Gamification Interface. PlayerStats combines the defined gamification mechanics
@@ -213,7 +214,7 @@ public class PlayerStats implements Gamification {
         /* If you add a new daily, do not
            forget to update the field NUMBER_OF_DAILIES
            and to modify the switch case. */
-        int randomIndex = (int) (Math.random() * NUMBER_OF_DAILIES);
+        int randomIndex = new Random().nextInt(NUMBER_OF_DAILIES);
 
         switch (randomIndex) {
             case 0:
