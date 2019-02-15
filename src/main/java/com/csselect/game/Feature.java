@@ -27,7 +27,7 @@ public class Feature implements Comparable<Feature> {
     /**
      * Key identifying the Median
      */
-    public static final String STAT_MEDIAN_KEY = " Median";
+    public static final String STAT_MEDIAN_KEY = "Median";
 
     /**
      * Key identifying the Mean
