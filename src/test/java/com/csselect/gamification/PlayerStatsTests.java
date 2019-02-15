@@ -134,6 +134,7 @@ public class PlayerStatsTests extends TestClass {
         stats.finishRound(0.3);
         int computedScore = stats.computeScore(0.3);
 
+        Assert.assertEquals(1, stats.getStreak().getCounter());
         Assert.assertEquals(computedScore, stats.getScore());
         stats.skipRound();
         // Score stays the same, but the streak resets.

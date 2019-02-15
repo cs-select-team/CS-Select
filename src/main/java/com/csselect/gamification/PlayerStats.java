@@ -20,7 +20,7 @@ public class PlayerStats implements Gamification {
 
     /**
      * Creates a new {@link PlayerStats} object with the given {@link PlayerStatsAdapter}.
-     * @param playerStatsAdapter PlayerstatsAdapter for connection to the database.
+     * @param playerStatsAdapter PlayerStatsAdapter for connection to the database.
      */
     public PlayerStats(PlayerStatsAdapter playerStatsAdapter) {
         this.playerStatsAdapter = playerStatsAdapter;

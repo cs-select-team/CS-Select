@@ -60,7 +60,7 @@ public class LeaderboardTests extends TestClass {
         Assert.assertTrue(leaderboard.getPlayers().containsKey(player4));
         Assert.assertTrue(leaderboard.getPlayers().containsKey(player5));
 
-        Player player6 = mockDatabaseAdapter.createPlayer("email6", "hash6", "salt6", "username6");
+        mockDatabaseAdapter.createPlayer("email6", "hash6", "salt6", "username6");
         // Maximum leaderboard size is 5.
         Assert.assertEquals(5, leaderboard.getPlayers().size());
     }
