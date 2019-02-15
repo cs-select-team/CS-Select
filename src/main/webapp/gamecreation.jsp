@@ -41,12 +41,12 @@
                     </player-invite-box>
                     <table class="table">
                         <thead>
-                        <th> Player Emails </th>
-                        <th> Remove </th>
+                        <th> <fmt:message key="playerMails"/> </th>
+                        <th> <fmt:message key="remove"/> </th>
                         </thead>
                         <tr v-if="inviteString != ''" v-for="(email,index) in inviteString.split(',')">
                             <td>{{email}}</td>
-                            <td  ><a href="#" v-on:click="removePlayerByIndex(index)" >Delete</a></td>
+                            <td  ><a href="#" v-on:click="removePlayerByIndex(index)" ><fmt:message key="remove"/></a></td>
                         </tr>
                     </table>
                 </div>
