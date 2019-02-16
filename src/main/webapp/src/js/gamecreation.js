@@ -51,6 +51,7 @@ var creation = new Vue({
         listOfPatterns: [],
         showPatternModal: false,
         showTitleModal: false,
+        fromCreation: false,
         createButtonEnabled: true,
         acceptTitle: true,
         alerts: []
@@ -113,14 +114,8 @@ var creation = new Vue({
                 self.createButtonEnabled = true;
                 return;
             }
-            var titleUsed = axios({
-                method: 'get',
-                url: 'create/titleexists',
-                params: {
-                    name: this.title
-                }
-            });
-            if (titleUsed) {
+            if (self.checkTitleExists()) {
+                self.fromCreation = true;
                 self.showTitleModal = true;
             } else {
                 self.submitGame()
@@ -135,6 +130,7 @@ var creation = new Vue({
                 this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function (response) {
                 if (!response[0].data) {
                     self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
+                    self.createButtonEnabled = true;
                     return;
                 }
                 if (self.saveAsPattern) {
@@ -153,6 +149,7 @@ var creation = new Vue({
                 self.createGame();
             }).catch(function (reason) {
                 if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
+                    self.createButtonEnabled = true;
                     self.alerts.push({message: self.localisation.MLServerDown, type: 0})
                 }
             })
@@ -177,7 +174,7 @@ var creation = new Vue({
         submitTitle: function () {
             var self = this;
             self.showTitleModal = false;
-            self.submitGame()
+            if (self.fromCreation === true) self.submitGame()
         },
         createGame: function () {
             var self = this;
@@ -189,7 +186,7 @@ var creation = new Vue({
                 self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
                 if (error.status == 551) { // game has not been created
-                    self.createButtonEnabled = true;
+                    self.createButtonEnabled;
                     self.alerts.push({message: self.localisation.creationFail, type: 0})
                 }
             });
@@ -213,10 +210,14 @@ var creation = new Vue({
             var self = this;
             self.showPatternModal = false
         },
-        submitTitle: function () {
-            var self = this;
-            self.showTitleModal = false;
-            self.submitGame()
+        checkTitleExists: function() {
+            return axios({
+                method: 'get',
+                url: 'create/titleexists',
+                params: {
+                    name: self.title
+                }
+            })
         },
     },
 });

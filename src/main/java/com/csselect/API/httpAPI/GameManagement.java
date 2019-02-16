@@ -41,7 +41,8 @@ public class GameManagement extends Servlet {
 
     private void checkTitleExists(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
         String title = getParameter("name", req);
-        returnAsJson(resp, getOrganiserFacade().gameTitleInUse(title));
+        boolean exists = getOrganiserFacade().gameTitleInUse(title);
+        returnAsJson(resp, exists);
     }
 
     private void checkDatabase(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
