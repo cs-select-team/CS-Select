@@ -36,6 +36,12 @@ public class AchievementTests extends TestClass {
         AchievementType playFortytwo = AchievementType.PLAY_ROUND_FORTYTWO;
         AchievementType playHundred = AchievementType.PLAY_ROUND_HUNDRED;
 
+        Assert.assertEquals(playOne, playOne.checkProgress(stats).getType());
+        Assert.assertEquals(playFive, playFive.checkProgress(stats).getType());
+        Assert.assertEquals(playTen, playTen.checkProgress(stats).getType());
+        Assert.assertEquals(playFortytwo, playFortytwo.checkProgress(stats).getType());
+        Assert.assertEquals(playHundred, playHundred.checkProgress(stats).getType());
+
         Assert.assertEquals(AchievementState.SHOWN, playOne.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.CONCEALED, playFive.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.INVISIBLE, playTen.checkProgress(stats).getState());
@@ -81,6 +87,10 @@ public class AchievementTests extends TestClass {
         AchievementType streakFive = AchievementType.STREAK_FIVE;
         AchievementType streakTen = AchievementType.STREAK_TEN;
 
+        Assert.assertEquals(streakTwo, streakTwo.checkProgress(stats).getType());
+        Assert.assertEquals(streakFive, streakFive.checkProgress(stats).getType());
+        Assert.assertEquals(streakTen, streakTen.checkProgress(stats).getType());
+
         Assert.assertEquals(AchievementState.SHOWN, streakTwo.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.CONCEALED, streakFive.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.INVISIBLE, streakTen.checkProgress(stats).getState());
@@ -119,6 +129,10 @@ public class AchievementTests extends TestClass {
         AchievementType dailyThree = AchievementType.DAILY_THREE;
         AchievementType dailySeven = AchievementType.DAILY_SEVEN;
 
+        Assert.assertEquals(dailyOne, dailyOne.checkProgress(stats).getType());
+        Assert.assertEquals(dailyThree, dailyThree.checkProgress(stats).getType());
+        Assert.assertEquals(dailySeven, dailySeven.checkProgress(stats).getType());
+
         Assert.assertEquals(AchievementState.SHOWN, dailyOne.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.CONCEALED, dailyThree.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.INVISIBLE, dailySeven.checkProgress(stats).getState());
@@ -144,6 +158,13 @@ public class AchievementTests extends TestClass {
         AchievementType scoreThousand = AchievementType.TOTAL_SCORE_THOUSAND;
         AchievementType scoreTwoThousand = AchievementType.TOTAL_SCORE_TWOTHOUSAND;
         AchievementType scoreFiveThousand = AchievementType.TOTAL_SCORE_FIVETHOUSAND;
+
+        Assert.assertEquals(scoreHundred, scoreHundred.checkProgress(stats).getType());
+        Assert.assertEquals(scoreTwoHundredFifty, scoreTwoHundredFifty.checkProgress(stats).getType());
+        Assert.assertEquals(scoreFiveHundred, scoreFiveHundred.checkProgress(stats).getType());
+        Assert.assertEquals(scoreThousand, scoreThousand.checkProgress(stats).getType());
+        Assert.assertEquals(scoreTwoThousand, scoreTwoThousand.checkProgress(stats).getType());
+        Assert.assertEquals(scoreFiveThousand, scoreFiveThousand.checkProgress(stats).getType());
 
         Assert.assertEquals(AchievementState.SHOWN, scoreHundred.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.CONCEALED, scoreTwoHundredFifty.checkProgress(stats).getState());
@@ -184,6 +205,11 @@ public class AchievementTests extends TestClass {
         AchievementType roundScoreSeventy = AchievementType.ROUND_SCORE_SEVENTY;
         AchievementType roundScoreEighty = AchievementType.ROUND_SCORE_EIGHTY;
         AchievementType roundScoreNinety = AchievementType.ROUND_SCORE_NINETY;
+
+        Assert.assertEquals(roundScoreSixty, roundScoreSixty.checkProgress(stats).getType());
+        Assert.assertEquals(roundScoreSeventy, roundScoreSeventy.checkProgress(stats).getType());
+        Assert.assertEquals(roundScoreEighty, roundScoreEighty.checkProgress(stats).getType());
+        Assert.assertEquals(roundScoreNinety, roundScoreNinety.checkProgress(stats).getType());
 
         Assert.assertEquals(AchievementState.SHOWN, roundScoreSixty.checkProgress(stats).getState());
         Assert.assertEquals(AchievementState.CONCEALED, roundScoreSeventy.checkProgress(stats).getState());

@@ -13,11 +13,12 @@
                 </div>
                 <div class="col-2">
                     <input type="button" class="btn btn-primary btn-block" v-on:click="sendResults"
-                           v-bind:class="{ disabled: this.buttonState }" value="<fmt:message key="next"/>"/>
+                           v-bind:class="{ disabled: this.buttonState }"
+                           :title="localisation.confirmToolTip" value="<fmt:message key="confirm"/>"/>
                     <input type="button" class="btn btn-outline-primary btn-block" v-on:click="skip"
-                           value="<fmt:message key="skip"/>"/>
+                           :title="localisation.skipToolTip" value="<fmt:message key="skip"/>"/>
                     <input type="button" class="btn btn-outline-primary btn-block" v-on:click="quit"
-                           value="<fmt:message key="quit"/>"/>
+                           :title="localisation.quitToolTip" value="<fmt:message key="quit"/>"/>
 
                     <streak-display v-bind:counter="counter"></streak-display>
                     <points-display :title="localisation.gamificationPointsTooltip" v-bind:points="points"></points-display>

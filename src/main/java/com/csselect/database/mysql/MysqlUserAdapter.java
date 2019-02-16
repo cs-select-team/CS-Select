@@ -2,6 +2,7 @@ package com.csselect.database.mysql;
 
 import com.csselect.inject.Injector;
 import com.csselect.database.UserAdapter;
+import com.csselect.utils.Languages;
 import org.pmw.tinylog.Logger;
 
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER = (MysqlDatabaseAdapter) Injector.getInstance()
             .getDatabaseAdapter();
 
-    static final String DEFAULT_LANGUAGE = "en";
+    static final String DEFAULT_LANGUAGE = Languages.ENGLISH;
 
     /**
      * Creates a new {@link MysqlUserAdapter} with the given id

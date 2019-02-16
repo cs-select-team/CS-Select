@@ -39,6 +39,7 @@ props -->
                             gamecreationHelp: '<fmt:message key="gamecreationHelp"/>',
                             binarySelectHelp: '<fmt:message key="binarySelectHelp"/>',
                             matrixSelectHelp: '<fmt:message key="matrixSelectHelp"/>',
+                            binaryRoundSkipped: '<fmt:message key="binaryRoundSkipped"/>',
                             playerHelp: '<fmt:message key="playerHelp"/>',
                             gameHelp: '<fmt:message key="gameHelp"/>',
                             enterEmailSingle: '<fmt:message key="enterEmailSingle"/>',
@@ -63,6 +64,7 @@ props -->
                             roundsPlayed: '<fmt:message key="roundPlayed"/>',
                             dailyFinished: '<fmt:message key="dailyFinished"/>',
                             reward: '<fmt:message key="reward"/>',
+                            unknownAchievement: '<fmt:message key="unknownAchievement"/>',
                             streakTimesOne: '<fmt:message key="streakTimesOne"/>',
                             streakTimesOnePointFive: '<fmt:message key="streakTimesOnePointFive"/>',
                             streakTimesTwo: '<fmt:message key="streakTimesTwo"/>',
@@ -98,6 +100,11 @@ props -->
                             titleWarning: '<fmt:message key="titleWarning"/>',
                             titleWarningText: '<fmt:message key="titleWarningText"/>',
                             gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>'
+                            gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>',
+                            unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>',
+                            confirmToolTip: '<fmt:message key="confirmToolTip"/>',
+                            skipToolTip: '<fmt:message key="skipToolTip"/>',
+                            quitToolTip: '<fmt:message key="quitToolTip"/>'
                         }
                     }
                 }

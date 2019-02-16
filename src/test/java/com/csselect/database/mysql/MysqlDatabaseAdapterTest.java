@@ -100,6 +100,8 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         Assert.assertEquals(TEST_EMAIL, adapter.getEmail());
         Assert.assertEquals(TEST_HASH, adapter.getPasswordHash());
         Assert.assertEquals(TEST_SALT, adapter.getPasswordSalt());
+        player = mysqlDatabaseAdapter.getPlayer(1);
+        Assert.assertNotNull(player);
     }
 
     @Test
@@ -174,6 +176,16 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         Game game = createGame(organiser);
         Assert.assertTrue(mysqlDatabaseAdapter.checkDuplicateDatabase(TEST_DB));
+    }
+
+    @Test
+    public void removeGameTest() throws IOException {
+        Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
+        OrganiserAdapter organiserAdapter = mysqlDatabaseAdapter.getOrganiserAdapter(organiser.getId());
+        Game game = createGame(organiser);
+        mysqlDatabaseAdapter.removeGame(game);
+        Assert.assertTrue(mysqlDatabaseAdapter.getActiveGames(organiserAdapter).isEmpty());
+        Assert.assertTrue(mysqlDatabaseAdapter.getTerminatedGames(organiserAdapter).isEmpty());
     }
 
     private Game createGame(Organiser o) throws IOException {

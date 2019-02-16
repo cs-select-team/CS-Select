@@ -2,9 +2,11 @@ Vue.component('achievement',{
     props: ['achievement'],
 
     template:
-        '<div class="card" v-if="achievement.state > 0">\n' +
+        '<div class="card">\n' +
         '  <div class="card-body" v-bind:class="{ \'bg-success\': achievement.state > 2}">\n' +
-        '    <h5 class="card-title"  v-if="achievement.state > 1">{{ achievement.name }}</h5>\n' +
+        '    <h5 class="card-title"  v-if="achievement.state > 0">{{ achievement.name }}</h5>\n' +
+        '    <h5 class="card-title"  :title="localisation.unknownAchievementTooltip" ' +
+        '      v-else>{{localisation.unknownAchievement}}</h5>\n' +
         '    <div  v-if="achievement.state > 1"class="card-text">\n' +
         '      {{ achievement.desc }}\n' +
         '    </div>' +
@@ -14,12 +16,13 @@ Vue.component('achievement',{
 
 })
 
-/*  state   description
+/*  State   Description
     0       invisible
-    1       hidden( the box is there, but nothing else)
+    1       hidden (the box is there, but nothing else)
     2       shown
     3       completed
  */
+
 var achievements = new Vue({
     el: '#achievements',
     data: {

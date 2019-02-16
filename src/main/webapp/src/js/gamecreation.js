@@ -72,8 +72,17 @@ var creation = new Vue({
                 }
             })
         },
-        updateInviteString: function (newVal) {
-            this.inviteString = newVal;
+        updateInviteString: function(newVal) {
+            var clearedString = newVal.split(',').filter(function(item, index, allItems){
+                return index === allItems.indexOf(item);
+            }).join(',');
+            $('#output').append(clearedString);
+          this.inviteString = clearedString;
+        },
+        removePlayerByIndex: function(index) {
+            var playerArray = this.inviteString.split(',');
+            playerArray.splice(index, 1)
+            this.inviteString = playerArray.join(',')
         },
         updateConfString: function (newVal) {
             this.gameModeConfigString = newVal;
@@ -89,7 +98,7 @@ var creation = new Vue({
             this.databaseName = gameOptions.database;
             this.gameModeConfigString = gameOptions.gamemodeConf;
             this.terminationConfigString = gameOptions.termination;
-            this.invitedPlayers = gameOptions.invites.join(',');
+            this.inviteString = gameOptions.invites.join(',');
         },
         checkFeatureSet: function () {
             var self = this;

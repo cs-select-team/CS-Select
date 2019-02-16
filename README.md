@@ -45,6 +45,7 @@ If you want to expand CS:Select with your own additions, use the following setup
  - organiserpassword: The password an organiser has to supply to be able to register a new account
  - mlserverurl: The URL the ML-Server is available under
  - homedirectory: The directory path in which CS:Select will save downloaded featuresets from the ML-Server
+ - csselecturl: The URL CS:Select will be accessible under. Used e.g. in invitation mails
  - timezone: The timezone your server uses
  - database.hostname: The hostname of your database server
  - database.port: The port of your database server
@@ -67,10 +68,17 @@ If you want to expand CS:Select with your own additions, use the following setup
  ### Add new languages 
  1. Add new Locale file to the resource path mentioned above. Name it accordingly (`Locale_xx.properties`). If the ML server does not supply the feature description in this language(same country code), the english version will be used.
  2. Add new option to [setting.js](src/main/webapp/src/js/settings.js). (data.languageoptions array has to be extended)
-  
+ 3. (Optional) Add new constant to `com/csselect/utils/Languages.java` instead of directly using the language code to allow for easy refactoring of language codes in the java code
+ 
  - For non ascii characters you will have to use the `native2ascii` tool by Oracle, or an alternative that converts UTF-8 to ISO-8859-1 standart ([native2ascii](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/native2ascii.html)).
  It converts characters like `ü` to the `\uxxxx` notation.
  
  # Known issues
  - Only works with MySql Version 5.7.20
  - pattern loading doesn't load termination value
+ ## Potential out-of-memory-error
+ When creating multiple games in a row there might happen an Out-of-memory-error and the dataset will not be written to
+ the database correctly when using Tomcat. This can occur if the application is redeployed often, as Tomcat has a problem
+ with memory leaking when redeploying often. Restarting Tomcat fixes this. Though this should not happen in productive use, 
+ as you won't be redeploying your application as often as when developing, you might as well try using CS:Select with a
+ different web-container application because as far as is known to us our application doesn't use any tomcat specific code.

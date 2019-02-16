@@ -6,7 +6,7 @@ package com.csselect.gamification;
 public enum AchievementState {
 
     /**
-     * The achievement is invisible for the player. He does not know it exists.
+     * The achievement is invisible for the player.
      */
     INVISIBLE,
 

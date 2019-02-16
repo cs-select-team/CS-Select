@@ -19,6 +19,12 @@ public interface Configuration {
     String getMLServerURL();
 
     /**
+     * Gets the URL of CS:Select
+     * @return CS:Select URL
+     */
+    String getCSSelectURL();
+
+    /**
      * Gets the timezone used for connecting to the database server
      * @return timezone
      */

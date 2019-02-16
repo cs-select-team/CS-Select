@@ -26,7 +26,7 @@ Vue.component('BinarySelect', {
         uselessToggle: function(newVal) {
             if (this.feature1.useless && this.feature2.useless) { // in case both features are selected as useless
                 this.nextRound();
-                var alert = {message: "Round was skipped, because both features were marked useless", type: 1}
+                var alert = {message: this.localisation.binaryRoundSkipped, type: 1}
                 this.$emit("clear-alerts")
                 this.$emit("add-alert", alert)
             }

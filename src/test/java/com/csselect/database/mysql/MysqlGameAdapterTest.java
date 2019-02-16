@@ -1,8 +1,12 @@
 package com.csselect.database.mysql;
 
+import com.csselect.game.BinarySelect;
+import com.csselect.game.FeatureSet;
+import com.csselect.game.Gamemode;
 import com.csselect.inject.Injector;
 import com.csselect.inject.MysqlTestClass;
 import com.csselect.database.GameAdapter;
+import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +22,7 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
     private static final String TEST_DATABASE_NAME = "PSE";
     private static final String TEST_EMAIL = "test@test.de";
     private static final String TEST_EMAIL2 = "test2@test.de";
+    private static final Gamemode GAMEMODE = new BinarySelect();
 
     private GameAdapter adapter;
     private MysqlDatabaseAdapter mysqlDatabaseAdapter;
@@ -106,5 +111,32 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
         adapter.removeInvitedPlayers(toRemove);
         Assert.assertTrue(adapter.getInvitedPlayers().contains(TEST_EMAIL));
         Assert.assertFalse(adapter.getInvitedPlayers().contains(TEST_EMAIL2));
+    }
+
+    @Test
+    public void testRounds() throws SQLException {
+        Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
+        adapter.setGamemode(GAMEMODE);
+        Assert.assertTrue(adapter.getRounds().isEmpty());
+        mysqlDatabaseAdapter.executeMysqlUpdate("INSERT INTO rounds (playerId,time,skipped,quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
+                + "VALUES (1,NOW(),0,0.5,10,'1','2','3');", TEST_DATABASE_NAME);
+        mysqlDatabaseAdapter.executeMysqlUpdate("INSERT INTO rounds (playerId,time,skipped,quality,points,uselessFeatures,chosenFeatures,shownFeatures)"
+                + "VALUES (1,NOW(),1,0.5,10,'1','2','3');", TEST_DATABASE_NAME);
+        Assert.assertEquals(1, adapter.getRounds().size());
+    }
+
+    @Test
+    public void organiserTest() {
+        Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
+        adapter.setOrganiser(organiser);
+        Assert.assertEquals(organiser, adapter.getOrganiser());
+    }
+
+    @Test
+    public void featuresTest() {
+        FeatureSet featureSet = new FeatureSet(TEST_DATABASE_NAME);
+        adapter.setFeatures(featureSet);
+        Assert.assertNotNull(adapter.getFeatures());
+        Assert.assertEquals(featureSet, adapter.getFeatures());
     }
 }

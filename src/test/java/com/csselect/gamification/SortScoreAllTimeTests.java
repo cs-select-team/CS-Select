@@ -87,6 +87,7 @@ public class SortScoreAllTimeTests extends TestClass {
 
         playersMap = allTime.sort(playersList);
 
+        // Checking correct order.
         points = playersMap.values().toArray(new Integer[0]);
         Assert.assertTrue(points[0] >= points[1]);
         Assert.assertTrue(points[1] >= points[2]);

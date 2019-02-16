@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import com.csselect.utils.Languages;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
@@ -13,17 +14,46 @@ import java.util.Map;
 
 public class Feature implements Comparable<Feature> {
 
+    /**
+     * Key identifying the Minimum
+     */
+    public static final String STAT_MIN_KEY = "Min.";
+
+    /**
+     * Key identifying the 1st Quartile
+     */
+    public static final String STAT_1QU_KEY = "1st Qu.";
+
+    /**
+     * Key identifying the Median
+     */
+    public static final String STAT_MEDIAN_KEY = "Median";
+
+    /**
+     * Key identifying the Mean
+     */
+    public static final String STAT_MEAN_KEY = "Mean";
+
+    /**
+     * Key identifying the 3rd Quartile
+     */
+    public static final String STAT_3QU_KEY = "3rd Qu.";
+
+    /**
+     * Key identifying the Maximum
+     */
+    public static final String STAT_MAX_KEY = "Max.";
+
     private final int id;
     private final String internalName;
-    private Map<String, String> nameMap;
-    private Map<String, String> descriptionMap;
+    private final Map<String, String> nameMap;
+    private final Map<String, String> descriptionMap;
     private BufferedImage totalGraph;
     private BufferedImage classGraph;
+    private final Map<String, String> valueMap;
 
 
-    private static final String ENGLISH_LANGUAGE_CODE = "en";
-    private static final String GERMAN_LANGUAGE_CODE = "de";
-    private static final String DEFAULT_LANGUAGE_CODE = ENGLISH_LANGUAGE_CODE;
+    private static final String DEFAULT_LANGUAGE_CODE = Languages.ENGLISH;
 
 
     /**
@@ -37,6 +67,7 @@ public class Feature implements Comparable<Feature> {
 
         this.nameMap = new HashMap<>();
         this.descriptionMap = new HashMap<>();
+        this.valueMap = new HashMap<>();
     }
     /**
      * Getter for the ID of the feature
@@ -103,35 +134,22 @@ public class Feature implements Comparable<Feature> {
     }
 
     /**
-     * Setter for the german name of the feature
-     * @param germanName the german name
+     * Setter for the name of the feature with the given langCode
+     * @param langCode langCode of the language to set the title for
+     * @param name the name
      */
-    public void setGermanName(String germanName) {
-        this.nameMap.put(GERMAN_LANGUAGE_CODE, germanName);
+    public void setName(String langCode, String name) {
+        this.nameMap.put(langCode, name);
     }
 
-    /**
-     * Setter for the english name of the feature
-     * @param englishName the english name
-     */
-    public void setEnglishName(String englishName) {
-        this.nameMap.put(ENGLISH_LANGUAGE_CODE, englishName);
-    }
 
     /**
-     * Setter for the german description of the feature
-     * @param germanDescription the german description
+     * Setter for the description of the feature with the given langCode
+     * @param langCode langCode of the language to set the description for
+     * @param description the description
      */
-    public void setGermanDescription(String germanDescription) {
-        this.descriptionMap.put(GERMAN_LANGUAGE_CODE, germanDescription);
-    }
-
-    /**
-     * Setter for the english description of the feature
-     * @param englishDescription the english description
-     */
-    public void setEnglishDescription(String englishDescription) {
-        this.descriptionMap.put(ENGLISH_LANGUAGE_CODE, englishDescription);
+    public void setDescription(String langCode, String description) {
+        this.descriptionMap.put(langCode, description);
     }
 
     /**
@@ -148,6 +166,33 @@ public class Feature implements Comparable<Feature> {
      */
     public void setClassGraph(BufferedImage classGraph) {
         this.classGraph = classGraph;
+    }
+
+    /**
+     * Stores a value for extra information about the {@link Feature} under the given key
+     * @param key key to store the value under
+     * @param value value to store
+     */
+    public void addValue(String key, String value) {
+        valueMap.put(key, value);
+    }
+
+    /**
+     * Gets the value stored under the given key
+     * @param key key to get value for
+     * @return stored value
+     */
+    public String getValue(String key) {
+        return valueMap.get(key);
+    }
+
+    /**
+     * Checks whether the given key exists in the {@link Feature}s values
+     * @param key key to check
+     * @return true if key exists, false otherwise
+     */
+    public boolean hasValue(String key) {
+        return valueMap.containsKey(key);
     }
 
     @Override

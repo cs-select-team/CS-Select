@@ -56,6 +56,11 @@ public final class ApacheCommonsConfiguration implements Configuration {
     }
 
     @Override
+    public String getCSSelectURL() {
+        return configuration.getString("csselecturl");
+    }
+
+    @Override
     public String getTimezone() {
         return configuration.getString("timezone");
     }

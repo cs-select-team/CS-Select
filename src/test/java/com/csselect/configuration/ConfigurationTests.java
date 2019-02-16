@@ -11,6 +11,7 @@ public class ConfigurationTests extends TestClass {
     private Configuration config;
     private static final String TEST_PATH = System.getProperty("user.dir") + File.separator + "src"
             + File.separator + "test" + File.separator + "resources" + File.separator + "config.properties";
+    private static final String INVALID_PATH = "muchEmpty/soConfig/wow";
 
     @Override
     public void setUp() {
@@ -20,6 +21,11 @@ public class ConfigurationTests extends TestClass {
     @Override
     public void reset() {
 
+    }
+
+    @Test(expected = ConfigurationException.class)
+    public void invalidPathTest() {
+        Configuration configuration = new ApacheCommonsConfiguration(INVALID_PATH);
     }
 
     @Test
@@ -33,6 +39,11 @@ public class ConfigurationTests extends TestClass {
     @Test
     public void testMLServerURL() {
         testString("127.0.0.1:8000", config.getMLServerURL());
+    }
+
+    @Test
+    public void testCSSelectURL() {
+        testString("http://localhost:8080/CS-Select", config.getCSSelectURL());
     }
 
     @Test

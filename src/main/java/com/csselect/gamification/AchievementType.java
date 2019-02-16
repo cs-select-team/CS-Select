@@ -1,7 +1,6 @@
 package com.csselect.gamification;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import com.csselect.utils.Localisation;
 
 /**
  * An enumeration for all the existing achievements. Every instance
@@ -439,7 +438,7 @@ public enum AchievementType {
     }
 
     /**
-     * Gets the current state of the achievement type determined by the players'
+     * Gets the current state of the achievement type determined by the player's
      * progress.
      * @param stats The player's stats.
      * @return The current state of the achievement.
@@ -452,8 +451,7 @@ public enum AchievementType {
      * @return The name in the specified language.
      */
     public final String getName(String lang) {
-        ResourceBundle bundle = getBundle(lang);
-        return bundle.getString(nameKey);
+        return Localisation.get(lang, nameKey);
     }
 
     /**
@@ -462,13 +460,7 @@ public enum AchievementType {
      * @return The The description in the specified language.
      */
     public final String getDescription(String lang) {
-        ResourceBundle bundle = getBundle(lang);
-        return bundle.getString(descKey);
-    }
-
-    private ResourceBundle getBundle(String lang) {
-        return ResourceBundle.getBundle("locale/Locale", new Locale(lang),
-                ResourceBundle.Control.getNoFallbackControl(ResourceBundle.Control.FORMAT_PROPERTIES));
+        return Localisation.get(lang, descKey);
     }
 
 }

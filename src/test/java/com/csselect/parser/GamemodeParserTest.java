@@ -1,5 +1,6 @@
 package com.csselect.parser;
 
+import com.csselect.game.Gamemode;
 import com.csselect.inject.TestClass;
 import com.csselect.game.BinarySelect;
 import com.csselect.game.MatrixSelect;
@@ -7,31 +8,38 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class GamemodeParserTest extends TestClass {
-    private String input;
+
+    private static final String MATRIX = "matrixSelect,10,2,6";
+    private static final String BINARY = "binarySelect";
+    private static final String INVALID = "testtest";
 
     @Override
     public void setUp() {
-        input = new String();
+
     }
 
     @Override
     public void reset() {
-        input = new String();
+
     }
 
     @Test //there for debugging
     public void testMatrixParsing() {
-        input = "matrixSelect:10,2,6";
-
-        MatrixSelect gamemode = (MatrixSelect) GamemodeParser.parseGamemode(input);
+        Gamemode gamemode = GamemodeParser.parseGamemode(MATRIX);
         Assert.assertNotNull(gamemode);
+        Assert.assertTrue(gamemode instanceof  MatrixSelect);
     }
 
     @Test
     public void testBinaryParsing() {
-        input = "binarySelect";
-        BinarySelect gamemode = (BinarySelect) GamemodeParser.parseGamemode(input);
+        Gamemode gamemode = GamemodeParser.parseGamemode(BINARY);
         Assert.assertNotNull(gamemode);
+        Assert.assertTrue(gamemode instanceof BinarySelect);
+    }
+
+    @Test
+    public void testInvalidGamemodeParsing() {
+        Gamemode gamemode = GamemodeParser.parseGamemode(INVALID);
     }
 }
 
