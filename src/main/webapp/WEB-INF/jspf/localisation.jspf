@@ -95,6 +95,8 @@ props -->
                             lastWeekScoreTooltip: '<fmt:message key="lastWeekScoreTooltip"/>',
                             patternOverwriteWarning: '<fmt:message key="patternOverwriteWarning"/>',
                             patternOverwriteWarningText: '<fmt:message key="patternOverwriteWarningText"/>',
+                            titleWarning: '<fmt:message key="titleWarning"/>',
+                            titleWarningText: '<fmt:message key="titleWarningText"/>',
                             gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>'
                         }
                     }

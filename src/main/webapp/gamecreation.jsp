@@ -29,9 +29,17 @@
                             <span class="input-group-text" ><fmt:message key="title"/></span>
                         </div>
                         <input type="text" class="form-control"v-model="title">
-                        <title-warning v-if="showTitleWarning">
-                        </title-warning>
-    '               </div>
+                        <title-modal v-if="showTitleModal">
+                        <h3 slot="header">{{localisation.titleWarning}}</h3>
+                        <a slot="body">{{localisation.titleWarningText}}</a>
+                        <input type="text" class="form-control"v-model="title" slot="body">
+                        <button type="button"
+                        slot="footer"
+                        class="btn btn-primary"
+                        v-on:click="submitTitle">{{localisation.submit}}
+                        </button>
+                        </title-modal>
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" ><fmt:message key="description"/></span>
@@ -95,7 +103,7 @@
                         </div>
                         <input type="text" class="form-control" v-model="databaseName">
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg" v-on:click="submitGame" :disabled="!createButtonEnabled">{{localisation.create}}</button>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="startCreation" :disabled="!createButtonEnabled">{{localisation.create}}</button>
 
                 </div>
             </div>
