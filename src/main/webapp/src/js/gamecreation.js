@@ -1,4 +1,25 @@
-
+Vue.component('pattern-modal', {
+   template: '<div class="modal" tabindex="-1" role="dialog">\n' +
+       '  <div class="modal-dialog" role="document">\n' +
+       '    <div class="modal-content">\n' +
+       '      <div class="modal-header">\n' +
+       '        <h5 class="modal-title">{{localisation.patternOverwriteWarning}}</h5>\n' +
+       '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+       '          <span aria-hidden="true">&times;</span>\n' +
+       '        </button>\n' +
+       '      </div>\n' +
+       '      <div class="modal-body">\n' +
+       '        <p>{{localisation.patternOverwriteWarningText}}</p>\n' +
+       '      </div>\n' +
+       '      <div class="modal-footer">\n' +
+       '        <button type="button" class="btn btn-primary">{{localisation.submit}}</button>\n' +
+       '        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{localisation.decline}}' +
+       '        </button>\n' +
+       '      </div>\n' +
+       '    </div>\n' +
+       '  </div>\n' +
+       '</div>',
+});
 Vue.component('pattern-selection', {
     data: function() {
         return {
@@ -146,15 +167,15 @@ var creation = new Vue({
                }
             });
             if (isOverwriting) {
-                if (confirm(self.localisation.patternOverwrite)) {
+                $('#pattern-modal').on('show.bs.modal', function (event) {
                     axios({
                         method: 'post',
                         url: 'create/savePattern',
                         params: {
-                            title: this.patternName,
+                            title: self.patternName,
                         }
-                    })
-                }
+                    });
+                })
             } else {
                 axios({
                     method: 'post',
