@@ -181,8 +181,7 @@ var creation = new Vue({
                 }
             }).then(function() {
                 self.showPatternModal = false;
-            })
-        ,
+            }),
         declineOverwritePattern: function() {
             var self = this;
             self.showPatternModal = false;
