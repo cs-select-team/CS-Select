@@ -55,7 +55,21 @@
                         v-on:load-pattern="loadPattern">
                     </pattern-selection>
 
-
+                    <pattern-modal v-if="showPatternModal">
+                        <h3 slot="header">{{localisation.patternOverwriteWarning}}</h3>
+                        <a slot="body">{{localisation.patternOverwriteWarningText}}</a>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-secondary"
+                            v-on:click="submitOverwritePattern">{{localisation.submit}}
+                        </button>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-secondary"
+                            data-dismiss="modal-template"
+                            v-on:click="declineOverwritePattern">{{localisation.decline}}
+                        </button>
+                    </pattern-modal>
                     <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -86,6 +100,25 @@
 
         </div>
     </div>
+    <script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header"></slot>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body"></slot>
+                    </div>
+                    <div class="modal-footer">
+                        <slot name="footer"></slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    </script>
     <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>

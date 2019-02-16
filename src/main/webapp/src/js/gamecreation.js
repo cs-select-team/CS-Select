@@ -1,24 +1,5 @@
 Vue.component('pattern-modal', {
-   template: '<div class="modal" tabindex="-1" role="dialog">\n' +
-       '  <div class="modal-dialog" role="document">\n' +
-       '    <div class="modal-content">\n' +
-       '      <div class="modal-header">\n' +
-       '        <h5 class="modal-title">{{localisation.patternOverwriteWarning}}</h5>\n' +
-       '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
-       '          <span aria-hidden="true">&times;</span>\n' +
-       '        </button>\n' +
-       '      </div>\n' +
-       '      <div class="modal-body">\n' +
-       '        <p>{{localisation.patternOverwriteWarningText}}</p>\n' +
-       '      </div>\n' +
-       '      <div class="modal-footer">\n' +
-       '        <button type="button" class="btn btn-primary">{{localisation.submit}}</button>\n' +
-       '        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{localisation.decline}}' +
-       '        </button>\n' +
-       '      </div>\n' +
-       '    </div>\n' +
-       '  </div>\n' +
-       '</div>',
+   template: '#modal-template'
 });
 Vue.component('pattern-selection', {
     data: function() {
@@ -65,7 +46,7 @@ var creation = new Vue({
         saveAsPattern: false,
         patternName: '',
         listOfPatterns: [],
-
+        showPatternModal: false,
 
         createButtonEnabled: true,
         alerts: []
@@ -163,27 +144,13 @@ var creation = new Vue({
             var isOverwriting = false;
             self.listOfPatterns.forEach(function(pattern) {
                if(pattern.title === self.patternName) {
-                   isOverwriting = true;
+                   isOverwriting = true
                }
             });
             if (isOverwriting) {
-                $('#pattern-modal').on('show.bs.modal', function (event) {
-                    axios({
-                        method: 'post',
-                        url: 'create/savePattern',
-                        params: {
-                            title: self.patternName,
-                        }
-                    });
-                })
+                self.showPatternModal = true
             } else {
-                axios({
-                    method: 'post',
-                    url: 'create/savePattern',
-                    params: {
-                        title: this.patternName,
-                    }
-                })
+                self.submitOverwritePattern()
             }
         },
         createGame: function() {
@@ -203,6 +170,21 @@ var creation = new Vue({
         },
         setPatterns: function(list) {
             this.listOfPatterns = list;
+        },
+        submitOverwritePattern: function() {
+            var self = this;
+            axios({
+                method: 'post',
+                url: 'create/savePattern',
+                params: {
+                    title: self.patternName,
+                }
+            });
+            self.showPatternModal = false;
+        },
+        declineOverwritePattern: function() {
+            var self = this;
+            self.showPatternModal = false;
         }
     },
     computed: {
