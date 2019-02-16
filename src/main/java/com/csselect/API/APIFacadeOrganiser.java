@@ -190,4 +190,12 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         return Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase(name);
     }
 
+    /**
+     * Checks if there is an active game with given title
+     * @param title Game title
+     * @return Boolean if active(!) game with this title exists
+     */
+    public boolean gameTitleInUse(String title) {
+        return organiser.gameTitleInUse(title);
+    }
 }
