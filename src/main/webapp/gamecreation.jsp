@@ -29,7 +29,9 @@
                             <span class="input-group-text" ><fmt:message key="title"/></span>
                         </div>
                         <input type="text" class="form-control"v-model="title">
-                    </div>
+                        <title-warning v-if="showTitleWarning">
+                        </title-warning>
+    '               </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" ><fmt:message key="description"/></span>
