@@ -6,8 +6,9 @@ var app1 = new Vue({
             passwordRepeat: '',
             organiser: 'player', // so that the player is the default option for registering
             thirdParam: '',
-            alert: false,
-            missingConfig: false
+            emailInUse: false,
+            missingConfig: false,
+            wrongMasterPassword: false,
         },
     watch:{
         organiser: function () {
@@ -37,8 +38,12 @@ var app1 = new Vue({
                 }).catch(function (error) {
                     if (error.response.status == 550) {
                         app1.missingConfig = true;
-                    } else app1.alert = true;
-                    });
+                    } else if (error.response.status == 409) {
+                        app1.emailInUse = true;
+                    } else if (error.response.status == 401) {
+                        app1.wrongMasterPassword = true;
+                    }
+                })
             }
         }
-    })
+    });

@@ -24,8 +24,9 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *             1: password
      *             2: masterpassword
      * @return true if registration successfull, false otherwise
+     * @throws IllegalArgumentException if email is in use or the masterpassword is incorrect
      */
-    public boolean register(String[] args) {
+    public boolean register(String[] args) throws IllegalArgumentException {
         OrganiserManagement om = new OrganiserManagement();
         organiser = om.register(args);
         return organiser != null;
@@ -45,7 +46,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     }
 
     @Override
-    public void changeEmail(String email) throws IllegalArgumentException{
+    public void changeEmail(String email) throws IllegalArgumentException {
             organiser.changeEmail(email);
 
     }
