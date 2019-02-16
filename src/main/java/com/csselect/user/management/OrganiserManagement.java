@@ -33,19 +33,17 @@ public final class OrganiserManagement extends UserManagement {
         String password = parameters[1];
         String globalPassword = parameters[2];
 
-        if (config.getOrganiserPassword().equals(globalPassword)) {
-            String salt = Encrypter.getRandomSalt();
-            String encryptedPassword = Encrypter.encrypt(password, salt);
-            Organiser organiser = Injector.getInstance().getDatabaseAdapter().createOrganiser(email, encryptedPassword, salt);
-            if (organiser != null) {
-                organiser.login();
-                return organiser;
-            } else {
-                throw new IllegalArgumentException(EMAIL_IN_USE);
-            }
-        } else {
+        if (!config.getOrganiserPassword().equals(globalPassword)) {
             throw new IllegalArgumentException(MASTER_PASSWORD_INCORRECT);
         }
+        String salt = Encrypter.getRandomSalt();
+        String encryptedPassword = Encrypter.encrypt(password, salt);
+        Organiser organiser = Injector.getInstance().getDatabaseAdapter().createOrganiser(email, encryptedPassword, salt);
+        if (organiser == null) {
+            throw new IllegalArgumentException(EMAIL_IN_USE);
+        }
+        organiser.login();
+        return organiser;
     }
 
     /**
