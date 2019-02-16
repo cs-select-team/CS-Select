@@ -179,9 +179,10 @@ var creation = new Vue({
                 params: {
                     title: self.patternName,
                 }
-            }).then(function() {
+            }).then(function () {
                 self.showPatternModal = false;
-            }),
+            })
+        },
         declineOverwritePattern: function() {
             var self = this;
             self.showPatternModal = false;
