@@ -1,6 +1,5 @@
 package com.csselect.API.httpAPI;
 import com.csselect.configuration.ConfigurationException;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.pmw.tinylog.Logger;
 import com.csselect.user.management.OrganiserManagement;
 import com.csselect.user.management.PlayerManagement;
@@ -70,8 +69,10 @@ public class Login extends Servlet {
             } catch (IllegalArgumentException e) {
                 if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
                     resp.sendError(409, e.getMessage());
+                    return;
                 } else if (e.getMessage().equals(OrganiserManagement.MASTER_PASSWORD_INCORRECT)) {
                     resp.sendError(401, e.getMessage());
+                    return;
                 }
             }
         } else {
