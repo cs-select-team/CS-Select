@@ -7,8 +7,10 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
             <form id="registerForm">
-                <div class="alert alert-danger" v-bind:class="{ collapse: !alert }">
-                    <fmt:message key="noRegister"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !emailInUse }">
+                    <fmt:message key="emailInUse"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !wrongMasterPassword }">
+                    <fmt:message key="wrongMasterPassword"/></div>
                 <div class="alert alert-danger" v-bind:class="{ collapse: !missingConfig }">
                     <fmt:message key="noConfig"/></div>
                 <div class="login-form">
