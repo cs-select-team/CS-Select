@@ -5,6 +5,7 @@ var app = new Vue({
     data: {
         email: '',
         password: '',
+        repeatpassword: '',
         languageOptions: ['de', 'en'],
         language: '',
         alert: false,
