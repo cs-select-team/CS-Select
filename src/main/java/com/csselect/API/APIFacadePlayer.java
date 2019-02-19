@@ -54,7 +54,7 @@ public class APIFacadePlayer extends APIFacadeUser {
     }
 
     @Override
-    public void changeEmail(String email) throws IllegalArgumentException{
+    public void changeEmail(String email) throws IllegalArgumentException {
         player.changeEmail(email);
 
     }

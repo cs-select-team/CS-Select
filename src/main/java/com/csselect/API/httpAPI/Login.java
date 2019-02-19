@@ -63,8 +63,18 @@ public class Login extends Servlet {
         boolean success = false;
         if (isSet("organiser", req)) {
             createOrganiser();
-            success = getOrganiserFacade().register(new String[]{email, password, third});
-            setPlayer(false);
+            try {
+                success = getOrganiserFacade().register(new String[]{email, password, third});
+                setPlayer(false);
+            } catch (IllegalArgumentException e) {
+                if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
+                    resp.sendError(409, e.getMessage());
+                    return;
+                } else if (e.getMessage().equals(OrganiserManagement.MASTER_PASSWORD_INCORRECT)) {
+                    resp.sendError(401, e.getMessage());
+                    return;
+                }
+            }
         } else {
             createPlayer();
             success = getPlayerFacade().register(new String[]{email, password, third});
@@ -72,8 +82,6 @@ public class Login extends Servlet {
         }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
-        } else {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
         updateLanguage();
 
