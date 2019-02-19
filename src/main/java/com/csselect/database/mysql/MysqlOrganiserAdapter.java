@@ -52,7 +52,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         Collection<Pattern> patterns = new HashSet<>();
         try {
             ResultSet set = DATABASE_ADAPTER.executeMysqlQuery(
-                    "SELECT * FROM " + TableNames.PATTERNS + " WHERE organiserId=" + getID() + ";");
+                    "SELECT * FROM " + TableNames.PATTERNS + " WHERE organiserId=?;", new IntParam(getID()));
             while (set.next()) {
                 GameOptions options = new GameOptions();
                 options.setTitle(set.getString("gameTitle"));

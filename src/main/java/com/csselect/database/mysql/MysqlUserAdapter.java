@@ -65,7 +65,8 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     public final void setPassword(String hash, String salt) {
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
-                    + " SET hash='" + hash + "', salt='" + salt + "' WHERE (id='" + getID() + "');");
+                    + " SET hash=?, salt=? WHERE (id=?);", new StringParam(hash), new StringParam(salt),
+                    new IntParam(getID()));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -78,6 +79,7 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
 
     @Override
     final ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (ID='" + getID() + "');");
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (id=?);",
+                new IntParam(getID()));
     }
 }
