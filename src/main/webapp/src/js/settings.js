@@ -28,7 +28,7 @@ var app = new Vue({
             })
         },
         setPassword: function () {
-            if (this.password != '')
+            if (this.password !== '' && this.password === this.repeatpassword)
                 axios({
                     method: 'post',
                     url: 'users/setPassword',
