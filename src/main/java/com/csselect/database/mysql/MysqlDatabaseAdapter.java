@@ -176,7 +176,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public int getNextGameID() {
         try {
-            return getNextIdOfTable("games");
+            return getNextIdOfTable(TableNames.GAMES);
         } catch (SQLException e) {
             Logger.error(e);
             return 1;
