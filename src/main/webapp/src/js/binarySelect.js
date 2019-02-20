@@ -46,12 +46,12 @@ Vue.component('BinarySelect', {
         this.nextRound();
     },
 
-    template: '<div class="row" :title="binarySelectHelp" v-bind:class="{\'disabled-div\': disabled}">\n' +
-        '                                <div class="col-sm" >\n' +
-        '                                        <feature-box v-bind:feature="feature1" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>\n' +
-        '                                </div>\n' +
-        '                                <div class="col-sm">\n' +
-        '                                        <feature-box v-bind:feature="feature2" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>\n' +
-        '                                </div>\n' +
-        '                        </div>'
-})
+    template:
+        `<div class="row" :title="binarySelectHelp" v-bind:class="{'disabled-div': disabled}">
+            <div class="col-sm">
+                <feature-box v-bind:feature="feature1" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>
+            </div>
+            <div class="col-sm">
+                <feature-box v-bind:feature="feature2" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>
+            </div>
+        </div>`})

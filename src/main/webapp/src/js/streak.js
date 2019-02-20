@@ -19,16 +19,17 @@ Vue.component('streak-display', {
         }
     },
     template:
-        '<div class="card">' +
-        '    <div class="card-body">' +
-        '        <h5 class="card-title">{{ localisation.streak }}</h5>' +
-        '        <div class="card-text">\n' +
-        '            <div class="progress">\n' +
-        '                <div class="progress-bar bg-primary" role="progressbar" v-bind:style="{width: progress1}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\n' +
-        '                <div class="progress-bar bg-success" role="progressbar" v-bind:style="{width: progress2}" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>\n' +
-        '            </div>' +
-        '            <div>{{this.streakText}}</div>\n' +
-        '        </div>\n' +
-        '    </div>\n' +
-        '</div>'
+        `<div class="card">
+            <div class="card-body"><h5 class="card-title">{{ localisation.streak }}</h5>
+                <div class="card-text">
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" role="progressbar" v-bind:style="{width: progress1}"
+                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" v-bind:style="{width: progress2}"
+                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div>{{this.streakText}}</div>
+                </div>
+            </div>
+        </div>`
 })

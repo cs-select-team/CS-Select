@@ -4,7 +4,7 @@
  */
 Vue.component('gamemode-config-binarySelect', {
     props: ['configString'],
-    template: '<div></div>',
+    template: `<div></div>`,
 
     mounted: function (newVal) {
         this.$emit('update-config-str', "binarySelect")
@@ -17,27 +17,26 @@ Vue.component('gamemode-config-matrixSelect', {
             conf: this.isValidConfig(this.configString)?this.configString:'matrixSelect,0,0,0'
         }
     },
-    template: '<div>\n' +
-        '  <div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text" >{{localisation.numberOfFeatures}}</span>\n' +
-        '  </div>\n' +
-        '  <input type="number" min="0" class="form-control"  v-model="numberOfFeatures">' +
-        '</div>' +
-        '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">{{localisation.minNumberOfFeatures}}</span>\n' +
-        '  </div>\n' +
-        '  <input type="number" min="0" :max="max" class="form-control"  v-model="min">\n' +
-        '</div>\n' +
-        '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">{{localisation.maxNumberOfFeatures}}</span>\n' +
-        '  </div>\n' +
-        '  <input type="number" :min="min" :max="numberOfFeatures" class="form-control"  v-model="max">\n' +
-        '</div>\n' +
-        '</div>',
-
+    template:
+        `<div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{localisation.numberOfFeatures}}</span>
+                </div>
+                <input type="number" min="0" class="form-control" v-model="numberOfFeatures">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{localisation.minNumberOfFeatures}}</span>
+                </div>
+                <input type="number" min="0" :max="max" class="form-control" v-model="min"></div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{localisation.maxNumberOfFeatures}}</span>
+                </div>
+                <input type="number" :min="min" :max="numberOfFeatures" class="form-control" v-model="max">
+            </div>
+        </div>`,
     methods: {
         getArgByIndex: function (index) {
             var args = this.conf.split(',');
@@ -102,17 +101,20 @@ Vue.component('gamemode-config', {
         }
     },
     // language=HTML
-    template: '<div  class="input-group mb-3">' +
-        '<div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">{{localisation.gamemode}}</span>\n' +
-        '  </div>' +
-        '<select class="custom-select" v-model="currentGm">' +
-        '<option v-for="(gm, index) in listOfGamemodes" v-bind:key="index"' +
-        '   v-bind:config-string="gamemodeConfigStr" :value="gm.value">{{gm.title}}</option>' +
-        '</select> ' +
-        '<component v-bind:is="componentName" v-bind:config-string="gamemodeConfigStr" v-on:update-config-str="updateConfString">' +
-        '</component>' +
-        '</div>',
+    template:
+        `<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{localisation.gamemode}}</span>
+            </div>
+            <select class="custom-select" v-model="currentGm">
+                <option v-for="(gm, index) in listOfGamemodes" v-bind:key="index" v-bind:config-string="gamemodeConfigStr"
+                        :value="gm.value">{{gm.title}}
+                </option>
+            </select>
+            <component v-bind:is="componentName" v-bind:config-string="gamemodeConfigStr"
+                       v-on:update-config-str="updateConfString">
+            </component>
+        </div>`,
     computed: {
         componentName: function () {
             return 'gamemode-config-' + this.currentGm;
