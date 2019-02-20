@@ -23,74 +23,77 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
     MysqlPlayerStatsAdapter(int id) throws SQLException {
         super(id);
         DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.PLAYERSTATS
-                + " (id,score,roundsPlayed,dailiesCompleted,maxRoundScore,lastScore,highestStreak) "
-                + "VALUES (" + id + ",0,0,0,0,0,0) ON DUPLICATE KEY UPDATE id = id;");
+                + " (" + ColumnNames.ID + "," + ColumnNames.SCORE + "," + ColumnNames.ROUNDS_PLAYED + ","
+                + ColumnNames.DAILIES_COMPLETED + "," + ColumnNames.MAX_ROUND_SCORE + "," + ColumnNames.LAST_SCORE
+                + "," + ColumnNames.HIGHEST_STREAK + ") "
+                + "VALUES (?,0,0,0,0,0,0) ON DUPLICATE KEY UPDATE " + ColumnNames.ID + " = " + ColumnNames.ID + ";",
+                new IntParam(id));
     }
 
     @Override
     public int getScore() {
-        return getInt("score");
+        return getInt(ColumnNames.SCORE);
     }
 
     @Override
     public int getRoundsPlayed() {
-        return getInt("roundsPlayed");
+        return getInt(ColumnNames.ROUNDS_PLAYED);
     }
 
     @Override
     public int getDailiesCompleted() {
-        return getInt("dailiesCompleted");
+        return getInt(ColumnNames.DAILIES_COMPLETED);
     }
 
     @Override
     public int getMaxRoundScore() {
-        return getInt("maxRoundScore");
+        return getInt(ColumnNames.MAX_ROUND_SCORE);
     }
 
     @Override
     public int getLastScore() {
-        return getInt("lastScore");
+        return getInt(ColumnNames.LAST_SCORE);
     }
 
     @Override
     public int getHighestStreak() {
-        return getInt("highestStreak");
+        return getInt(ColumnNames.HIGHEST_STREAK);
     }
 
     @Override
     public void addScore(int score) {
-        addInt("score", score);
+        addInt(ColumnNames.SCORE, score);
     }
 
     @Override
     public void playRound() {
-        incrementValue("roundsPlayed");
+        incrementValue(ColumnNames.ROUNDS_PLAYED);
     }
 
     @Override
     public void completeDaily() {
-        incrementValue("dailiesCompleted");
+        incrementValue(ColumnNames.DAILIES_COMPLETED);
     }
 
     @Override
     public void setMaxRoundScore(int maxRoundScore) {
-        setInt("maxRoundScore", maxRoundScore);
+        setInt(ColumnNames.MAX_ROUND_SCORE, maxRoundScore);
     }
 
     @Override
     public void setLastScore(int lastScore) {
-        setInt("lastScore", lastScore);
+        setInt(ColumnNames.LAST_SCORE, lastScore);
     }
 
     @Override
     public void setHighestStreak(int highestStreak) {
-        setInt("highestStreak", highestStreak);
+        setInt(ColumnNames.HIGHEST_STREAK, highestStreak);
     }
 
     @Override
     final ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERSTATS + " WHERE (id=?);",
-                new IntParam(getID()));
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERSTATS
+                        + " WHERE (" + ColumnNames.ID + "=?);", new IntParam(getID()));
     }
 
     @Override

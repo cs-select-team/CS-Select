@@ -43,14 +43,16 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
      */
     MysqlPlayerAdapter(String username, String email, String hash, String salt) throws SQLException {
         super(DATABASE_ADAPTER.getNextIdOfTable(TableNames.PLAYERS));
-        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.PLAYERS + " (username,email,hash,salt,language)"
-                + "VALUES (?,?,?,?,?);", new StringParam(username), new StringParam(email),
-                new StringParam(hash), new StringParam(salt), new StringParam(DEFAULT_LANGUAGE));
+        DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.PLAYERS
+                        + " (" + ColumnNames.USERNAME + "," + ColumnNames.EMAIL + "," + ColumnNames.HASH + ","
+                        + ColumnNames.SALT + "," + ColumnNames.LANGUAGE + ")" + "VALUES (?,?,?,?,?);",
+                new StringParam(username), new StringParam(email), new StringParam(hash), new StringParam(salt),
+                new StringParam(DEFAULT_LANGUAGE));
     }
 
     @Override
     public String getUsername() {
-        return getString("username");
+        return getString(ColumnNames.USERNAME);
     }
 
     /**
@@ -60,7 +62,7 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
      * @param username username to set
      */
     void setUsername(String username) {
-        setString("username", username);
+        setString(ColumnNames.USERNAME, username);
     }
 
     @Override
