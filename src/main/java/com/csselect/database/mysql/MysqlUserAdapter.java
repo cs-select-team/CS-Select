@@ -28,28 +28,29 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
 
     @Override
     public final String getEmail() {
-        return getString("email");
+        return getString(ColumnNames.EMAIL);
     }
 
     @Override
     public final String getPasswordHash() {
-        return getString("hash");
+        return getString(ColumnNames.HASH);
     }
 
     @Override
     public final String getPasswordSalt() {
-        return getString("salt");
+        return getString(ColumnNames.SALT);
     }
 
     @Override
     public final String getLanguage() {
-        return getString("language");
+        return getString(ColumnNames.LANGUAGE);
     }
 
     @Override
     public final void setEmail(String email) throws IllegalArgumentException {
         try {
-            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE email=?;",
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE "
+                            + ColumnNames.EMAIL + "=?;",
                     new StringParam(email));
             if (set.next()) {
                 throw new IllegalArgumentException("Email is already in use!");
@@ -58,15 +59,15 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
             Logger.error(e);
             throw new IllegalArgumentException("Error occurred setting the email-address");
         }
-        setString("email", email);
+        setString(ColumnNames.EMAIL, email);
     }
 
     @Override
     public final void setPassword(String hash, String salt) {
         try {
             DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
-                    + " SET hash=?, salt=? WHERE (id=?);", new StringParam(hash), new StringParam(salt),
-                    new IntParam(getID()));
+                    + " SET " + ColumnNames.HASH + "=?, " + ColumnNames.SALT + "=? WHERE (" + ColumnNames.ID + "=?);",
+                    new StringParam(hash), new StringParam(salt), new IntParam(getID()));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -74,12 +75,12 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
 
     @Override
     public final void setLanguage(String langCode) {
-        setString("language", langCode);
+        setString(ColumnNames.LANGUAGE, langCode);
     }
 
     @Override
     final ResultSet getRow() throws SQLException {
-        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName() + " WHERE (id=?);",
-                new IntParam(getID()));
+        return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName()
+                        + " WHERE (" + ColumnNames.ID + "=?);", new IntParam(getID()));
     }
 }

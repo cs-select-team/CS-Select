@@ -67,8 +67,8 @@ public abstract class MysqlAdapter {
     void setString(String columnLabel, String value) {
         try {
             @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value));
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value), new IntParam(id));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -101,8 +101,8 @@ public abstract class MysqlAdapter {
     void setInt(String columnLabel, int value) {
         try {
             @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -125,8 +125,8 @@ public abstract class MysqlAdapter {
         try {
             @Language("sql")
             String query = "UPDATE " + getTableName()
-                    + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (id=" + id + ");";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value));
+                    + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (" + ColumnNames.ID + "=?);";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
         } catch (SQLException e) {
             Logger.error(e);
         }
@@ -140,8 +140,8 @@ public abstract class MysqlAdapter {
     void setBoolean(String columnLabel, boolean value) {
         try {
             @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE id=" + id + ";";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value));
+            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+            DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value), new IntParam(id));
         } catch (SQLException e) {
             Logger.error(e);
         }
