@@ -6,14 +6,15 @@ Vue.component('pattern-selection', {
             selectedPattern: {}
         }
     },
-    template: '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <label class="input-group-text" >{{localisation.pattern}}</label>\n' +
-        '  </div>\n' +
-        '  <select class="custom-select" v-model="selectedPattern">\n' +
-        '    <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>' +
-        '  </select>\n' +
-        '</div>',
+    template:
+        `<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">{{localisation.pattern}}</label>
+            </div>
+            <select class="custom-select" v-model="selectedPattern">
+                <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>
+            </select>
+        </div>`,
     mounted: function() {
         var self = this;
         axios({

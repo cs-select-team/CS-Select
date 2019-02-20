@@ -5,17 +5,20 @@ Vue.component('termination-config', {
             listOfTerminations: []
         }
     },
-    template: "<div class=\"input-group mb-3\">" +
-        "      <div class=\"input-group-prepend\">\n" +
-        "    <span class=\"input-group-text\" >{{localisation.termination}}</span>\n" +
-        "  </div>     " +
-        "<select class='custom-select' v-model='currentTermination' >\n" +
-        "    <option v-for='(term,index) in listOfTerminations' v-bind:key='index'" +
-        "               :value='term.value'>{{term.title}}</option>\n" +
-        "  </select>" +
-        "   <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'" +
-        "               v-on:update-termination='updateTermination' v-bind:list-of-possible-terminations='listOfTerminations.slice(2,4)'></component>" +
-        "</div>",
+    template:
+        `<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{localisation.termination}}</span>
+            </div>
+            <select class='custom-select' v-model='currentTermination'>
+                <option v-for='(term,index) in listOfTerminations' v-bind:key='index' :value='term.value'>{{term.title}}
+                </option>
+            </select>
+            <component v-bind:is='componentName' v-bind:termination-config-str='terminationConfigStr'
+                       v-on:update-termination='updateTermination'
+                       v-bind:list-of-possible-terminations='listOfTerminations.slice(2,4)'>
+            </component>
+        </div>`,
     methods: {
         updateTermination: function (newVal) {
             this.$emit('update-termination-str', newVal);
@@ -56,7 +59,8 @@ Vue.component('termination-config', {
     }
 });
 Vue.component('termination-config-organiser', {
-    template: '<div>{{localisation.organiserTerminationInfo}}</div>'
+    template:
+        `<div>{{localisation.organiserTerminationInfo}}</div>`
 })
 Vue.component('termination-config-composite', {
     props: ['list-of-possible-terminations', 'termination-config-str'],
@@ -116,29 +120,32 @@ Vue.component('termination-config-composite', {
         }
     },
 
-    template: '<div>' +
-        '     <div class="input-group mb-3" :title="localisation.selectTerminationTooltip">\n' +
-        '  <select class="custom-select" v-model="currentTermination">\n' +
-        '    <option v-for="(termination, index) in listOfPossibleTerminations" v-bind:key="index"' +
-        '               :value="termination" >{{termination.title}}</option>' +
-        '  </select>\n' +
-        ' <div class="input-group-append">\n' +
-        '    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">{{localisation.add}}</button>\n' +
-        '  </div>' +
-        '</div>' +
-        '<div v-for="(term, index) in terminations" class="row" >' +
-        '<div class="col-10">' +
-        '<component  v-bind:key="index" ' +
-        '           v-bind:is="\'termination-config-\' + term.value" v-bind:termination-config-str="terminationStrings[index]"' +
-        '           v-on:update-termination="addTerminationStringByIndex($event, index)"></component></div>' +
-        '<div class="col-2"> ' +
-        '<button type="button" class="close" v-on:click="removeTerminationByIndex(index)">\n' +
-        '          <span aria-hidden="true">&times;</span>\n' +
-        '        </button>\n' +
-        '</div>' +
-        '</div>' +
-        '</div>'
-
+    template:
+        `<div>
+            <div class="input-group mb-3" :title="localisation.selectTerminationTooltip"><select class="custom-select"
+                                                                                                 v-model="currentTermination">
+                <option v-for="(termination, index) in listOfPossibleTerminations" v-bind:key="index" :value="termination">
+                    {{termination.title}}
+                </option>
+            </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" v-on:click="addTermination(currentTermination)">
+                        {{localisation.add}}
+                    </button>
+                </div>
+            </div>
+            <div v-for="(term, index) in terminations" class="row">
+                <div class="col-10">
+                    <component v-bind:key="index" v-bind:is="'termination-config-' + term.value"
+                               v-bind:termination-config-str="terminationStrings[index]"
+                               v-on:update-termination="addTerminationStringByIndex($event, index)"></component>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="close" v-on:click="removeTerminationByIndex(index)"><span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>` 
 })
 
 Vue.component('termination-config-rounds', {
@@ -169,13 +176,13 @@ Vue.component('termination-config-rounds', {
             }
         }
     },
-    template: '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text">{{localisation.rounds}}</span>\n' +
-        '  </div>\n' +
-        '  <input type="number" min="0" class="form-control" v-model="number">\n' +
-        '</div>'
-
+    template:
+        `<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{localisation.rounds}}</span>
+            </div>
+            <input type="number" min="0" class="form-control" v-model="number">
+        </div>`
 });
 
 Vue.component('termination-config-time', {
@@ -212,11 +219,11 @@ Vue.component('termination-config-time', {
             }
         }
     },
-    template: '<div class="input-group mb-3">\n' +
-        '  <div class="input-group-prepend">\n' +
-        '    <span class="input-group-text" >{{localisation.endDate}}</span>\n' +
-        '  </div>\n' +
-        '  <date-picker v-bind:config="{format: \'DD/MM/YYYY HH:mm\'}" v-model="date"></date-picker>' +
-        '</div>'
-
+    template:
+        `<div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{localisation.endDate}}</span>
+            </div>
+            <date-picker v-bind:config="{format: 'DD/MM/YYYY HH:mm'}" v-model="date"></date-picker>
+        </div>`
 });

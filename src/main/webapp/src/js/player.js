@@ -1,12 +1,21 @@
 Vue.component('game-display', {
     props: ['game'],
-    template: '<div class="card mt-1"><div class="card-body"><div class="row">' +
-        '                <div class="col"><div>{{ game.title }}</div>' +
-        '                <div>{{ game.type }}</div>' +
-        '                <div>{{ localisation.roundsPlayed + \': \' + game.roundsPlayed  }}</div>' +
-        '               <div>{{game.desc}}</div></div>' +
-        '                <div class="col"><input type="button" :title="localisation.playGameTooltip" class="btn btn-primary float-right" :value="localisation.play" v-on:click="startGame(game.id)"/></div>' +
-        '            </div></div></div>',
+    template:
+        `<div class="card mt-1">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div>{{ game.title }}</div>
+                        <div>{{ game.type }}</div>
+                        <div>{{ localisation.roundsPlayed + ': ' + game.roundsPlayed }}</div>
+                        <div>{{game.desc}}</div>
+                    </div>
+                    <div class="col"><input type="button" :title="localisation.playGameTooltip"
+                                            class="btn btn-primary float-right" :value="localisation.play"
+                                            v-on:click="startGame(game.id)"/></div>
+                </div>
+            </div>
+        </div>`,
     methods: {
         startGame: function(gameId) {
             localStorage.setItem("gameId", gameId);
@@ -18,51 +27,53 @@ Vue.component('game-display', {
 Vue.component('daily-challenge', {
     props:['daily'],
     template:
-        '<div class="card p-2" v-bind:class="{\'disabled-div\': daily.finished, \'bg-success\': daily.finished}">' +
-        '  <div class="card-body">' +
-        '    <h5 class="card-title">{{daily.title}}</h5>' +
-        '    <div class="card-text">' +
-        '     {{localisation.reward}}: {{daily.points}} {{localisation.points}}' +
-        '    </div>' +
-        '    <div class="card-text" v-if="daily.finished">' +
-        '       {{localisation.dailyFinished}}</div>' +
-        '  </div>' +
-        '</div>'
+        `<div class="card p-2" v-bind:class="{'disabled-div': daily.finished, 'bg-success': daily.finished}">
+            <div class="card-body"><h5 class="card-title">{{daily.title}}</h5>
+                <div class="card-text"> {{localisation.reward}}: {{daily.points}} {{localisation.points}}</div>
+                <div class="card-text" v-if="daily.finished"> {{localisation.dailyFinished}}</div>
+            </div>
+        </div>`
 })
-
 Vue.component('leaderboard-element', {
     props: ['place', 'username', 'points'],
-    template: '<tr>\n' +
-        '                    <th>{{ place }}</th>\n' +
-        '                    <th>{{ username }}</th>\n' +
-        '                    <th :title="localisation.lastWeekScoreTooltip">{{ points }}</th>\n' +
-        '                </tr>'
+    template:
+        `<tr>
+            <th>{{ place }}</th>
+            <th>{{ username }}</th>
+            <th :title="localisation.lastWeekScoreTooltip">{{ points }}</th>
+        </tr>`
 })
 
 Vue.component('stats-display', {
     props: ['points', 'username'],
-    template: '        <div>\n' +
-        '            <b class="text">{{username}}</b>\n' +
-        '            <p class="text" :title="localisation.totalScoreTooltip">{{points}}</p>\n' +
-        '        </div>'
+    template:
+        `<div>
+            <b class="text">{{username}}</b>
+            <p class="text" :title="localisation.totalScoreTooltip">{{points}}</p>
+        </div>`
 })
 Vue.component('invite-element', {
     props: ['title', 'gameId'],
-    template: '        <div class="card mt-1">\n' +
-        '            <div class="card-body">\n' +
-        '            <div class="row">\n' +
-        '                <div class="col">\n' +
-        '                <div class="float-left">{{title}}</div>\n' +
-        '                </div>\n' +
-        '                <div class="col">\n' +
-        '                <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">\n' +
-        '                    <button type="button" class="btn-primary btn float-right" v-on:click="accept(gameId)">{{localisation.accept}}</button>\n' +
-        '                    <button type="button" class="btn-secondary btn float-right" v-on:click="decline(gameId)">{{localisation.decline}}</button>\n' +
-        '                </div>\n' +
-        '                </div>\n' +
-        '            </div>\n' +
-        '            </div>\n' +
-        '        </div>',
+    template:
+        `<div class="card mt-1">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="float-left">{{title}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">
+                            <button type="button" class="btn-primary btn float-right" v-on:click="accept(gameId)">
+                                {{localisation.accept}}
+                            </button>
+                            <button type="button" class="btn-secondary btn float-right" v-on:click="decline(gameId)">
+                                {{localisation.decline}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`,
     methods: {
         accept: function (gameId) {
             axios({

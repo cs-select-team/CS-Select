@@ -13,7 +13,8 @@ Vue.component('alert-box', {
             ]
         }
     },
-    template: '<div class="alert" v-bind:class="alertClasses[type]" role="alert">\n' +
-        '  {{alertMessage}}\n' +
-        '</div>'
+    template:
+        `<div class="alert" v-bind:class="alertClasses[type]" role="alert">
+            {{alertMessage}}\n
+        </div>`
 });

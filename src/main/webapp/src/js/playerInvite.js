@@ -5,15 +5,15 @@ Vue.component('player-invite-single', {
         }
     },
 
-    template: '<div class="input-group mb-3">\n' +
-        '  <input type="email" class="form-control" placeholder="" aria-label="" ' +
-        '       v-model="email" aria-describedby="inviteButton">\n' +
-        '  <div class="input-group-append">\n' +
-        '    <button class="btn btn-outline-secondary" type="button" :disabled="!this.validateEmail"' +
-        ' v-on:click="newEmail" id="inviteButton">{{ localisation.invite }}</button>\n' +
-        '  </div>\n' +
-        '</div>',
-
+    template:
+        `<div class="input-group mb-3"><input type="email" class="form-control" placeholder="" aria-label="" v-model="email"
+                                             aria-describedby="inviteButton">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" :disabled="!this.validateEmail" v-on:click="newEmail"
+                        id="inviteButton">{{ localisation.invite }}
+                </button>
+            </div>
+        </div>`, 
     methods: {
         newEmail: function () {
             this.$emit('new-email', this.email)
@@ -34,9 +34,12 @@ Vue.component('player-invite-textarea', {
             rawText: this.inviteString
             }
         },
-    template: '<div class="input-group">\n' +
-        '  <textarea class="form-control" aria-label="" :title="localisation.gamecreationMassInviteTooltip" v-model="rawText"></textarea>\n' +
-        '</div>',
+    template:
+        `<div class="input-group">
+            <textarea class="form-control" aria-label=""
+                                           :title="localisation.gamecreationMassInviteTooltip" v-model="rawText">
+            </textarea>
+        </div>`,
     methods: {
         validateEmail: function (email) {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -72,10 +75,10 @@ Vue.component('player-invite-textarea', {
 });
 Vue.component('player-invite-nav-tab', {
     props: ['title', 'value', 'current-tab'],
-    template: '<li class="nav-item">\n' +
-        '                            <a class="nav-link" v-bind:class="{active: currentTab == value}"\n' +
-        '                                v-on:click="$emit(\'update-tab\', value)" href="#" v-on>{{title}}</a>\n' +
-        '                        </li>'
+    template:
+        `<li class="nav-item">
+            <a class="nav-link" v-bind:class="{active: currentTab == value}" v-on:click="$emit('update-tab', value)" href="#" v-on>{{title}}</a>
+        </li>`
 });
 Vue.component('player-invite-box', {
     props: ['invite-string'],
@@ -118,14 +121,14 @@ Vue.component('player-invite-box', {
             this.currentTab = value;
         }
     },
-    template: '<div>' +
-        '<ul class="nav nav-tabs">\n' +
-        '<player-invite-nav-tab v-for="(value, index) in playerInputType" v-bind:key="index"\n' +
-        '                       v-bind:title="value.title" v-bind:value="value.value"\n' +
-        '                       v-on:update-tab="updateTab">\n' +
-        '</player-invite-nav-tab>\n' +
-        '</ul>\n' +
-        '<component v-bind:is="currentTabComponent" v-on:new-email="addPlayer" v-bind:invite-string="inviteString"\n' +
-        '           v-on:update-invited="updateInviteString"></component>' +
-        '</div>'
+    template:
+        `<div>
+            <ul class="nav nav-tabs">
+                <player-invite-nav-tab v-for="(value, index) in playerInputType" v-bind:key="index" v-bind:title="value.title"
+                                       v-bind:value="value.value" v-on:update-tab="updateTab"></player-invite-nav-tab>
+            </ul>
+            <component v-bind:is="currentTabComponent" v-on:new-email="addPlayer" v-bind:invite-string="inviteString"
+                       v-on:update-invited="updateInviteString">
+            </component>
+        </div>`
 })

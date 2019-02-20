@@ -7,41 +7,50 @@ Vue.component('active-games-display', {
         }
     }
     ,
-    template: '<div class="container">' +
-        '       <div class="container">' +
-        '           <div class="row">' +
-        '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
-        '                   <div>{{ game.type }}</div>' +
-        '                   <div>{{game.desc}}</div>' +
-        '               </div>' +
-        '               <div class="col">' +
-        '                   <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"' +
-        '                        v-on:click="terminate(game.id)" :value="localisation.terminate">' +
-        '                   <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"' +
-        '                       data-toggle="modal" :title="localisation.invitePlayerHelp" :data-target="\'#inviteModal\' + game.id">' +
-        '               </div>' +
-        '            </div>' +
-        '       </div>' +
-                '<div class="modal fade" :id="\'inviteModal\' + game.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\n' +
-                '  <div class="modal-dialog" role="document">\n' +
-                '    <div class="modal-content">\n' +
-                '      <div class="modal-header">\n' +
-                '        <h5 class="modal-title" id="modalLabel">{{ localisation.invite }}</h5>\n' +
-                '        <button :title="localisation.closeTooltip" type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
-                '          <span aria-hidden="true" >&times;</span>\n' +
-                '        </button>\n' +
-                '      </div>\n' +
-                '      <div class="modal-body">' +
-                '               ' +
-                '       <player-invite-box v-bind:invite-string="inviteString" v-on:update-invite-string="updateInviteString"></player-invite-box>' +
-        '               <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">{{localisation.sendInvitations}}</button>' +
-                '      </div>\n' +
-                '      <div class="modal-footer">\n' +
-                '      </div>\n' +
-                '    </div>\n' +
-                '  </div>\n' +
-        '</div>' +
-        '      </div>',
+    template:
+        `<div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div>
+                            {{ game.title }}
+                        </div>
+                        <div>
+                            {{ game.type }}
+                        </div>
+                        <div>
+                            {{game.desc}}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"
+                            v-on:click="terminate(game.id)" :value="localisation.terminate">
+                        <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"
+                            data-toggle="modal" :title="localisation.invitePlayerHelp" :data-target="'#inviteModal' + game.id">
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" :id="'inviteModal' + game.id" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header"><h5 class="modal-title" id="modalLabel">{{ localisation.invite }}</h5>
+                            <button :title="localisation.closeTooltip" type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <player-invite-box v-bind:invite-string="inviteString"
+                                               v-on:update-invite-string="updateInviteString">
+                            </player-invite-box>
+                            <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">
+                                {{localisation.sendInvitations}}
+                            </button>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>`,
     methods: {
         terminate: function(gameId) {
             axios({
@@ -75,18 +84,26 @@ Vue.component('active-games-display', {
 
 Vue.component('terminated-games-display', {
     props: ['game'],
-    template: '<div class="container">' +
-        '       <div class="container">' +
-        '           <div class="row">' +
-        '               <div class="col-md-6 col-sm-12 col-xs-12"><div>{{ game.title }}</div>' +
-        '                   <div>{{ game.type }}</div>' +
-        '               </div>' +
-        '               <div class="col">' +
-        '                   <input type="button" :title="localisation.deleteGameHelp" class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)" :value="localisation.del">' +
-        '               </div>' +
-        '            </div>' +
-        '       </div>' +
-        '      </div>',
+    template:
+        `<div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div>
+                            {{ game.title }}
+                        </div>
+                        <div>
+                            {{ game.type }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <input type="button" :title="localisation.deleteGameHelp"
+                                            class="btn btn-secondary float-right btn-space" v-on:click="remove(game.id)"
+                                            :value="localisation.del">
+                    </div>
+                </div>
+            </div>
+        </div>`,
     methods: {
         remove: function (gameId) {
             axios({
@@ -105,7 +122,7 @@ Vue.component('terminated-games-display', {
 
 Vue.component('stats-display', {
     props: [''],
-    template: ''
+    template: ``
 });
 
 var activeGames = new Vue({
