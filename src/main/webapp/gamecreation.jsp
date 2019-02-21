@@ -29,16 +29,17 @@
                             <span class="input-group-text" ><fmt:message key="title"/></span>
                         </div>
                         <input type="text" class="form-control"v-model="title">
-                        <title-modal v-if="showTitleModal">
+                        <modal-template v-if="showTitleModal">
                         <h3 slot="header"><fmt:message key="titleWarning"/></h3>
                         <a slot="body"><fmt:message key="titleWarningText"/></a>
+                        <hr slot="body">
                         <input type="text" class="form-control"v-model="title" slot="body">
                         <button type="button"
                         slot="footer"
                         class="btn btn-primary"
-                        v-on:click="submitTitle"><fmt:message key="submit"/>
+                        v-on:click="submitTitle" disable="title = ''"><fmt:message key="submit"/>
                         </button>
-                        </title-modal>
+                        </modal-template>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -75,7 +76,7 @@
                         v-on:load-pattern="loadPattern">
                     </pattern-selection>
 
-                    <pattern-modal v-if="showPatternModal">
+                    <modal-template v-if="showPatternModal">
                         <h3 slot="header"><fmt:message key="patternOverwriteWarning"/></h3>
                         <a slot="body"><fmt:message key="patternOverwriteWarningText"/></a>
                         <button type="button"
@@ -89,7 +90,7 @@
                             data-dismiss="modal-template"
                             v-on:click="declineOverwritePattern"><fmt:message key="decline"/>
                         </button>
-                    </pattern-modal>
+                    </modal-template>
                     <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -120,25 +121,7 @@
 
         </div>
     </div>
-    <script type="text/x-template" id="modal-template">
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
-                    <div class="modal-header">
-                        <slot name="header"></slot>
-                    </div>
-                    <div class="modal-body">
-                        <slot name="body"></slot>
-                    </div>
-                    <div class="modal-footer">
-                        <slot name="footer"></slot>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </transition>
-    </script>
+    <script src="src/js/modal.js"></script>
     <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>

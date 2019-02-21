@@ -1,9 +1,4 @@
-Vue.component('pattern-modal', {
-    template: '#modal-template'
-});
-Vue.component('title-modal', {
-    template: '#modal-template'
-});
+
 Vue.component('pattern-selection', {
     data: function() {
         return {
@@ -51,7 +46,7 @@ var creation = new Vue({
         listOfPatterns: [],
         showPatternModal: false,
         showTitleModal: false,
-        titleExists: false,
+        questionTitle: false,
         fromCreation: false,
         createButtonEnabled: true,
         acceptTitle: true,
@@ -128,7 +123,7 @@ var creation = new Vue({
         },
         resumeCreation: function() {
             var self = this;
-            if (self.titleExists === true) {
+            if (self.questionTitle === true) {
                 self.fromCreation = true;
                 self.showTitleModal = true;
             } else {
@@ -188,7 +183,7 @@ var creation = new Vue({
         submitTitle: function () {
             var self = this;
             self.showTitleModal = false;
-            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false;
+            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false; self.questionTitle = false;
         },
         createGame: function () {
             var self = this;
@@ -234,7 +229,7 @@ var creation = new Vue({
                 }
             }).then(function(response) {
                 if(response.data) {
-                    self.titleExists = true;
+                    self.questionTitle = true;
                 }
                 self.resumeCreation()
             })
