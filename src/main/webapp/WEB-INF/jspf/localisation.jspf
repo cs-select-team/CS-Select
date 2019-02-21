@@ -99,7 +99,6 @@ props -->
                             patternOverwriteWarningText: '<fmt:message key="patternOverwriteWarningText"/>',
                             titleWarning: '<fmt:message key="titleWarning"/>',
                             titleWarningText: '<fmt:message key="titleWarningText"/>',
-                            gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>'
                             gamificationPointsTooltip: '<fmt:message key="gamificationPointsTooltip"/>',
                             unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>',
                             confirmToolTip: '<fmt:message key="confirmToolTip"/>',
