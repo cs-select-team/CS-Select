@@ -55,7 +55,7 @@ public class GameManagement extends Servlet {
         String name = getParameter("name", req);
         try {
             boolean exists = getOrganiserFacade().checkFeatureSet(name);
-            returnAsJson(resp, exists );
+            returnAsJson(resp, exists);
         } catch (IOException e) {
             resp.sendError(HttpServletResponse.SC_GATEWAY_TIMEOUT);
         }
