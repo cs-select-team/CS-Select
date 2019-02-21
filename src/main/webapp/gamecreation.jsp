@@ -30,13 +30,13 @@
                         </div>
                         <input type="text" class="form-control"v-model="title">
                         <title-modal v-if="showTitleModal">
-                        <h3 slot="header">{{localisation.titleWarning}}</h3>
-                        <a slot="body">{{localisation.titleWarningText}}</a>
+                        <h3 slot="header"><fmt:message key="titleWarning"/></h3>
+                        <a slot="body"><fmt:message key="titleWarningText"/></a>
                         <input type="text" class="form-control"v-model="title" slot="body">
                         <button type="button"
                         slot="footer"
                         class="btn btn-primary"
-                        v-on:click="submitTitle">{{localisation.submit}}
+                        v-on:click="submitTitle"><fmt:message key="submit"/>
                         </button>
                         </title-modal>
                     </div>
@@ -76,18 +76,18 @@
                     </pattern-selection>
 
                     <pattern-modal v-if="showPatternModal">
-                        <h3 slot="header">{{localisation.patternOverwriteWarning}}</h3>
-                        <a slot="body">{{localisation.patternOverwriteWarningText}}</a>
+                        <h3 slot="header"><fmt:message key="patternOverwriteWarning"/></h3>
+                        <a slot="body"><fmt:message key="patternOverwriteWarningText"/></a>
                         <button type="button"
                             slot="footer"
                             class="btn btn-secondary"
-                            v-on:click="submitOverwritePattern">{{localisation.submit}}
+                            v-on:click="submitOverwritePattern"><fmt:message key="submit"/>
                         </button>
                         <button type="button"
                             slot="footer"
                             class="btn btn-secondary"
                             data-dismiss="modal-template"
-                            v-on:click="declineOverwritePattern">{{localisation.decline}}
+                            v-on:click="declineOverwritePattern"><fmt:message key="decline"/>
                         </button>
                     </pattern-modal>
                     <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
