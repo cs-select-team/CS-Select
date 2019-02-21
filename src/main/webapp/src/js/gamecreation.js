@@ -183,7 +183,8 @@ var creation = new Vue({
         submitTitle: function () {
             var self = this;
             self.showTitleModal = false;
-            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false; self.questionTitle = false;
+            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false;
+            self.questionTitle = false;
         },
         createGame: function () {
             var self = this;
