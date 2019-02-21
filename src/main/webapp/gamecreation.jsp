@@ -80,7 +80,7 @@
                         <a slot="body"><fmt:message key="patternOverwriteWarningText"/></a>
                         <button type="button"
                             slot="footer"
-                            class="btn btn-secondary"
+                            class="btn btn-primary"
                             v-on:click="submitOverwritePattern"><fmt:message key="submit"/>
                         </button>
                         <button type="button"
