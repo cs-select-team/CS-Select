@@ -51,6 +51,7 @@ var creation = new Vue({
         listOfPatterns: [],
         showPatternModal: false,
         showTitleModal: false,
+        titleExists: false,
         fromCreation: false,
         createButtonEnabled: true,
         acceptTitle: true,
@@ -123,7 +124,11 @@ var creation = new Vue({
                 self.createButtonEnabled = true;
                 return;
             }
-            if (self.checkTitleExists()) {
+            this.checkTitleExists();
+        },
+        resumeCreation: function() {
+            var self = this;
+            if (self.titleExists === true) {
                 self.fromCreation = true;
                 self.showTitleModal = true;
             } else {
@@ -183,7 +188,7 @@ var creation = new Vue({
         submitTitle: function () {
             var self = this;
             self.showTitleModal = false;
-            if (self.fromCreation === true) self.submitGame()
+            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false;
         },
         createGame: function () {
             var self = this;
@@ -220,12 +225,18 @@ var creation = new Vue({
             self.showPatternModal = false
         },
         checkTitleExists: function() {
-            return axios({
+            var self = this;
+            axios({
                 method: 'get',
                 url: 'create/titleexists',
                 params: {
                     name: self.title
                 }
+            }).then(function(response) {
+                if(response.data) {
+                    self.titleExists = true;
+                }
+                self.resumeCreation()
             })
         },
     },
