@@ -1,7 +1,7 @@
 Vue.component('matrix-row', {
     props: ['feature-list'],
     template:
-        `<div class="mt-2 row" :title="localisation.matrixSelectHelp">
+        `<div class="mt-2 row">
             <feature-box v-on:toggled="toggled" v-on:useless-toggle="uselessToggle" class="col p-0 mr-2"
                 v-for="feature in featureList" v-bind:key="feature.id" v-bind:feature="feature">
             </feature-box>
