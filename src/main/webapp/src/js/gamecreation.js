@@ -130,7 +130,7 @@ var creation = new Vue({
                         self.submittedDatabaseName = false;
                         self.showDatabaseModal = true;
                     }
-                    if (response[1].data && submittedDatabaseName) {
+                    if (response[1].data) {
                         self.submittedTitle = false;
                         self.showTitleModal = true;
                     }
