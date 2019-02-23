@@ -181,7 +181,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         if (!Injector.getInstance().getMLServer().isOnline()) throw new IOException("can not connect to ml server");
         return Injector.getInstance().getMLServer().isValidDataset(name);
     }
-    /** checks if a batabse with the given name exists
+    /** checks if a database with the given name exists
      *
      * @throws IOException if the backend failed the connection to the database
      * @param name name of the database to look up
