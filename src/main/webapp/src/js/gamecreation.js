@@ -47,9 +47,9 @@ var creation = new Vue({
         showPatternModal: false,
         showTitleModal: false,
         showDatabaseModal: false,
-        submittedTitle: false,
+        submittedTitle: true,
         titleDuplicate: false,
-        submittedDatabaseName: false,
+        submittedDatabaseName: true,
         createButtonEnabled: true,
         alerts: []
     },
