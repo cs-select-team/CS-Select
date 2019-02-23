@@ -2,8 +2,8 @@ package com.csselect.user;
 
 import com.csselect.database.UserAdapter;
 import com.csselect.email.EmailSender;
+import com.csselect.inject.Injector;
 import com.csselect.user.management.safety.Encrypter;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,12 +13,13 @@ import org.jetbrains.annotations.NotNull;
  * Additionally, he can set in which language the frontend should be displayed.
  * A user is identified in our system through a ID in our Database, retrievable via the {@link UserAdapter}
  */
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
 
     private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
     private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password"
-            + " was submitted. Your temporary password is '%s'! Please change this password to an own safe one"
-            + " as fast as possible!";
+            + " was submitted. Your temporary password is '%s'! Please login with your temporary password under "
+            + Injector.getInstance().getConfiguration().getCSSelectURL()
+            + " and change it to an own, safe one as fast as possible!";
 
     private final UserAdapter userAdapter;
     protected boolean loggedIn;
