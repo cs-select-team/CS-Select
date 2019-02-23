@@ -32,12 +32,15 @@
                         <modal-template v-if="showTitleModal">
                         <h3 slot="header"><fmt:message key="titleWarning"/></h3>
                         <a slot="body"><fmt:message key="titleWarningText"/></a>
-                        <hr slot="body">
-                        <input type="text" class="form-control"v-model="title" slot="body">
                         <button type="button"
                         slot="footer"
                         class="btn btn-primary"
-                        v-on:click="submitTitle" disable="title = ''"><fmt:message key="submit"/>
+                        v-on:click="submitTitle"><fmt:message key="submit"/>
+                        </button>
+                        <button type="button"
+                        slot="footer"
+                        class="btn btn-secondary"
+                        v-on:click="abortCreation"><fmt:message key="abortCreation"/>
                         </button>
                         </modal-template>
                     </div>
@@ -114,6 +117,20 @@
                         </div>
                         <input type="text" class="form-control" v-model="databaseName">
                     </div>
+                    <modal-template v-if="showDatabaseModal">
+                    <h3 slot="header"><fmt:message key="databaseWarning"/></h3>
+                    <a slot="body"><fmt:message key="databaseWarningText"/></a>
+                    <button type="button"
+                    slot="footer"
+                    class="btn btn-primary"
+                    v-on:click="submitDatabaseName"><fmt:message key="submit"/>
+                    </button>
+                    <button type="button"
+                    slot="footer"
+                    class="btn btn-secondary"
+                    v-on:click="abortCreation"><fmt:message key="abortCreation"/>
+                    </button>
+                    </modal-template>
                     <button type="button" class="btn btn-primary btn-lg" v-on:click="startCreation" :disabled="!createButtonEnabled">{{localisation.create}}</button>
 
                 </div>

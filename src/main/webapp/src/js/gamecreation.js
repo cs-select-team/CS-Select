@@ -46,10 +46,11 @@ var creation = new Vue({
         listOfPatterns: [],
         showPatternModal: false,
         showTitleModal: false,
-        questionTitle: false,
-        fromCreation: false,
+        showDatabaseModal: false,
+        submittedTitle: false,
+        titleDuplicate: false,
+        submittedDatabaseName: false,
         createButtonEnabled: true,
-        acceptTitle: true,
         alerts: []
     },
     methods: {
@@ -119,15 +120,28 @@ var creation = new Vue({
                 self.createButtonEnabled = true;
                 return;
             }
-            this.checkTitleExists();
+            self.checkConflicts();
         },
-        resumeCreation: function() {
+        checkConflicts: function() {
             var self = this;
-            if (self.questionTitle === true) {
-                self.fromCreation = true;
-                self.showTitleModal = true;
-            } else {
-                self.submitGame()
+            axios.all([self.checkDatabaseExists(), self.checkTitleExists()]).then(function(response) {
+                if(response[0].data || response[1].data) {
+                    if (response[0].data) {
+                        self.submittedDatabaseName = false;
+                        self.showDatabaseModal = true;
+                    }
+                    if (response[1].data && submittedDatabaseName) {
+                        self.submittedTitle = false;
+                        self.showTitleModal = true;
+                    }
+                } else {
+                    self.submitGame();
+                }
+            })
+        },
+        checkResolved: function() {
+            if(this.submittedTitle && this.submittedDatabaseName) {
+                this.submitGame();
             }
         },
         submitGame: function () {
@@ -157,9 +171,14 @@ var creation = new Vue({
                 }
                 self.createGame();
             }).catch(function (reason) {
-                if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
-                    self.createButtonEnabled = true;
-                    self.alerts.push({message: self.localisation.MLServerDown, type: 0})
+                if (reason.response !== undefined) {
+                    if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
+                        self.alerts.push({message: self.localisation.MLServerDown, type: 0});
+                        self.createButtonEnabled = true;
+                    }
+                } else {
+                        self.alerts.push({message: self.localisation.creationFail, type: 0});
+                        self.createButtonEnabled = true;
                 }
             })
         },
@@ -180,12 +199,6 @@ var creation = new Vue({
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
             return this.alerts.length === 0;
         },
-        submitTitle: function () {
-            var self = this;
-            self.showTitleModal = false;
-            if (self.fromCreation === true) self.submitGame(); self.fromCreation = false;
-            self.questionTitle = false;
-        },
         createGame: function () {
             var self = this;
             axios({
@@ -196,7 +209,7 @@ var creation = new Vue({
                 self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
                 if (error.status == 551) { // game has not been created
-                    self.createButtonEnabled;
+                    self.createButtonEnabled = true;
                     self.alerts.push({message: self.localisation.creationFail, type: 0})
                 }
             });
@@ -220,20 +233,46 @@ var creation = new Vue({
             var self = this;
             self.showPatternModal = false
         },
+        checkDatabaseExists: function() {
+            var self = this;
+            return axios({
+                method: 'get',
+                url: 'create/dbexists',
+                params: {
+                    name: self.databaseName
+                }
+            })
+        },
         checkTitleExists: function() {
             var self = this;
-            axios({
+            return axios({
                 method: 'get',
                 url: 'create/titleexists',
                 params: {
                     name: self.title
                 }
-            }).then(function(response) {
-                if(response.data) {
-                    self.questionTitle = true;
-                }
-                self.resumeCreation()
             })
         },
+        submitDatabaseName: function() {
+            var self = this;
+            self.submittedDatabaseName = true;
+            self.showDatabaseModal = false;
+            self.checkResolved();
+        },
+        submitTitle: function() {
+            var self = this;
+            self.submittedTitle = true;
+            self.showTitleModal = false;
+            self.checkResolved();
+        },
+        abortCreation() {
+            var self = this;
+            self.showTitleModal = false;
+            self.showDatabaseModal = false;
+            self.submittedTitle = false;
+            self.submittedDatabaseName = false;
+            self.createButtonEnabled = true;
+            self.alerts.push({message: self.localisation.creationAbort, type: 0})
+        }
     },
 });
