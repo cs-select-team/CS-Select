@@ -97,7 +97,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
     @Override
     public boolean gameTitleInUse(String title) {
         try {
-            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM games WHERE title=? AND organiserId=?;",
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TableNames.GAMES + " WHERE "
+                            + ColumnNames.TITLE + "=? AND " + ColumnNames.ORGANISER_ID + "=?;",
                     new StringParam(title), new IntParam(this.getID()));
             return set.next();
         } catch (SQLException e) {
