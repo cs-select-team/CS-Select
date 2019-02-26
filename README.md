@@ -73,6 +73,13 @@ If you want to expand CS:Select with your own additions, use the following setup
  - For non ascii characters you will have to use the `native2ascii` tool by Oracle, or an alternative that converts UTF-8 to ISO-8859-1 standart ([native2ascii](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/native2ascii.html)).
  It converts characters like `ü` to the `\uxxxx` notation.
  
+ # Database
+ If you wish to use a different database implementation instead of our MySQL one, you will need to follow these steps:
+ 1. Implement all interfaces in the `com.csselect.database` package according to their documentation for your database of choice
+ 1. Edit `com.csselect.inject.CSSelectModule` to use your implementation of the database package or create your own extension of the
+    `com.csselect.inject.Module` abstract class and use it in the `com.csselect.inject.Injector` class instead of our default implementation
+ 
+ 
  # Known issues
  - Only works with MySql Version 5.7.20
  - pattern loading doesn't load termination value
