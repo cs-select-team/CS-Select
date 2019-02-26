@@ -74,8 +74,7 @@ If you want to expand CS:Select with your own additions, use the following setup
  It converts characters like `ü` to the `\uxxxx` notation.
  
  # Known issues
- - Only works with MySql Version 5.7.20
- - pattern loading doesn't load termination value
+ - Developed and tested on MySql Version 5.7, using newer version might result in unknown bugs
  ## Potential out-of-memory-error
  When creating multiple games in a row there might happen an Out-of-memory-error and the dataset will not be written to
  the database correctly when using Tomcat. This can occur if the application is redeployed often, as Tomcat has a problem
