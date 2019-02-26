@@ -78,7 +78,7 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         gameOptions.getInvitedEmails().forEach(joiner::add);
         String emails = joiner.toString();
         try {
-            DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO patterns"
+            DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO patterns"
                     + "(organiserId,title,gameTitle,description,dataset,databasename,termination,gamemode,"
                             + "invitedPlayers) VALUES (?,?,?,?,?,?,?,?,?)", new IntParam(getID()),
                     new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
@@ -88,6 +88,18 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                     new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
         } catch (SQLException e) {
             Logger.error(e);
+        }
+    }
+
+    @Override
+    public boolean gameTitleInUse(String title) {
+        try {
+            ResultSet set = DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM games WHERE title=? AND organiserId=?;",
+                    new StringParam(title), new IntParam(this.getID()));
+            return set.next();
+        } catch (SQLException e) {
+            Logger.error(e);
+            return true;
         }
     }
 

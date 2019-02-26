@@ -34,7 +34,15 @@ public class GameManagement extends Servlet {
             checkExist(req, resp);
         } else if (req.getPathInfo().matches("/dbexists.*")) {
             checkDatabase(req, resp);
+        } else if (req.getPathInfo().matches("/titleexists.*")) {
+            checkTitleExists(req, resp);
         }
+    }
+
+    private void checkTitleExists(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
+        String title = getParameter("name", req);
+        boolean exists = getOrganiserFacade().gameTitleInUse(title);
+        returnAsJson(resp, exists);
     }
 
     private void checkDatabase(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
@@ -47,7 +55,7 @@ public class GameManagement extends Servlet {
         String name = getParameter("name", req);
         try {
             boolean exists = getOrganiserFacade().checkFeatureSet(name);
-            returnAsJson(resp, exists );
+            returnAsJson(resp, exists);
         } catch (IOException e) {
             resp.sendError(HttpServletResponse.SC_GATEWAY_TIMEOUT);
         }

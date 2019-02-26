@@ -99,7 +99,8 @@ props -->
                             unknownAchievementTooltip: '<fmt:message key="unknownAchievementTooltip"/>',
                             confirmToolTip: '<fmt:message key="confirmToolTip"/>',
                             skipToolTip: '<fmt:message key="skipToolTip"/>',
-                            quitToolTip: '<fmt:message key="quitToolTip"/>'
+                            quitToolTip: '<fmt:message key="quitToolTip"/>',
+                            creationAbort: '<fmt:message key="creationAbort"/>'
                         }
                     }
                 }

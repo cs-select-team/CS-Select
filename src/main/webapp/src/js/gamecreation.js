@@ -21,15 +21,16 @@ Vue.component('pattern-selection', {
             method: 'get',
             url: 'create/patterns'
         }).then(function (response) {
-            self.listOfPatterns = response.data
-        })
+            self.listOfPatterns = response.data;
+            self.$emit('set-patterns' ,response.data);
+        });
     },
     watch: {
         selectedPattern: function(newVal) {
             this.$emit('load-pattern', newVal)
         }
     }
-})
+});
 var creation = new Vue({
     el: '#gamecreation',
     data: {
@@ -43,8 +44,13 @@ var creation = new Vue({
         featureSet: '',
         saveAsPattern: false,
         patternName: '',
-
-
+        listOfPatterns: [],
+        showPatternModal: false,
+        showTitleModal: false,
+        showDatabaseModal: false,
+        submittedTitle: true,
+        titleDuplicate: false,
+        submittedDatabaseName: true,
         createButtonEnabled: true,
         alerts: []
     },
@@ -82,7 +88,7 @@ var creation = new Vue({
         updateTerminationString: function (newVal) {
             this.terminationConfigString = newVal;
         },
-        loadPattern: function(newVal) {
+        loadPattern: function (newVal) {
             var gameOptions = newVal.gameOptions;
             this.featureSet = gameOptions.featureset;
             this.desc = gameOptions.desc;
@@ -92,7 +98,7 @@ var creation = new Vue({
             this.terminationConfigString = gameOptions.termination;
             this.inviteString = gameOptions.invites.join(',');
         },
-        checkFeatureSet: function() {
+        checkFeatureSet: function () {
             var self = this;
             if (this.featureSet == '') {
                 alert("Please set featureSet");
@@ -108,55 +114,94 @@ var creation = new Vue({
                 })
             }
         },
-
-        submitGame: function() {
-
+        startCreation: function () {
             var self = this;
-            if (!this.checkParameters()) return
-            axios.all([this.checkFeatureSet(), this.submitParameter('title', this.title),
-                        this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
-                        this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
-                        this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function(response){
-                            if(!response[0].data) {
-                                self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
-                                return;
-                            }
-                            if (self.saveAsPattern) {
-                                self.savePattern()
-                            }
-                            self.createGame();
-            }).catch(function (reason) {
-                if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
-                    self.alerts.push({message: self.localisation.MLServerDown, type: 0})
+            self.createButtonEnabled = false;
+            if (!this.checkParameters()) {
+                self.createButtonEnabled = true;
+                return;
+            }
+            self.checkConflicts();
+        },
+        checkConflicts: function() {
+            var self = this;
+            axios.all([self.checkDatabaseExists(), self.checkTitleExists()]).then(function(response) {
+                if(response[0].data || response[1].data) {
+                    if (response[0].data) {
+                        self.submittedDatabaseName = false;
+                        self.showDatabaseModal = true;
+                    }
+                    if (response[1].data) {
+                        self.submittedTitle = false;
+                        self.showTitleModal = true;
+                    }
+                } else {
+                    self.submitGame();
                 }
             })
         },
-        checkParameters: function() {
+        checkResolved: function() {
+            if(this.submittedTitle && this.submittedDatabaseName) {
+                this.submitGame();
+            }
+        },
+        submitGame: function () {
+            var self = this;
+            axios.all(
+                [this.checkFeatureSet(), this.submitParameter('title', this.title),
+                this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
+                this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
+                this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function (response) {
+                if (!response[0].data) {
+                    self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
+                    self.createButtonEnabled = true;
+                    return;
+                }
+                if (self.saveAsPattern) {
+                    var isOverwriting = false;
+                    self.listOfPatterns.forEach(function (pattern) {
+                        if (pattern.title === self.patternName) {
+                            isOverwriting = true
+                        }
+                    });
+                    if (isOverwriting) {
+                        self.showPatternModal = true
+                    } else {
+                        self.submitOverwritePattern()
+                    }
+                }
+                self.createGame();
+            }).catch(function (reason) {
+                if (reason.response !== undefined) {
+                    if (504 === reason.response.status) { // if gateway unavailable(i.e. ML-Server does not respond
+                        self.alerts.push({message: self.localisation.MLServerDown, type: 0});
+                        self.createButtonEnabled = true;
+                    }
+                } else {
+                        self.alerts.push({message: self.localisation.creationFail, type: 0});
+                        self.createButtonEnabled = true;
+                }
+            })
+        },
+        checkParameters: function () {
             this.alerts = [];
             // language=RegExp
             if (this.title.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterTitle, type: 0});
             // language=RegExp
             if (this.desc.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDescription, type: 0});
             // language=RegExp
-            if (this.databaseName.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDatabaseName, type: 0});
+            if (this.databaseName.match(/^\s*$/)) this.alerts.push({
+                message: this.localisation.enterDatabaseName,
+                type: 0
+            });
             if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
             if (this.terminationConfigString.split(':').length < 2 &&
                 this.terminationConfigString.split(':')[0].toString() != 'organiser')
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
             return this.alerts.length === 0;
         },
-        savePattern: function() {
-            axios({
-                method: 'post',
-                url: 'create/savePattern',
-                params: {
-                    title: this.patternName,
-                }
-            })
-        },
-        createGame: function() {
+        createGame: function () {
             var self = this;
-            this.createButtonEnabled = false;
             axios({
                 method: 'post',
                 url: 'create'
@@ -165,12 +210,70 @@ var creation = new Vue({
                 self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
                 if (error.status == 551) { // game has not been created
+                    self.createButtonEnabled = true;
                     self.alerts.push({message: self.localisation.creationFail, type: 0})
                 }
             });
+        },
+        setPatterns: function (list) {
+            this.listOfPatterns = list;
+        },
+        submitOverwritePattern: function () {
+            var self = this;
+            axios({
+                method: 'post',
+                url: 'create/savePattern',
+                params: {
+                    title: self.patternName,
+                }
+            }).then(function () {
+                self.showPatternModal = false;
+            })
+        },
+        declineOverwritePattern: function () {
+            var self = this;
+            self.showPatternModal = false
+        },
+        checkDatabaseExists: function() {
+            var self = this;
+            return axios({
+                method: 'get',
+                url: 'create/dbexists',
+                params: {
+                    name: self.databaseName
+                }
+            })
+        },
+        checkTitleExists: function() {
+            var self = this;
+            return axios({
+                method: 'get',
+                url: 'create/titleexists',
+                params: {
+                    name: self.title
+                }
+            })
+        },
+        submitDatabaseName: function() {
+            var self = this;
+            self.submittedDatabaseName = true;
+            self.showDatabaseModal = false;
+            self.checkResolved();
+        },
+        submitTitle: function() {
+            var self = this;
+            self.submittedTitle = true;
+            self.showTitleModal = false;
+            self.checkResolved();
+        },
+        abortCreation() {
+            var self = this;
+            self.showTitleModal = false;
+            self.showDatabaseModal = false;
+            self.submittedTitle = false;
+            self.submittedDatabaseName = false;
+            self.createButtonEnabled = true;
+            self.alerts.push({message: self.localisation.creationAbort, type: 0})
         }
-
     },
-    computed: {
-    }
 });

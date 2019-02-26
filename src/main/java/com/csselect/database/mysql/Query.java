@@ -44,11 +44,11 @@ final class Query {
     @Language("sql")
     static final String CREATE_PATTERN_TABLE
             = "CREATE TABLE IF NOT EXISTS patterns("
-            + "id INT AUTO_INCREMENT PRIMARY KEY,"
             + "organiserId INT,"
             + "INDEX organiser_ind (organiserId),"
             + "FOREIGN KEY (organiserId) REFERENCES organisers(id) ON DELETE CASCADE,"
             + "title VARCHAR(255),"
+            + "PRIMARY KEY (organiserId, title),"
             + "gameTitle VARCHAR(255),"
             + "description VARCHAR(255),"
             + "dataset VARCHAR(255),"

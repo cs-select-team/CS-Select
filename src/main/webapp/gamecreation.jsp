@@ -29,6 +29,20 @@
                             <span class="input-group-text" ><fmt:message key="title"/></span>
                         </div>
                         <input type="text" class="form-control"v-model="title">
+                        <modal-template v-if="showTitleModal">
+                        <h3 slot="header"><fmt:message key="titleWarning"/></h3>
+                        <a slot="body"><fmt:message key="titleWarningText"/></a>
+                        <button type="button"
+                        slot="footer"
+                        class="btn btn-primary"
+                        v-on:click="submitTitle"><fmt:message key="submit"/>
+                        </button>
+                        <button type="button"
+                        slot="footer"
+                        class="btn btn-secondary"
+                        v-on:click="abortCreation"><fmt:message key="abortCreation"/>
+                        </button>
+                        </modal-template>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -61,9 +75,25 @@
                     </termination-config>
                 </div>
                 <div class="col-4">
-                    <pattern-selection :title="localisation.selectPatternTooltip" v-on:load-pattern="loadPattern"></pattern-selection>
+                    <pattern-selection :title="localisation.selectPatternTooltip" v-on:set-patterns="setPatterns"
+                        v-on:load-pattern="loadPattern">
+                    </pattern-selection>
 
-
+                    <modal-template v-if="showPatternModal">
+                        <h3 slot="header"><fmt:message key="patternOverwriteWarning"/></h3>
+                        <a slot="body"><fmt:message key="patternOverwriteWarningText"/></a>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-primary"
+                            v-on:click="submitOverwritePattern"><fmt:message key="submit"/>
+                        </button>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-secondary"
+                            data-dismiss="modal-template"
+                            v-on:click="declineOverwritePattern"><fmt:message key="decline"/>
+                        </button>
+                    </modal-template>
                     <div class="input-group mb-3" :title="localisation.saveAsPatternTooltip">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -87,13 +117,28 @@
                         </div>
                         <input type="text" class="form-control" v-model="databaseName">
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg" v-on:click="submitGame" :disabled="!createButtonEnabled">{{localisation.create}}</button>
+                    <modal-template v-if="showDatabaseModal">
+                    <h3 slot="header"><fmt:message key="databaseWarning"/></h3>
+                    <a slot="body"><fmt:message key="databaseWarningText"/></a>
+                    <button type="button"
+                    slot="footer"
+                    class="btn btn-primary"
+                    v-on:click="submitDatabaseName"><fmt:message key="submit"/>
+                    </button>
+                    <button type="button"
+                    slot="footer"
+                    class="btn btn-secondary"
+                    v-on:click="abortCreation"><fmt:message key="abortCreation"/>
+                    </button>
+                    </modal-template>
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="startCreation" :disabled="!createButtonEnabled">{{localisation.create}}</button>
 
                 </div>
             </div>
 
         </div>
     </div>
+    <script src="src/js/modal.js"></script>
     <script src="src/js/alert.js"></script>
     <script src="src/js/terminationCreation.js"></script>
     <script src="src/js/gamemodesCreation.js"></script>

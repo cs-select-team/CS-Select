@@ -181,7 +181,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         if (!Injector.getInstance().getMLServer().isOnline()) throw new IOException("can not connect to ml server");
         return Injector.getInstance().getMLServer().isValidDataset(name);
     }
-    /** checks if a batabse with the given name exists
+    /** checks if a database with the given name exists
      *
      * @throws IOException if the backend failed the connection to the database
      * @param name name of the database to look up
@@ -191,4 +191,12 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         return Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase(name);
     }
 
+    /**
+     * Checks if there is an active game with given title
+     * @param title Game title
+     * @return Boolean if active(!) game with this title exists
+     */
+    public boolean gameTitleInUse(String title) {
+        return organiser.gameTitleInUse(title);
+    }
 }
