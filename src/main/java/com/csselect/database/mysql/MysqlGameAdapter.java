@@ -11,7 +11,6 @@ import com.csselect.parser.GamemodeParser;
 import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
-import com.mysql.cj.xdevapi.Column;
 import org.pmw.tinylog.Logger;
 
 import java.io.IOException;
@@ -28,6 +27,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
+    private static final String COUNT = "count";
 
     private String databaseName;
     private String title;
@@ -99,12 +99,12 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     public int getNumberOfRounds() {
         ResultSet set;
         try {
-            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT COUNT(*) AS count FROM " + TableNames.GAME_ROUNDS
+            set = DATABASE_ADAPTER.executeMysqlQuery("SELECT COUNT(*) AS " + COUNT + " FROM " + TableNames.GAME_ROUNDS
                             + " WHERE " + ColumnNames.SKIPPED + "=0;", getDatabaseName());
             if (!set.next()) {
                 return 0;
             } else {
-                return set.getInt("count");
+                return set.getInt(COUNT);
             }
         } catch (SQLException e) {
             Logger.error(e);
@@ -334,7 +334,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     ResultSet getRow() throws SQLException {
         return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TableNames.GAMES
-                + " WHERE ("+ ColumnNames.ID + "=?);", new IntParam(getID()));
+                + " WHERE (" + ColumnNames.ID + "=?);", new IntParam(getID()));
     }
 
     @Override
