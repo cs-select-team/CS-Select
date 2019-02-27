@@ -180,6 +180,7 @@ public class Games extends Servlet {
             jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
             jsonObject.addProperty("type", game.getGamemode().getName());
             jsonObject.addProperty("desc", game.getDescription());
+            jsonObject.addProperty("termination", game.getTermination().toString());
             json.add(jsonObject);
         }
         returnJson(resp, json);
