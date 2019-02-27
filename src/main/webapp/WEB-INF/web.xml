@@ -7,7 +7,11 @@
     <description>This is an application to help with Feature Subset Selection</description>
 
     <listener>
-        <listener-class>com.csselect.utils.LoggerConfigurator</listener-class>
+        <listener-class>com.csselect.servletlisteners.DatabaseAvailableChecker</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.csselect.servletlisteners.LoggerConfigurator</listener-class>
     </listener>
 
     <!-- Servlet mapping -->

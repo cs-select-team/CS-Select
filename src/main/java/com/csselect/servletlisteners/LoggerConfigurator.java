@@ -1,4 +1,4 @@
-package com.csselect.utils;
+package com.csselect.servletlisteners;
 
 import com.csselect.inject.Injector;
 import org.pmw.tinylog.Configurator;
