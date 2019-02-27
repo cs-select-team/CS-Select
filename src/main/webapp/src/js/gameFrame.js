@@ -68,6 +68,7 @@ var gameFrame = new Vue({
         },
         getNextRound: function() {
             this.clearAlerts();
+
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
@@ -76,6 +77,7 @@ var gameFrame = new Vue({
                     localStorage.setItem("gameTerminated", true);
                     gameFrame.quit()
                 }
+                $('.modal').modal('hide'); // close all open modals
                 gameFrame.featureList = response.data.listOfFeatures;
                 gameFrame.featureList.forEach(function (feature) {
                     // add necessary properties
