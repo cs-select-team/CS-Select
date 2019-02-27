@@ -2,6 +2,7 @@ package com.csselect.database.mysql;
 
 import com.csselect.configuration.Configuration;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.DatabaseException;
 import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
@@ -62,7 +63,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             executeMysqlUpdate(Query.CREATE_PLAYERSTATS_TABLE);
         } catch (SQLException e) {
             Logger.error(e);
-            System.exit(1);
+            throw new DatabaseException();
         }
     }
 

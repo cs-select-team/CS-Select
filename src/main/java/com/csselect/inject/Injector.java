@@ -5,6 +5,7 @@ import com.csselect.configuration.Configuration;
 import com.csselect.configuration.ConfigurationException;
 import com.csselect.configuration.MockConfiguration;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.DatabaseException;
 import com.csselect.mlserver.MLServer;
 
 /**
@@ -35,12 +36,21 @@ public final class Injector {
                 } else if (mysqlTestMode) {
                     injector = new Injector(new CSSelectMysqlTestModule(new MockConfiguration()));
                 } else {
+                    Configuration configuration;
+                    Module module;
                     try {
-                        injector = new Injector(new CSSelectModule(new ApacheCommonsConfiguration()));
+                        configuration = new ApacheCommonsConfiguration();
                     } catch (ConfigurationException | NoClassDefFoundError e) {
                         injector = null;
                         throw new ConfigurationException();
                     }
+                    try {
+                        module = new CSSelectModule(configuration);
+                    } catch (DatabaseException | NoClassDefFoundError e) {
+                        injector = null;
+                        throw new DatabaseException();
+                    }
+                    injector = new Injector(module);
                 }
             }
         }
