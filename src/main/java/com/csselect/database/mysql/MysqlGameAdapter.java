@@ -186,7 +186,9 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     @Override
     public void setFeatures(FeatureSet featureSet) {
         setString(ColumnNames.DATASET, featureSet.getIdentifier());
-        //We only set the name of the featureset as the featureset itself is saved on the disk and we load it from there
+        /* We only set the name of the featureset as the featureset itself is saved on the disk and we load it from
+        there. The column is named dataset, as that's the name used by the MLServer for the data we get from it and we
+        use it interchangeably */
     }
 
     @Override
