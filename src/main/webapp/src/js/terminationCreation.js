@@ -120,9 +120,9 @@ Vue.component('termination-config-composite', {
         }
     },
 
-    template:
+    template: // if there are more than 2 termination types, add the add button back in by putting this back into the code
         `<div>
-            <div class="input-group mb-3" :title="localisation.selectTerminationTooltip"><select class="custom-select"
+            <!-- <div class="input-group mb-3" :title="localisation.selectTerminationTooltip"><select class="custom-select" 
                                                                                                  v-model="currentTermination">
                 <option v-for="(termination, index) in listOfPossibleTerminations" v-bind:key="index" :value="termination">
                     {{termination.title}}
@@ -133,7 +133,7 @@ Vue.component('termination-config-composite', {
                         {{localisation.add}}
                     </button>
                 </div>
-            </div>
+            </div> -->
             <div v-for="(term, index) in terminations" class="row">
                 <div class="col-10">
                     <component v-bind:key="index" v-bind:is="'termination-config-' + term.value"
