@@ -9,9 +9,9 @@ import org.pmw.tinylog.Logger;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapter {
 
-    private static final Map<PlayerAdapter, PlayerStats> PLAYERSTATS_MAP = new HashMap<>();
+    private static final Map<PlayerAdapter, PlayerStats> PLAYERSTATS_MAP = new ConcurrentHashMap<>();
 
     private static final MysqlDatabaseAdapter DATABASE_ADAPTER
             = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();

@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -46,13 +47,13 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param configuration configuration to use
      */
     public MysqlDatabaseAdapter(Configuration configuration) {
-        gameMap = new HashMap<>();
-        gameAdapterMap = new HashMap<>();
+        gameMap = new ConcurrentHashMap<>();
+        gameAdapterMap = new ConcurrentHashMap<>();
         this.hostname = configuration.getDatabaseHostname();
         this.port = configuration.getDatabasePort();
         this.username = configuration.getDatabaseUsername();
         this.password = configuration.getDatabasePassword();
-        this.dataSources = new HashMap<>();
+        this.dataSources = new ConcurrentHashMap<>();
         this.dataSources.put(PRODUCT_DATABASE_NAME, createDataSource(PRODUCT_DATABASE_NAME));
         try {
             executeMysqlUpdate(Query.CREATE_PLAYER_TABLE);
