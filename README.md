@@ -3,7 +3,7 @@
 ## Installation
 ### Manual
 1. Install tomcat-9 from official [Tomcat Website](http://tomcat.apache.org/)
-1. Install MySql-Server version 5.7.20 from the official [MySql Website](https://downloads.mysql.com/archives/installer/)
+1. Install MySql-Server version 5.7 from the official [MySql Website](https://dev.mysql.com/downloads/mysql/5.7.html#downloads)
 1. (Optional but recommended) Install MySql-Workbench from the official [MySql Website](https://dev.mysql.com/downloads/workbench/)
 1. Install [maven](https://maven.apache.org/) for your system
 1. Edit values in example-conf.properties and move the new file to `$CATALINA_HOME/conf/Catalina/cs_select/config.properties`
