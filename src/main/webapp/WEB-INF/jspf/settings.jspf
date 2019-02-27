@@ -16,13 +16,13 @@
     </div>
     <div class="input-group mb-3">
         <input type="password" v-model="password" class="form-control" placeholder="<fmt:message key="newPassword"/>">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password == '' || password != repeatpassword}" type="button"
-                    v-on:click="setPassword"><fmt:message key="update"/></button>
-        </div>
     </div>
     <div class="input-group mb-3">
         <input type="password" v-model="repeatpassword" class="form-control" placeholder="<fmt:message key="passwordRepeat"/>">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" v-bind:class="{ disabled: password == '' || password != repeatpassword}" type="button"
+                v-on:click="setPassword"><fmt:message key="update"/></button>
+        </div>
     </div>
     <div class="input-group alert alert-danger" v-bind:class="{collapse: password == '' || password == repeatpassword}">
         <fmt:message key="passwordNoMatch"/>
