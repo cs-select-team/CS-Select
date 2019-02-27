@@ -17,6 +17,36 @@
 1. Start the ML-Server on the hostname specified in the config
 1. go to [http://localhost:8080/CS-Select/](http://localhost:8080/CS-Select/) to use CS-Select
 1. to register a new organiser they need the masterpassword which is set in the config.properties
+
+#### Installation under Debian 
+1. Clone this git repository `git clone https://github.com/bendixsonnenberg/CS-Select.git` (We will assume that the repository is in your home directory for the rest of this setup)
+1. Install maven (this is only needed during deployment and can be uninstalled after the setup is complete) `sudo apt install maven`
+1. Go into the CS-Select repository `cd CS-Select`
+1. Package the project `mvn package`
+1. Set up MySql
+    1. Install MySql version 5.7 `sudo apt update && sudo apt upgrade && sudo apt install mysql-server-5.7`
+    1. Start the MySql setup and use the default values `sudo mysql_secure_installation`
+    1. Add a new user for CS:Select
+        1. Log in to MySql by using `sudo mysql -u root -p`. You will be prompted for the root password you set during the setup.
+        1. Create a new MySql user `CREATE USER 'CSSELECT'@'localhost' IDENTIFIED BY '<custom password>';`.
+        1. Grant privileges to create new databases and use existing ones to the CSSELECT user `GRANT ALL PRIVILEGES ON *.* TO 'CSSELECT'@'localhost' WITH GRANT OPTION;`
+        1. Exit MySql `exit;`
+    1. Make sure that MySql is started on system boot `sudo systemctl enable mysql.service`
+1. Set up Tomcat
+    1. Go to your home directory (or wherever you want to install tomcat) `cd ~`
+    1. Download tomcat version 9 `wget https://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz`
+    1. Unpack the file `tar -xzf apache-tomcat-9.0.16.tar.gz`
+    1. Change into the tomcat dir `cd apache-tomcat-9.0.16`
+    1. Copy the CS-Select project war file to tomcat webapps `cp ~/CS-Select/target/CS-Select.war webapps/`
+    1. Copy the example config file `mkdir -p conf/Catalina/cs_select/ && cp ~/CS-Select/example-config.properties conf/Catalina/cs_select/config.properties`
+    1. Open the config file `vim conf/Catalina/cs_select/config.properties`
+        1. Edit the `database.username`, `database.password` to fit the created user from the MySql setup
+        1. Edit `csselecturl` (only change the localhost path unless you know what you are doing)
+        1. Change `organiserpassword` to a password that your organiser will use to authenticate them self when creating a new account
+        1.Set `homedirectory` to a path where you have edit rights and where you do not care about the contents of that path(best to create a new directory)
+1. Set up the ML-Server
+    1. Follow the setup instructions in the ML-Server repository and host it on localhost on port `8000`
+1. Start the tomcat server by running `~/apache-tomcat-9.0.16/bin/startup.sh` 
 ### Docker
 1. Refer to [https://github.com/bendixsonnenberg/CS-Select-Docker](https://github.com/bendixsonnenberg/CS-Select-Docker)
 
