@@ -53,6 +53,7 @@ props -->
                             rounds: '<fmt:message key="roundsInput"/>',
                             pattern: '<fmt:message key="pattern"/>',
                             featureSetMissingMessage: '<fmt:message key="featureSetMissing"/>',
+                            featureSetNotSet: '<fmt:message key="featureSetNotSet"/>',
                             enterTitle: '<fmt:message key="enterTitle"/>',
                             enterDescription: '<fmt:message key="enterDescription"/>',
                             enterDatabaseName: '<fmt:message key="enterDatabaseName"/>',

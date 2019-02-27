@@ -101,8 +101,8 @@ var creation = new Vue({
         checkFeatureSet: function () {
             var self = this;
             if (this.featureSet == '') {
-                alert("Please set featureSet");
-                return;
+                self.alerts.push({message: self.localisation.featureSetNotSet, type: 0});
+                return false;
             } else {
                 // checking if the feature set exists on the server
                 return axios({
@@ -195,9 +195,19 @@ var creation = new Vue({
                 type: 0
             });
             if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
-            if (this.terminationConfigString.split(':').length < 2 &&
-                this.terminationConfigString.split(':')[0].toString() != 'organiser')
+            if ((this.terminationConfigString.split(':').length < 2 || this.terminationConfigString.split(':')[1] === '' ) &&
+                this.terminationConfigString.split(':')[0].toString() !== 'organiser' )
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
+            if (this.terminationConfigString.split(',').length > 1) {
+                // composite termination
+                var i = 0;
+                for (i = 0; i < this.terminationConfigString.split(',').length; i++) {
+                    if (this.terminationConfigString.split(',')[i].split(':')[1] === '') {
+                        this.alerts.push({message: this.localisation.enterTermination, type: 0});
+                        break;
+                    }
+                }
+            }
             return this.alerts.length === 0;
         },
         createGame: function () {
