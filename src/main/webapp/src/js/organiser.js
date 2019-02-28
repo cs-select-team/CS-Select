@@ -18,7 +18,7 @@ Vue.component('active-games-display', {
                         <div>
                             {{ game.type }}
                         </div>
-                        <div>
+                        <div class="word-wrap">
                             {{game.desc}}
                         </div>
                         <div>

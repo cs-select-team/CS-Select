@@ -5,10 +5,10 @@ Vue.component('game-display', {
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div>{{ game.title }}</div>
+                        <div class="word-wrap">{{ game.title }}</div>
                         <div>{{ game.type }}</div>
                         <div>{{ localisation.roundsPlayed + ': ' + game.roundsPlayed }}</div>
-                        <div>{{game.desc}}</div>
+                        <div class="word-wrap">{{game.desc}}</div>
                         <div>{{terminationNotice}}</div>
                     </div>
                     <div class="col"><input type="button" :title="localisation.playGameTooltip"
@@ -78,7 +78,7 @@ Vue.component('invite-element', {
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="float-left">{{title}}</div>
+                        <div class="float-left word-wrap">{{title}}</div>
                     </div>
                     <div class="col">
                         <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">
