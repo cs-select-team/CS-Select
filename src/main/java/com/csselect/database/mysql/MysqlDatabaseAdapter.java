@@ -295,7 +295,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
             executeMysqlUpdate("UPDATE " + TableNames.GAMES + " SET " + ColumnNames.ORGANISER_ID + "=? WHERE id=?;",
-                    new IntParam(organiser.getId()),new IntParam(game.getId()));
+                    new IntParam(organiser.getId()), new IntParam(game.getId()));
         }
         return game;
     }
@@ -360,7 +360,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * Executes the given Mysql-Update on the main database
      * @param update update query to execute
      * @param params params to execute the query with
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
     void executeMysqlUpdate(@Language("sql") String update, Param... params) {
         executeMysqlUpdate(update, PRODUCT_DATABASE_NAME, params);
@@ -371,7 +370,6 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param update prepared-statement update to execute
      * @param databaseName database to execute the query on
      * @param params params to execute the query with
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
     void executeMysqlUpdate(@Language("sql") String update, String databaseName, Param... params) {
         if (!tablesCreated) {
@@ -517,7 +515,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             ResultSet gameSet = executeMysqlQuery("SELECT * FROM " + TableNames.GAMES + ";");
             Map<Integer, Organiser> organisers = getOrganisers();
             while (gameSet.next()) {
-                gameMap.put(new Game(gameSet.getInt(ColumnNames.ID)), organisers.get(gameSet.getInt(ColumnNames.ORGANISER_ID)));
+                gameMap.put(new Game(gameSet.getInt(ColumnNames.ID)),
+                        organisers.get(gameSet.getInt(ColumnNames.ORGANISER_ID)));
             }
         } catch (SQLException e) {
             Logger.error(e);
@@ -528,15 +527,15 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         MysqlDataSource dataSource = dataSources.getOrDefault(PRODUCT_DATABASE_NAME, //We can't use the executeUpdate
                 createDataSource(PRODUCT_DATABASE_NAME));                            //method as we'd have cyclic calls
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(Query.CREATE_PLAYER_TABLE);
+            PreparedStatement statement = connection.prepareStatement(CreationQueries.CREATE_PLAYER_TABLE);
             statement.executeUpdate();
-            statement = connection.prepareStatement(Query.CREATE_ORGANISER_TABLE);
+            statement = connection.prepareStatement(CreationQueries.CREATE_ORGANISER_TABLE);
             statement.executeUpdate();
-            statement = connection.prepareStatement(Query.CREATE_GAME_TABLE);
+            statement = connection.prepareStatement(CreationQueries.CREATE_GAME_TABLE);
             statement.executeUpdate();
-            statement = connection.prepareStatement(Query.CREATE_PATTERN_TABLE);
+            statement = connection.prepareStatement(CreationQueries.CREATE_PATTERN_TABLE);
             statement.executeUpdate();
-            statement = connection.prepareStatement(Query.CREATE_PLAYERSTATS_TABLE);
+            statement = connection.prepareStatement(CreationQueries.CREATE_PLAYERSTATS_TABLE);
             statement.executeUpdate();
             this.tablesCreated = true;
             return true;
