@@ -30,23 +30,14 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
     @Override
     public void setUp() {
         mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
-        try {
-            adapter = new MysqlGameAdapter();
-            adapter.setDatabase("PSE");
-        } catch (SQLException e) {
-            System.err.println("Setup-Error occurred!");
-            e.printStackTrace();
-        }
+        adapter = new MysqlGameAdapter();
+        adapter.setDatabase("PSE");
     }
 
     @Override
     public void reset() {
-        try {
-            mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT;");
-            mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE PSE;", "PSE");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT;");
+        mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE PSE;", "PSE");
     }
 
     @Test

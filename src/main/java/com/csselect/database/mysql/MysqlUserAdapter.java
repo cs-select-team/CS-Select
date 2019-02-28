@@ -64,13 +64,9 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
 
     @Override
     public final void setPassword(String hash, String salt) {
-        try {
-            DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
-                    + " SET " + ColumnNames.HASH + "=?, " + ColumnNames.SALT + "=? WHERE (" + ColumnNames.ID + "=?);",
+        DATABASE_ADAPTER.executeMysqlUpdate("UPDATE " + getTableName()
+                + " SET " + ColumnNames.HASH + "=?, " + ColumnNames.SALT + "=? WHERE (" + ColumnNames.ID + "=?);",
                     new StringParam(hash), new StringParam(salt), new IntParam(getID()));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
     }
 
     @Override

@@ -44,8 +44,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         super(DATABASE_ADAPTER.getNextIdOfTable(TableNames.ORGANISERS));
         DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.ORGANISERS
                         + " (" + ColumnNames.EMAIL + "," + ColumnNames.HASH + "," + ColumnNames.SALT + "," + ColumnNames.LANGUAGE + ")"
-                        + "VALUES (?,?,?,?);", new StringParam(email), new StringParam(hash), new StringParam(salt),
-                        new StringParam(DEFAULT_LANGUAGE));
+                        + " VALUES (?,?,?,?);", new StringParam(email),
+                new StringParam(hash), new StringParam(salt), new StringParam(DEFAULT_LANGUAGE));
     }
 
     @Override
@@ -78,20 +78,16 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
         StringJoiner joiner = new StringJoiner(",");
         gameOptions.getInvitedEmails().forEach(joiner::add);
         String emails = joiner.toString();
-        try {
-            DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO " + TableNames.PATTERNS
+        DATABASE_ADAPTER.executeMysqlUpdate("REPLACE INTO " + TableNames.PATTERNS
                     + " (" + ColumnNames.ORGANISER_ID + "," + ColumnNames.TITLE + "," + ColumnNames.GAME_TITLE + ","
-                            + ColumnNames.DESCRIPTION + "," + ColumnNames.DATASET + "," + ColumnNames.DATABASE_NAME
-                            + "," + ColumnNames.TERMINATION + "," + ColumnNames.GAMEMODE + ","
+                + ColumnNames.DESCRIPTION + "," + ColumnNames.DATASET + "," + ColumnNames.DATABASE_NAME
+                        + "," + ColumnNames.TERMINATION + "," + ColumnNames.GAMEMODE + ","
                             + ColumnNames.INVITED_PLAYERS + ") VALUES (?,?,?,?,?,?,?,?,?)", new IntParam(getID()),
-                    new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
-                    new StringParam(gameOptions.getDescription()), new StringParam(gameOptions.getDataset()),
-                    new StringParam(gameOptions.getResultDatabaseName()),
-                    new StringParam(gameOptions.getTermination().toString()),
-                    new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
+                new StringParam(pattern.getTitle()), new StringParam(gameOptions.getTitle()),
+                new StringParam(gameOptions.getDescription()), new StringParam(gameOptions.getDataset()),
+                new StringParam(gameOptions.getResultDatabaseName()),
+                new StringParam(gameOptions.getTermination().toString()),
+                new StringParam(gameOptions.getGamemode().toString()), new StringParam(emails));
     }
 
     @Override

@@ -32,11 +32,7 @@ public class MysqlPlayerStatsAdapterTest extends MysqlTestClass {
 
     @Override
     public void reset() {
-        try {
-            mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT;");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT;");
     }
 
     @Test
