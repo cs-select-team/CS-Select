@@ -161,6 +161,9 @@
 #matrixSelect .feature-display {
     max-width: 350px;
 }
+.word-wrap {
+    word-wrap: break-word;
+}
 body {
     overflow: scroll;
 }
