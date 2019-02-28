@@ -197,8 +197,8 @@ public class GameManagement extends Servlet {
             jsonObject.addProperty("title", game.getTitle());
             jsonObject.addProperty("id", game.getId());
             jsonObject.addProperty("type", game.getGamemode().getName());
-            jsonObject.addProperty("termination", 0); // TODO
             jsonObject.addProperty("desc", game.getDescription());
+            jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
             array.add(jsonObject);
         }
         returnJson(resp, array);

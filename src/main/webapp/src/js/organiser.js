@@ -21,6 +21,9 @@ Vue.component('active-games-display', {
                         <div>
                             {{game.desc}}
                         </div>
+                        <div>
+                            {{localisation.roundsPlayed + ": " + game.roundsPlayed}}
+                        </div>
                     </div>
                     <div class="col">
                         <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"
