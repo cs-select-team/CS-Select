@@ -65,13 +65,9 @@ public abstract class MysqlAdapter {
      * @param value string to set
      */
     void setString(String columnLabel, String value) {
-        try {
-            @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value), new IntParam(id));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
+        @Language("sql")
+        String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+        DATABASE_ADAPTER.executeMysqlUpdate(query, new StringParam(value), new IntParam(id));
     }
 
     /**
@@ -99,13 +95,9 @@ public abstract class MysqlAdapter {
      * @param value int to set
      */
     void setInt(String columnLabel, int value) {
-        try {
-            @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
+        @Language("sql")
+        String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+        DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
     }
 
     /**
@@ -122,14 +114,10 @@ public abstract class MysqlAdapter {
      * @param value value to add
      */
     void addInt(String columnLabel, int value) {
-        try {
-            @Language("sql")
-            String query = "UPDATE " + getTableName()
-                    + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (" + ColumnNames.ID + "=?);";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
+        @Language("sql")
+        String query = "UPDATE " + getTableName()
+                + " SET " + columnLabel + " = " + columnLabel + " + ? WHERE (" + ColumnNames.ID + "=?);";
+        DATABASE_ADAPTER.executeMysqlUpdate(query, new IntParam(value), new IntParam(id));
     }
 
     /**
@@ -138,13 +126,9 @@ public abstract class MysqlAdapter {
      * @param value boolean to set
      */
     void setBoolean(String columnLabel, boolean value) {
-        try {
-            @Language("sql")
-            String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
-            DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value), new IntParam(id));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
+        @Language("sql")
+        String query = "UPDATE " + getTableName() + " SET " + columnLabel + " = ? WHERE " + ColumnNames.ID + "=?;";
+        DATABASE_ADAPTER.executeMysqlUpdate(query, new BooleanParam(value), new IntParam(id));
     }
 
     /**

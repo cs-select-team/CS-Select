@@ -2,6 +2,7 @@ package com.csselect.database.mysql;
 
 import com.csselect.configuration.Configuration;
 import com.csselect.database.DatabaseAdapter;
+import com.csselect.database.DatabaseException;
 import com.csselect.database.GameAdapter;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.database.PlayerAdapter;
@@ -37,6 +38,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     private final int port;
     private final String username;
     private final String password;
+    private boolean tablesCreated;
     private final Map<String, MysqlDataSource> dataSources;
 
     private final Map<Game, Organiser> gameMap;
@@ -53,18 +55,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         this.port = configuration.getDatabasePort();
         this.username = configuration.getDatabaseUsername();
         this.password = configuration.getDatabasePassword();
+        this.tablesCreated = false;
         this.dataSources = new ConcurrentHashMap<>();
         this.dataSources.put(PRODUCT_DATABASE_NAME, createDataSource(PRODUCT_DATABASE_NAME));
-        try {
-            executeMysqlUpdate(CreationQueries.CREATE_PLAYER_TABLE);
-            executeMysqlUpdate(CreationQueries.CREATE_ORGANISER_TABLE);
-            executeMysqlUpdate(CreationQueries.CREATE_GAME_TABLE);
-            executeMysqlUpdate(CreationQueries.CREATE_PATTERN_TABLE);
-            executeMysqlUpdate(CreationQueries.CREATE_PLAYERSTATS_TABLE);
-        } catch (SQLException e) {
-            Logger.error(e);
-            System.exit(1);
-        }
     }
 
     @Override
@@ -90,12 +83,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
 
     @Override
     public GameAdapter getNewGameAdapter() {
-        try {
-            return new MysqlGameAdapter();
-        } catch (SQLException e) {
-            Logger.error(e);
-            return null;
-        }
+        return new MysqlGameAdapter();
     }
 
     @Override
@@ -306,12 +294,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         Game game = new Game();
         if (!gameMap.containsKey(game)) {
             gameMap.put(game, organiser);
-            try {
-                executeMysqlUpdate("UPDATE " + TableNames.GAMES + " SET " + ColumnNames.ORGANISER_ID + "=? WHERE id=?;",
-                        new IntParam(organiser.getId()), new IntParam(game.getId()));
-            } catch (SQLException e) {
-                Logger.error(e);
-            }
+            executeMysqlUpdate("UPDATE " + TableNames.GAMES + " SET " + ColumnNames.ORGANISER_ID + "=? WHERE id=?;",
+                    new IntParam(organiser.getId()),new IntParam(game.getId()));
         }
         return game;
     }
@@ -319,12 +303,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     @Override
     public void removeGame(Game game) {
         gameMap.remove(game);
-        try {
-            executeMysqlUpdate("DELETE FROM " + TableNames.GAMES + " WHERE (" + ColumnNames.ID + "=?);",
+        executeMysqlUpdate("DELETE FROM " + TableNames.GAMES + " WHERE (" + ColumnNames.ID + "=?);",
                     new IntParam(game.getId()));
-        } catch (SQLException e) {
-            Logger.error(e);
-        }
     }
 
     @Override
@@ -359,6 +339,9 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      */
     ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params)
             throws SQLException {
+        if (!tablesCreated) {
+            createTables();
+        }
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
         try (Connection connection = dataSource.getConnection()) {
@@ -367,6 +350,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 params[i].apply(statement, i + 1);
             }
             rowSet.populate(statement.executeQuery());
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
         }
         return rowSet;
     }
@@ -377,7 +362,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param params params to execute the query with
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    void executeMysqlUpdate(@Language("sql") String update, Param... params) throws SQLException {
+    void executeMysqlUpdate(@Language("sql") String update, Param... params) {
         executeMysqlUpdate(update, PRODUCT_DATABASE_NAME, params);
     }
 
@@ -388,7 +373,10 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param params params to execute the query with
      * @throws SQLException Thrown when there is an error executing the given statement
      */
-    void executeMysqlUpdate(@Language("sql") String update, String databaseName, Param... params) throws SQLException {
+    void executeMysqlUpdate(@Language("sql") String update, String databaseName, Param... params) {
+        if (!tablesCreated) {
+            createTables();
+        }
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(update);
@@ -396,6 +384,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
                 params[i].apply(statement, i + 1);
             }
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
         }
     }
 
@@ -531,6 +521,28 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
             }
         } catch (SQLException e) {
             Logger.error(e);
+        }
+    }
+
+    private boolean createTables() {
+        MysqlDataSource dataSource = dataSources.getOrDefault(PRODUCT_DATABASE_NAME, //We can't use the executeUpdate
+                createDataSource(PRODUCT_DATABASE_NAME));                            //method as we'd have cyclic calls
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(Query.CREATE_PLAYER_TABLE);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(Query.CREATE_ORGANISER_TABLE);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(Query.CREATE_GAME_TABLE);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(Query.CREATE_PATTERN_TABLE);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(Query.CREATE_PLAYERSTATS_TABLE);
+            statement.executeUpdate();
+            this.tablesCreated = true;
+            return true;
+        } catch (SQLException e) {
+            this.tablesCreated = false;
+            return false;
         }
     }
 }

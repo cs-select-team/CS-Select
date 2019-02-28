@@ -8,7 +8,8 @@ public abstract class MysqlTestClass {
     @Before
     public void enableTestmode() {
         Injector.useMysqlTestMode();
-        setUp();
+        Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase("TEST"); //We need to call a query so direct construction
+        setUp();                                                                                 //of adapters works correctly
     }
 
     /**
@@ -19,8 +20,8 @@ public abstract class MysqlTestClass {
 
     @After
     public void resetInjector() {
-        Injector.resetInjector();
         reset();
+        Injector.resetInjector();
     }
 
     /**
