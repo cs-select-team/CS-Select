@@ -1,5 +1,6 @@
 package com.csselect.API.httpAPI;
 import com.csselect.configuration.ConfigurationException;
+import com.csselect.database.DatabaseException;
 import org.pmw.tinylog.Logger;
 import com.csselect.user.management.OrganiserManagement;
 import com.csselect.user.management.PlayerManagement;
@@ -44,6 +45,8 @@ public class Login extends Servlet {
             }
         } catch (ConfigurationException e) {
             resp.sendError(550); // tell the frontend that the config file is missing
+        } catch (DatabaseException e) {
+            resp.sendError(552); // tell frontend the database is not online
         }
     }
 

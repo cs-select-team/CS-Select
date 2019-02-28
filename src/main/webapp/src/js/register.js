@@ -9,6 +9,7 @@ var app1 = new Vue({
             emailInUse: false,
             missingConfig: false,
             wrongMasterPassword: false,
+            missingDatabase: false
         },
     watch:{
         organiser: function () {
@@ -38,6 +39,8 @@ var app1 = new Vue({
                 }).catch(function (error) {
                     if (error.response.status == 550) {
                         app1.missingConfig = true;
+                    } else if(error.response.status == 552) {
+                        app1.missingDatabase = true;
                     } else if (error.response.status == 409) {
                         app1.emailInUse = true;
                     } else if (error.response.status == 401) {

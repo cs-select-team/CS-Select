@@ -5,7 +5,8 @@ var app1 = new Vue({
         password: '',
         organiser: false,
         alert: true,
-        missingConfig: false
+        missingConfig: false,
+        missingDatabase: false
     },
     computed: {
 
@@ -29,6 +30,8 @@ var app1 = new Vue({
             }).catch(function (error) {
                 if (error.response.status == 550) {
                     app1.missingConfig = true;
+                } else if (error.response.status == 552) {
+                    app1.missingDatabase = true;
                 }
                  else if (error.response) {
                     app1.alert = false;
