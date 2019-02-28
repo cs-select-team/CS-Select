@@ -325,11 +325,11 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
         return TableNames.GAMES;
     }
 
-    private void createRoundsTable() throws SQLException {
+    private void createRoundsTable() {
         DATABASE_ADAPTER.executeMysqlUpdate(CreationQueries.CREATE_ROUNDS_TABLE, getDatabaseName());
     }
 
-    private void createPlayersTable() throws SQLException {
+    private void createPlayersTable() {
         DATABASE_ADAPTER.executeMysqlUpdate(CreationQueries.CREATE_GAMES_PLAYERS_TABLE, getDatabaseName());
     }
 
