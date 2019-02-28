@@ -167,21 +167,15 @@ public class Games extends Servlet {
 
 
 
+
     private void getGames(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
 
         Collection<Game> games = getPlayerFacade().getGames();
         JsonArray json = new JsonArray();
         for (Game game:games) {
 
-            JsonObject jsonObject = new JsonObject();
 
-            jsonObject.addProperty("id", game.getId());
-            jsonObject.addProperty("title", game.getTitle());
-            jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
-            jsonObject.addProperty("type", game.getGamemode().getName());
-            jsonObject.addProperty("desc", game.getDescription());
-            jsonObject.addProperty("termination", game.getTermination().toString());
-            json.add(jsonObject);
+            json.add(gameToJson(game));
         }
         returnJson(resp, json);
     }

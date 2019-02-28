@@ -9,6 +9,7 @@ Vue.component('game-display', {
                         <div>{{ game.type }}</div>
                         <div>{{ localisation.roundsPlayed + ': ' + game.roundsPlayed }}</div>
                         <div>{{game.desc}}</div>
+                        <div>{{terminationNotice}}</div>
                     </div>
                     <div class="col"><input type="button" :title="localisation.playGameTooltip"
                                             class="btn btn-primary float-right" :value="localisation.play"
@@ -20,6 +21,24 @@ Vue.component('game-display', {
         startGame: function(gameId) {
             localStorage.setItem("gameId", gameId);
             window.location.href = "game.jsp"
+        }
+    },
+    computed: {
+        terminationType: function () {
+            if (this.game.termination.split(',').length > 1) return 'composite';
+            return this.game.termination.split(':')[0];
+        },
+        terminationNotice: function () {
+            switch(this.terminationType) {
+                case 'composite':
+                    return this.localisation.compositeTermination;
+                case 'organiser':
+                    return this.localisation.organiserTermination;
+                case 'time':
+                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format("DD/MM/YYYY");;
+                case 'rounds':
+                    return this.localisation.roundsTermination + ' ' + this.game.termination.split(':')[1];
+            }
         }
     }
 });

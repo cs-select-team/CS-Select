@@ -3,9 +3,11 @@ package com.csselect.API.httpAPI;
 import com.csselect.API.APIFacadeOrganiser;
 import com.csselect.API.APIFacadePlayer;
 import com.csselect.API.APIFacadeUser;
+import com.csselect.game.Game;
 import com.csselect.utils.Languages;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -263,5 +265,22 @@ public abstract  class Servlet extends HttpServlet {
     void updateLanguage() throws NullPointerException {
         lang = getUserFacade().getLanguage();
         session.setAttribute("lang", lang);
+    }
+
+    /**
+     * converts a game to a json object
+     * @param game game to convert
+     * @return json object with id, title, roundsPlayer, type, desc, termination
+     */
+    protected JsonObject gameToJson(Game game) {
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty("id", game.getId());
+        jsonObject.addProperty("title", game.getTitle());
+        jsonObject.addProperty("roundsPlayed", game.getNumberOfRounds());
+        jsonObject.addProperty("type", game.getGamemode().getName());
+        jsonObject.addProperty("desc", game.getDescription());
+        jsonObject.addProperty("termination", game.getTermination().toString());
+        return jsonObject;
     }
 }

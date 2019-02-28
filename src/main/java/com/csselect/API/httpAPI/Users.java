@@ -89,17 +89,10 @@ public class Users extends Servlet {
         Collection<Game> notifications = getPlayerFacade().getNotifications();
         JsonArray array = new JsonArray();
         for (Game invite: notifications) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("title", invite.getTitle());
-            jsonObject.addProperty("id", invite.getId());
-            jsonObject.addProperty("type", invite.getGamemode().getName());
-            jsonObject.addProperty("roundsPlayed", invite.getNumberOfRounds());
-            jsonObject.addProperty("desc", invite.getDescription());
-            array.add(jsonObject);
+            array.add(gameToJson(invite));
         }
         returnAsJson(resp, array);
     }
-
 
 
     private void getStreak(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {

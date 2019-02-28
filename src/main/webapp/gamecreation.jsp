@@ -3,7 +3,7 @@
     <div>
          <%@ include file="WEB-INF/jspf/organiserNavbar.jspf" %>
 
-        <script src="https://cdn.jsdelivr.net/npm/moment@2.22"></script>
+
 
         <script src="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/js/bootstrap-datetimepicker.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/pc-bootstrap4-datetimepicker@4.17/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
