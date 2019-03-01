@@ -178,7 +178,9 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @return true if a feature set does exist , false otherwise
      */
     public boolean checkFeatureSet(String name) throws IOException {
-        if (!Injector.getInstance().getMLServer().isOnline()) throw new IOException("can not connect to ml server");
+        if (!Injector.getInstance().getMLServer().isOnline()) {
+            throw new IOException("can not connect to ml server");
+        }
         return Injector.getInstance().getMLServer().isValidDataset(name);
     }
     /** checks if a database with the given name exists

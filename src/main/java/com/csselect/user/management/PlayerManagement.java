@@ -22,7 +22,8 @@ public final class PlayerManagement extends UserManagement {
         String username = parameters[2];
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
-        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer(email, encryptedPassword, salt, username);
+        Player player = Injector.getInstance().getDatabaseAdapter()
+                .createPlayer(email, encryptedPassword, salt, username);
         if (player != null) {
             player.login();
         }

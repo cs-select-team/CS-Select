@@ -38,7 +38,8 @@ public final class OrganiserManagement extends UserManagement {
         }
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
-        Organiser organiser = Injector.getInstance().getDatabaseAdapter().createOrganiser(email, encryptedPassword, salt);
+        Organiser organiser = Injector.getInstance().getDatabaseAdapter()
+                .createOrganiser(email, encryptedPassword, salt);
         if (organiser == null) {
             throw new IllegalArgumentException(EMAIL_IN_USE);
         }
