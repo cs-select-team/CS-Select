@@ -16,7 +16,7 @@ Vue.component('player-invite-single', {
         </div>`, 
     methods: {
         newEmail: function () {
-            this.$emit('new-email', this.email)
+            this.$emit('new-email', this.email);
             this.email = "";
         }
     },
@@ -131,4 +131,4 @@ Vue.component('player-invite-box', {
                        v-on:update-invited="updateInviteString">
             </component>
         </div>`
-})
+});

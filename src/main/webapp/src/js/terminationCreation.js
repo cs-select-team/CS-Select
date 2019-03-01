@@ -61,7 +61,7 @@ Vue.component('termination-config', {
 Vue.component('termination-config-organiser', {
     template:
         `<div>{{localisation.organiserTerminationInfo}}</div>`
-})
+});
 Vue.component('termination-config-composite', {
     props: ['list-of-possible-terminations', 'termination-config-str'],
     data: function () {
@@ -74,7 +74,7 @@ Vue.component('termination-config-composite', {
     methods: {
         addTermination: function (term) {
             if (!this.terminations.includes(term)) {
-                this.terminationStrings.push(term.value + ':')
+                this.terminationStrings.push(term.value + ':');
                 this.terminations.push(term);
             }
             this.$emit('update-termination', this.terminationStrings.join(','))
@@ -98,7 +98,7 @@ Vue.component('termination-config-composite', {
                 var termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
                     if (term.value === value.split(':')[0]) termination = term;
-                })
+                });
                 self.terminations.push(termination)
             })
         })
@@ -107,14 +107,14 @@ Vue.component('termination-config-composite', {
     },
     watch: {
         terminationConfigStr: function(newVal) {
-            var self = this
+            var self = this;
             this.terminations = [];
             self.terminationStrings = newVal.split(',');
             self.terminationStrings.forEach(function (value, index) {
                 var termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
                     if (term.value === value.split(':')[0]) termination = term;
-                })
+                });
                 self.terminations.push(termination)
             })
         }
@@ -146,7 +146,7 @@ Vue.component('termination-config-composite', {
                 </div>
             </div>
         </div>` 
-})
+});
 
 Vue.component('termination-config-rounds', {
     props: ['termination-config-str'],

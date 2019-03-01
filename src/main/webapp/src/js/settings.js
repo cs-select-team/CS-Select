@@ -48,4 +48,4 @@ var app = new Vue({
                 }).then(function () { app.alert = true })
         }
     }
-})
+});

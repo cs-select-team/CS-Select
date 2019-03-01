@@ -14,7 +14,7 @@ Vue.component('matrix-row', {
             this.$emit('useless-toggle', newVal, toggled)
         }
     }
-})
+});
 Vue.component('MatrixSelect', {
     props: ['feature-list', 'options'],
     data: function() {
@@ -24,8 +24,8 @@ Vue.component('MatrixSelect', {
     },
     mounted: function() { // giving the player information about this game
         this.$emit("add-alert", {message: this.localisation.matrixSelectHelp, type: 2});
-        var messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd
-        var alert = {message: messageString, type: 2}
+        var messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd;
+        var alert = {message: messageString, type: 2};
         this.$emit("add-alert", alert)
 
     },
@@ -61,4 +61,4 @@ Vue.component('MatrixSelect', {
             else this.$emit("done", false)
         }
     }
-})
+});

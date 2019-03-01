@@ -62,7 +62,7 @@ Vue.component('active-games-display', {
                 params: {
                     gameId: gameId
                 }
-            })
+            });
             this.$emit("terminate", gameId);
         },
         invitePlayers: function(gameId) {

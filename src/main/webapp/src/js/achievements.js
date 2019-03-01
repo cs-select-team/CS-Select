@@ -14,7 +14,7 @@ Vue.component('achievement',{
             </div>
         </div>`
 
-})
+});
 
 /*  State   Description
     0       invisible
@@ -34,4 +34,4 @@ var achievements = new Vue({
             achievements.achievementList = response.data;
         })
     }
-})
+});

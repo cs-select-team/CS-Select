@@ -121,7 +121,7 @@ Vue.component('gamemode-config', {
         },
         currentGm: {
             get: function() {
-                if (this.gamemodeConfigStr == '') return 'binarySelect'
+                if (this.gamemodeConfigStr == '') return 'binarySelect';
                 return this.gamemodeConfigStr.split(',')[0];
             },
             set: function (newVal) {
@@ -129,4 +129,4 @@ Vue.component('gamemode-config', {
             }
         }
     }
-})
+});

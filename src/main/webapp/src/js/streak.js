@@ -2,12 +2,12 @@ Vue.component('streak-display', {
     props: ['counter'],
     computed: {
       progress1: function () {
-          if (this.counter >= 3) return 60 + '%'
+          if (this.counter >= 3) return 60 + '%';
           else return 20 * this.counter + '%'
       },
         progress2: function () {
-            if (this.counter >= 5) return 40 + '%'
-            else if (this.counter <= 3) return 0 + '%'
+            if (this.counter >= 5) return 40 + '%';
+            else if (this.counter <= 3) return 0 + '%';
             else {
                 return 20 * (this.counter - 3)+ '%'
             }
@@ -32,4 +32,4 @@ Vue.component('streak-display', {
                 </div>
             </div>
         </div>`
-})
+});

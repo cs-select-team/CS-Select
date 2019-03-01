@@ -14,4 +14,4 @@ var nav = new Vue({
             self.logout();
         }, 600000);// 600000 = 10 * 60 * 1000, so 10 minutes in ms
     }
-})
+});

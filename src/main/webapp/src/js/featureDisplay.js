@@ -51,16 +51,16 @@ Vue.component('feature-box', {
     methods: {
         toggleMarked: function () {
             oldVal = this.feature.toggled;
-            if (!this.feature.useless) this.feature.toggled = !this.feature.toggled
-            this.$forceUpdate()
+            if (!this.feature.useless) this.feature.toggled = !this.feature.toggled;
+            this.$forceUpdate();
             this.$emit("toggled", !oldVal, oldVal)
         },
         toggleUseless: function () {
             this.feature.useless = !this.feature.useless;
-            this.$emit("useless-toggle", this.feature.useless, this.feature.toggled)
+            this.$emit("useless-toggle", this.feature.useless, this.feature.toggled);
             this.feature.toggled = false;
             this.$forceUpdate()
 
         }
     }
-})
+});

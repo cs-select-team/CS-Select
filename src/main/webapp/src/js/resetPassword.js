@@ -9,7 +9,7 @@ var reset = new Vue({
     },
     methods: {
         submit: function (event) {
-            event.preventDefault()
+            event.preventDefault();
             var self = this;
             self.emailSent = false;
             self.alert = false;
@@ -31,4 +31,4 @@ var reset = new Vue({
             })
         }
     }
-})
+});

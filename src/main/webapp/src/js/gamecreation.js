@@ -79,7 +79,7 @@ var creation = new Vue({
         },
         removePlayerByIndex: function(index) {
             var playerArray = this.inviteString.split(',');
-            playerArray.splice(index, 1)
+            playerArray.splice(index, 1);
             this.inviteString = playerArray.join(',')
         },
         updateConfString: function (newVal) {
@@ -200,8 +200,7 @@ var creation = new Vue({
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
             if (this.terminationConfigString.split(',').length > 1) {
                 // composite termination
-                var i = 0;
-                for (i = 0; i < this.terminationConfigString.split(',').length; i++) {
+                for (let i = 0; i < this.terminationConfigString.split(',').length; i++) {
                     if (this.terminationConfigString.split(',')[i].split(':')[1] === '') {
                         this.alerts.push({message: this.localisation.enterTermination, type: 0});
                         break;

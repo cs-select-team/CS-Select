@@ -35,7 +35,7 @@ Vue.component('game-display', {
                 case 'organiser':
                     return this.localisation.organiserTermination;
                 case 'time':
-                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format("DD/MM/YYYY");;
+                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format("DD/MM/YYYY");
                 case 'rounds':
                     return this.localisation.roundsTermination + ' ' + this.game.termination.split(':')[1];
             }
@@ -52,7 +52,7 @@ Vue.component('daily-challenge', {
                 <div class="card-text" v-if="daily.finished"> {{localisation.dailyFinished}}</div>
             </div>
         </div>`
-})
+});
 Vue.component('leaderboard-element', {
     props: ['place', 'username', 'points'],
     template:
@@ -61,7 +61,7 @@ Vue.component('leaderboard-element', {
             <th>{{ username }}</th>
             <th :title="localisation.lastWeekScoreTooltip">{{ points }}</th>
         </tr>`
-})
+});
 
 Vue.component('stats-display', {
     props: ['points', 'username'],
@@ -70,7 +70,7 @@ Vue.component('stats-display', {
             <b class="text">{{username}}</b>
             <p class="text" :title="localisation.totalScoreTooltip">{{points}}</p>
         </div>`
-})
+});
 Vue.component('invite-element', {
     props: ['title', 'gameId'],
     template:
@@ -98,7 +98,7 @@ Vue.component('invite-element', {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/accept'
-            })
+            });
             invites.listOfInvites.forEach(function (value, index) { // remove from the list without reloading page
                 if (value.id == gameId){
 
@@ -110,7 +110,7 @@ Vue.component('invite-element', {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/decline'
-            })
+            });
             invites.listOfInvites.forEach(function (value, index) {  // remove from the list without reloading page
                 if (value.id == gameId) invites.listOfInvites.splice(index, 1);
             })
@@ -132,7 +132,7 @@ var invites = new Vue({
         })
 
     }
-})
+});
 var stats = new Vue({
     el: '#stats',
     data: {
@@ -149,7 +149,7 @@ var stats = new Vue({
         })
 
     }
-})
+});
 
 var games = new Vue({
     el: '#games',
@@ -164,7 +164,7 @@ var games = new Vue({
             games.listOfGames = response.data
         })
     }
-})
+});
 
 var leaderboard = new Vue({
     el: '#leaderboard',
@@ -179,7 +179,7 @@ var leaderboard = new Vue({
             leaderboard.playerList = response.data
         })
     }
-})
+});
 
 
 var daily = new Vue({
@@ -195,7 +195,7 @@ var daily = new Vue({
             daily.daily = response.data
         })
     }
-})
+});
 
 var playerAlerts = new Vue({
     el: '#playerAlerts',
@@ -209,4 +209,4 @@ var playerAlerts = new Vue({
         localStorage.setItem("gameTerminated", false);
 
     }
-})
+});

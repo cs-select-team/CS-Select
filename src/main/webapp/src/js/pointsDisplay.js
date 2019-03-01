@@ -8,4 +8,4 @@ Vue.component('points-display', {
                 </div>
             </div>
         </div>`
-})
+});

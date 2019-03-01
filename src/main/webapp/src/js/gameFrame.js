@@ -48,7 +48,7 @@ var gameFrame = new Vue({
                         selected: JSON.stringify(this.getSelectedFeaturesById())
                     }
                 }).then(function (response) {
-                    gameFrame.points = response.data
+                    gameFrame.points = response.data;
                     gameFrame.getNextRound();
                 })
 
@@ -83,7 +83,7 @@ var gameFrame = new Vue({
                     // add necessary properties
                     feature.toggled = false;
                     feature.useless = false;
-                })
+                });
                 gameFrame.options = response.data.options;
                 gameFrame.gameType = response.data.gameType;
                 gameFrame.forceUpdate++;
@@ -103,4 +103,4 @@ var gameFrame = new Vue({
     }
 
 
-})
+});
