@@ -346,9 +346,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            for (int i = 0; i < params.length; i++) {
-                params[i].apply(statement, i + 1);
-            }
+            applyParams(statement, params);
             rowSet.populate(statement.executeQuery());
         } catch (SQLException e) {
             throw new DatabaseException(e);
@@ -378,12 +376,16 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(update);
-            for (int i = 0; i < params.length; i++) {
-                params[i].apply(statement, i + 1);
-            }
+            applyParams(statement, params);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException(e);
+        }
+    }
+
+    private void applyParams(PreparedStatement statement, Param... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            params[i].apply(statement, i + 1);
         }
     }
 
