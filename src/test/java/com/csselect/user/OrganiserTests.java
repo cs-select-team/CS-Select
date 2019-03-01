@@ -12,29 +12,20 @@ import java.util.Collection;
 
 public class OrganiserTests extends TestClass {
     private Organiser organiser;
-    private static boolean registered = false;
 
     @Override
     public void setUp() {
-        if (!registered) {
-            String globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
-            OrganiserManagement om = new OrganiserManagement();
-            String[] args = new String[3];
-            args[0] = "voldi@csselect.com";
-            args[1] = "#ElDeRsTaB!#";
-            args[2] = globalPassword;
-
-            organiser = om.register(args);
-            registered = true;
-        } else {
-            OrganiserManagement om = new OrganiserManagement();
-            organiser = om.login("voldi@csselect.com", "#ElDeRsTaB!#");
-        }
+        String globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
+        OrganiserManagement om = new OrganiserManagement();
+        String[] args = new String[3];
+        args[0] = "voldi@csselect.com";
+        args[1] = "#ElDeRsTaB!#";
+        args[2] = globalPassword;
+        organiser = om.register(args);
     }
 
     @Override
     public void reset() {
-        organiser.logout();
         this.organiser = null;
     }
 
@@ -73,28 +64,28 @@ public class OrganiserTests extends TestClass {
     @Test
     public void testSetTerminationTime() {
         organiser.setGameOption("termination",
-                "TimeTermination:2011-12-03T10:15:30");
+                "time:200011121");
         Termination termination = organiser.getGameOptions().getTermination();
         Assert.assertEquals(termination.getName(), "TimeTermination");
     }
 
     @Test
     public void testSetTerminationRounds() {
-        organiser.setGameOption("termination", "NumberOfRoundsTermination:100");
+        organiser.setGameOption("termination", "rounds:100");
         Termination termination = organiser.getGameOptions().getTermination();
         Assert.assertEquals(termination.getName(), "NumberOfRoundsTermination");
     }
 
     @Test
     public void testSetGamemodeMatrix() {
-        organiser.setGameOption("gamemode", "MatrixSelect:num~20-min~2-max~10");
+        organiser.setGameOption("gamemode", "matrixSelect,20,2,10");
         Gamemode mode = organiser.getGameOptions().getGamemode();
         Assert.assertEquals(mode.getName(), "MatrixSelect");
     }
 
     @Test
     public void testSetGamemodeBinary() {
-        organiser.setGameOption("gamemode", "BinarySelect:none");
+        organiser.setGameOption("gamemode", "binarySelect");
         Gamemode mode = organiser.getGameOptions().getGamemode();
         Assert.assertEquals(mode.getName(), "BinarySelect");
     }
