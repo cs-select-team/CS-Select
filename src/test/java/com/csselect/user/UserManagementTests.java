@@ -151,7 +151,7 @@ public class UserManagementTests extends TestClass {
         testLoginExistingOrganiser();
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testDuplicateEmailRegistrationOrganiser() {
         String[] args1 = new String[3];
         args1[0] = "voldi3@csselect.com";
@@ -164,13 +164,11 @@ public class UserManagementTests extends TestClass {
         args2[2] = globalPassword;
 
         voldemort = om.register(args1);
-        harry = om.register(args2);
-
         Assert.assertNotNull(voldemort);
-        Assert.assertNull(harry);
+        harry = om.register(args2);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testIllegalOrganiserPasswordRegistration() {
         String[] args = new String[3];
         args[0] = "voldi4@csselect.com";
@@ -178,7 +176,6 @@ public class UserManagementTests extends TestClass {
         args[2] = "";
 
         voldemort = om.register(args);
-        Assert.assertNull(voldemort);
     }
 
     private void testLoginExistingPlayer() {
