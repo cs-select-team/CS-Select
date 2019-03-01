@@ -58,7 +58,7 @@ public abstract class APIFacadeUser {
     public abstract void recoverPassword(String email);
 
     /** validates the email of the currently logged in user. This means that the system can confirm that the
-     * user is in control of the email account they supplied in {@link APIFacadeUser#register(String, String, String)}
+     * user is in control of the email account they supplied during registration}
      *
      */
     public abstract void validateEmail();
