@@ -20,7 +20,7 @@ import java.util.Map;
  * more precisely their score over time, their achievements and daily challenges.
  */
 public class Player extends User {
-    private PlayerAdapter playerAdapter;
+    private final PlayerAdapter playerAdapter;
     private Game gameToReturn;
     private Round activeRound;
 

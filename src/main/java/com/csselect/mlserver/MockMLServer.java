@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public final class MockMLServer implements MLServer {
 
-    private Random random;
+    private final Random random;
 
     /**
      * Creates a new {@link MockMLServer}

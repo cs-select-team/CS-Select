@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpError extends Exception {
 
-    private int errorCode;
+    private final int errorCode;
 
     /**
      * Creates a new {@link HttpError} with the given errorCode

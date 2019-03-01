@@ -36,7 +36,7 @@ public class GameCreator {
     private static final String INVITATION_TEXT = "Your knowledge is needed in the CS:Select game %s! "
             + "Log in or create an account under %s and check your notifications!";
 
-    private Organiser organiser;
+    private final Organiser organiser;
     private GameOptions gameOptions;
 
     /**

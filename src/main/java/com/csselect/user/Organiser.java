@@ -17,8 +17,8 @@ import java.util.Collection;
  * for creating games.
  */
 public class Organiser extends User {
-    private OrganiserAdapter organiserAdapter;
-    private GameCreator gameBuilder;
+    private final OrganiserAdapter organiserAdapter;
+    private final GameCreator gameBuilder;
 
     /**
      * Constructor for an Organiser object. Database adapter is set to allow communication with our database

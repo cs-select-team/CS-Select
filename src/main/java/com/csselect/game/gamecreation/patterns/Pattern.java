@@ -4,8 +4,8 @@ package com.csselect.game.gamecreation.patterns;
  * The Pattern class represents a memento which can store a {@link GameOptions} object for creating games.
  */
 public class Pattern {
-    private String title;
-    private GameOptions gameOptions;
+    private final String title;
+    private final GameOptions gameOptions;
 
     /**
      * This method creates a new Pattern-Object which is there for storing GameOptions
