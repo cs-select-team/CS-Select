@@ -41,7 +41,7 @@ public class MLServerTests extends TestClass {
     }
 
     @Test
-    public void testVersion() throws IOException {
+    public void testVersion() {
         Assert.assertEquals("0.1.5", mlServer.getVersion());
     }
 
@@ -56,7 +56,7 @@ public class MLServerTests extends TestClass {
     }
 
     @Test
-    public void testGetScore() throws IOException {
+    public void testGetScore() {
         Collection<Feature> features = new LinkedList<>();
         features.add(new Feature(1, "1"));
         features.add(new Feature(1, "2"));

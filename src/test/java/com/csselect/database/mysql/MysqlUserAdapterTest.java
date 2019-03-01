@@ -6,8 +6,6 @@ import com.csselect.database.UserAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 public class MysqlUserAdapterTest extends MysqlTestClass {
 
     private static final String TEST_EMAIL = "test@test.de";

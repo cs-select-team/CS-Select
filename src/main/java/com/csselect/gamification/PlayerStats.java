@@ -3,7 +3,6 @@ package com.csselect.gamification;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -66,7 +65,7 @@ public class PlayerStats implements Gamification {
 
     @Override
     public List<Achievement> getAchievements() {
-        List<AchievementType> achievementTypes = Arrays.asList(AchievementType.values());
+        AchievementType[] achievementTypes = AchievementType.values();
         List<Achievement> achievements = new LinkedList<>();
         for (AchievementType type : achievementTypes) {
             achievements.add(type.checkProgress(this));

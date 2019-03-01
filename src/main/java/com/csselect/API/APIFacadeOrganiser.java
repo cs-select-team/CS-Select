@@ -149,7 +149,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param gameId id of the game to which to invite the player
      */
     public void invitePlayer(String playerEmail, int gameId) {
-        Collection<String> playerEmails = new HashSet<String>();
+        Collection<String> playerEmails = new HashSet<>();
         playerEmails.add(playerEmail);
         organiser.invitePlayers(playerEmails, gameId);
     }

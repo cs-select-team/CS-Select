@@ -11,7 +11,6 @@ import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 

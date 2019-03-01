@@ -6,8 +6,6 @@ import com.csselect.database.PlayerStatsAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 public class MysqlPlayerStatsAdapterTest extends MysqlTestClass {
 
     private static final String TEST_EMAIL = "test@test.de";

@@ -293,12 +293,10 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
 
     @Override
     public void removeInvitedPlayers(Collection<String> emails) {
-        emails.forEach(email -> {
-            DATABASE_ADAPTER.executeMysqlUpdate(
-                    "DELETE FROM " + TableNames.GAME_PLAYERS + " WHERE " + ColumnNames.EMAIL + "=? AND "
-                                + ColumnNames.INVITED + "=1;", getDatabaseName(),
-                    new StringParam(email));
-        });
+        emails.forEach(email -> DATABASE_ADAPTER.executeMysqlUpdate(
+                "DELETE FROM " + TableNames.GAME_PLAYERS + " WHERE " + ColumnNames.EMAIL + "=? AND "
+                            + ColumnNames.INVITED + "=1;", getDatabaseName(),
+                new StringParam(email)));
     }
 
     @Override

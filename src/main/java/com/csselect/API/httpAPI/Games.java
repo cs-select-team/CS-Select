@@ -159,10 +159,7 @@ public class Games extends Servlet {
             returnJson(resp, jsonObject);
         } catch (IllegalArgumentException e) {
             resp.sendError(HttpServletResponse.SC_NO_CONTENT);
-            return;
         }
-
-
     }
 
 

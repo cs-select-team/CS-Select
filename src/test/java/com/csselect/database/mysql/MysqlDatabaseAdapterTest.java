@@ -149,7 +149,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
     }
 
     @Test
-    public void testGameCreation() throws IOException {
+    public void testGameCreation() {
         Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_HASH, TEST_SALT, TEST_USERNAME);
         Game game = createGame(organiser);
@@ -168,14 +168,14 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
     }
 
     @Test
-    public void testDuplicateDatabase() throws IOException {
+    public void testDuplicateDatabase() {
         Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         Game game = createGame(organiser);
         Assert.assertTrue(mysqlDatabaseAdapter.checkDuplicateDatabase(TEST_DB));
     }
 
     @Test
-    public void removeGameTest() throws IOException {
+    public void removeGameTest() {
         Organiser organiser = mysqlDatabaseAdapter.createOrganiser(TEST_EMAIL, TEST_HASH, TEST_SALT);
         OrganiserAdapter organiserAdapter = mysqlDatabaseAdapter.getOrganiserAdapter(organiser.getId());
         Game game = createGame(organiser);
