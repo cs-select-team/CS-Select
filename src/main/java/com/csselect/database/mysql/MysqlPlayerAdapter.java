@@ -67,17 +67,12 @@ public class MysqlPlayerAdapter extends MysqlUserAdapter implements PlayerAdapte
 
     @Override
     public PlayerStats getPlayerStats() {
-        try {
-            if (PLAYERSTATS_MAP.containsKey(this)) {
-                return PLAYERSTATS_MAP.get(this);
-            } else {
-                PlayerStats stats = new PlayerStats(new MysqlPlayerStatsAdapter(getID()));
-                PLAYERSTATS_MAP.put(this, stats);
-                return stats;
-            }
-        } catch (SQLException e) {
-            Logger.error(e);
-            return null;
+        if (PLAYERSTATS_MAP.containsKey(this)) {
+            return PLAYERSTATS_MAP.get(this);
+        } else {
+            PlayerStats stats = new PlayerStats(new MysqlPlayerStatsAdapter(getID()));
+            PLAYERSTATS_MAP.put(this, stats);
+            return stats;
         }
     }
 

@@ -15,9 +15,8 @@ public interface MLServer {
     /**
      * Gets the ML-Servers version
      * @return version
-     * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
-    String getVersion() throws IOException;
+    String getVersion();
 
     /**
      * Gets the {@link FeatureSet} specified by the given dataset name
@@ -35,9 +34,8 @@ public interface MLServer {
      * @param dataset dataset to which the feature selection belongs
      * @param selectedFeatures feature selection to be evaluated
      * @return score out of [0,1]
-     * @throws IOException Thrown when an error occurs while communicating with the ML-Server
      */
-    double getScore(String dataset, Collection<Feature> selectedFeatures) throws IOException;
+    double getScore(String dataset, Collection<Feature> selectedFeatures);
 
     /**
      * This method checks whether a dataset with the given name exists

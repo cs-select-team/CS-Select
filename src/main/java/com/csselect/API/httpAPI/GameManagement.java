@@ -172,7 +172,7 @@ public class GameManagement extends Servlet {
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
 
-    private void createGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void createGame(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         if (getOrganiserFacade().createGame()) {
             resp.sendError(HttpServletResponse.SC_ACCEPTED);

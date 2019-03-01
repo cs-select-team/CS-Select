@@ -185,11 +185,10 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     }
     /** checks if a database with the given name exists
      *
-     * @throws IOException if the backend failed the connection to the database
      * @param name name of the database to look up
      * @return true if the database does exist , false otherwise
      */
-    public boolean checkDatabase(String name) throws IOException {
+    public boolean checkDatabase(String name) {
         return Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase(name);
     }
 

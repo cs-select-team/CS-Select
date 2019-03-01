@@ -105,7 +105,7 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
     }
 
     @Test
-    public void testRounds() throws SQLException {
+    public void testRounds() {
         Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
         adapter.setGamemode(GAMEMODE);
         Assert.assertTrue(adapter.getRounds().isEmpty());

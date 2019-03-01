@@ -23,11 +23,7 @@ public class MysqlPlayerStatsAdapterTest extends MysqlTestClass {
     public void setUp() {
         mysqlDatabaseAdapter = (MysqlDatabaseAdapter) Injector.getInstance().getDatabaseAdapter();
         mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_HASH, TEST_SALT, TEST_USERNAME);
-        try {
-            adapter = new MysqlPlayerStatsAdapter(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        adapter = new MysqlPlayerStatsAdapter(1);
     }
 
     @Override

@@ -70,7 +70,7 @@ public class Games extends Servlet {
     }
 
 
-    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void skipRound(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String body = getBody(req);
         JsonObject json = new Gson().fromJson(body, JsonObject.class);
@@ -78,7 +78,7 @@ public class Games extends Servlet {
         getPlayerFacade().skipRound(useless);
     }
 
-    private void playRound(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void playRound(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String body = getBody(req);
         JsonObject json = new Gson().fromJson(body, JsonObject.class);
@@ -103,12 +103,12 @@ public class Games extends Servlet {
         }
         return returnval;
     }
-    private void declineInvite(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+    private void declineInvite(HttpServletRequest req, HttpServletResponse resp) {
 
         getPlayerFacade().declineInvite(getId(req.getPathInfo()));
     }
 
-    private void acceptInvite(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+    private void acceptInvite(HttpServletRequest req, HttpServletResponse resp) {
 
         getPlayerFacade().acceptInvite(getId(req.getPathInfo()));
     }
@@ -120,7 +120,7 @@ public class Games extends Servlet {
 
         }
      */
-    private void startRound(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
+    private void startRound(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         int gameId = getId(req.getPathInfo());
         JsonObject jsonObject = new JsonObject();
@@ -168,7 +168,7 @@ public class Games extends Servlet {
 
 
 
-    private void getGames(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void getGames(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         Collection<Game> games = getPlayerFacade().getGames();
         JsonArray json = new JsonArray();
@@ -182,7 +182,7 @@ public class Games extends Servlet {
 
 
 
-    private void getGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    private void getGame(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         APIFacadePlayer facade = getPlayerFacade();
         // getting the game id

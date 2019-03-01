@@ -16,7 +16,7 @@ public class Login extends Servlet {
 
 
     @Override
-    public void get(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
+    public void get(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getPathInfo().equals("/logout")) {
             logout(resp);
         }

@@ -18,9 +18,8 @@ public class MysqlPlayerStatsAdapter extends MysqlAdapter implements PlayerStats
      * Creates a new {@link MysqlPlayerStatsAdapter}
      *
      * @param id id of the adapter
-     * @throws SQLException Thrown if an error occurs while communicating with the database
      */
-    MysqlPlayerStatsAdapter(int id) throws SQLException {
+    MysqlPlayerStatsAdapter(int id) {
         super(id);
         DATABASE_ADAPTER.executeMysqlUpdate("INSERT INTO " + TableNames.PLAYERSTATS
                 + " (" + ColumnNames.ID + "," + ColumnNames.SCORE + "," + ColumnNames.ROUNDS_PLAYED + ","

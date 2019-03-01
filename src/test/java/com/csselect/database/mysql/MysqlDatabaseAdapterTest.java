@@ -184,7 +184,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         Assert.assertTrue(mysqlDatabaseAdapter.getTerminatedGames(organiserAdapter).isEmpty());
     }
 
-    private Game createGame(Organiser o) throws IOException {
+    private Game createGame(Organiser o) {
         Game game = mysqlDatabaseAdapter.createGame(o);
         game.setGamemode(new BinarySelect());
         game.setTitle(TEST_TITLE);

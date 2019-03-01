@@ -2,7 +2,6 @@ package com.csselect.game;
 
 import com.csselect.inject.Injector;
 import com.csselect.user.Player;
-import org.pmw.tinylog.Logger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -174,10 +173,8 @@ public abstract class Round {
             this.skip(uselessFeatures);
             return 0;
         }
-
         this.player.setActiveRound(null);
         this.addUselessFeatures(uselessFeatures);
-
         for (int id : selectedFeatures) {
             for (Feature feature : this.features) {
                 if (feature.getID() == id) {
@@ -185,20 +182,10 @@ public abstract class Round {
                 }
             }
         }
-
         String identifier = this.game.getFeatureSet().getIdentifier();
-        try {
-            this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
-        } catch (java.io.IOException e) {
-            Logger.error(e);
-        }
-
-
+        this.quality = Injector.getInstance().getMLServer().getScore(identifier, this.chosenFeatures);
         this.points = this.player.getStats().finishRound(this.quality);
-
         this.game.addFinishedRound(this);
-
-
         return this.points;
     }
 
