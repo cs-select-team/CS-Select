@@ -78,6 +78,7 @@ props -->
                             compositeTermination: '<fmt:message key="compositeTermination"/>',
                             organiserTermination: '<fmt:message key="organiserTermination"/>',
                             organiserTerminationInfo: '<fmt:message key="organiserTerminationInfo"/>',
+                            createPatternFromGame: '<fmt:message key="createPatternFromGame"/>',
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
@@ -101,6 +102,7 @@ props -->
                             confirmToolTip: '<fmt:message key="confirmToolTip"/>',
                             skipToolTip: '<fmt:message key="skipToolTip"/>',
                             quitToolTip: '<fmt:message key="quitToolTip"/>',
+                            createPatternFromGameTooltip: '<fmt:message key="createPatternFromGameToolTip"/>',
                             creationAbort: '<fmt:message key="creationAbort"/>'
                         }
                     }

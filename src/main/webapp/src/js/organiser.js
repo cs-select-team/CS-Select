@@ -26,6 +26,7 @@ Vue.component('active-games-display', {
                         </div>
                     </div>
                     <div class="col">
+                        <input type="button" class="btn btn-secondary float-right btn-space" :title="localisation.createPatternFromGameTooltip" :value="localisation.createPatternFromGame">
                         <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"
                             v-on:click="terminate(game.id)" :value="localisation.terminate">
                         <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"
