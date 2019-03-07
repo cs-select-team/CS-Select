@@ -1,6 +1,6 @@
 Vue.component('BinarySelect', {
     props: ['feature-list', 'options'],
-    data: function() {
+    data() {
         return {
             feature1: {},
             feature2: {},
@@ -13,7 +13,7 @@ Vue.component('BinarySelect', {
     },
 
     methods: {
-        nextRound: function () {
+        nextRound() {
             this.currentRound++;
             if (this.currentRound < this.maxRound) {
                 this.feature1 = this.featureList[2 * this.currentRound];
@@ -23,7 +23,7 @@ Vue.component('BinarySelect', {
                 this.disabled = true
             }
         },
-        uselessToggle: function(newVal) {
+        uselessToggle(newVal) {
             if (this.feature1.useless && this.feature2.useless) { // in case both features are selected as useless
                 this.nextRound();
                 const alert = {message: this.localisation.binaryRoundSkipped, type: 1};
@@ -31,7 +31,7 @@ Vue.component('BinarySelect', {
                 this.$emit("add-alert", alert)
             }
         },
-        toggled: function (newVal, oldVal) {
+        toggled(newVal, oldVal) {
             if(newVal){
                 this.nextRound();
                 this.$emit("clear-alerts")
@@ -40,7 +40,7 @@ Vue.component('BinarySelect', {
         }
 
     },
-    mounted: function() {
+    mounted() {
         this.$emit('add-alert', {message: this.localisation.binarySelectHelp, type: 2});
         this.currentRound= -1;
         this.nextRound();

@@ -10,34 +10,34 @@ const gameFrame = new Vue({
         points: undefined,
         alerts: [] // alerts are cleared on nextRound
     },
-    mounted: function () {
+    mounted() {
         this.getNextRound();
     },
     methods: {
-        addAlert: function (alert) {
+        addAlert(alert) {
             this.alerts.push(alert);
         },
-        clearAlerts: function () {
+        clearAlerts() {
             this.alerts = []
         },
-        unlockButton: function (done) {
+        unlockButton(done) {
             this.buttonState = !done
         },
-        getSelectedFeaturesById: function () {
+        getSelectedFeaturesById() {
             let idList = [];
             for (let i = 0; i < this.featureList.length; i++) {
                 if (this.featureList[i].toggled) idList.push(this.featureList[i].id)
             }
             return idList;
         },
-        getUselessFeaturesById: function () {
+        getUselessFeaturesById() {
             let idList = [];
             for (let i = 0; i < this.featureList.length; i++) {
                 if (this.featureList[i].useless) idList.push(this.featureList[i].id)
             }
             return idList;
         },
-        sendResults: function () {
+        sendResults() {
             if (!this.buttonState) { // truly only send if the game is finished
 
                 axios({
@@ -54,7 +54,7 @@ const gameFrame = new Vue({
 
             }
         },
-        skip: function () {
+        skip() {
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/skip",
@@ -66,7 +66,7 @@ const gameFrame = new Vue({
             })
 
         },
-        getNextRound: function () {
+        getNextRound() {
             this.clearAlerts();
 
             axios({
@@ -95,7 +95,7 @@ const gameFrame = new Vue({
 
 
         },
-        quit: function () {
+        quit() {
 
             window.location.href = 'player.jsp'
         },

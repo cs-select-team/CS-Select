@@ -29,7 +29,7 @@ const achievements = new Vue({
         achievementList: []
 
     },
-    mounted: function () {
+    mounted() {
         axios('users/achievements').then(function (response) {
             achievements.achievementList = response.data;
         })

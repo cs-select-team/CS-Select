@@ -21,8 +21,8 @@ const app1 = new Vue({
                 }
             }).then(function (response) {
                 if (response.status === 202) {
-                    if (app1.organiser) window.open("organiser.jsp", "_self");
-                    else window.open("player.jsp", "_self")
+                    if (app1.organiser) window.open('organiser.jsp', '_self');
+                    else window.open('player.jsp', '_self')
 
                 }
 
@@ -38,7 +38,7 @@ const app1 = new Vue({
         },
         autoLogout: function () {
             const val = localStorage.getItem('autoLogout');
-            localStorage.setItem("autoLogout", false);
+            localStorage.setItem('autoLogout', false);
             return val;
         },
         checkEmail: function() {

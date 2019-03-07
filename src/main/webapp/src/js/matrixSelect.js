@@ -7,22 +7,22 @@ Vue.component('matrix-row', {
             </feature-box>
         </div>`,
     methods: {
-        toggled: function (newVal, oldVal) {
+        toggled(newVal, oldVal) {
             this.$emit("toggled", newVal, oldVal)
         },
-        uselessToggle: function (newVal, toggled) {
+        uselessToggle(newVal, toggled) {
             this.$emit('useless-toggle', newVal, toggled)
         }
     }
 });
 Vue.component('MatrixSelect', {
     props: ['feature-list', 'options'],
-    data: function() {
+    data() {
         return {
             count: 0 // number of selected features
         }
     },
-    mounted: function() { // giving the player information about this game
+    mounted() { // giving the player information about this game
         this.$emit("add-alert", {message: this.localisation.matrixSelectHelp, type: 2});
         const messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd;
         const alert = {message: messageString, type: 2};
@@ -30,10 +30,10 @@ Vue.component('MatrixSelect', {
 
     },
     computed: {
-        col: function () {
+        col() {
             return Math.floor(document.getElementsByClassName("col-10")[0].offsetWidth / 350);
         },
-        row: function () {
+        row() {
             return Math.ceil(this.options.numberOfFeatures / this.col);
         }
     },
@@ -45,16 +45,16 @@ Vue.component('MatrixSelect', {
             </matrix-row>
         </div>`,
     methods: {
-        toggled: function(newVal, oldVal) {
+        toggled(newVal, oldVal) {
             if (newVal && !oldVal) this.count++;
             if (!newVal && oldVal) this.count--;
             this.checkDone();
         },
-        uselessToggle: function (newVal, toggled) {
+        uselessToggle(newVal, toggled) {
             if (newVal && toggled) this.count--;
             this.checkDone();
         },
-        checkDone: function () {
+        checkDone() {
             if (this.count >= this.options.minSelect && this.count <= this.options.maxSelect) {
                 this.$emit("done", true)
             }

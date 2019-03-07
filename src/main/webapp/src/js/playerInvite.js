@@ -1,5 +1,5 @@
 Vue.component('player-invite-single', {
-    data: function () {
+    data() {
         return {
             email: ''
         }
@@ -15,13 +15,13 @@ Vue.component('player-invite-single', {
             </div>
         </div>`, 
     methods: {
-        newEmail: function () {
+        newEmail() {
             this.$emit('new-email', this.email);
             this.email = "";
         }
     },
     computed: {
-        validateEmail: function () {
+        validateEmail() {
             const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(this.email).toLowerCase());
         }
@@ -29,7 +29,7 @@ Vue.component('player-invite-single', {
 });
 Vue.component('player-invite-textarea', {
     props: ['invite-string'],
-    data: function () {
+    data() {
         return {
             rawText: this.inviteString
             }
@@ -41,13 +41,13 @@ Vue.component('player-invite-textarea', {
             </textarea>
         </div>`,
     methods: {
-        validateEmail: function (email) {
+        validateEmail(email) {
             const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         }
     },
     watch: {
-        rawText: function (newVal) {
+        rawText(newVal) {
             const self = this;
             let wrongEmail = false;
             newVal = newVal.replace(/\s/g, '');
@@ -82,19 +82,19 @@ Vue.component('player-invite-nav-tab', {
 });
 Vue.component('player-invite-box', {
     props: ['invite-string'],
-    data: function () {
+    data() {
         return {
             playerInputType: [],
             currentTab: 'single'
         }
     },
-    mounted: function () {
+    mounted() {
         this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
             {title: this.localisation.invitePlayerMass, value: 'textarea'}]
     },
     computed:{
         invitedPlayers: {
-            get: function () {
+            get() {
                 const array = this.inviteString.split(',');
                 const newArray = [];
                 array.forEach(function(value) { // removing empty strings
@@ -105,19 +105,19 @@ Vue.component('player-invite-box', {
                 return newArray;
             }
         },
-        currentTabComponent: function () {
+        currentTabComponent() {
             return 'player-invite-' + this.currentTab
         },
     }, methods: {
-        addPlayer: function (email) {
+        addPlayer(email) {
             const players = this.invitedPlayers;
             players.push(email);
             this.$emit('update-invite-string', players.join(','))
         },
-        updateInviteString: function (newVal) {
+        updateInviteString(newVal) {
             this.$emit('update-invite-string', newVal)
         },
-        updateTab: function(value) {
+        updateTab(value) {
             this.currentTab = value;
         }
     },

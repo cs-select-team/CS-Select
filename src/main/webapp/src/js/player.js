@@ -18,17 +18,17 @@ Vue.component('game-display', {
             </div>
         </div>`,
     methods: {
-        startGame: function(gameId) {
+        startGame(gameId) {
             localStorage.setItem("gameId", gameId);
             window.location.href = "game.jsp"
         }
     },
     computed: {
-        terminationType: function () {
+        terminationType() {
             if (this.game.termination.split(',').length > 1) return 'composite';
             return this.game.termination.split(':')[0];
         },
-        terminationNotice: function () {
+        terminationNotice() {
             switch(this.terminationType) {
                 case 'composite':
                     return this.localisation.compositeTermination;
@@ -94,7 +94,7 @@ Vue.component('invite-element', {
             </div>
         </div>`,
     methods: {
-        accept: function (gameId) {
+        accept(gameId) {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/accept'
@@ -106,7 +106,7 @@ Vue.component('invite-element', {
                 }
             });
         },
-        decline: function (gameId) {
+        decline(gameId) {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/decline'
@@ -123,7 +123,7 @@ const invites = new Vue({
     data: {
         listOfInvites: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/notifications'
@@ -139,7 +139,7 @@ const stats = new Vue({
         username: '',
         points: 0
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users'
@@ -156,7 +156,7 @@ const games = new Vue({
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'games'
@@ -171,7 +171,7 @@ const leaderboard = new Vue({
     data: {
         playerList: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/leaderboard'
@@ -187,7 +187,7 @@ const daily = new Vue({
     data: {
         daily: {}
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/daily'
@@ -202,7 +202,7 @@ const playerAlerts = new Vue({
     data: {
         gameTerminated: false
     },
-    mounted: function () {
+    mounted() {
         if (localStorage.hasOwnProperty("gameTerminated")) {
             this.gameTerminated = localStorage.getItem("gameTerminated") === "true";
         }

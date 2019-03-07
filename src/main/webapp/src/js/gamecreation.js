@@ -1,6 +1,6 @@
 
 Vue.component('pattern-selection', {
-    data: function() {
+    data() {
         return {
             listOfPatterns: [],
             selectedPattern: {}
@@ -15,7 +15,7 @@ Vue.component('pattern-selection', {
                 <option v-for="(p, index) in listOfPatterns" v-bind:key="index" :value="p">{{p.title}}</option>
             </select>
         </div>`,
-    mounted: function() {
+    mounted() {
         const self = this;
         axios({
             method: 'get',
@@ -26,7 +26,7 @@ Vue.component('pattern-selection', {
         });
     },
     watch: {
-        selectedPattern: function(newVal) {
+        selectedPattern(newVal) {
             this.$emit('load-pattern', newVal)
         }
     }
@@ -60,7 +60,7 @@ const creation = new Vue({
          * @param name name of the parameter
          * @param value value of that parameter
          */
-        submitParameter: function (name, value) {
+        submitParameter(name, value) {
             axios({
                 method: 'post',
                 url: 'create/setParam',
@@ -70,25 +70,25 @@ const creation = new Vue({
                 }
             })
         },
-        updateInviteString: function (newVal) {
+        updateInviteString(newVal) {
             const clearedString = newVal.split(',').filter(function (item, index, allItems) {
                 return index === allItems.indexOf(item);
             }).join(',');
             $('#output').append(clearedString);
             this.inviteString = clearedString;
         },
-        removePlayerByIndex: function(index) {
+        removePlayerByIndex(index) {
             const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
             this.inviteString = playerArray.join(',')
         },
-        updateConfString: function (newVal) {
+        updateConfString(newVal) {
             this.gameModeConfigString = newVal;
         },
-        updateTerminationString: function (newVal) {
+        updateTerminationString(newVal) {
             this.terminationConfigString = newVal;
         },
-        loadPattern: function (newVal) {
+        loadPattern(newVal) {
             const gameOptions = newVal.gameOptions;
             this.featureSet = gameOptions.featureset;
             this.desc = gameOptions.desc;
@@ -98,7 +98,7 @@ const creation = new Vue({
             this.terminationConfigString = gameOptions.termination;
             this.inviteString = gameOptions.invites.join(',');
         },
-        checkFeatureSet: function () {
+        checkFeatureSet() {
             const self = this;
             if (this.featureSet === '') {
                 self.alerts.push({message: self.localisation.featureSetNotSet, type: 0});
@@ -114,7 +114,7 @@ const creation = new Vue({
                 })
             }
         },
-        startCreation: function () {
+        startCreation() {
             const self = this;
             self.createButtonEnabled = false;
             if (!this.checkParameters()) {
@@ -123,7 +123,7 @@ const creation = new Vue({
             }
             self.checkConflicts();
         },
-        checkConflicts: function () {
+        checkConflicts() {
             const self = this;
             axios.all([self.checkDatabaseExists(), self.checkTitleExists()]).then(function (response) {
                 if (response[0].data || response[1].data) {
@@ -140,12 +140,12 @@ const creation = new Vue({
                 }
             })
         },
-        checkResolved: function () {
+        checkResolved() {
             if (this.submittedTitle && this.submittedDatabaseName) {
                 this.submitGame();
             }
         },
-        submitGame: function () {
+        submitGame() {
             const self = this;
             axios.all(
                 [this.checkFeatureSet(), this.submitParameter('title', this.title),
@@ -183,7 +183,7 @@ const creation = new Vue({
                 }
             })
         },
-        checkParameters: function () {
+        checkParameters() {
             this.alerts = [];
             // language=RegExp
             if (this.title.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterTitle, type: 0});
@@ -209,7 +209,7 @@ const creation = new Vue({
             }
             return this.alerts.length === 0;
         },
-        createGame: function () {
+        createGame() {
             const self = this;
             axios({
                 method: 'post',
@@ -224,10 +224,10 @@ const creation = new Vue({
                 }
             });
         },
-        setPatterns: function (list) {
+        setPatterns(list) {
             this.listOfPatterns = list;
         },
-        submitOverwritePattern: function () {
+        submitOverwritePattern() {
             const self = this;
             axios({
                 method: 'post',
@@ -239,11 +239,11 @@ const creation = new Vue({
                 self.showPatternModal = false;
             })
         },
-        declineOverwritePattern: function () {
+        declineOverwritePattern() {
             const self = this;
             self.showPatternModal = false
         },
-        checkDatabaseExists: function () {
+        checkDatabaseExists() {
             const self = this;
             return axios({
                 method: 'get',
@@ -253,7 +253,7 @@ const creation = new Vue({
                 }
             })
         },
-        checkTitleExists: function () {
+        checkTitleExists() {
             const self = this;
             return axios({
                 method: 'get',
@@ -263,13 +263,13 @@ const creation = new Vue({
                 }
             })
         },
-        submitDatabaseName: function () {
+        submitDatabaseName() {
             const self = this;
             self.submittedDatabaseName = true;
             self.showDatabaseModal = false;
             self.checkResolved();
         },
-        submitTitle: function () {
+        submitTitle() {
             const self = this;
             self.submittedTitle = true;
             self.showTitleModal = false;

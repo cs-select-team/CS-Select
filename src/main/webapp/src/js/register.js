@@ -32,7 +32,7 @@ const app1 = new Vue({
                             }
                 }).then(function () {
                     localStorage.setItem('checkEmail', true);
-                    window.open("index.jsp","_self")
+                    window.open('index.jsp','_self');
                 }).catch(function (error) {
                     if (error.response.status === 550) {
                         app1.missingConfig = true;

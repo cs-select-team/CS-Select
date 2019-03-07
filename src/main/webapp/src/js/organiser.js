@@ -1,6 +1,6 @@
 Vue.component('active-games-display', {
     props: ['game'],
-    data: function () {
+    data() {
         return {
             email: '',
             inviteString: '',
@@ -81,7 +81,7 @@ Vue.component('active-games-display', {
             <hr class="separator">
         </div>`,
     methods: {
-        terminate: function (gameId) {
+        terminate (gameId) {
             axios({
                 method: 'post',
                 url: 'create/terminate',
@@ -91,7 +91,7 @@ Vue.component('active-games-display', {
             });
             this.$emit("terminate", gameId);
         },
-        invitePlayers: function (gameId) {
+        invitePlayers (gameId) {
             this.inviteString.split(',').forEach(function (value) {
                 if (value !== '') {
                     axios({
@@ -105,15 +105,15 @@ Vue.component('active-games-display', {
                 }
             })
         },
-        updateInviteString: function (newVal) {
+        updateInviteString(newVal) {
             this.inviteString = newVal;
         },
-        createPattern: function(gameId) {
-            var self = this;
+        createPattern(gameId) {
+            const self = this;
             self.showPatternModal = true
         },
-        doCreatePattern: function(gameId) {
-            var self = this;
+        doCreatePattern(gameId) {
+            const self = this;
             self.showPatternModal = false;
             axios({
                 method: 'post',
@@ -122,9 +122,10 @@ Vue.component('active-games-display', {
                     gameId: gameId,
                     title: self.patternTitle,
                 }
-            }),
-        removePlayerByIndex: function(index) {
-            var playerArray = this.inviteString.split(',');
+            })
+        },
+        removePlayerByIndex(index) {
+            const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
             this.inviteString = playerArray.join(',')
         }
@@ -154,7 +155,7 @@ Vue.component('terminated-games-display', {
             </div>
         </div>`,
     methods: {
-        remove: function (gameId) {
+        remove(gameId) {
             axios({
                 method: 'post',
                 url: 'create/delete',
@@ -179,7 +180,7 @@ const activeGames = new Vue({
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: "create/active"
@@ -188,7 +189,7 @@ const activeGames = new Vue({
         })
     },
     methods: {
-        gameWasTerminated: function (gameId) {
+        gameWasTerminated(gameId) {
             const self = this;
             this.listOfGames.forEach(function (value, index) {
                 if (value.id === gameId) {
@@ -207,7 +208,7 @@ const terminatedGames = new Vue({
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: "create/terminated"

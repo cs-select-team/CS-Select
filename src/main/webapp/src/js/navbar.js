@@ -1,12 +1,12 @@
 const nav = new Vue({
     el: '#navbar',
     methods: {
-        logout: function () {
+        logout() {
             axios.get("login/logout");
             window.location.href = ".";
         }
     },
-    mounted: function () {
+    mounted() {
         localStorage.setItem("autoLogout", false);
         const self = this;
         setTimeout(function () {

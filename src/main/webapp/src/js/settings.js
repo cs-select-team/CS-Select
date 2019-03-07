@@ -10,7 +10,7 @@ const app = new Vue({
         emailFalse: false
     },
     methods: {
-        setEmail: function () {
+        setEmail() {
             this.emailFalse = false;
             if (this.email !== '')
                 axios({
@@ -27,7 +27,7 @@ const app = new Vue({
                     }
                 })
         },
-        setPassword: function () {
+        setPassword() {
             if (this.password !== '' && this.password === this.repeatpassword)
                 axios({
                     method: 'post',
@@ -39,7 +39,7 @@ const app = new Vue({
                     app.alert = true
                 })
         },
-        setLanguage: function () {
+        setLanguage() {
             if (this.language !== '')
                 axios({
                     method: 'post',

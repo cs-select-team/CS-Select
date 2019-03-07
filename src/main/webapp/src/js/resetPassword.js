@@ -8,7 +8,7 @@ const reset = new Vue({
         organiser: false
     },
     methods: {
-        submit: function (event) {
+        submit(event) {
             event.preventDefault();
             const self = this;
             self.emailSent = false;

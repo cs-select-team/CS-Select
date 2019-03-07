@@ -4,7 +4,7 @@
 // 2    info
 Vue.component('alert-box', {
     props: ['alert-message', 'type'],
-    data: function() {
+    data() {
         return {
             alertClasses: [
                 "alert-danger",
