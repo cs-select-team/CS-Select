@@ -33,6 +33,7 @@ public class RoundTests extends TestClass {
         }
         game.setFeatureSet(features);
         round.setGame(game);
+        round.start();
     }
 
     @Override @After
