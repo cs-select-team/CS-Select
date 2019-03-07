@@ -44,11 +44,6 @@ public class StandardRoundTests extends TestClass {
         round  = null;
     }
 
-    @Test
-    public void selectNotEnoughFeatures() {
-        int[] feat = new int[]{1};
-        Assert.assertEquals(round.selectFeatures(feat, feat), -1);
-    }
 
     @Test
     public void selectTooManyFeatures() {
