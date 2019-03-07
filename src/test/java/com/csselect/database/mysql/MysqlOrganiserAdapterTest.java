@@ -56,6 +56,15 @@ public class MysqlOrganiserAdapterTest extends MysqlTestClass {
     }
 
     @Test
+    public void testGameTitleInUse() {
+        Assert.assertFalse(organiserAdapter.gameTitleInUse(TEST_EMAIL));
+        mysqlDatabaseAdapter.executeMysqlUpdate("INSERT INTO "  + TableNames.GAMES + " ("
+                        + ColumnNames.TITLE + ", " + ColumnNames.ORGANISER_ID + ") VALUES (?,?);",
+                new StringParam(TEST_EMAIL), new IntParam(organiserAdapter.getID()));
+        Assert.assertTrue(organiserAdapter.gameTitleInUse(TEST_EMAIL));
+    }
+
+    @Test
     public void patternTest() {
         GameOptions gameOptions = getCompleteGameOptions();
         Pattern pattern = new Pattern(gameOptions, TITLE);

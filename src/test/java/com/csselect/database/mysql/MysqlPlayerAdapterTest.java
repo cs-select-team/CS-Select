@@ -31,6 +31,14 @@ public class MysqlPlayerAdapterTest extends MysqlTestClass {
         }
     }
 
+    @Test
+    public void testUsername() {
+        playerAdapter.setUsername(TEST_USERNAME);
+        String username = playerAdapter.getUsername();
+        Assert.assertNotNull(username);
+        Assert.assertEquals(TEST_USERNAME, username);
+    }
+
     @Override
     public void reset() {
         mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE CS_SELECT;");
