@@ -21,8 +21,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *
      * @param args String array of arguments for registration
      *             0: email
-     *             1: password
-     *             2: masterpassword
+     *             1: masterpassword
      * @return true if registration successfull, false otherwise
      * @throws IllegalArgumentException if email is in use or the masterpassword is incorrect
      */

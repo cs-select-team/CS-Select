@@ -18,15 +18,16 @@ public final class PlayerManagement extends UserManagement {
     public Player register(String[] parameters) {
         assert parameters.length == 3;
         String email = parameters[0];
-        String password = parameters[1];
-        String username = parameters[2];
+        String password = this.createTemporaryPassword();
+        String username = parameters[1];
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
         Player player = Injector.getInstance().getDatabaseAdapter()
                 .createPlayer(email, encryptedPassword, salt, username);
-        if (player != null) {
-            player.login();
+        if (player == null) {
+            throw new IllegalArgumentException(EMAIL_IN_USE);
         }
+        sendConfirmationMail(email, password);
         return player;
     }
 

@@ -25,19 +25,6 @@
                         <small id="login" class="form-text text-muted"><a href="index.jsp"><fmt:message
                                 key="loginPrompt"/></a></small>
                     </div>
-                    <div class="form-group login-form-div">
-                        <label for="password"><fmt:message key="password"/></label>
-                        <input type="password" class="form-control" name="password" id="password"
-                               placeholder="<fmt:message key="password"/>" v-model="password">
-                    </div>
-                    <div class="form-group login-form-div">
-                        <label for="passwordRepeat"><fmt:message key="passwordRepeat"/></label>
-                        <input type="password" class="form-control" id="passwordRepeat"
-                               placeholder="<fmt:message key="passwordRepeat"/>" v-model="passwordRepeat">
-                    </div>
-                    <div class="alert alert-danger login-form-div" v-bind:class="{collapse: passwordRepeat == password }">
-                        <fmt:message key="passwordNoMatch"/>
-                    </div>
                     <div class="login-form-div">
                         <div class="form-check" id="organiserCheck">
                             <input type="radio" class="form-check-input" name="organiser" id="player"

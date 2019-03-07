@@ -29,8 +29,7 @@ public class APIFacadePlayer extends APIFacadeUser {
      *
      * @param args array with arguments for this method
      *             0: email
-     *             1: password
-     *             2: username
+     *             1: username
      * @return true if registration successful, false otherwise
      */
     @Override

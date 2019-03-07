@@ -10,10 +10,6 @@ import com.csselect.user.management.safety.Encrypter;
  * Management class for registration and login of {@link Organiser}
  */
 public final class OrganiserManagement extends UserManagement {
-    /**
-     * Error String if Email is in use (registration)
-     */
-    public static final String EMAIL_IN_USE = "Email is already in use";
 
     /**
      * Error string if master password is incorrect (registration)
@@ -30,9 +26,8 @@ public final class OrganiserManagement extends UserManagement {
         assert parameters.length == 3;
         Configuration config = Injector.getInstance().getConfiguration();
         String email = parameters[0];
-        String password = parameters[1];
-        String globalPassword = parameters[2];
-
+        String password = this.createTemporaryPassword();
+        String globalPassword = parameters[1];
         if (!config.getOrganiserPassword().equals(globalPassword)) {
             throw new IllegalArgumentException(MASTER_PASSWORD_INCORRECT);
         }
@@ -43,7 +38,7 @@ public final class OrganiserManagement extends UserManagement {
         if (organiser == null) {
             throw new IllegalArgumentException(EMAIL_IN_USE);
         }
-        organiser.login();
+        sendConfirmationMail(email, password);
         return organiser;
     }
 
