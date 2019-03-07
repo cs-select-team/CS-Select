@@ -25,6 +25,7 @@ var app1 = new Vue({
                             thirdParam: this.thirdParam
                             }
                 }).then(function () {
+                    localStorage.setItem('checkEmail', true);
                     window.open("index.jsp","_self")
                 }).catch(function (error) {
                     if (error.response.status === 550) {
