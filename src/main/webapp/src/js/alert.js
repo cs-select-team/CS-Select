@@ -11,7 +11,7 @@ Vue.component('alert-box', {
                 "alert-success",
                 "alert-info"
             ]
-        }
+        };
     },
     template:
         `<div class="alert" v-bind:class="alertClasses[type]" role="alert">
