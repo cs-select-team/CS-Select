@@ -39,18 +39,18 @@
                     </div>
                     <div class="form-group fixed-height login-form-div">
                         <div class="position-absolute login-form-absolute" v-bind:class="{ invisible: organiser !='organiser' }">
-                            <label for="thirdParam"><fmt:message key="masterPassword"/></label>
-                            <input type="password" class="form-control" id="thirdParam"
-                                   placeholder="<fmt:message key="masterPassword"/>" v-model="thirdParam">
+                            <label for="secondParam"><fmt:message key="masterPassword"/></label>
+                            <input type="password" class="form-control" id="secondParam"
+                                   placeholder="<fmt:message key="masterPassword"/>" v-model="secondParam">
                         </div>
                         <div class="position-absolute login-form-absolute" v-bind:class="{ invisible: organiser =='organiser' }">
-                            <label for="thirdParam"><fmt:message key="username"/></label>
-                            <input type="text" class="form-control" id="thirdParam"
-                                   placeholder="<fmt:message key="username"/>" v-model="thirdParam">
+                            <label for="secondParam"><fmt:message key="username"/></label>
+                            <input type="text" class="form-control" id="secondParam"
+                                   placeholder="<fmt:message key="username"/>" v-model="secondParam">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary login-form-button" v-on:click="submit"
-                            :disabled="passwordRepeat != password || email == '' || password == '' || thirdParam == ''">
+                            :disabled="passwordRepeat != password || email == '' || password == '' || secondParam == ''">
                         <fmt:message key="register"/></button>
                 </div>
             </form>
