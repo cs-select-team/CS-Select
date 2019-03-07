@@ -44,6 +44,14 @@ public class User implements Comparable<User> {
     }
 
     /**
+     * Gets the {@link User}s email address
+     * @return email address
+     */
+    public String getEmail() {
+        return this.userAdapter.getEmail();
+    }
+
+    /**
      * This method allows a user to log into our system. The API will call this function on an object stored in a user
      * facade. Logging in and validation of the password is taken care of {@link com.csselect.API.APIFacadeUser} and
      * {@link com.csselect.database.DatabaseAdapter}

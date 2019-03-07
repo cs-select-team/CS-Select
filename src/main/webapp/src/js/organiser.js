@@ -26,6 +26,8 @@ Vue.component('active-games-display', {
                         </div>
                     </div>
                     <div class="col">
+                        <input type="button" class="btn btn-secondary float-right btn-space" :title="localisation.createPatternFromGameTooltip"
+                         :value="localisation.createPatternFromGame" v-on:click="createPattern(game.id)">
                         <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"
                             v-on:click="terminate(game.id)" :value="localisation.terminate">
                         <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"
@@ -81,6 +83,18 @@ Vue.component('active-games-display', {
         },
         updateInviteString: function (newVal) {
             this.inviteString = newVal;
+        },
+        createPattern: function(gameId) {
+            var title = "title"; // TODO get from User
+            axios({
+                method: 'post',
+                url: 'create/patternFromGame',
+                params: {
+                    gameId: gameId,
+                    title: title
+                }
+            })
+
         }
     }
 });

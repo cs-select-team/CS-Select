@@ -1,5 +1,6 @@
 package com.csselect.game.gamecreation.patterns;
 
+import com.csselect.game.Game;
 import com.csselect.inject.Injector;
 import com.csselect.game.Gamemode;
 import com.csselect.game.Termination;
@@ -25,6 +26,22 @@ public class GameOptions implements Cloneable {
      */
     public GameOptions() {
         this.invitedEmails = new HashSet<>();
+    }
+
+    /**
+     * Creates a new {@link GameOptions} object from an existing {@link Game}
+     * @param game game to create GameOptions from
+     */
+    public GameOptions(Game game) {
+        this();
+        this.title = game.getTitle();
+        this.description = game.getDescription();
+        this.resultDatabaseName = game.getNameOrganiserDatabase();
+        this.dataset = game.getFeatureSet().getIdentifier();
+        this.termination = game.getTermination();
+        this.gamemode = game.getGamemode();
+        this.invitedEmails.addAll(game.getInvitedPlayers());
+        game.getPlayingPlayers().forEach(p -> this.invitedEmails.add(p.getEmail()));
     }
 
     /**
