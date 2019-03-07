@@ -1,5 +1,6 @@
 # CS-Select
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Installation
 ### Manual
 1. Install Tomcat-9 from the official [Tomcat Website](http://tomcat.apache.org/)
