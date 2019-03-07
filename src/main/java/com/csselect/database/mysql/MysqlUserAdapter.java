@@ -75,7 +75,7 @@ public abstract class MysqlUserAdapter extends MysqlAdapter implements UserAdapt
     }
 
     @Override
-    final ResultSet getRow() throws SQLException {
+    final ResultSet getRow() {
         return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + getTableName()
                         + " WHERE (" + ColumnNames.ID + "=?);", new IntParam(getID()));
     }

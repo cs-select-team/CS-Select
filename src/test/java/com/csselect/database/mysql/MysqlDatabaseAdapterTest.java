@@ -1,5 +1,6 @@
 package com.csselect.database.mysql;
 
+import com.csselect.database.DatabaseException;
 import com.csselect.inject.Injector;
 import com.csselect.inject.MysqlTestClass;
 import com.csselect.database.OrganiserAdapter;
@@ -52,6 +53,10 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
         mysqlDatabaseAdapter.executeMysqlUpdate("DROP DATABASE PSE;", "PSE");
     }
 
+    @Test(expected = DatabaseException.class)
+    public void testExceptionOnWrongSQLQuery() {
+        mysqlDatabaseAdapter.executeMysqlQuery("SELECT nonExistingColumn FROM nonExistingDatabase;");
+    }
     @Test
     public void testTimezone() throws SQLException {
         ResultSet resultSet = mysqlDatabaseAdapter.executeMysqlQuery("SELECT @@global.time_zone, @@session.time_zone;");
