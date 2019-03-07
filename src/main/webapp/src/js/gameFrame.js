@@ -1,4 +1,4 @@
-var gameFrame = new Vue({
+const gameFrame = new Vue({
     el: '#gameFrame',
     data: {
         featureList: [],
@@ -11,28 +11,28 @@ var gameFrame = new Vue({
         alerts: [] // alerts are cleared on nextRound
     },
     mounted: function () {
-      this.getNextRound();
+        this.getNextRound();
     },
     methods: {
-        addAlert: function(alert) {
-          this.alerts.push(alert);
+        addAlert: function (alert) {
+            this.alerts.push(alert);
         },
-        clearAlerts: function() {
+        clearAlerts: function () {
             this.alerts = []
         },
         unlockButton: function (done) {
             this.buttonState = !done
         },
-        getSelectedFeaturesById: function() {
-            idList = [];
-            for (var i = 0; i < this.featureList.length; i++) {
+        getSelectedFeaturesById: function () {
+            let idList = [];
+            for (let i = 0; i < this.featureList.length; i++) {
                 if (this.featureList[i].toggled) idList.push(this.featureList[i].id)
             }
             return idList;
         },
-        getUselessFeaturesById: function() {
-            idList = [];
-            for (var i = 0; i < this.featureList.length; i++) {
+        getUselessFeaturesById: function () {
+            let idList = [];
+            for (let i = 0; i < this.featureList.length; i++) {
                 if (this.featureList[i].useless) idList.push(this.featureList[i].id)
             }
             return idList;
@@ -54,7 +54,7 @@ var gameFrame = new Vue({
 
             }
         },
-        skip: function() {
+        skip: function () {
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/skip",
@@ -66,14 +66,14 @@ var gameFrame = new Vue({
             })
 
         },
-        getNextRound: function() {
+        getNextRound: function () {
             this.clearAlerts();
 
             axios({
                 method: 'post',
                 url: 'games/' + localStorage.getItem("gameId") + "/start"
-            }).then (function (response) {
-                if (response.status == 204) {
+            }).then(function (response) {
+                if (response.status === 204) {
                     localStorage.setItem("gameTerminated", true);
                     gameFrame.quit()
                 }
@@ -95,7 +95,7 @@ var gameFrame = new Vue({
 
 
         },
-        quit: function() {
+        quit: function () {
 
             window.location.href = 'player.jsp'
         },

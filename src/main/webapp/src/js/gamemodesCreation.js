@@ -39,18 +39,18 @@ Vue.component('gamemode-config-matrixSelect', {
         </div>`,
     methods: {
         getArgByIndex: function (index) {
-            var args = this.conf.split(',');
+            const args = this.conf.split(',');
 
             return args[index + 1];
         },
         setArgByIndex: function (index, newVal) {
-            var arguments = this.conf.split(',');
+            const arguments = this.conf.split(',');
             arguments[index + 1] = newVal;
             this.conf = arguments.join(',');
 
         },
         isValidConfig: function (string) {
-            var args = string.split(',');
+            const args = string.split(',');
             if (args[0] !== 'matrixSelect') return false;
             return args.length === 4;
 
@@ -121,7 +121,7 @@ Vue.component('gamemode-config', {
         },
         currentGm: {
             get: function() {
-                if (this.gamemodeConfigStr == '') return 'binarySelect';
+                if (this.gamemodeConfigStr === '') return 'binarySelect';
                 return this.gamemodeConfigStr.split(',')[0];
             },
             set: function (newVal) {

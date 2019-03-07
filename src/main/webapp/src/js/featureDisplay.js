@@ -50,7 +50,7 @@ Vue.component('feature-box', {
         </div>`,
     methods: {
         toggleMarked: function () {
-            oldVal = this.feature.toggled;
+            const oldVal = this.feature.toggled;
             if (!this.feature.useless) this.feature.toggled = !this.feature.toggled;
             this.$forceUpdate();
             this.$emit("toggled", !oldVal, oldVal)

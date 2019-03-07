@@ -1,23 +1,22 @@
-var app1 = new Vue({
+const app1 = new Vue({
     el: '#registerForm',
-        data: {
-            email: '',
-            organiser: 'player', // so that the player is the default option for registering
-            secondParam: '',
-            emailInUse: false,
-            missingConfig: false,
-            wrongMasterPassword: false,
-            missingDatabase: false,
-            usernameInUse: false,
-            emailInvalid: false
-        },
-    watch:{
+    data: {
+        email: '',
+        organiser: 'player', // so that the player is the default option for registering
+        secondParam: '',
+        emailInUse: false,
+        missingConfig: false,
+        wrongMasterPassword: false,
+        missingDatabase: false,
+        usernameInUse: false,emailInvalid:false
+    },
+    watch: {
         organiser: function () {
             this.secondParam = '';
         }
     },
         methods: {
-            submit: function(event) {
+            submit: function (event) {
                 event.preventDefault();
                 const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 if (!re.test(this.email)) {

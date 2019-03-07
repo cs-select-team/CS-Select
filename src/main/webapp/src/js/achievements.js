@@ -23,7 +23,7 @@ Vue.component('achievement',{
     3       completed
  */
 
-var achievements = new Vue({
+const achievements = new Vue({
     el: '#achievements',
     data: {
         achievementList: []

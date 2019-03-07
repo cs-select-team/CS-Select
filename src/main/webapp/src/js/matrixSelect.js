@@ -24,8 +24,8 @@ Vue.component('MatrixSelect', {
     },
     mounted: function() { // giving the player information about this game
         this.$emit("add-alert", {message: this.localisation.matrixSelectHelp, type: 2});
-        var messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd;
-        var alert = {message: messageString, type: 2};
+        const messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd;
+        const alert = {message: messageString, type: 2};
         this.$emit("add-alert", alert)
 
     },

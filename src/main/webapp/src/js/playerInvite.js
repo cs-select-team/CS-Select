@@ -22,7 +22,7 @@ Vue.component('player-invite-single', {
     },
     computed: {
         validateEmail: function () {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(this.email).toLowerCase());
         }
     }
@@ -42,19 +42,19 @@ Vue.component('player-invite-textarea', {
         </div>`,
     methods: {
         validateEmail: function (email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         }
     },
     watch: {
         rawText: function (newVal) {
-            var self = this;
-            var wrongEmail = false;
+            const self = this;
+            let wrongEmail = false;
             newVal = newVal.replace(/\s/g, '');
-            var array = newVal.split(',');
-            var newArray = [];
+            const array = newVal.split(',');
+            const newArray = [];
             array.forEach(function (value, index) {
-                if (value == '') {
+                if (value === '') {
 
                     return
                 } // trailing comma will cause one empty string
@@ -95,8 +95,8 @@ Vue.component('player-invite-box', {
     computed:{
         invitedPlayers: {
             get: function () {
-                var array = this.inviteString.split(',');
-                var newArray = [];
+                const array = this.inviteString.split(',');
+                const newArray = [];
                 array.forEach(function(value) { // removing empty strings
                    if (value !== '') {
                        newArray.push(value)
@@ -110,7 +110,7 @@ Vue.component('player-invite-box', {
         },
     }, methods: {
         addPlayer: function (email) {
-            var players = this.invitedPlayers;
+            const players = this.invitedPlayers;
             players.push(email);
             this.$emit('update-invite-string', players.join(','))
         },

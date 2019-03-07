@@ -100,7 +100,7 @@ Vue.component('invite-element', {
                 url: 'games/' + gameId + '/accept'
             });
             invites.listOfInvites.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.id == gameId){
+                if (value.id === gameId){
 
                     games.listOfGames.push(invites.listOfInvites.splice(index, 1)[0]);
                 }
@@ -112,13 +112,13 @@ Vue.component('invite-element', {
                 url: 'games/' + gameId + '/decline'
             });
             invites.listOfInvites.forEach(function (value, index) {  // remove from the list without reloading page
-                if (value.id == gameId) invites.listOfInvites.splice(index, 1);
+                if (value.id === gameId) invites.listOfInvites.splice(index, 1);
             })
         }
     }
 });
 
-var invites = new Vue({
+const invites = new Vue({
     el: '#invites',
     data: {
         listOfInvites: []
@@ -133,7 +133,7 @@ var invites = new Vue({
 
     }
 });
-var stats = new Vue({
+const stats = new Vue({
     el: '#stats',
     data: {
         username: '',
@@ -151,7 +151,7 @@ var stats = new Vue({
     }
 });
 
-var games = new Vue({
+const games = new Vue({
     el: '#games',
     data: {
         listOfGames: []
@@ -166,7 +166,7 @@ var games = new Vue({
     }
 });
 
-var leaderboard = new Vue({
+const leaderboard = new Vue({
     el: '#leaderboard',
     data: {
         playerList: []
@@ -182,7 +182,7 @@ var leaderboard = new Vue({
 });
 
 
-var daily = new Vue({
+const daily = new Vue({
     el: "#daily",
     data: {
         daily: {}
@@ -197,14 +197,14 @@ var daily = new Vue({
     }
 });
 
-var playerAlerts = new Vue({
+const playerAlerts = new Vue({
     el: '#playerAlerts',
     data: {
         gameTerminated: false
     },
     mounted: function () {
         if (localStorage.hasOwnProperty("gameTerminated")) {
-            this.gameTerminated = localStorage.getItem("gameTerminated") == "true";
+            this.gameTerminated = localStorage.getItem("gameTerminated") === "true";
         }
         localStorage.setItem("gameTerminated", false);
 

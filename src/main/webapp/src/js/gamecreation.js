@@ -16,7 +16,7 @@ Vue.component('pattern-selection', {
             </select>
         </div>`,
     mounted: function() {
-        var self = this;
+        const self = this;
         axios({
             method: 'get',
             url: 'create/patterns'
@@ -31,7 +31,7 @@ Vue.component('pattern-selection', {
         }
     }
 });
-var creation = new Vue({
+const creation = new Vue({
     el: '#gamecreation',
     data: {
 
@@ -70,15 +70,15 @@ var creation = new Vue({
                 }
             })
         },
-        updateInviteString: function(newVal) {
-            var clearedString = newVal.split(',').filter(function(item, index, allItems){
+        updateInviteString: function (newVal) {
+            const clearedString = newVal.split(',').filter(function (item, index, allItems) {
                 return index === allItems.indexOf(item);
             }).join(',');
             $('#output').append(clearedString);
-          this.inviteString = clearedString;
+            this.inviteString = clearedString;
         },
         removePlayerByIndex: function(index) {
-            var playerArray = this.inviteString.split(',');
+            const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
             this.inviteString = playerArray.join(',')
         },
@@ -89,7 +89,7 @@ var creation = new Vue({
             this.terminationConfigString = newVal;
         },
         loadPattern: function (newVal) {
-            var gameOptions = newVal.gameOptions;
+            const gameOptions = newVal.gameOptions;
             this.featureSet = gameOptions.featureset;
             this.desc = gameOptions.desc;
             this.title = gameOptions.title;
@@ -99,8 +99,8 @@ var creation = new Vue({
             this.inviteString = gameOptions.invites.join(',');
         },
         checkFeatureSet: function () {
-            var self = this;
-            if (this.featureSet == '') {
+            const self = this;
+            if (this.featureSet === '') {
                 self.alerts.push({message: self.localisation.featureSetNotSet, type: 0});
                 return false;
             } else {
@@ -115,7 +115,7 @@ var creation = new Vue({
             }
         },
         startCreation: function () {
-            var self = this;
+            const self = this;
             self.createButtonEnabled = false;
             if (!this.checkParameters()) {
                 self.createButtonEnabled = true;
@@ -123,10 +123,10 @@ var creation = new Vue({
             }
             self.checkConflicts();
         },
-        checkConflicts: function() {
-            var self = this;
-            axios.all([self.checkDatabaseExists(), self.checkTitleExists()]).then(function(response) {
-                if(response[0].data || response[1].data) {
+        checkConflicts: function () {
+            const self = this;
+            axios.all([self.checkDatabaseExists(), self.checkTitleExists()]).then(function (response) {
+                if (response[0].data || response[1].data) {
                     if (response[0].data) {
                         self.submittedDatabaseName = false;
                         self.showDatabaseModal = true;
@@ -140,25 +140,25 @@ var creation = new Vue({
                 }
             })
         },
-        checkResolved: function() {
-            if(this.submittedTitle && this.submittedDatabaseName) {
+        checkResolved: function () {
+            if (this.submittedTitle && this.submittedDatabaseName) {
                 this.submitGame();
             }
         },
         submitGame: function () {
-            var self = this;
+            const self = this;
             axios.all(
                 [this.checkFeatureSet(), this.submitParameter('title', this.title),
-                this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
-                this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
-                this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function (response) {
+                    this.submitParameter('description', this.desc), this.submitParameter('addressOrganiserDatabase', this.databaseName),
+                    this.submitParameter('termination', this.terminationConfigString), this.submitParameter('gamemode', this.gameModeConfigString),
+                    this.submitParameter('featureSet', this.featureSet), this.submitParameter('addPlayers', this.inviteString)]).then(function (response) {
                 if (!response[0].data) {
                     self.alerts.push({message: self.localisation.featureSetMissingMessage, type: 0});
                     self.createButtonEnabled = true;
                     return;
                 }
                 if (self.saveAsPattern) {
-                    var isOverwriting = false;
+                    let isOverwriting = false;
                     self.listOfPatterns.forEach(function (pattern) {
                         if (pattern.title === self.patternName) {
                             isOverwriting = true
@@ -178,8 +178,8 @@ var creation = new Vue({
                         self.createButtonEnabled = true;
                     }
                 } else {
-                        self.alerts.push({message: self.localisation.creationFail, type: 0});
-                        self.createButtonEnabled = true;
+                    self.alerts.push({message: self.localisation.creationFail, type: 0});
+                    self.createButtonEnabled = true;
                 }
             })
         },
@@ -195,8 +195,8 @@ var creation = new Vue({
                 type: 0
             });
             if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
-            if ((this.terminationConfigString.split(':').length < 2 || this.terminationConfigString.split(':')[1] === '' ) &&
-                this.terminationConfigString.split(':')[0].toString() !== 'organiser' )
+            if ((this.terminationConfigString.split(':').length < 2 || this.terminationConfigString.split(':')[1] === '') &&
+                this.terminationConfigString.split(':')[0].toString() !== 'organiser')
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
             if (this.terminationConfigString.split(',').length > 1) {
                 // composite termination
@@ -210,7 +210,7 @@ var creation = new Vue({
             return this.alerts.length === 0;
         },
         createGame: function () {
-            var self = this;
+            const self = this;
             axios({
                 method: 'post',
                 url: 'create'
@@ -218,7 +218,7 @@ var creation = new Vue({
                 self.createButtonEnabled = true;
                 self.alerts.push({message: self.localisation.creationSuccess, type: 1})
             }).catch(function (error) {
-                if (error.status == 551) { // game has not been created
+                if (error.status === 551) { // game has not been created
                     self.createButtonEnabled = true;
                     self.alerts.push({message: self.localisation.creationFail, type: 0})
                 }
@@ -228,7 +228,7 @@ var creation = new Vue({
             this.listOfPatterns = list;
         },
         submitOverwritePattern: function () {
-            var self = this;
+            const self = this;
             axios({
                 method: 'post',
                 url: 'create/savePattern',
@@ -240,11 +240,11 @@ var creation = new Vue({
             })
         },
         declineOverwritePattern: function () {
-            var self = this;
+            const self = this;
             self.showPatternModal = false
         },
-        checkDatabaseExists: function() {
-            var self = this;
+        checkDatabaseExists: function () {
+            const self = this;
             return axios({
                 method: 'get',
                 url: 'create/dbexists',
@@ -253,8 +253,8 @@ var creation = new Vue({
                 }
             })
         },
-        checkTitleExists: function() {
-            var self = this;
+        checkTitleExists: function () {
+            const self = this;
             return axios({
                 method: 'get',
                 url: 'create/titleexists',
@@ -263,20 +263,20 @@ var creation = new Vue({
                 }
             })
         },
-        submitDatabaseName: function() {
-            var self = this;
+        submitDatabaseName: function () {
+            const self = this;
             self.submittedDatabaseName = true;
             self.showDatabaseModal = false;
             self.checkResolved();
         },
-        submitTitle: function() {
-            var self = this;
+        submitTitle: function () {
+            const self = this;
             self.submittedTitle = true;
             self.showTitleModal = false;
             self.checkResolved();
         },
         abortCreation() {
-            var self = this;
+            const self = this;
             self.showTitleModal = false;
             self.showDatabaseModal = false;
             self.submittedTitle = false;

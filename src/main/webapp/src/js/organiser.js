@@ -93,7 +93,7 @@ Vue.component('active-games-display', {
         },
         invitePlayers: function (gameId) {
             this.inviteString.split(',').forEach(function (value) {
-                if (value != '') {
+                if (value !== '') {
                     axios({
                         method: 'post',
                         url: 'create/invite',
@@ -163,7 +163,7 @@ Vue.component('terminated-games-display', {
                 }
             });
             terminatedGames.listOfGames.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.id == gameId) terminatedGames.listOfGames.splice(index, 1);
+                if (value.id === gameId) terminatedGames.listOfGames.splice(index, 1);
             });
         }
     }
@@ -174,7 +174,7 @@ Vue.component('stats-display', {
     template: ``
 });
 
-var activeGames = new Vue({
+const activeGames = new Vue({
     el: "#active",
     data: {
         listOfGames: []
@@ -189,10 +189,10 @@ var activeGames = new Vue({
     },
     methods: {
         gameWasTerminated: function (gameId) {
-            var self = this;
+            const self = this;
             this.listOfGames.forEach(function (value, index) {
-                if (value.id == gameId) {
-                    var game = self.listOfGames.splice(index, 1);
+                if (value.id === gameId) {
+                    const game = self.listOfGames.splice(index, 1);
                     terminatedGames.listOfGames.push(game[0]);
                 }
             })
@@ -202,7 +202,7 @@ var activeGames = new Vue({
 
 });
 
-var terminatedGames = new Vue({
+const terminatedGames = new Vue({
     el: "#terminated",
     data: {
         listOfGames: []
@@ -217,6 +217,6 @@ var terminatedGames = new Vue({
     }
 });
 
-var stats = new Vue({
+const stats = new Vue({
     el: "#stats"
 });

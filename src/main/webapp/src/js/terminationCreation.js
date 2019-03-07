@@ -52,7 +52,7 @@ Vue.component('termination-config', {
                 }
             },
             set: function (newVal) {
-                if (newVal == 'composite') this.$emit('update-termination-str', 'rounds:1,time:');
+                if (newVal === 'composite') this.$emit('update-termination-str', 'rounds:1,time:');
                 else this.$emit('update-termination-str', newVal + ':');
             }
         }
@@ -91,11 +91,11 @@ Vue.component('termination-config-composite', {
 
     },
     mounted: function () {
-        var self = this;
+        const self = this;
         Vue.nextTick(function() {
             self.terminationStrings = self.terminationConfigStr.split(',');
             self.terminationStrings.forEach(function (value, index) {
-                var termination = {};
+                let termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
                     if (term.value === value.split(':')[0]) termination = term;
                 });
@@ -107,11 +107,11 @@ Vue.component('termination-config-composite', {
     },
     watch: {
         terminationConfigStr: function(newVal) {
-            var self = this;
+            const self = this;
             this.terminations = [];
             self.terminationStrings = newVal.split(',');
             self.terminationStrings.forEach(function (value, index) {
-                var termination = {};
+                let termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
                     if (term.value === value.split(':')[0]) termination = term;
                 });
@@ -157,7 +157,7 @@ Vue.component('termination-config-rounds', {
     },
     methods: {
         isValidConf: function (string) {
-            var args = string.split(':');
+            const args = string.split(':');
             if (args[0] !== 'rounds') return false;
             if (args.length !== 2) return false;
         }
@@ -165,11 +165,11 @@ Vue.component('termination-config-rounds', {
     computed: {
         number: {
             get: function () {
-                if (this.terminationConfigStr == undefined || this.terminationConfigStr === '') this.$emit('update-termination', 'rounds:1');
+                if (this.terminationConfigStr === undefined || this.terminationConfigStr === '') this.$emit('update-termination', 'rounds:1');
                 return parseInt(this.terminationConfigStr.split(':')[1])
             },
             set: function (newVal) {
-                var args = this.terminationConfigStr.split(':');
+                const args = this.terminationConfigStr.split(':');
                 args[1] = newVal;
 
                 this.$emit('update-termination', args.join(':'))
@@ -195,7 +195,7 @@ Vue.component('termination-config-time', {
     },
     methods: {
         isValidConf: function (string) {
-            var args = string.split(':');
+            const args = string.split(':');
             if (args[0] !== 'time') return false;
             if (args.length !== 2) return false;
         }
@@ -203,8 +203,8 @@ Vue.component('termination-config-time', {
     computed: {
         date: {
             get: function() {
-                var args = this.terminationConfigStr.split(':');
-                var date;
+                const args = this.terminationConfigStr.split(':');
+                let date;
                 if (args[1] === '') {
                     date = Date.now();
                 } else {
@@ -213,7 +213,7 @@ Vue.component('termination-config-time', {
                 return date.toString();
             },
             set: function (newVal) {
-                var args = this.terminationConfigStr.split(':');
+                const args = this.terminationConfigStr.split(':');
                 args[1] = moment(newVal, 'DD/MM/YYYY HH:mm')._d.getTime();
                 this.$emit('update-termination', args.join(':'))
             }
