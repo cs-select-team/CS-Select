@@ -83,7 +83,7 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
     }
 
     @Test
-    public void testPlayingPlayerAdding() {
+    public void testPlayingPlayersAdding() {
         Collection<String> emails = new HashSet<>();
         Player player1 = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
         Player player2 = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL2, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL2);
@@ -93,6 +93,16 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
         Collection<Player> players = adapter.getPlayingPlayers();
         Assert.assertTrue(players.contains(player1));
         Assert.assertTrue(players.contains(player2));
+    }
+
+    @Test
+    public void testPlayingPlayerAdding(){
+        Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
+        Assert.assertTrue(adapter.getInvitedPlayers().isEmpty());
+        Assert.assertTrue(adapter.getPlayingPlayers().isEmpty());
+        adapter.addPlayingPlayer(player.getId());
+        Assert.assertTrue(adapter.getInvitedPlayers().isEmpty());
+        Assert.assertEquals(1, adapter.getPlayingPlayers().size());
     }
 
     @Test
@@ -112,23 +122,21 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
     public void testRounds() {
         Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
         adapter.setGamemode(GAMEMODE);
+        Round round = createMockRound(player);
         Assert.assertTrue(adapter.getRounds().isEmpty());
-        Collection<Feature> features = new HashSet<>();
-        features.add(new Feature(1, ""));
-        features.add(new Feature(2, ""));
-        features.add(new Feature(3, ""));
-        Round round = Mockito.mock(Round.class);
-        Mockito.when(round.getPlayer()).thenReturn(player);
-        Mockito.when(round.isSkipped()).thenReturn(false);
-        Mockito.when(round.getQuality()).thenReturn(0.5);
-        Mockito.when(round.getPoints()).thenReturn(10);
-        Mockito.when(round.getUselessFeatures()).thenReturn(features);
-        Mockito.when(round.getChosenFeatures()).thenReturn(features);
-        Mockito.when(round.getShownFeatures()).thenReturn(features);
         adapter.addRound(round);
         Assert.assertEquals(1, adapter.getRounds().size());
         adapter.addRound(round);
         Assert.assertEquals(2, adapter.getRounds().size());
+    }
+
+    @Test
+    public void testDuplicateFeatureProvision() {
+        Player player = mysqlDatabaseAdapter.createPlayer(TEST_EMAIL, TEST_EMAIL, TEST_EMAIL, TEST_EMAIL);
+        Collection<Feature> features = createMockFeatures();
+        Assert.assertFalse(adapter.checkDuplicateFeatureProvision(features));
+        adapter.addRound(createMockRound(player));
+        Assert.assertTrue(adapter.checkDuplicateFeatureProvision(features));
     }
 
     @Test
@@ -144,5 +152,26 @@ public class MysqlGameAdapterTest extends MysqlTestClass {
         adapter.setFeatures(featureSet);
         Assert.assertNotNull(adapter.getFeatures());
         Assert.assertEquals(featureSet, adapter.getFeatures());
+    }
+
+    private Collection<Feature> createMockFeatures() {
+        Collection<Feature> features = new HashSet<>();
+        features.add(new Feature(1, ""));
+        features.add(new Feature(2, ""));
+        features.add(new Feature(3, ""));
+        return features;
+    }
+
+    private Round createMockRound(Player player){
+        Collection<Feature> features = createMockFeatures();
+        Round round = Mockito.mock(Round.class);
+        Mockito.when(round.getPlayer()).thenReturn(player);
+        Mockito.when(round.isSkipped()).thenReturn(false);
+        Mockito.when(round.getQuality()).thenReturn(0.5);
+        Mockito.when(round.getPoints()).thenReturn(10);
+        Mockito.when(round.getUselessFeatures()).thenReturn(features);
+        Mockito.when(round.getChosenFeatures()).thenReturn(features);
+        Mockito.when(round.getShownFeatures()).thenReturn(features);
+        return round;
     }
 }
