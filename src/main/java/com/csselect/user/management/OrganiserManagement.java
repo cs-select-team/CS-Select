@@ -10,10 +10,6 @@ import com.csselect.user.management.safety.Encrypter;
  * Management class for registration and login of {@link Organiser}
  */
 public final class OrganiserManagement extends UserManagement {
-    /**
-     * Error String if Email is in use (registration)
-     */
-    public static final String EMAIL_IN_USE = "Email is already in use";
 
     /**
      * Error string if master password is incorrect (registration)
@@ -22,18 +18,15 @@ public final class OrganiserManagement extends UserManagement {
 
     /**
      * Register an organiser with 3 parameters email, password and global password
-     * @param parameters Registration parameters
+     * @param email organisers email
+     * @param masterPassword masterPassword used in the frontend
      * @return {@link Organiser} object
      * @throws IllegalArgumentException if email is in use or masterpassword is incorrect
      */
-    public Organiser register(String[] parameters) throws IllegalArgumentException {
-        assert parameters.length == 3;
+    public Organiser register(String email, String masterPassword) throws IllegalArgumentException {
         Configuration config = Injector.getInstance().getConfiguration();
-        String email = parameters[0];
-        String password = parameters[1];
-        String globalPassword = parameters[2];
-
-        if (!config.getOrganiserPassword().equals(globalPassword)) {
+        String password = this.createTemporaryPassword();
+        if (!config.getOrganiserPassword().equals(masterPassword)) {
             throw new IllegalArgumentException(MASTER_PASSWORD_INCORRECT);
         }
         String salt = Encrypter.getRandomSalt();
@@ -43,7 +36,7 @@ public final class OrganiserManagement extends UserManagement {
         if (organiser == null) {
             throw new IllegalArgumentException(EMAIL_IN_USE);
         }
-        organiser.login();
+        sendConfirmationMail(email, password);
         return organiser;
     }
 
