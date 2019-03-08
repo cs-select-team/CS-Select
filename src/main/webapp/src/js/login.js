@@ -9,7 +9,7 @@ const app1 = new Vue({
         missingDatabase: false
     },
     methods: {
-        submit: function (event) {
+        submit(event) {
             event.preventDefault();
             axios({
                 method: 'post',
@@ -36,13 +36,13 @@ const app1 = new Vue({
                 }
             });
         },
-        autoLogout: function () {
+        autoLogout() {
             const val = localStorage.getItem('autoLogout');
             localStorage.setItem('autoLogout', false);
             return val;
         },
-        checkEmail: function() {
-            var val = localStorage.getItem('checkEmail');
+        checkEmail() {
+            const val = localStorage.getItem('checkEmail');
             localStorage.setItem('checkEmail', false);
             return val;
         }
