@@ -1,5 +1,5 @@
 Vue.component('active-games-display', {
-    props: ['game', ],
+    props: ['game',],
     data: function () {
         return {
             email: '',
@@ -45,6 +45,16 @@ Vue.component('active-games-display', {
                             <player-invite-box v-bind:invite-string="inviteString"
                                                v-on:update-invite-string="updateInviteString">
                             </player-invite-box>
+                            <table class="table">
+                                <thead>
+                                    <th> {{localisation.playerEmails}} </th>
+                                    <th>  {{localisation.remove }}</th>
+                                </thead>
+                                <tr v-if="inviteString != ''" v-for="(email,index) in inviteString.split(',')">
+                                    <td>{{email}}</td>
+                                    <td  ><a href="#" v-on:click="removePlayerByIndex(index)" >{{localisation.remove }}</a></td>
+                                </tr>
+                            </table>
                             <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">
                                 {{localisation.sendInvitations}}
                             </button>
@@ -56,7 +66,7 @@ Vue.component('active-games-display', {
             <hr class="separator">
         </div>`,
     methods: {
-        terminate: function(gameId) {
+        terminate: function (gameId) {
             axios({
                 method: 'post',
                 url: 'create/terminate',
@@ -66,7 +76,7 @@ Vue.component('active-games-display', {
             });
             this.$emit("terminate", gameId);
         },
-        invitePlayers: function(gameId) {
+        invitePlayers: function (gameId) {
             this.inviteString.split(',').forEach(function (value) {
                 if (value != '') {
                     axios({
@@ -82,6 +92,11 @@ Vue.component('active-games-display', {
         },
         updateInviteString: function (newVal) {
             this.inviteString = newVal;
+        },
+        removePlayerByIndex: function(index) {
+            var playerArray = this.inviteString.split(',');
+            playerArray.splice(index, 1);
+            this.inviteString = playerArray.join(',')
         }
     }
 });

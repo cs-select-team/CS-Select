@@ -18,6 +18,7 @@ props -->
                             terminate: '<fmt:message key="terminate"/>',
                             streak: '<fmt:message key="streak"/>',
                             points: '<fmt:message key="points"/>',
+                            remove: '<fmt:message key="remove"/>',
                             accept: '<fmt:message key="accept"/>',
                             decline: '<fmt:message key="decline"/>',
                             create: '<fmt:message key="create"/>',
@@ -83,6 +84,7 @@ props -->
                             roundsPlayedAll: '<fmt:message key="roundsPlayedAll"/>',
                             acceptInvite: '<fmt:message key="acceptInvite"/>',
                             declineInvite: '<fmt:message key="declineInvite"/>',
+                            playerEmails: '<fmt:message key="playerMails"/>',
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
