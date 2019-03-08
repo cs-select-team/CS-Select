@@ -10,7 +10,7 @@ var app1 = new Vue({
             missingConfig: false,
             wrongMasterPassword: false,
             missingDatabase: false,
-            emailOrUsernameInUse: false
+            usernameInUse: false,
             emailInvalid: false
         },
     watch:{
@@ -53,7 +53,7 @@ var app1 = new Vue({
                     } else if (error.response.status === 401) {
                         app1.wrongMasterPassword = true;
                     } else if (error.response.status === 450) {
-                        app1.emailOrUsernameInUse = true;
+                        app1.usernameInUse = true;
                     }
                 })
             }
