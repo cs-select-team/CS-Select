@@ -10,11 +10,15 @@ import com.csselect.user.management.safety.Encrypter;
  */
 public final class PlayerManagement extends UserManagement {
 
-    public static final String EMAIL_OR_USERNAME_IN_USE = "Email or username is already in use";
+    /**
+     * Error string if username is already in use
+     */
+    public static final String USERNAME_IN_USE = "Username is already in use";
     /**
      * Register a player with parameters email, password and username
      * @param parameters Registration parameters
      * @return {@link Player} object
+     * @throws IllegalArgumentException if email or username were already in use
      */
     public Player register(String[] parameters) throws IllegalArgumentException{
         assert parameters.length == 3;
@@ -28,7 +32,7 @@ public final class PlayerManagement extends UserManagement {
         if (player != null) {
             player.login();
         } else {
-            throw new IllegalArgumentException(PlayerManagement.EMAIL_OR_USERNAME_IN_USE);
+            throw new IllegalArgumentException("Creation failed!");
         }
         return player;
     }

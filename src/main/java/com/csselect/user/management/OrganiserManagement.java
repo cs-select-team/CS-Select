@@ -10,10 +10,6 @@ import com.csselect.user.management.safety.Encrypter;
  * Management class for registration and login of {@link Organiser}
  */
 public final class OrganiserManagement extends UserManagement {
-    /**
-     * Error String if Email is in use (registration)
-     */
-    public static final String EMAIL_IN_USE = "Email is already in use";
 
     /**
      * Error string if master password is incorrect (registration)

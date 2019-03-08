@@ -9,6 +9,11 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public abstract class UserManagement {
 
+    /**
+     * Error String if Email is in use (registration)
+     */
+    public static final String EMAIL_IN_USE = "Email is already in use";
+
     private static final int MIN_TEMP_PASSWORD_LENGTH = 16;
     private static final int MAX_TEMP_PASSWORD_LENGTH = 20;
     private static final int MIN_SALT_LENGTH = 40;

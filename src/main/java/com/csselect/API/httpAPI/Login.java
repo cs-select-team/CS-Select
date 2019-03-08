@@ -84,7 +84,7 @@ public class Login extends Servlet {
                 case OrganiserManagement.MASTER_PASSWORD_INCORRECT:
                     resp.sendError(401, e.getMessage());
                     return;
-                case PlayerManagement.EMAIL_OR_USERNAME_IN_USE:
+                case PlayerManagement.USERNAME_IN_USE:
                     resp.sendError(450, e.getMessage());
                     return;
                 default:
