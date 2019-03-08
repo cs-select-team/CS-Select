@@ -12,16 +12,16 @@ Vue.component('active-games-display', {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="word-wrap">
+                        <div :title="localisation.gameTitle" class="word-wrap">
                             {{ game.title }}
                         </div>
-                        <div>
+                        <div :title="localisation.gamemode">
                             {{ game.type }}
                         </div>
-                        <div class="word-wrap">
+                        <div :title="localisation.gameDescription" class="word-wrap">
                             {{game.desc}}
                         </div>
-                        <div>
+                        <div :title="localisation.roundsPlayedAll">
                             {{localisation.roundsPlayed + ": " + game.roundsPlayed}}
                         </div>
                     </div>
@@ -93,10 +93,10 @@ Vue.component('terminated-games-display', {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="word-wrap">
+                        <div :title="localisation.gameTitle" class="word-wrap">
                             {{ game.title }}
                         </div>
-                        <div>
+                        <div :title="localisation.gamemode">
                             {{ game.type }}
                         </div>
                     </div>
