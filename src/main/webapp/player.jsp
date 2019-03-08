@@ -52,6 +52,9 @@
             <div class="top-buffer"></div>
             <div class="row">
                 <div class="col-md-7 h-100 overflow-auto" id="games">
+                    <div class="container h-10 title">
+                        <fmt:message key="activeGames"/>
+                    </div>
                     <game-display
                             v-for="game in listOfGames"
                             v-bind:game="game"
@@ -60,6 +63,9 @@
                     </game-display>
                 </div>
                 <div class="col-md-5 h-100" id="invites">
+                    <div class="container h-10 title">
+                        <fmt:message key="invitedGames"/>
+                    </div>
                     <div class="overflow-auto h-100">
                         <invite-element v-for="invite in listOfInvites"
                                         v-bind:key="invite.id"
