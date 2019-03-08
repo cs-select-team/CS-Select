@@ -9,6 +9,9 @@
                     <div class="alert alert-danger mt-3" v-bind:class="{ collapse: !(autoLogout() == 'true') }">
                         <fmt:message key="autoLogout"/>
                     </div>
+                    <div class="alert alert-info mt-3" v-bind:class="{ collapse: !(checkEmail == 'true') }">
+                        <fmt:message key="checkEmail"/>
+                    </div>
                     <div class="alert alert-danger mt-3" v-bind:class="{ invisible: alert }">
                         <fmt:message key="noLogin"/>
                     </div>

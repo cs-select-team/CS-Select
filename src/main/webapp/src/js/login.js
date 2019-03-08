@@ -43,4 +43,12 @@ var app1 = new Vue({
             localStorage.setItem("autoLogout", false);
             return val;
         }
-    }});
+    },
+    computed: {
+        checkEmail: function() {
+            var val = localStorage.getItem('checkEmail');
+            localStorage.setItem('checkEmail', false);
+            return val;
+        }
+    }
+    });

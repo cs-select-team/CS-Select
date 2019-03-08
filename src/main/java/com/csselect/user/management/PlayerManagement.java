@@ -16,24 +16,21 @@ public final class PlayerManagement extends UserManagement {
     public static final String USERNAME_IN_USE = "Username is already in use";
     /**
      * Register a player with parameters email, password and username
-     * @param parameters Registration parameters
+     * @param email players email
+     * @param username players username
      * @return {@link Player} object
      * @throws IllegalArgumentException if email or username were already in use
      */
-    public Player register(String[] parameters) throws IllegalArgumentException{
-        assert parameters.length == 3;
-        String email = parameters[0];
-        String password = parameters[1];
-        String username = parameters[2];
+    public Player register(String email, String username) throws IllegalArgumentException{
+        String password = this.createTemporaryPassword();
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
         Player player = Injector.getInstance().getDatabaseAdapter()
                 .createPlayer(email, encryptedPassword, salt, username);
-        if (player != null) {
-            player.login();
-        } else {
-            throw new IllegalArgumentException("Creation failed!");
+        if (player == null) {
+            throw new IllegalArgumentException(EMAIL_IN_USE);
         }
+        sendConfirmationMail(email, password);
         return player;
     }
 

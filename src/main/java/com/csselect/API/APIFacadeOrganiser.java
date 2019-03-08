@@ -19,16 +19,14 @@ public class APIFacadeOrganiser extends APIFacadeUser {
 
     /** registers a new organiser. This will create a new Organiser in the database
      *
-     * @param args String array of arguments for registration
-     *             0: email
-     *             1: password
-     *             2: masterpassword
+     * @param email organisers email
+     * @param masterPassword password needed for organiser registration
      * @return true if registration successfull, false otherwise
      * @throws IllegalArgumentException if email is in use or the masterpassword is incorrect
      */
-    public boolean register(String[] args) throws IllegalArgumentException {
+    public boolean register(String email, String masterPassword) throws IllegalArgumentException {
         OrganiserManagement om = new OrganiserManagement();
-        organiser = om.register(args);
+        organiser = om.register(email, masterPassword);
         return organiser != null;
     }
 

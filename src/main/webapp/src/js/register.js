@@ -2,10 +2,8 @@ var app1 = new Vue({
     el: '#registerForm',
         data: {
             email: '',
-            password: '',
-            passwordRepeat: '',
             organiser: 'player', // so that the player is the default option for registering
-            thirdParam: '',
+            secondParam: '',
             emailInUse: false,
             missingConfig: false,
             wrongMasterPassword: false,
@@ -15,7 +13,7 @@ var app1 = new Vue({
         },
     watch:{
         organiser: function () {
-            this.thirdParam = '';
+            this.secondParam = '';
         }
     },
         methods: {
@@ -30,19 +28,12 @@ var app1 = new Vue({
                   method: 'post',
                   url: 'login/register',
                   params: {email: this.email,
-                            password: this.password,
                             organiser: this.organiser === 'organiser',
-                            thirdParam: this.thirdParam
+                            secondParam: this.secondParam
                             }
-                }).then(function (response) {
-                    if (app1.organiser === "player") {
-                        window.location.href = "player.jsp"
-                    }
-                    else if (app1.organiser === "organiser") {
-                        window.location.href = "organiser.jsp"
-                    }
-                    // if (response.status == 202) window.open("login.jsp","_self")
-
+                }).then(function () {
+                    localStorage.setItem('checkEmail', true);
+                    window.open("index.jsp","_self")
                 }).catch(function (error) {
                     if (error.response.status === 550) {
                         app1.missingConfig = true;
