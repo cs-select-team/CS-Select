@@ -61,12 +61,12 @@ public class Login extends Servlet {
 
     private void register(HttpServletRequest req, HttpServletResponse resp) throws HttpError, IOException {
         String email = getParameter("email", req);
-        String third = getParameter("thirdParam", req);
+        String second = getParameter("secondParam", req);
         boolean success = false;
         if (isSet("organiser", req)) {
             createOrganiser();
             try {
-                success = getOrganiserFacade().register(new String[]{email, third});
+                success = getOrganiserFacade().register(new String[]{email, second});
             } catch (IllegalArgumentException e) {
                 if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
                     resp.sendError(409, e.getMessage());
@@ -78,7 +78,7 @@ public class Login extends Servlet {
             }
         } else {
             createPlayer();
-            success = getPlayerFacade().register(new String[]{email, third});
+            success = getPlayerFacade().register(new String[]{email, second});
         }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
