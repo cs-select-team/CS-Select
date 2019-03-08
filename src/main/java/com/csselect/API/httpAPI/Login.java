@@ -1,9 +1,10 @@
 package com.csselect.API.httpAPI;
+
 import com.csselect.configuration.ConfigurationException;
 import com.csselect.database.DatabaseException;
-import org.pmw.tinylog.Logger;
 import com.csselect.user.management.OrganiserManagement;
 import com.csselect.user.management.PlayerManagement;
+import org.pmw.tinylog.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ public class Login extends Servlet {
 
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
+
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
         try {
@@ -84,6 +86,9 @@ public class Login extends Servlet {
                     return;
                 case PlayerManagement.EMAIL_OR_USERNAME_IN_USE:
                     resp.sendError(450, e.getMessage());
+                    return;
+                default:
+                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
             }
         }
