@@ -5,11 +5,11 @@ Vue.component('game-display', {
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="word-wrap">{{ game.title }}</div>
-                        <div>{{ game.type }}</div>
-                        <div>{{ localisation.roundsPlayed + ': ' + game.roundsPlayed }}</div>
-                        <div class="word-wrap">{{game.desc}}</div>
-                        <div>{{terminationNotice}}</div>
+                        <div :title="localisation.gameTitle" class="word-wrap">{{ game.title }}</div>
+                        <div :title="localisation.gamemode">{{ game.type }}</div>
+                        <div :title="localisation.roundsPlayedAll">{{ localisation.roundsPlayed + ': ' + game.roundsPlayed }}</div>
+                        <div :title="localisation.gameDescription" class="word-wrap">{{game.desc}}</div>
+                        <div :title="localisation.termination" >{{terminationNotice}}</div>
                     </div>
                     <div class="col"><input type="button" :title="localisation.playGameTooltip"
                                             class="btn btn-primary float-right" :value="localisation.play"
@@ -78,14 +78,14 @@ Vue.component('invite-element', {
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="float-left word-wrap">{{title}}</div>
+                        <div :title="localisation.gameTitle" class="float-left word-wrap">{{title}}</div>
                     </div>
                     <div class="col">
                         <div class="btn-group" role="group" aria-label="Annehmen/Ablehnen von Einladungen">
-                            <button type="button" class="btn-primary btn float-right" v-on:click="accept(gameId)">
+                            <button type="button" :title="localisation.acceptInvite" class="btn-primary btn float-right" v-on:click="accept(gameId)">
                                 {{localisation.accept}}
                             </button>
-                            <button type="button" class="btn-secondary btn float-right" v-on:click="decline(gameId)">
+                            <button type="button" :title="localisation.declineInvite" class="btn-secondary btn float-right" v-on:click="decline(gameId)">
                                 {{localisation.decline}}
                             </button>
                         </div>

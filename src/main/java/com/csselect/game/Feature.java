@@ -81,7 +81,7 @@ public class Feature implements Comparable<Feature> {
      * Getter for the internal name of the feature
      * @return the internal name
      */
-    public String getInternalName() {
+    String getInternalName() {
         return this.internalName;
     }
 

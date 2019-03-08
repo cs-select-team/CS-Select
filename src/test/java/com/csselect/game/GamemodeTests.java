@@ -27,4 +27,10 @@ public class GamemodeTests extends TestClass {
         Gamemode matr = new MatrixSelect(2, 3, 4);
         Assert.assertEquals(matr.getName(), "MatrixSelect");
     }
+
+    @Test
+    public void nullPlayer() {
+        Gamemode bin = new BinarySelect();
+        Assert.assertNull(bin.createRound(null));
+    }
 }

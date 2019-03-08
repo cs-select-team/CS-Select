@@ -19,18 +19,24 @@ public class StandardRoundTests extends TestClass {
     @Override @Before
     public void setUp() {
         DatabaseAdapter adapter = Injector.getInstance().getDatabaseAdapter();
-        Player player = adapter.createPlayer("email", "hash", "salt", "username");
+        Player player = adapter.getPlayer("email");
+        if (player == null) {
+            player = adapter.createPlayer("email", "hash", "salt", "username");
+        }
         round = new StandardRound(player, 5, 3, 2, 2);
 
         Game game = new Game(1);
+
+        Termination term = new NumberOfRoundsTermination(3);
+        game.setTermination(term);
 
         FeatureSet features = new FeatureSet("abc");
         for (int i = 0; i < 5; i++) {
             features.addFeature(new Feature(i, "a"));
         }
         game.setFeatureSet(features);
-        // game.setMlserver(new MockMLServer());
         round.setGame(game);
+        round.start();
     }
 
     @Override @After
@@ -38,11 +44,6 @@ public class StandardRoundTests extends TestClass {
         round  = null;
     }
 
-    @Test
-    public void selectNotEnoughFeatures() {
-        int[] feat = new int[]{1};
-        Assert.assertEquals(round.selectFeatures(feat, feat), -1);
-    }
 
     @Test
     public void selectTooManyFeatures() {

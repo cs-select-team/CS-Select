@@ -35,9 +35,8 @@ public abstract class MysqlAdapter {
     /**
      * Gets the adapters row in the table as a {@link ResultSet}
      * @return resultSet of the adapters row
-     * @throws SQLException Thrown if an error occurs while communicating with the database
      */
-    abstract ResultSet getRow() throws SQLException;
+    abstract ResultSet getRow();
 
     /**
      * Gets a String from the given columnlabel
@@ -52,7 +51,6 @@ public abstract class MysqlAdapter {
             } else {
                 return null;
             }
-
         } catch (SQLException e) {
             Logger.error(e);
             return null;

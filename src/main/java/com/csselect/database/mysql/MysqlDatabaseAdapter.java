@@ -323,9 +323,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param query query to execute
      * @param params params to execute the query with
      * @return ResultSet of the operation
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, Param... params) throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, Param... params) {
         return executeMysqlQuery(query, PRODUCT_DATABASE_NAME, params);
     }
 
@@ -335,15 +334,18 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param databaseName database to execute the query on
      * @param params parameters to execute the query with
      * @return ResultSet of the operation
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params)
-            throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params) {
         if (!tablesCreated) {
             createTables();
         }
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
-        CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
+        CachedRowSet rowSet;
+        try {
+            rowSet = RowSetProvider.newFactory().createCachedRowSet();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             applyParams(statement, params);

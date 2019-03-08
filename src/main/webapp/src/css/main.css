@@ -95,6 +95,11 @@
     margin-left: 2.5rem!important;
     margin-right: 2.5rem!important;
 }
+
+.separator {
+    border: none;
+}
+
 .modal-mask {
     position: fixed;
     z-index: 9998;
