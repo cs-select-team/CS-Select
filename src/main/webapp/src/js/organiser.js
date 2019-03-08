@@ -53,6 +53,7 @@ Vue.component('active-games-display', {
                     </div>
                 </div>
             </div>
+            <hr class="separator">
         </div>`,
     methods: {
         terminate: function(gameId) {
