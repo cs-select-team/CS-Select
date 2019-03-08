@@ -9,7 +9,8 @@ var app1 = new Vue({
             emailInUse: false,
             missingConfig: false,
             wrongMasterPassword: false,
-            missingDatabase: false
+            missingDatabase: false,
+            emailOrUsernameInUse: false
         },
     watch:{
         organiser: function () {
