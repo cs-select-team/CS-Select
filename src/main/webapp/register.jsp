@@ -17,6 +17,8 @@
                     <fmt:message key="noDatabase"/></div>
                 <div class="alert alert-danger" v-bind:class="{ collapse: !emailOrUsernameInUse }">
                     <fmt:message key="emailOrUsernameInUse"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !emailInvalid }">
+                    <fmt:message key="emailInvalid"/></div>
                 <div class="login-form">
                     <img class="login-form-img" src="src/img/cs_select.svg" alt="CS:Select">
                     <div class="form-group login-form-div">
