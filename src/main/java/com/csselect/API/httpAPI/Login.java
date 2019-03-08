@@ -64,24 +64,28 @@ public class Login extends Servlet {
         String password = getParameter("password", req);
         String third = getParameter("thirdParam", req);
         boolean success = false;
-        if (isSet("organiser", req)) {
-            createOrganiser();
-            try {
+        try {
+            if (isSet("organiser", req)) {
+                createOrganiser();
                 success = getOrganiserFacade().register(new String[]{email, password, third});
                 setPlayer(false);
-            } catch (IllegalArgumentException e) {
-                if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
+            } else {
+                createPlayer();
+                success = getPlayerFacade().register(new String[]{email, password, third});
+                setPlayer(true);
+            }
+        } catch (IllegalArgumentException e) {
+            switch (e.getMessage()) {
+                case OrganiserManagement.EMAIL_IN_USE:
                     resp.sendError(409, e.getMessage());
                     return;
-                } else if (e.getMessage().equals(OrganiserManagement.MASTER_PASSWORD_INCORRECT)) {
+                case OrganiserManagement.MASTER_PASSWORD_INCORRECT:
                     resp.sendError(401, e.getMessage());
                     return;
-                }
+                case PlayerManagement.EMAIL_OR_USERNAME_IN_USE:
+                    resp.sendError(450, e.getMessage());
+                    return;
             }
-        } else {
-            createPlayer();
-            success = getPlayerFacade().register(new String[]{email, password, third});
-            setPlayer(true);
         }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
