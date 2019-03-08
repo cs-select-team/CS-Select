@@ -20,9 +20,9 @@ var app1 = new Vue({
         methods: {
             submit: function(event) {
                 event.preventDefault();
-                var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-                if (re.test(this.email)) {
-                    this.emailInvalid = true;
+                const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                if (!re.test(this.email)) {
+                    app1.emailInvalid = true;
                     return;
                 }
                 axios({
