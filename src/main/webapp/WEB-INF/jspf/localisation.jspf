@@ -78,6 +78,11 @@ props -->
                             compositeTermination: '<fmt:message key="compositeTermination"/>',
                             organiserTermination: '<fmt:message key="organiserTermination"/>',
                             organiserTerminationInfo: '<fmt:message key="organiserTerminationInfo"/>',
+                            gameTitle: '<fmt:message key="gameTitle"/>',
+                            gameDescription: '<fmt:message key="gameDescription"/>',
+                            roundsPlayedAll: '<fmt:message key="roundsPlayedAll"/>',
+                            acceptInvite: '<fmt:message key="acceptInvite"/>',
+                            declineInvite: '<fmt:message key="declineInvite"/>',
 
                             invitePlayerSingle: '<fmt:message key="invitePlayerSingle"/>',
                             invitePlayerMass: '<fmt:message key="invitePlayerMass"/>',
