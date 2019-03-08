@@ -12,14 +12,12 @@ public final class PlayerManagement extends UserManagement {
 
     /**
      * Register a player with parameters email, password and username
-     * @param parameters Registration parameters
+     * @param email players email
+     * @param username players username
      * @return {@link Player} object
      */
-    public Player register(String[] parameters) {
-        assert parameters.length == 3;
-        String email = parameters[0];
+    public Player register(String email, String username) {
         String password = this.createTemporaryPassword();
-        String username = parameters[1];
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
         Player player = Injector.getInstance().getDatabaseAdapter()

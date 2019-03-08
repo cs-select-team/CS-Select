@@ -18,17 +18,15 @@ public final class OrganiserManagement extends UserManagement {
 
     /**
      * Register an organiser with 3 parameters email, password and global password
-     * @param parameters Registration parameters
+     * @param email organisers email
+     * @param masterPassword masterPassword used in the frontend
      * @return {@link Organiser} object
      * @throws IllegalArgumentException if email is in use or masterpassword is incorrect
      */
-    public Organiser register(String[] parameters) throws IllegalArgumentException {
-        assert parameters.length == 3;
+    public Organiser register(String email, String masterPassword) throws IllegalArgumentException {
         Configuration config = Injector.getInstance().getConfiguration();
-        String email = parameters[0];
         String password = this.createTemporaryPassword();
-        String globalPassword = parameters[1];
-        if (!config.getOrganiserPassword().equals(globalPassword)) {
+        if (!config.getOrganiserPassword().equals(masterPassword)) {
             throw new IllegalArgumentException(MASTER_PASSWORD_INCORRECT);
         }
         String salt = Encrypter.getRandomSalt();

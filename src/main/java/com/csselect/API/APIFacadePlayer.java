@@ -27,15 +27,13 @@ public class APIFacadePlayer extends APIFacadeUser {
     /**
      * registers a new player
      *
-     * @param args array with arguments for this method
-     *             0: email
-     *             1: username
+     * @param email players email address
+     * @param username players username
      * @return true if registration successful, false otherwise
      */
-    @Override
-    public boolean register(String[] args) {
+    public boolean register(String email, String username) {
         PlayerManagement pm = new PlayerManagement();
-        player = pm.register(args);
+        player = pm.register(email, username);
         return player != null;
     }
 

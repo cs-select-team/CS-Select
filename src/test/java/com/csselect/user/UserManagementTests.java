@@ -14,13 +14,17 @@ public class UserManagementTests extends TestClass {
     private OrganiserManagement om;
     private Organiser harry;
     private Organiser voldemort;
-    private String globalPassword;
+    private String GLOBAL_PASSWORD;
+    private static final String EMAIL_1 = "skywalker1@csselect.com";
+    private static final String USERNAME_1 = "Luke1";
+    private static final String EMAIL_2 = "vader1@csselect.com";
+    private static final String USERNAME_2 = "Darth1";
 
     @Override
     public void setUp() {
+        GLOBAL_PASSWORD = Injector.getInstance().getConfiguration().getOrganiserPassword();
         pm = new PlayerManagement();
         om = new OrganiserManagement();
-        globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
     }
 
     @Override
@@ -29,99 +33,45 @@ public class UserManagementTests extends TestClass {
         luke = null;
         harry = null;
         voldemort = null;
+        om = null;
+        pm = null;
     }
 
     @Test
     public void testValidRegistrationPlayer() {
-        String[] args = new String[3];
-        args[0] = "skywalker1@csselect.com";
-        args[1] = "Nein!11!!1";
-        args[2] = "Luke1";
-
-        luke = pm.register(args);
+        luke = pm.register(EMAIL_1, USERNAME_1);
         Assert.assertNotNull(luke);
-
-        Assert.assertTrue(luke.isLoggedIn());
         Assert.assertTrue(luke.getGames().isEmpty());
         Assert.assertNotNull(luke.getStats());
         Assert.assertNull(luke.getActiveRound());
         Assert.assertTrue(luke.getRounds().isEmpty());
-
-        testLoginExistingPlayer();
-        testIllegalLoginAsOrganiser();
-        testLoginPlayerAfterChangingEmail();
     }
 
     @Test
     public void testTwoValidRegistrationsPlayer() {
-        String[] args1 = new String[3];
-        args1[0] = "vader1@csselect.com";
-        args1[1] = "IchBinDeinVater1968";
-        args1[2] = "Darth1";
-
-        String[] args2 = new String[3];
-        args2[0] = "skywalker2@csselect.com";
-        args2[1] = "Nein!11!!1";
-        args2[2] = "Luke2";
-
-        darth = pm.register(args1);
+        darth = pm.register(EMAIL_1, USERNAME_1);
         Assert.assertNotNull(darth);
-        luke = pm.register(args2);
+        luke = pm.register(EMAIL_2, USERNAME_2);
         Assert.assertNotNull(luke);
         Assert.assertNotSame(darth, luke);
-
-        testLoginPlayerAfterChangingPassword();
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testDuplicateEmailRegistrationPlayer() {
-        String[] args1 = new String[3];
-        args1[0] = "vader2@csselect.com";
-        args1[1] = "IchBinDeinVater1968";
-        args1[2] = "Darth2";
-
-        String[] args2 = new String[3];
-        args2[0] = "vader2@csselect.com";
-        args2[1] = "Nein!11!!1";
-        args2[2] = "Luke3";
-
-        darth = pm.register(args1);
-        luke = pm.register(args2);
-
-        Assert.assertNotNull(darth);
-        Assert.assertNull(luke);
+        darth = pm.register(EMAIL_1, USERNAME_1);
+        luke = pm.register(EMAIL_1, USERNAME_2);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testDuplicateUsernameRegistrationPlayer() {
-        String[] args1 = new String[3];
-        args1[0] = "vader3@csselect.com";
-        args1[1] = "IchBinDeinVater1968";
-        args1[2] = "Darth3";
-
-        String[] args2 = new String[3];
-        args2[0] = "luke3@csselect.com";
-        args2[1] = "Nein!11!!1";
-        args2[2] = "Darth3";
-
-        darth = pm.register(args1);
-        luke = pm.register(args2);
-
-        Assert.assertNotNull(darth);
-        Assert.assertNull(luke);
+        darth = pm.register(EMAIL_1, USERNAME_1);
+        luke = pm.register(EMAIL_2, USERNAME_1);
     }
 
     @Test
     public void testValidRegistrationOrganiser() {
-        String[] args = new String[3];
-        args[0] = "voldi1@csselect.com";
-        args[1] = "#ElDeRsTaB!#";
-        args[2] = globalPassword;
-
-        voldemort = om.register(args);
+        voldemort = om.register(EMAIL_1, GLOBAL_PASSWORD);
         Assert.assertNotNull(voldemort);
-
-        Assert.assertTrue(voldemort.isLoggedIn());
         Assert.assertNotNull(voldemort.getActiveGames());
         Assert.assertTrue(voldemort.getActiveGames().isEmpty());
         Assert.assertNotNull(voldemort.getTerminatedGames());
@@ -132,118 +82,22 @@ public class UserManagementTests extends TestClass {
 
     @Test
     public void testTwoValidRegistrationsOrganiser() {
-        String[] args1 = new String[3];
-        args1[0] = "voldi2@csselect.com";
-        args1[1] = "#ElDeRsTaB!#";
-        args1[2] = globalPassword;
-
-        String[] args2 = new String[3];
-        args2[0] = "harry1@csselect.com";
-        args2[1] = "#FiniteIncantatem!#";
-        args2[2] = globalPassword;
-
-        voldemort = om.register(args1);
+        voldemort = om.register(EMAIL_1, GLOBAL_PASSWORD);
         Assert.assertNotNull(voldemort);
-        harry = om.register(args2);
+        harry = om.register(EMAIL_2, GLOBAL_PASSWORD);
         Assert.assertNotNull(harry);
         Assert.assertNotSame(harry, voldemort);
-
-        testLoginExistingOrganiser();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testDuplicateEmailRegistrationOrganiser() {
-        String[] args1 = new String[3];
-        args1[0] = "voldi3@csselect.com";
-        args1[1] = "#ElDeRsTaB!#";
-        args1[2] = globalPassword;
-
-        String[] args2 = new String[3];
-        args2[0] = "voldi3@csselect.com";
-        args2[1] = "#FiniteIncantatem!#";
-        args2[2] = globalPassword;
-
-        voldemort = om.register(args1);
+        voldemort = om.register(EMAIL_1, GLOBAL_PASSWORD);
         Assert.assertNotNull(voldemort);
-        harry = om.register(args2);
+        harry = om.register(EMAIL_1, GLOBAL_PASSWORD);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalOrganiserPasswordRegistration() {
-        String[] args = new String[3];
-        args[0] = "voldi4@csselect.com";
-        args[1] = "#ElDeRsTaB!#";
-        args[2] = "";
-
-        voldemort = om.register(args);
-    }
-
-    private void testLoginExistingPlayer() {
-        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
-        Assert.assertNotNull(luke);
-        Assert.assertTrue(luke.isLoggedIn());
-    }
-
-    private void testLoginPlayerAfterChangingEmail() {
-        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
-        Assert.assertNotNull(luke);
-        luke.changeEmail("skywalker@csselect.com");
-        luke = pm.login("skywalker1@csselect.com", "Nein!11!!1");
-        Assert.assertNull(luke);
-        luke = pm.login("skywalker@csselect.com", "Nein!11!!1");
-        Assert.assertNotNull(luke);
-        luke.changeEmail("skywalker1@csselect.com");
-    }
-
-    private void testLoginPlayerAfterChangingPassword() {
-        darth = pm.login("vader1@csselect.com", "IchBinDeinVater1968");
-        Assert.assertNotNull(darth);
-        darth.changePassword("IchBinEchtDeinVater1968");
-        darth = pm.login("vader1@csselect.com", "IchBinDeinVater1968");
-        Assert.assertNull(darth);
-        darth = pm.login("vader1@csselect.com", "IchBinEchtDeinVater1968");
-        Assert.assertNotNull(darth);
-        darth.changePassword("IchBinDeinVater1968");
-    }
-
-    private void testLoginExistingOrganiser() {
-        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNotNull(harry);
-        Assert.assertTrue(harry.isLoggedIn());
-
-        testIllegalLoginAsPlayer();
-        testLoginOrganiserAfterChangingEmail();
-        testLoginOrganiserAfterChangingPassword();
-    }
-
-    private void testLoginOrganiserAfterChangingEmail() {
-        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNotNull(harry);
-        harry.changeEmail("harry@csselect.com");
-        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNull(harry);
-        harry = om.login("harry@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNotNull(harry);
-        harry.changeEmail("harry1@csselect.com");
-    }
-
-    private void testLoginOrganiserAfterChangingPassword() {
-        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNotNull(harry);
-        harry.changePassword("#LumosMaxima!#");
-        harry = om.login("harry1@csselect.com", "#FiniteIncantatem!#");
-        Assert.assertNull(harry);
-        harry = om.login("harry1@csselect.com", "#LumosMaxima!#");
-        Assert.assertNotNull(harry);
-        harry.changePassword("#FiniteIncantatem!#");
-    }
-
-    private void testIllegalLoginAsOrganiser() {
-        harry = om.login("skywalker1@csselect.com", "Nein!11!!1");
-        Assert.assertNull(harry);
-    }
-
-    private void testIllegalLoginAsPlayer() {
-        darth = pm.login("harry1@csselect.com", "#FiniteIncantatem!#");
+        voldemort = om.register(EMAIL_1, "");
     }
 }

@@ -66,7 +66,7 @@ public class Login extends Servlet {
         if (isSet("organiser", req)) {
             createOrganiser();
             try {
-                success = getOrganiserFacade().register(new String[]{email, second});
+                success = getOrganiserFacade().register(email, second);
             } catch (IllegalArgumentException e) {
                 if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
                     resp.sendError(409, e.getMessage());
@@ -78,7 +78,7 @@ public class Login extends Servlet {
             }
         } else {
             createPlayer();
-            success = getPlayerFacade().register(new String[]{email, second});
+            success = getPlayerFacade().register(email, second);
         }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);

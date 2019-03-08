@@ -11,17 +11,16 @@ import org.junit.Test;
 import java.util.Collection;
 
 public class OrganiserTests extends TestClass {
+
+
+    private static final String EMAIL = "skywalker1@csselect.com";
+
     private Organiser organiser;
 
     @Override
     public void setUp() {
-        String globalPassword = Injector.getInstance().getConfiguration().getOrganiserPassword();
         OrganiserManagement om = new OrganiserManagement();
-        String[] args = new String[3];
-        args[0] = "voldi@csselect.com";
-        args[1] = "#ElDeRsTaB!#";
-        args[2] = globalPassword;
-        organiser = om.register(args);
+        organiser = om.register(EMAIL, Injector.getInstance().getConfiguration().getOrganiserPassword());
     }
 
     @Override
