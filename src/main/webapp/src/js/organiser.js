@@ -1,9 +1,11 @@
 Vue.component('active-games-display', {
-    props: ['game', ],
+    props: ['game'],
     data: function () {
         return {
             email: '',
             inviteString: '',
+            showPatternModal: false,
+            patternTitle: '',
         }
     }
     ,
@@ -25,6 +27,17 @@ Vue.component('active-games-display', {
                             {{localisation.roundsPlayed + ": " + game.roundsPlayed}}
                         </div>
                     </div>
+                    <modal-template v-if="showPatternModal">
+                        <h3 slot="header">{{localisation.patternFromGameModalTitle}}</h3>
+                        <a slot="body">{{localisation.patternFromGameModalText}}</a>
+                        <input type="text" slot="body" class="form-control" v-model="patternTitle" :placeholder="localisation.inputTitle">
+                        <hr slot="body">
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-primary"
+                            v-on:click="doCreatePattern">{{localisation.submit}}
+                        </button>
+                    </modal-template>
                     <div class="col">
                         <input type="button" class="btn btn-secondary float-right btn-space" :title="localisation.createPatternFromGameTooltip"
                          :value="localisation.createPatternFromGame" v-on:click="createPattern(game.id)">
@@ -85,16 +98,20 @@ Vue.component('active-games-display', {
             this.inviteString = newVal;
         },
         createPattern: function(gameId) {
-            var title = "title"; // TODO get from User
+            var self = this;
+            self.showPatternModal = true
+        },
+        doCreatePattern: function(gameId) {
+            var self = this;
+            self.showPatternModal = false;
             axios({
                 method: 'post',
                 url: 'create/patternFromGame',
                 params: {
                     gameId: gameId,
-                    title: title
+                    title: self.patternTitle,
                 }
             })
-
         }
     }
 });
