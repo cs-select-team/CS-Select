@@ -47,12 +47,12 @@ Vue.component('active-games-display', {
                             </player-invite-box>
                             <table class="table">
                                 <thead>
-                                    <th> localisation.playerEmails </th>
-                                    <th> localisation.remove </th>
+                                    <th> {{localisation.playerEmails}} </th>
+                                    <th>  {{localisation.remove }}</th>
                                 </thead>
                                 <tr v-if="inviteString != ''" v-for="(email,index) in inviteString.split(',')">
                                     <td>{{email}}</td>
-                                    <td  ><a href="#" v-on:click="removePlayerByIndex(index)" ><fmt:message key="remove"/></a></td>
+                                    <td  ><a href="#" v-on:click="removePlayerByIndex(index)" >{{localisation.remove }}</a></td>
                                 </tr>
                             </table>
                             <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">
