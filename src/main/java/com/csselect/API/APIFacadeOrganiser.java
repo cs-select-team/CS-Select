@@ -132,7 +132,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      * @param title title of the new pattern
      */
     public void createPatternFromGame(int gameId, String title) {
-
+        organiser.createPatternFromGame(gameId, title);
     }
 
     /** loads the pattern parameter as setting for the current game

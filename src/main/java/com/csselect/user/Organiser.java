@@ -172,4 +172,20 @@ public class Organiser extends User {
             return this.organiserAdapter.getID() == organiser.getId();
         }
     }
+
+    /**
+     * Creates a {@link Pattern} with the given title from the game with the given gameId
+     * @param gameId id of the game to use
+     * @param title title to use
+     */
+    public void createPatternFromGame(final int gameId, final String title) {
+        Game game = organiserAdapter.getActiveGames().stream().filter(g -> g.getId() == gameId).findAny()
+                .orElse(organiserAdapter.getTerminatedGames().stream().filter(g -> g.getId() == gameId).findAny()
+                        .orElse(null));
+        if (game == null) {
+            throw new NullPointerException("No game with the ID " + gameId + " could be found for the organiser with"
+                    + " ID " + this.getId() + " to create a new pattern from!");
+        }
+        this.organiserAdapter.addPattern(new Pattern(game, title));
+    }
 }
