@@ -65,7 +65,6 @@ Vue.component('player-invite-textarea', {
                 }
             });
             if (wrongEmail) {
-                // TODO inform user
             } else {
                 this.$emit('update-invited', newArray.join(','));
             }
