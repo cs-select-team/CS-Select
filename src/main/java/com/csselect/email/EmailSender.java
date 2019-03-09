@@ -41,7 +41,6 @@ public final class EmailSender {
             email.setSubject(header);
             email.setMsg(message);
             email.addTo(recipient);
-            email.updateContentType(EmailConstants.TEXT_HTML);
             email.send();
         } catch (EmailException e) {
             Logger.error(e);
