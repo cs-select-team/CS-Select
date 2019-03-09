@@ -183,8 +183,8 @@ public class Organiser extends User {
                 .orElse(organiserAdapter.getTerminatedGames().stream().filter(g -> g.getId() == gameId).findAny()
                         .orElse(null));
         if (game == null) {
-            throw new IllegalArgumentException("No game with the ID " + gameId + " could be found for the organiser with"
-                    + " ID " + this.getId() + " to create a new pattern from!");
+            throw new IllegalArgumentException("No game with the ID " + gameId + " could be found for the organiser "
+                    + "with ID " + this.getId() + " to create a new pattern from!");
         }
         this.organiserAdapter.addPattern(new Pattern(game, title));
     }
