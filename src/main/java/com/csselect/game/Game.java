@@ -1,5 +1,6 @@
 package com.csselect.game;
 
+import com.csselect.email.EmailSender;
 import com.csselect.inject.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.database.GameAdapter;
@@ -14,6 +15,12 @@ import java.util.Collection;
  */
 
 public class Game {
+
+
+    private static final String INVITATION_HEADER = "CS:Select Invitation";
+    private static final String INVITATION_TEXT = "Your knowledge is needed in the CS:Select game %s!<br>"
+            + "Log in or create an account on the <a href=%s>CS:Select homepage</a> and check your notifications!";
+
     private String title;
     private String description;
     private final int id;
@@ -217,14 +224,17 @@ public class Game {
 
 
     /**
-     * Adds invited the email-addresses of invited players to the collection invitedPlayers
+     * Adds invited the email-addresses of invited players to the collection invitedPlayers and sends an invite mail
      * @param playerEmails the collection of email-addresses of invited players
      */
     public void invitePlayers(Collection<String> playerEmails) {
         if (this.isTerminated()) {
             return;
         }
-
+        for (String mail : playerEmails) {
+            EmailSender.sendEmail(mail, INVITATION_HEADER, String.format(INVITATION_TEXT, this.getTitle(),
+                    Injector.getInstance().getConfiguration().getCSSelectURL()));
+        }
         this.database.addInvitedPlayers(playerEmails);
     }
 

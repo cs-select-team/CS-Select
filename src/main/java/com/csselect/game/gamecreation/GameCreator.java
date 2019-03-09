@@ -32,9 +32,6 @@ public class GameCreator {
     private static final String ADD_PLAYERS = "addPlayers";
     private static final String EMAIL_SEPARATOR = ",";
 
-    private static final String INVITATION_HEADER = "CS:Select Invitation";
-    private static final String INVITATION_TEXT = "Your knowledge is needed in the CS:Select game %s! "
-            + "Log in or create an account under %s and check your notifications!";
 
     private final Organiser organiser;
     private GameOptions gameOptions;
@@ -133,10 +130,6 @@ public class GameCreator {
         }
         if (!gameOptions.getInvitedEmails().isEmpty()) {
             game.invitePlayers(gameOptions.getInvitedEmails());
-            for (String mail : gameOptions.getInvitedEmails()) {
-                EmailSender.sendEmail(mail, INVITATION_HEADER, String.format(INVITATION_TEXT, gameOptions.getTitle(),
-                        Injector.getInstance().getConfiguration().getCSSelectURL()));
-            }
             gameOptions.resetEmails();
         }
         return game;
