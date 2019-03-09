@@ -20,7 +20,7 @@ const app = new Vue({
                         email: this.email
                     }
                 }).then(function () {
-                    app.alert = true
+                    app.alert = true;
                 }).catch(function (reason) {
                     if (reason.response.status === 409) { // Conflict has happend
                         app.emailFalse = true;
@@ -36,7 +36,7 @@ const app = new Vue({
                         password: this.password
                     }
                 }).then(function () {
-                    app.alert = true
+                    app.alert = true;
                 })
         },
         setLanguage() {
@@ -48,7 +48,7 @@ const app = new Vue({
                         lang: this.language
                     }
                 }).then(function () {
-                    app.alert = true
+                    app.alert = true;
                 })
         }
     }

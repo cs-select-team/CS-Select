@@ -45,7 +45,7 @@ const app1 = new Vue({
                     } else if (error.response.status === 450) {
                         app1.usernameInUse = true;
                     }
-                })
+                });
             }
         }
     });

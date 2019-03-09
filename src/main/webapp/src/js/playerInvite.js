@@ -55,11 +55,10 @@ Vue.component('player-invite-textarea', {
             const newArray = [];
             array.forEach(function (value, index) {
                 if (value === '') {
-
-                    return
+                    return;
                 } // trailing comma will cause one empty string
                 else {
-                    newArray.push(value)
+                    newArray.push(value);
                 }
                 if (!self.validateEmail(value)) {
                     wrongEmail = true;
@@ -86,7 +85,7 @@ Vue.component('player-invite-box', {
         return {
             playerInputType: [],
             currentTab: 'single'
-        }
+        };
     },
     mounted() {
         this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
@@ -99,23 +98,23 @@ Vue.component('player-invite-box', {
                 const newArray = [];
                 array.forEach(function(value) { // removing empty strings
                    if (value !== '') {
-                       newArray.push(value)
+                       newArray.push(value);
                    }
                 });
                 return newArray;
             }
         },
         currentTabComponent() {
-            return 'player-invite-' + this.currentTab
+            return 'player-invite-' + this.currentTab;
         },
     }, methods: {
         addPlayer(email) {
             const players = this.invitedPlayers;
             players.push(email);
-            this.$emit('update-invite-string', players.join(','))
+            this.$emit('update-invite-string', players.join(','));
         },
         updateInviteString(newVal) {
-            this.$emit('update-invite-string', newVal)
+            this.$emit('update-invite-string', newVal);
         },
         updateTab(value) {
             this.currentTab = value;

@@ -4,7 +4,7 @@ Vue.component('pattern-selection', {
         return {
             listOfPatterns: [],
             selectedPattern: {}
-        }
+        };
     },
     template:
         `<div class="input-group mb-3">
@@ -27,7 +27,7 @@ Vue.component('pattern-selection', {
     },
     watch: {
         selectedPattern(newVal) {
-            this.$emit('load-pattern', newVal)
+            this.$emit('load-pattern', newVal);
         }
     }
 });
@@ -161,13 +161,13 @@ const creation = new Vue({
                     let isOverwriting = false;
                     self.listOfPatterns.forEach(function (pattern) {
                         if (pattern.title === self.patternName) {
-                            isOverwriting = true
+                            isOverwriting = true;
                         }
                     });
                     if (isOverwriting) {
-                        self.showPatternModal = true
+                        self.showPatternModal = true;
                     } else {
-                        self.submitOverwritePattern()
+                        self.submitOverwritePattern();
                     }
                 }
                 self.createGame();
@@ -216,11 +216,11 @@ const creation = new Vue({
                 url: 'create'
             }).then(function (response) {
                 self.createButtonEnabled = true;
-                self.alerts.push({message: self.localisation.creationSuccess, type: 1})
+                self.alerts.push({message: self.localisation.creationSuccess, type: 1});
             }).catch(function (error) {
                 if (error.status === 551) { // game has not been created
                     self.createButtonEnabled = true;
-                    self.alerts.push({message: self.localisation.creationFail, type: 0})
+                    self.alerts.push({message: self.localisation.creationFail, type: 0});
                 }
             });
         },
@@ -282,7 +282,7 @@ const creation = new Vue({
             self.submittedTitle = false;
             self.submittedDatabaseName = false;
             self.createButtonEnabled = true;
-            self.alerts.push({message: self.localisation.creationAbort, type: 0})
+            self.alerts.push({message: self.localisation.creationAbort, type: 0});
         }
     },
 });

@@ -18,22 +18,26 @@ const gameFrame = new Vue({
             this.alerts.push(alert);
         },
         clearAlerts() {
-            this.alerts = []
+            this.alerts = [];
         },
         unlockButton(done) {
-            this.buttonState = !done
+            this.buttonState = !done;
         },
         getSelectedFeaturesById() {
             let idList = [];
             for (let i = 0; i < this.featureList.length; i++) {
-                if (this.featureList[i].toggled) idList.push(this.featureList[i].id)
+                if (this.featureList[i].toggled) {
+                    idList.push(this.featureList[i].id)
+                }
             }
             return idList;
         },
         getUselessFeaturesById() {
             let idList = [];
             for (let i = 0; i < this.featureList.length; i++) {
-                if (this.featureList[i].useless) idList.push(this.featureList[i].id)
+                if (this.featureList[i].useless) {
+                    idList.push(this.featureList[i].id);
+                }
             }
             return idList;
         },
@@ -75,7 +79,7 @@ const gameFrame = new Vue({
             }).then(function (response) {
                 if (response.status === 204) {
                     localStorage.setItem("gameTerminated", true);
-                    gameFrame.quit()
+                    gameFrame.quit();
                 }
                 $('.modal').modal('hide'); // close all open modals
                 gameFrame.featureList = response.data.listOfFeatures;
@@ -89,15 +93,14 @@ const gameFrame = new Vue({
                 gameFrame.forceUpdate++;
                 gameFrame.buttonState = true;
                 axios('users/streak').then(function (response) {
-                    gameFrame.counter = response.data
+                    gameFrame.counter = response.data;
                 })
             })
 
 
         },
         quit() {
-
-            window.location.href = 'player.jsp'
+            window.location.href = 'player.jsp';
         },
 
     }

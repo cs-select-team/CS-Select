@@ -26,7 +26,7 @@ Vue.component('termination-config', {
     },
     watch: {
         terminationConfigStr(newVal) {
-            this.$forceUpdate()
+            this.$forceUpdate();
         }
     }
     ,
@@ -77,16 +77,16 @@ Vue.component('termination-config-composite', {
                 this.terminationStrings.push(term.value + ':');
                 this.terminations.push(term);
             }
-            this.$emit('update-termination', this.terminationStrings.join(','))
+            this.$emit('update-termination', this.terminationStrings.join(','));
         },
         removeTerminationByIndex(index) {
             this.terminations.splice(index, 1);
             this.terminationStrings.splice(index, 1);
-            this.$emit('update-termination', this.terminationStrings.join(','))
+            this.$emit('update-termination', this.terminationStrings.join(','));
         },
         addTerminationStringByIndex(event, index) {
             this.terminationStrings[index] = event;
-            this.$emit('update-termination', this.terminationStrings.join(','))
+            this.$emit('update-termination', this.terminationStrings.join(','));
         }
 
     },
@@ -172,7 +172,7 @@ Vue.component('termination-config-rounds', {
                 const args = this.terminationConfigStr.split(':');
                 args[1] = newVal;
 
-                this.$emit('update-termination', args.join(':'))
+                this.$emit('update-termination', args.join(':'));
             }
         }
     },
@@ -215,7 +215,7 @@ Vue.component('termination-config-time', {
             set(newVal) {
                 const args = this.terminationConfigStr.split(':');
                 args[1] = moment(newVal, 'DD/MM/YYYY HH:mm')._d.getTime();
-                this.$emit('update-termination', args.join(':'))
+                this.$emit('update-termination', args.join(':'));
             }
         }
     },

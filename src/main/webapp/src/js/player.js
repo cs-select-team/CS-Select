@@ -20,7 +20,7 @@ Vue.component('game-display', {
     methods: {
         startGame(gameId) {
             localStorage.setItem("gameId", gameId);
-            window.location.href = "game.jsp"
+            window.location.href = "game.jsp";
         }
     },
     computed: {
@@ -128,7 +128,7 @@ const invites = new Vue({
             method: 'get',
             url: 'users/notifications'
         }).then(function (response) {
-            invites.listOfInvites = response.data
+            invites.listOfInvites = response.data;
         })
 
     }
@@ -161,7 +161,7 @@ const games = new Vue({
             method: 'get',
             url: 'games'
         }).then(function (response) {
-            games.listOfGames = response.data
+            games.listOfGames = response.data;
         })
     }
 });
@@ -176,7 +176,7 @@ const leaderboard = new Vue({
             method: 'get',
             url: 'users/leaderboard'
         }).then(function (response) {
-            leaderboard.playerList = response.data
+            leaderboard.playerList = response.data;
         })
     }
 });
@@ -192,7 +192,7 @@ const daily = new Vue({
             method: 'get',
             url: 'users/daily'
         }).then(function (response) {
-            daily.daily = response.data
+            daily.daily = response.data;
         })
     }
 });

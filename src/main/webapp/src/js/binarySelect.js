@@ -20,7 +20,7 @@ Vue.component('BinarySelect', {
                 this.feature2 = this.featureList[2 * this.currentRound + 1];
             } else {
                 this.$emit('done', true);
-                this.disabled = true
+                this.disabled = true;
             }
         },
         uselessToggle(newVal) {
@@ -28,7 +28,7 @@ Vue.component('BinarySelect', {
                 this.nextRound();
                 const alert = {message: this.localisation.binaryRoundSkipped, type: 1};
                 this.$emit("clear-alerts");
-                this.$emit("add-alert", alert)
+                this.$emit("add-alert", alert);
             }
         },
         toggled(newVal, oldVal) {
