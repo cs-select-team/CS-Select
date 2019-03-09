@@ -73,6 +73,11 @@ If you want to expand CS:Select with your own additions, use the following setup
  via Annotations to allow for syntax highlighting and auto-completion of different languages inside your java code
  (e.g. SQL).
  
+ ## Illegal reflective access
+ CS:Select uses Java 8, if the project is built with a newer JDK, Illegal reflective access operations will occur, this
+ is because since Java 9, a `module-info.java` file must be used to explicitly allow reflective access, but as we use
+ Java 8 we can't use modules but the compiler will still print this warning
+ 
  ## JUnit
  The test cases in the `mysql` and `mlserver` package only work with a correctly set up MySQL- or ML-Server respectively.
  All other test cases work without external resources
