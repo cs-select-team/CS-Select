@@ -4,7 +4,6 @@ import com.csselect.inject.Injector;
 import com.csselect.database.PlayerStatsAdapter;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * Mysql-Implementation of the {@link PlayerStatsAdapter} Interface

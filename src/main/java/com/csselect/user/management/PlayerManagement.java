@@ -21,7 +21,7 @@ public final class PlayerManagement extends UserManagement {
      * @return {@link Player} object
      * @throws IllegalArgumentException if email or username were already in use
      */
-    public Player register(String email, String username) throws IllegalArgumentException{
+    public Player register(String email, String username) throws IllegalArgumentException {
         String password = this.createTemporaryPassword();
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);
