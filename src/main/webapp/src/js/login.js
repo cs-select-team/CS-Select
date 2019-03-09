@@ -42,9 +42,7 @@ var app1 = new Vue({
             var val = localStorage.getItem('autoLogout');
             localStorage.setItem("autoLogout", false);
             return val;
-        }
-    },
-    computed: {
+        },
         checkEmail: function() {
             var val = localStorage.getItem('checkEmail');
             localStorage.setItem('checkEmail', false);

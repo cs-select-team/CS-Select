@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary login-form-button" v-on:click="submit"
-                            :disabled="passwordRepeat != password || email == '' || password == '' || secondParam == ''">
+                            :disabled="email == '' || secondParam == ''">
                         <fmt:message key="register"/></button>
                 </div>
             </form>
