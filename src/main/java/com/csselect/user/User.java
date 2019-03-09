@@ -16,10 +16,11 @@ import org.jetbrains.annotations.NotNull;
 public class User implements Comparable<User> {
 
     private static final String RESET_EMAIL_HEADER = "CS:Select Password Reset";
-    private static final String RESET_EMAIL_MESSAGE = "Dear CS:Select User, a request to reset your CS:Select password"
-            + " was submitted. Your temporary password is '%s'! Please login with your temporary password under "
-            + Injector.getInstance().getConfiguration().getCSSelectURL()
-            + " and change it to an own, safe one as fast as possible!";
+    private static final String RESET_EMAIL_MESSAGE = String.format(
+            "Dear CS:Select User, <br> A request to reset your CS:Select password was submitted. Your temporary "
+                    + "password is '%s'! Please login with your temporary password on the"
+                    + " <a href=%s>CS:Select homepage</a> and change it to an own, safe one as fast as possible!",
+            "%s", Injector.getInstance().getConfiguration().getCSSelectURL());
 
     private final UserAdapter userAdapter;
     protected boolean loggedIn;

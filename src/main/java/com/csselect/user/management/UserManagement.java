@@ -21,10 +21,11 @@ public abstract class UserManagement {
     private static final int MIN_SALT_LENGTH = 40;
     private static final int MAX_SALT_LENGTH = 70;
     private static final String REGISTRATION_CONFIRMATION_HEADER = "CS:Select Registration";
-    private static final String REGISTRATION_CONFIRMATION_MESSAGE = "Welcome to CS:Select, your temporary password is"
-            + " '%s'! Please login with your temporary password under "
-            + Injector.getInstance().getConfiguration().getCSSelectURL()
-            + " and change it to an own, safe one as fast as possible!";
+    private static final String REGISTRATION_CONFIRMATION_MESSAGE = String.format(
+            "Welcome to CS:Select, your temporary password is '%s'! Please login with your temporary password on the"
+            + " <a href=%s>CS:Select homepage</a> and change it to an own, safe one as fast as possible!",
+            "%s", Injector.getInstance().getConfiguration().getCSSelectURL());
+
 
     /**
      * Resets the password of the {@link User} with the given email address to a temporary one and sends a mail
