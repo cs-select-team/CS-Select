@@ -74,13 +74,13 @@ If you want to expand CS:Select with your own additions, use the following setup
  (e.g. SQL).
  
  ## Illegal reflective access
- CS:Select uses Java 8, if the project is built with a newer JDK, Illegal reflective access operations will occur, this
+ CS:Select uses Java 8. Keep in mind that if the project is built with a newer JDK, illegal reflective access operations will occur. This
  is because since Java 9, a `module-info.java` file must be used to explicitly allow reflective access, but as we use
- Java 8 we can't use modules but the compiler will still print this warning
+ Java 8 we can't use modules. The compiler will still print this warning.
  
  ## JUnit
  The test cases in the `mysql` and `mlserver` package only work with a correctly set up MySQL- or ML-Server respectively.
- All other test cases work without external resources
+ All other test cases work without external resources.
  
  ## Configuration Values
  - organiserpassword: The password an organiser has to supply to be able to register a new account
@@ -98,7 +98,7 @@ If you want to expand CS:Select with your own additions, use the following setup
  - email.password: **The password to the email account**
  - email.username: **The username of the email account for authorisation with the email server. In most cases equal to email.address**
  
- The bold values **must** be changed depending on your setup
+ The bold values **must** be changed depending on your setup.
  
  ## Logger Configuration
  The Logger used by CS:Select is the [tinylog-framework](https://tinylog.org/). Tinylog can be configured in a multitude
