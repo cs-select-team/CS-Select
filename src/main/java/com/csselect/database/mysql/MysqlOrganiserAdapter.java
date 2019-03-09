@@ -1,12 +1,12 @@
 package com.csselect.database.mysql;
 
+import com.csselect.game.Gamemode;
+import com.csselect.game.Termination;
 import com.csselect.inject.Injector;
 import com.csselect.database.OrganiserAdapter;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
-import com.csselect.parser.GamemodeParser;
-import com.csselect.parser.TerminationParser;
 import org.pmw.tinylog.Logger;
 
 import java.sql.ResultSet;
@@ -61,8 +61,8 @@ public class MysqlOrganiserAdapter extends MysqlUserAdapter implements Organiser
                 options.setDescription(set.getString(ColumnNames.DESCRIPTION));
                 options.setDataset(set.getString(ColumnNames.DATASET));
                 options.setResultDatabaseName(set.getString(ColumnNames.DATABASE_NAME));
-                options.setTermination(TerminationParser.parseTermination(set.getString(ColumnNames.TERMINATION)));
-                options.setGamemode(GamemodeParser.parseGamemode(set.getString(ColumnNames.GAMEMODE)));
+                options.setTermination(Termination.parseTermination(set.getString(ColumnNames.TERMINATION)));
+                options.setGamemode(Gamemode.parseGamemode(set.getString(ColumnNames.GAMEMODE)));
                 options.addInvitedEmails(emailCollectionFromString(set.getString(ColumnNames.INVITED_PLAYERS)));
                 patterns.add(new Pattern(options, set.getString(ColumnNames.TITLE)));
             }

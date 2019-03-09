@@ -1,16 +1,12 @@
-package com.csselect.parser;
+package com.csselect.game;
 
-import com.csselect.game.OrganiserTermination;
-import com.csselect.game.Termination;
-import com.csselect.game.TerminationComposite;
 import com.csselect.inject.TestClass;
-import com.csselect.game.NumberOfRoundsTermination;
-import com.csselect.game.TimeTermination;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TerminationParserTest extends TestClass {
+import static org.junit.Assert.*;
 
+public class TerminationTest extends TestClass {
     private static final String TIME = "time:1549639855";
     private static final String ROUNDS = "rounds:10";
     private static final String COMPOSITE = TIME + "," + ROUNDS;
@@ -28,21 +24,21 @@ public class TerminationParserTest extends TestClass {
 
     @Test
     public void testTimeTerminationParsing() {
-        Termination termination = TerminationParser.parseTermination(TIME);
+        Termination termination = Termination.parseTermination(TIME);
         Assert.assertNotNull(termination);
         Assert.assertTrue(termination instanceof TimeTermination);
     }
 
     @Test
     public void testRoundTerminationParsing() {
-        Termination termination = TerminationParser.parseTermination(ROUNDS);
+        Termination termination = Termination.parseTermination(ROUNDS);
         Assert.assertNotNull(termination);
         Assert.assertTrue(termination instanceof NumberOfRoundsTermination);
     }
 
     @Test
     public void testCompositeTerminationParsing() {
-        Termination termination = TerminationParser.parseTermination(COMPOSITE);
+        Termination termination = Termination.parseTermination(COMPOSITE);
         Assert.assertNotNull(termination);
         Assert.assertTrue(termination instanceof TerminationComposite);
         TerminationComposite composite = (TerminationComposite) termination;
@@ -51,8 +47,9 @@ public class TerminationParserTest extends TestClass {
 
     @Test
     public void testInvalidTerminationParsing() {
-        Termination termination = TerminationParser.parseTermination(INVALID);
+        Termination termination = Termination.parseTermination(INVALID);
         Assert.assertNotNull(termination);
         Assert.assertTrue(termination instanceof OrganiserTermination);
     }
 }
+

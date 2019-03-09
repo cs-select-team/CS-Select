@@ -1,13 +1,13 @@
 package com.csselect.game.gamecreation;
 
+import com.csselect.game.Gamemode;
+import com.csselect.game.Termination;
 import com.csselect.inject.Injector;
 import com.csselect.database.DatabaseAdapter;
 import com.csselect.email.EmailSender;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
-import com.csselect.parser.GamemodeParser;
-import com.csselect.parser.TerminationParser;
 import com.csselect.user.Organiser;
 import org.pmw.tinylog.Logger;
 
@@ -76,11 +76,11 @@ public class GameCreator {
                 gameOptions.setResultDatabaseName(data);
                 break;
             case TERMINATION:
-                gameOptions.setTermination(TerminationParser.parseTermination(data));
+                gameOptions.setTermination(Termination.parseTermination(data));
                 assert this.gameOptions.getTermination() != null;
                 break;
             case GAMEMODE:
-                gameOptions.setGamemode(GamemodeParser.parseGamemode(data));
+                gameOptions.setGamemode(Gamemode.parseGamemode(data));
                 assert this.gameOptions.getGamemode() != null;
                 break;
             case ADD_PLAYERS:

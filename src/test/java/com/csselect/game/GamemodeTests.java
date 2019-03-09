@@ -6,6 +6,11 @@ import org.junit.Test;
 
 public class GamemodeTests extends TestClass {
 
+
+    private static final String MATRIX = "matrixSelect,10,2,6";
+    private static final String BINARY = "binarySelect";
+    private static final String INVALID = "testtest";
+
     @Override
     public void setUp() {
 
@@ -15,6 +20,27 @@ public class GamemodeTests extends TestClass {
     public void reset() {
 
     }
+
+    @Test //there for debugging
+    public void testMatrixParsing() {
+        Gamemode gamemode = Gamemode.parseGamemode(MATRIX);
+        Assert.assertNotNull(gamemode);
+        Assert.assertTrue(gamemode instanceof  MatrixSelect);
+    }
+
+    @Test
+    public void testBinaryParsing() {
+        Gamemode gamemode = Gamemode.parseGamemode(BINARY);
+        Assert.assertNotNull(gamemode);
+        Assert.assertTrue(gamemode instanceof BinarySelect);
+    }
+
+    @Test
+    public void testInvalidGamemodeParsing() {
+        Gamemode gamemode = Gamemode.parseGamemode(INVALID);
+    }
+
+
 
     @Test
     public void binarySelect() {
