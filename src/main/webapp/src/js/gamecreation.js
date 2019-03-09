@@ -68,7 +68,7 @@ const creation = new Vue({
                     option: name,
                     data: value
                 }
-            })
+            });
         },
         updateInviteString(newVal) {
             const clearedString = newVal.split(',').filter(function (item, index, allItems) {
@@ -80,7 +80,7 @@ const creation = new Vue({
         removePlayerByIndex(index) {
             const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
-            this.inviteString = playerArray.join(',')
+            this.inviteString = playerArray.join(',');
         },
         updateConfString(newVal) {
             this.gameModeConfigString = newVal;
@@ -111,7 +111,7 @@ const creation = new Vue({
                     params: {
                         name: this.featureSet
                     }
-                })
+                });
             }
         },
         startCreation() {
@@ -138,7 +138,7 @@ const creation = new Vue({
                 } else {
                     self.submitGame();
                 }
-            })
+            });
         },
         checkResolved() {
             if (this.submittedTitle && this.submittedDatabaseName) {
@@ -181,23 +181,32 @@ const creation = new Vue({
                     self.alerts.push({message: self.localisation.creationFail, type: 0});
                     self.createButtonEnabled = true;
                 }
-            })
+            });
         },
         checkParameters() {
             this.alerts = [];
             // language=RegExp
-            if (this.title.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterTitle, type: 0});
+            if (this.title.match(/^\s*$/)) {
+                this.alerts.push({message: this.localisation.enterTitle, type: 0});
+            }
             // language=RegExp
-            if (this.desc.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterDescription, type: 0});
+            if (this.desc.match(/^\s*$/)) {
+                this.alerts.push({message: this.localisation.enterDescription, type: 0});
+            }
             // language=RegExp
-            if (this.databaseName.match(/^\s*$/)) this.alerts.push({
-                message: this.localisation.enterDatabaseName,
-                type: 0
-            });
-            if (this.featureSet.match(/^\s*$/)) this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
+            if (this.databaseName.match(/^\s*$/)) {
+                this.alerts.push({
+                    message: this.localisation.enterDatabaseName,
+                    type: 0
+                });
+            }
+            if (this.featureSet.match(/^\s*$/)) {
+                this.alerts.push({message: this.localisation.enterFeatureset, type: 0});
+            }
             if ((this.terminationConfigString.split(':').length < 2 || this.terminationConfigString.split(':')[1] === '') &&
-                this.terminationConfigString.split(':')[0].toString() !== 'organiser')
+                this.terminationConfigString.split(':')[0].toString() !== 'organiser') {
                 this.alerts.push({message: this.localisation.enterTermination, type: 0});
+            }
             if (this.terminationConfigString.split(',').length > 1) {
                 // composite termination
                 for (let i = 0; i < this.terminationConfigString.split(',').length; i++) {
@@ -237,11 +246,11 @@ const creation = new Vue({
                 }
             }).then(function () {
                 self.showPatternModal = false;
-            })
+            });
         },
         declineOverwritePattern() {
             const self = this;
-            self.showPatternModal = false
+            self.showPatternModal = false;
         },
         checkDatabaseExists() {
             const self = this;
@@ -251,7 +260,7 @@ const creation = new Vue({
                 params: {
                     name: self.databaseName
                 }
-            })
+            });
         },
         checkTitleExists() {
             const self = this;
@@ -261,7 +270,7 @@ const creation = new Vue({
                 params: {
                     name: self.title
                 }
-            })
+            });
         },
         submitDatabaseName() {
             const self = this;

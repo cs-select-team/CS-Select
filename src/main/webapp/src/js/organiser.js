@@ -89,7 +89,7 @@ Vue.component('active-games-display', {
                     gameId: gameId
                 }
             });
-            this.$emit("terminate", gameId);
+            this.$emit('terminate', gameId);
         },
         invitePlayers (gameId) {
             this.inviteString.split(',').forEach(function (value) {
@@ -101,9 +101,9 @@ Vue.component('active-games-display', {
                             gameId: gameId,
                             email: value
                         }
-                    })
+                    });
                 }
-            })
+            });
         },
         updateInviteString(newVal) {
             this.inviteString = newVal;
@@ -122,7 +122,7 @@ Vue.component('active-games-display', {
                     gameId,
                     title: self.patternTitle,
                 }
-            })
+            });
         },
         removePlayerByIndex(index) {
             const playerArray = this.inviteString.split(',');
@@ -186,7 +186,7 @@ const activeGames = new Vue({
             url: 'create/active'
         }).then(function (response) {
             activeGames.listOfGames = response.data
-        })
+        });
     },
     methods: {
         gameWasTerminated(gameId) {
@@ -196,11 +196,9 @@ const activeGames = new Vue({
                     const game = self.listOfGames.splice(index, 1);
                     terminatedGames.listOfGames.push(game[0]);
                 }
-            })
-
+            });
         }
     }
-
 });
 
 const terminatedGames = new Vue({
@@ -213,8 +211,8 @@ const terminatedGames = new Vue({
             method: 'get',
             url: 'create/terminated'
         }).then(function (response) {
-            terminatedGames.listOfGames = response.data
-        })
+            terminatedGames.listOfGames = response.data;
+        });
     }
 });
 

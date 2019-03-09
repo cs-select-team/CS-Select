@@ -19,13 +19,15 @@ Vue.component('game-display', {
         </div>`,
     methods: {
         startGame(gameId) {
-            localStorage.setItem("gameId", gameId);
-            window.location.href = "game.jsp";
+            localStorage.setItem('gameId', gameId);
+            window.location.href = 'game.jsp';
         }
     },
     computed: {
         terminationType() {
-            if (this.game.termination.split(',').length > 1) return 'composite';
+            if (this.game.termination.split(',').length > 1) {
+                return 'composite';
+            }
             return this.game.termination.split(':')[0];
         },
         terminationNotice() {
@@ -35,7 +37,7 @@ Vue.component('game-display', {
                 case 'organiser':
                     return this.localisation.organiserTermination;
                 case 'time':
-                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format("DD/MM/YYYY");
+                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format('DD/MM/YYYY');
                 case 'rounds':
                     return this.localisation.roundsTermination + ' ' + this.game.termination.split(':')[1];
             }
@@ -112,7 +114,9 @@ Vue.component('invite-element', {
                 url: 'games/' + gameId + '/decline'
             });
             invites.listOfInvites.forEach(function (value, index) {  // remove from the list without reloading page
-                if (value.id === gameId) invites.listOfInvites.splice(index, 1);
+                if (value.id === gameId) {
+                    invites.listOfInvites.splice(index, 1);
+                }
             })
         }
     }
@@ -129,8 +133,7 @@ const invites = new Vue({
             url: 'users/notifications'
         }).then(function (response) {
             invites.listOfInvites = response.data;
-        })
-
+        });
     }
 });
 const stats = new Vue({
@@ -146,8 +149,7 @@ const stats = new Vue({
         }).then(function (response) {
             stats.points = response.data.points;
             stats.username = response.data.username;
-        })
-
+        });
     }
 });
 
@@ -162,7 +164,7 @@ const games = new Vue({
             url: 'games'
         }).then(function (response) {
             games.listOfGames = response.data;
-        })
+        });
     }
 });
 
@@ -177,7 +179,7 @@ const leaderboard = new Vue({
             url: 'users/leaderboard'
         }).then(function (response) {
             leaderboard.playerList = response.data;
-        })
+        });
     }
 });
 
@@ -193,7 +195,7 @@ const daily = new Vue({
             url: 'users/daily'
         }).then(function (response) {
             daily.daily = response.data;
-        })
+        });
     }
 });
 
@@ -207,6 +209,5 @@ const playerAlerts = new Vue({
             this.gameTerminated = localStorage.getItem('gameTerminated') === 'true';
         }
         localStorage.setItem('gameTerminated', false);
-
     }
 });

@@ -27,11 +27,10 @@ const achievements = new Vue({
     el: '#achievements',
     data: {
         achievementList: []
-
     },
     mounted() {
         axios('users/achievements').then(function (response) {
             achievements.achievementList = response.data;
-        })
+        });
     }
 });

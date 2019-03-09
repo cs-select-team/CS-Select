@@ -11,12 +11,12 @@ const app1 = new Vue({
         usernameInUse: false,emailInvalid:false
     },
     watch: {
-        organiser: function () {
+        organiser() {
             this.secondParam = '';
         }
     },
         methods: {
-            submit: function (event) {
+            submit(event) {
                 event.preventDefault();
                 const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 if (!re.test(this.email)) {

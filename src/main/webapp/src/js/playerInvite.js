@@ -32,7 +32,7 @@ Vue.component('player-invite-textarea', {
     data() {
         return {
             rawText: this.inviteString
-            }
+            };
         },
     template:
         `<div class="input-group">

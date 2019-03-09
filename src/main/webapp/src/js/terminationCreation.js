@@ -52,8 +52,11 @@ Vue.component('termination-config', {
                 }
             },
             set(newVal) {
-                if (newVal === 'composite') this.$emit('update-termination-str', 'rounds:1,time:');
-                else this.$emit('update-termination-str', newVal + ':');
+                if (newVal === 'composite') {
+                    this.$emit('update-termination-str', 'rounds:1,time:');
+                } else {
+                    this.$emit('update-termination-str', newVal + ':');
+                }
             }
         }
     }
@@ -152,7 +155,7 @@ Vue.component('termination-config-rounds', {
     props: ['termination-config-str'],
     watch: {
         terminationConfigStr(newVal) {
-            this.$forceUpdate()
+            this.$forceUpdate();
         }
     },
     methods: {
@@ -165,13 +168,14 @@ Vue.component('termination-config-rounds', {
     computed: {
         number: {
             get() {
-                if (this.terminationConfigStr === undefined || this.terminationConfigStr === '') this.$emit('update-termination', 'rounds:1');
-                return parseInt(this.terminationConfigStr.split(':')[1])
+                if (this.terminationConfigStr === undefined || this.terminationConfigStr === '') {
+                    this.$emit('update-termination', 'rounds:1');
+                }
+                return parseInt(this.terminationConfigStr.split(':')[1]);
             },
             set(newVal) {
                 const args = this.terminationConfigStr.split(':');
                 args[1] = newVal;
-
                 this.$emit('update-termination', args.join(':'));
             }
         }
@@ -190,7 +194,6 @@ Vue.component('termination-config-time', {
     watch: {
         terminationConfigStr(newVal) {
             this.$forceUpdate();
-
         }
     },
     methods: {

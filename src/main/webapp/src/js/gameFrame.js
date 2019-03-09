@@ -55,7 +55,6 @@ const gameFrame = new Vue({
                     gameFrame.points = response.data;
                     gameFrame.getNextRound();
                 })
-
             }
         },
         skip() {
@@ -68,14 +67,12 @@ const gameFrame = new Vue({
             }).then(function (value) {
                 gameFrame.getNextRound();
             })
-
         },
         getNextRound() {
             this.clearAlerts();
-
             axios({
                 method: 'post',
-                url: 'games/' + localStorage.getItem('gameId') + "/start"
+                url: 'games/' + localStorage.getItem('gameId') + '/start'
             }).then(function (response) {
                 if (response.status === 204) {
                     localStorage.setItem('gameTerminated', true);
@@ -95,15 +92,10 @@ const gameFrame = new Vue({
                 axios('users/streak').then(function (response) {
                     gameFrame.counter = response.data;
                 })
-            })
-
-
+            });
         },
         quit() {
             window.location.href = 'player.jsp';
         },
-
     }
-
-
 });
