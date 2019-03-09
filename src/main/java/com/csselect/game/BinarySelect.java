@@ -33,13 +33,6 @@ public class BinarySelect extends Gamemode {
      */
     private static final int MAX_SELECT = 1;
 
-    /**
-     * Constructor for a binary select object
-     */
-    public BinarySelect() {
-
-    }
-
     @Override
     public StandardRound createRound(Player player) {
         if (player == null) {
