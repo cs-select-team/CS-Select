@@ -92,7 +92,7 @@ public class Games extends Servlet {
         p = p.replace("[", ""); // TODO find a more elegant way to do this
         p = p.replace("]", "");
         // if no integer was in the array to begin with
-        if (p.equals("")) {
+        if ("".equals(p)) {
             return new int[0];
         }
         String[] arrayOfStrings = p.split(",");
