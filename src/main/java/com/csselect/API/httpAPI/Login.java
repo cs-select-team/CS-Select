@@ -88,6 +88,7 @@ public class Login extends Servlet {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     return;
             }
+        }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
         }
