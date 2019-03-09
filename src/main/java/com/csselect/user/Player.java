@@ -138,7 +138,7 @@ public class Player extends User {
      * To retrieve the player's stats, it is necessary to get access to the according {@link Gamification} interface.
      * @return {@link PlayerStats} object belonging to the player
      */
-    public PlayerStats getStats() {
+    public Gamification getStats() {
         return playerAdapter.getPlayerStats();
     }
 
