@@ -36,6 +36,11 @@ public class TimeTerminationTests extends TestClass {
     public void exactTime() {
         TimeTermination timeTermination = new TimeTermination(LocalDateTime.now());
         timeTermination.setGame(new Game(1));
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Assert.assertTrue(timeTermination.checkTermination());
     }
 
