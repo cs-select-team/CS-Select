@@ -1,1 +1,6 @@
 language: java
+dist: xenial
+services: mysql
+before_install:
+  - mysql -e 'CREATE USER admin@localhost;'
+  - mysql -e 'GRANT ALL PRIVILEGES To admin@localhost IDENTIFIED BY 4dm1n;'
