@@ -46,19 +46,27 @@ Vue.component('MatrixSelect', {
         </div>`,
     methods: {
         toggled(newVal, oldVal) {
-            if (newVal && !oldVal) this.count++;
-            if (!newVal && oldVal) this.count--;
+            if (newVal && !oldVal) {
+                this.count++;
+            }
+            if (!newVal && oldVal) {
+                this.count--;
+            }
             this.checkDone();
         },
         uselessToggle(newVal, toggled) {
-            if (newVal && toggled) this.count--;
+            if (newVal && toggled) {
+                this.count--;
+            }
             this.checkDone();
         },
         checkDone() {
             if (this.count >= this.options.minSelect && this.count <= this.options.maxSelect) {
                 this.$emit('done', true);
             }
-            else this.$emit('done', false);
+            else {
+                this.$emit('done', false);
+            }
         }
     }
 });
