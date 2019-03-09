@@ -59,7 +59,7 @@ Vue.component('gamemode-config-matrixSelect', {
     computed: {
         numberOfFeatures: {
             get() {
-                return parseInt(this.getArgByIndex(0))
+                return parseInt(this.getArgByIndex(0), 10)
             },
             set(newVal) {
                 this.setArgByIndex(0, newVal)
@@ -67,7 +67,7 @@ Vue.component('gamemode-config-matrixSelect', {
         },
         min: {
             get() {
-                return parseInt(this.getArgByIndex(1))
+                return parseInt(this.getArgByIndex(1), 10)
             },
             set(newVal) {
                 this.setArgByIndex(1, newVal)
@@ -75,7 +75,7 @@ Vue.component('gamemode-config-matrixSelect', {
         },
         max: {
             get() {
-                return parseInt(this.getArgByIndex(2))
+                return parseInt(this.getArgByIndex(2), 10)
             },
             set(newVal) {
                 this.setArgByIndex(2, newVal)
