@@ -66,7 +66,7 @@ const gameFrame = new Vue({
                 }
             }).then(function (value) {
                 gameFrame.getNextRound();
-            })
+            });
         },
         getNextRound() {
             this.clearAlerts();

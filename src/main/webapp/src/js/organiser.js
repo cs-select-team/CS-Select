@@ -86,7 +86,7 @@ Vue.component('active-games-display', {
                 method: 'post',
                 url: 'create/terminate',
                 params: {
-                    gameId: gameId
+                    gameId
                 }
             });
             this.$emit('terminate', gameId);

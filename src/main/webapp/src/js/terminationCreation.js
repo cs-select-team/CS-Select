@@ -3,7 +3,7 @@ Vue.component('termination-config', {
     data() {
         return {
             listOfTerminations: []
-        }
+        };
     },
     template:
         `<div class="input-group mb-3">
@@ -31,10 +31,10 @@ Vue.component('termination-config', {
     }
     ,
     mounted() {
-        this.listOfTerminations = [{title: this.localisation.compositeTermination, value: "composite"},
+        this.listOfTerminations = [{title: this.localisation.compositeTermination, value: 'composite'},
             {title: this.localisation.organiserTermination, value:'organiser'},
-            {title: this.localisation.timeTermination, value: "time"},
-            {title: this.localisation.roundsTermination, value: "rounds"}
+            {title: this.localisation.timeTermination, value: 'time'},
+            {title: this.localisation.roundsTermination, value: 'rounds'}
             ];
     },
 
@@ -99,13 +99,13 @@ Vue.component('termination-config-composite', {
             self.terminationStrings.forEach(function (value, index) {
                 let termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
-                    if (term.value === value.split(':')[0]) termination = term;
+                    if (term.value === value.split(':')[0]) {
+                        termination = term;
+                    }
                 });
-                self.terminations.push(termination)
-            })
-        })
-
-
+                self.terminations.push(termination);
+            });
+        });
     },
     watch: {
         terminationConfigStr(newVal) {
