@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class GameTests extends TestClass {
+    
+    private static final String EMAIL_1 = "test@test.de";
+    private static final String EMAIL_2 = "secondtest@test.de";
+    private static final String USERNAME_1 = "user1";
+    private static final String USERNAME_2 = "user2";
+    private static final String HASH = "hash";
+    private static final String SALT = "salt";
 
     private Game game;
 
@@ -48,7 +55,7 @@ public class GameTests extends TestClass {
     @Test
     public void termination() {
         Assert.assertFalse(game.isTerminated());
-        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username");
+        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer(EMAIL_1, HASH, SALT, USERNAME_1);
         Round round = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round);
         Round round2 = new StandardRound(player, 1, 2, 3, 4);
@@ -79,7 +86,7 @@ public class GameTests extends TestClass {
     public void inviteSamePlayer() {
         invitePlayer1();
         Collection<String> emails = new ArrayList<>();
-        emails.add("email");
+        emails.add(EMAIL_1);
         game.invitePlayers(emails);
         Assert.assertNotNull(game.getInvitedPlayers());
         Assert.assertEquals(1, game.getInvitedPlayers().size());
@@ -89,16 +96,16 @@ public class GameTests extends TestClass {
     public void declineInvite() {
         invitePlayer1();
         invitePlayer2();
-        game.declineInvite("email");
+        game.declineInvite(EMAIL_1);
         Assert.assertEquals(1, game.getInvitedPlayers().size());
-        Assert.assertTrue(game.getInvitedPlayers().contains("emai"));
+        Assert.assertTrue(game.getInvitedPlayers().contains(EMAIL_2));
     }
 
     @Test
     public void declineWrongEmail() {
         game.declineInvite("xd");
         invitePlayer1();
-        game.declineInvite("emai");
+        game.declineInvite(EMAIL_2);
         Assert.assertEquals(1, game.getInvitedPlayers().size());
     }
 
@@ -120,7 +127,7 @@ public class GameTests extends TestClass {
     @Test
     public void addPlayerSameID() {
         this.addPlayer1();
-        game.acceptInvite(0, "email");
+        game.acceptInvite(0, EMAIL_1);
         Assert.assertNotNull(game.getPlayingPlayers());
         Assert.assertEquals(1, game.getPlayingPlayers().size());
     }
@@ -152,7 +159,7 @@ public class GameTests extends TestClass {
     @Test
     public void createRoundWrongPlayer() {
         DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
-        Player player = database.createPlayer("emai", "has", "sal", "usernam");
+        Player player = database.createPlayer(EMAIL_2, HASH, SALT, USERNAME_2);
         Collection<Feature> features = game.startRound(player);
         Assert.assertNull(features);
     }
@@ -161,7 +168,7 @@ public class GameTests extends TestClass {
     public void addFinishedRound() {
         Assert.assertEquals(0, game.getNumberOfRounds());
         Assert.assertEquals(0, game.getRounds().size());
-        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer(EMAIL_1, HASH, SALT, USERNAME_1), 1, 2, 3, 4);
         game.addFinishedRound(round);
         Assert.assertEquals(1, game.getNumberOfRounds());
         Assert.assertEquals(1, game.getRounds().size());
@@ -181,30 +188,30 @@ public class GameTests extends TestClass {
 
     private Player addPlayer1() {
         Player player = invitePlayer1();
-        game.acceptInvite(0, "email");
+        game.acceptInvite(0, EMAIL_1);
         return player;
     }
 
     private Player addPlayer2() {
         Player player = invitePlayer2();
-        game.acceptInvite(1, "emai");
+        game.acceptInvite(1, EMAIL_2);
         return player;
     }
 
     private Player invitePlayer1() {
         DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
-        Player player = database.createPlayer("email", "hash", "salt", "username");
+        Player player = database.createPlayer(EMAIL_1, HASH, SALT, USERNAME_1);
         Collection<String> emails = new ArrayList<>();
-        emails.add("email");
+        emails.add(EMAIL_1);
         game.invitePlayers(emails);
         return player;
     }
 
     private Player invitePlayer2() {
         DatabaseAdapter database = Injector.getInstance().getDatabaseAdapter();
-        Player player = database.createPlayer("emai", "has", "sal", "usernam");
+        Player player = database.createPlayer(EMAIL_2, HASH, SALT, USERNAME_2);
         Collection<String> emails = new ArrayList<>();
-        emails.add("emai");
+        emails.add(EMAIL_2);
         game.invitePlayers(emails);
         return player;
     }
