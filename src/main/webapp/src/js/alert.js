@@ -7,9 +7,9 @@ Vue.component('alert-box', {
     data() {
         return {
             alertClasses: [
-                "alert-danger",
-                "alert-success",
-                "alert-info"
+                'alert-danger',
+                'alert-success',
+                'alert-info'
             ]
         };
     },

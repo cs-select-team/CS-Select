@@ -46,7 +46,7 @@ const gameFrame = new Vue({
 
                 axios({
                     method: 'post',
-                    url: 'games/' + localStorage.getItem("gameId") + "/play",
+                    url: 'games/' + localStorage.getItem('gameId') + '/play',
                     data: {
                         useless: JSON.stringify(this.getUselessFeaturesById()),
                         selected: JSON.stringify(this.getSelectedFeaturesById())
@@ -61,7 +61,7 @@ const gameFrame = new Vue({
         skip() {
             axios({
                 method: 'post',
-                url: 'games/' + localStorage.getItem("gameId") + "/skip",
+                url: 'games/' + localStorage.getItem('gameId') + '/skip',
                 data: {
                     useless: JSON.stringify(this.getUselessFeaturesById())
                 }
@@ -75,10 +75,10 @@ const gameFrame = new Vue({
 
             axios({
                 method: 'post',
-                url: 'games/' + localStorage.getItem("gameId") + "/start"
+                url: 'games/' + localStorage.getItem('gameId') + "/start"
             }).then(function (response) {
                 if (response.status === 204) {
-                    localStorage.setItem("gameTerminated", true);
+                    localStorage.setItem('gameTerminated', true);
                     gameFrame.quit();
                 }
                 $('.modal').modal('hide'); // close all open modals

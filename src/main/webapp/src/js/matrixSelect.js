@@ -8,7 +8,7 @@ Vue.component('matrix-row', {
         </div>`,
     methods: {
         toggled(newVal, oldVal) {
-            this.$emit("toggled", newVal, oldVal);
+            this.$emit('toggled', newVal, oldVal);
         },
         uselessToggle(newVal, toggled) {
             this.$emit('useless-toggle', newVal, toggled);
@@ -23,10 +23,10 @@ Vue.component('MatrixSelect', {
         }
     },
     mounted() { // giving the player information about this game
-        this.$emit("add-alert", {message: this.localisation.matrixSelectHelp, type: 2});
+        this.$emit('add-alert', {message: this.localisation.matrixSelectHelp, type: 2});
         const messageString = this.localisation.matrixSelectMin + this.options.minSelect + this.localisation.matrixSelectMax + this.options.maxSelect + this.localisation.matrixSelectEnd;
         const alert = {message: messageString, type: 2};
-        this.$emit("add-alert", alert);
+        this.$emit('add-alert', alert);
 
     },
     computed: {
@@ -56,9 +56,9 @@ Vue.component('MatrixSelect', {
         },
         checkDone() {
             if (this.count >= this.options.minSelect && this.count <= this.options.maxSelect) {
-                this.$emit("done", true);
+                this.$emit('done', true);
             }
-            else this.$emit("done", false);
+            else this.$emit('done', false);
         }
     }
 });

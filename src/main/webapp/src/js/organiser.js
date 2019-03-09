@@ -110,7 +110,7 @@ Vue.component('active-games-display', {
         },
         createPattern(gameId) {
             const self = this;
-            self.showPatternModal = true
+            self.showPatternModal = true;
         },
         doCreatePattern(gameId) {
             const self = this;
@@ -119,7 +119,7 @@ Vue.component('active-games-display', {
                 method: 'post',
                 url: 'create/patternFromGame',
                 params: {
-                    gameId: gameId,
+                    gameId,
                     title: self.patternTitle,
                 }
             })
@@ -127,7 +127,7 @@ Vue.component('active-games-display', {
         removePlayerByIndex(index) {
             const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
-            this.inviteString = playerArray.join(',')
+            this.inviteString = playerArray.join(',');
         }
     }
 });
@@ -176,14 +176,14 @@ Vue.component('stats-display', {
 });
 
 const activeGames = new Vue({
-    el: "#active",
+    el: '#active',
     data: {
         listOfGames: []
     },
     mounted() {
         axios({
             method: 'get',
-            url: "create/active"
+            url: 'create/active'
         }).then(function (response) {
             activeGames.listOfGames = response.data
         })
@@ -204,14 +204,14 @@ const activeGames = new Vue({
 });
 
 const terminatedGames = new Vue({
-    el: "#terminated",
+    el: '#terminated',
     data: {
         listOfGames: []
     },
     mounted() {
         axios({
             method: 'get',
-            url: "create/terminated"
+            url: 'create/terminated'
         }).then(function (response) {
             terminatedGames.listOfGames = response.data
         })
@@ -219,5 +219,5 @@ const terminatedGames = new Vue({
 });
 
 const stats = new Vue({
-    el: "#stats"
+    el: '#stats'
 });

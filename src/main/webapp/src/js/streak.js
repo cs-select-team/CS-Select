@@ -2,20 +2,34 @@ Vue.component('streak-display', {
     props: ['counter'],
     computed: {
       progress1() {
-          if (this.counter >= 3) return 60 + '%';
-          else return 20 * this.counter + '%'
+          if (this.counter >= 3) {
+              return 60 + '%';
+          }
+          else {
+              return 20 * this.counter + '%';
+          }
       },
         progress2() {
-            if (this.counter >= 5) return 40 + '%';
-            else if (this.counter <= 3) return 0 + '%';
+            if (this.counter >= 5) {
+                return 40 + '%';
+            }
+            else if (this.counter <= 3) {
+                return 0 + '%';
+            }
             else {
                 return 20 * (this.counter - 3)+ '%'
             }
         },
         streakText() {
-            if (this.counter < 3 && this.counter >= 0) return this.localisation.streakTimesOne;
-            else if (this.counter < 5) return this.localisation.streakTimesOnePointFive;
-            else return this.localisation.streakTimesTwo;
+            if (this.counter < 3 && this.counter >= 0) {
+                return this.localisation.streakTimesOne;
+            }
+            else if (this.counter < 5) {
+                return this.localisation.streakTimesOnePointFive;
+            }
+            else {
+                return this.localisation.streakTimesTwo;
+            }
         }
     },
     template:

@@ -203,10 +203,10 @@ const playerAlerts = new Vue({
         gameTerminated: false
     },
     mounted() {
-        if (localStorage.hasOwnProperty("gameTerminated")) {
-            this.gameTerminated = localStorage.getItem("gameTerminated") === "true";
+        if (localStorage.hasOwnProperty('gameTerminated')) {
+            this.gameTerminated = localStorage.getItem('gameTerminated') === 'true';
         }
-        localStorage.setItem("gameTerminated", false);
+        localStorage.setItem('gameTerminated', false);
 
     }
 });

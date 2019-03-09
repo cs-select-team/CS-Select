@@ -27,14 +27,14 @@ Vue.component('BinarySelect', {
             if (this.feature1.useless && this.feature2.useless) { // in case both features are selected as useless
                 this.nextRound();
                 const alert = {message: this.localisation.binaryRoundSkipped, type: 1};
-                this.$emit("clear-alerts");
-                this.$emit("add-alert", alert);
+                this.$emit('clear-alerts');
+                this.$emit('add-alert', alert);
             }
         },
         toggled(newVal, oldVal) {
             if(newVal){
                 this.nextRound();
-                this.$emit("clear-alerts")
+                this.$emit('clear-alerts');
             }
 
         }
