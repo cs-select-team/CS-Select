@@ -4,7 +4,9 @@ import com.csselect.inject.Injector;
 import com.csselect.configuration.Configuration;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.pmw.tinylog.Logger;
 
@@ -25,7 +27,7 @@ public final class EmailSender {
      */
     public static void sendEmail(String recipient, String header, String message) {
         Configuration config = Injector.getInstance().getConfiguration();
-        Email email = new SimpleEmail();
+        Email email = new HtmlEmail();
         email.setStartTLSRequired(true);
         email.setHostName(config.getEmailHostname());
         email.setSslSmtpPort("" + config.getEmailPort());
@@ -39,6 +41,7 @@ public final class EmailSender {
             email.setSubject(header);
             email.setMsg(message);
             email.addTo(recipient);
+            email.updateContentType(EmailConstants.TEXT_HTML);
             email.send();
         } catch (EmailException e) {
             Logger.error(e);
