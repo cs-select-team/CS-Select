@@ -29,7 +29,7 @@ public final class EmailSender {
         email.setStartTLSRequired(true);
         email.setHostName(config.getEmailHostname());
         email.setSslSmtpPort("" + config.getEmailPort());
-        email.setAuthenticator(new DefaultAuthenticator(config.getEmailAddress(), config.getEmailPassword()));
+        email.setAuthenticator(new DefaultAuthenticator(config.getEmailUsername(), config.getEmailPassword()));
         email.setSSLOnConnect(true);
         try {
             email.getMailSession().getProperties().put("mail.smtp.auth", "true");
