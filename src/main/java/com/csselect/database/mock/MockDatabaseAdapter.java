@@ -126,8 +126,6 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
                 throw new IllegalArgumentException(PlayerManagement.EMAIL_IN_USE);
             } else if (p.getUsername().equalsIgnoreCase(username)) {
                 throw new IllegalArgumentException(PlayerManagement.USERNAME_IN_USE);
-            } else {
-                return null;
             }
         }
         MockPlayerAdapter adapter = new MockPlayerAdapter(nextPlayerId);
