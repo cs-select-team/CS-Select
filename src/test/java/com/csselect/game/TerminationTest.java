@@ -4,8 +4,6 @@ import com.csselect.inject.TestClass;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class TerminationTest extends TestClass {
     private static final String TIME = "time:1549639855";
     private static final String ROUNDS = "rounds:10";

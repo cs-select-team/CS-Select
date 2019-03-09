@@ -12,10 +12,8 @@ import com.csselect.user.Organiser;
 import com.csselect.user.Player;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Answers;
 import org.mockito.Mockito;
 
-import java.lang.annotation.Target;
 import java.util.Collection;
 import java.util.HashSet;
 
