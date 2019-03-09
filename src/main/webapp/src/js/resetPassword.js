@@ -28,7 +28,7 @@ const reset = new Vue({
                 } else {
                     self.alert = true;
                 }
-            })
+            });
         }
     }
 });

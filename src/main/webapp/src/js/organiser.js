@@ -6,7 +6,7 @@ Vue.component('active-games-display', {
             inviteString: '',
             showPatternModal: false,
             patternTitle: '',
-        }
+        };
     }
     ,
     template:
@@ -98,7 +98,7 @@ Vue.component('active-games-display', {
                         method: 'post',
                         url: 'create/invite',
                         params: {
-                            gameId: gameId,
+                            gameId,
                             email: value
                         }
                     });
@@ -160,11 +160,13 @@ Vue.component('terminated-games-display', {
                 method: 'post',
                 url: 'create/delete',
                 params: {
-                    gameId: gameId
+                    gameId
                 }
             });
             terminatedGames.listOfGames.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.id === gameId) terminatedGames.listOfGames.splice(index, 1);
+                if (value.id === gameId) {
+                    terminatedGames.listOfGames.splice(index, 1);
+                }
             });
         }
     }
@@ -185,7 +187,7 @@ const activeGames = new Vue({
             method: 'get',
             url: 'create/active'
         }).then(function (response) {
-            activeGames.listOfGames = response.data
+            activeGames.listOfGames = response.data;
         });
     },
     methods: {

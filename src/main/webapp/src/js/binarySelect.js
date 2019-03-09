@@ -7,7 +7,7 @@ Vue.component('BinarySelect', {
             currentRound: -1,
             maxRound: 5,
             disabled: false
-        }
+        };
     },
     watch: {
     },
@@ -36,9 +36,7 @@ Vue.component('BinarySelect', {
                 this.nextRound();
                 this.$emit('clear-alerts');
             }
-
         }
-
     },
     mounted() {
         this.$emit('add-alert', {message: this.localisation.binarySelectHelp, type: 2});

@@ -27,7 +27,7 @@ const gameFrame = new Vue({
             let idList = [];
             for (let i = 0; i < this.featureList.length; i++) {
                 if (this.featureList[i].toggled) {
-                    idList.push(this.featureList[i].id)
+                    idList.push(this.featureList[i].id);
                 }
             }
             return idList;
@@ -91,7 +91,7 @@ const gameFrame = new Vue({
                 gameFrame.buttonState = true;
                 axios('users/streak').then(function (response) {
                     gameFrame.counter = response.data;
-                })
+                });
             });
         },
         quit() {

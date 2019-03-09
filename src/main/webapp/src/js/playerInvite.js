@@ -2,7 +2,7 @@ Vue.component('player-invite-single', {
     data() {
         return {
             email: ''
-        }
+        };
     },
 
     template:
@@ -17,7 +17,7 @@ Vue.component('player-invite-single', {
     methods: {
         newEmail() {
             this.$emit('new-email', this.email);
-            this.email = "";
+            this.email = '';
         }
     },
     computed: {
@@ -89,7 +89,7 @@ Vue.component('player-invite-box', {
     },
     mounted() {
         this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
-            {title: this.localisation.invitePlayerMass, value: 'textarea'}]
+            {title: this.localisation.invitePlayerMass, value: 'textarea'}];
     },
     computed:{
         invitedPlayers: {

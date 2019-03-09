@@ -20,7 +20,7 @@ Vue.component('MatrixSelect', {
     data() {
         return {
             count: 0 // number of selected features
-        }
+        };
     },
     mounted() { // giving the player information about this game
         this.$emit('add-alert', {message: this.localisation.matrixSelectHelp, type: 2});
@@ -31,7 +31,7 @@ Vue.component('MatrixSelect', {
     },
     computed: {
         col() {
-            return Math.floor(document.getElementsByClassName("col-10")[0].offsetWidth / 350);
+            return Math.floor(document.getElementsByClassName('col-10')[0].offsetWidth / 350);
         },
         row() {
             return Math.ceil(this.options.numberOfFeatures / this.col);

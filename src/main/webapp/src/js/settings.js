@@ -12,7 +12,7 @@ const app = new Vue({
     methods: {
         setEmail() {
             this.emailFalse = false;
-            if (this.email !== '')
+            if (this.email !== '') {
                 axios({
                     method: 'post',
                     url: 'users/setEmail',
@@ -22,13 +22,14 @@ const app = new Vue({
                 }).then(function () {
                     app.alert = true;
                 }).catch(function (reason) {
-                    if (reason.response.status === 409) { // Conflict has happend
+                    if (reason.response.status === 409) { // Conflict has happened
                         app.emailFalse = true;
                     }
-                })
+                });
+            }
         },
         setPassword() {
-            if (this.password !== '' && this.password === this.repeatpassword)
+            if (this.password !== '' && this.password === this.repeatpassword) {
                 axios({
                     method: 'post',
                     url: 'users/setPassword',
@@ -37,10 +38,11 @@ const app = new Vue({
                     }
                 }).then(function () {
                     app.alert = true;
-                })
+                });
+            }
         },
         setLanguage() {
-            if (this.language !== '')
+            if (this.language !== '') {
                 axios({
                     method: 'post',
                     url: 'users/setLanguage',
@@ -49,7 +51,8 @@ const app = new Vue({
                     }
                 }).then(function () {
                     app.alert = true;
-                })
+                });
+            }
         }
     }
 });

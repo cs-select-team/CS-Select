@@ -117,7 +117,7 @@ Vue.component('invite-element', {
                 if (value.id === gameId) {
                     invites.listOfInvites.splice(index, 1);
                 }
-            })
+            });
         }
     }
 });
@@ -185,7 +185,7 @@ const leaderboard = new Vue({
 
 
 const daily = new Vue({
-    el: "#daily",
+    el: '#daily',
     data: {
         daily: {}
     },

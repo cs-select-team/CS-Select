@@ -17,7 +17,7 @@ Vue.component('streak-display', {
                 return 0 + '%';
             }
             else {
-                return 20 * (this.counter - 3)+ '%'
+                return 20 * (this.counter - 3)+ '%';
             }
         },
         streakText() {

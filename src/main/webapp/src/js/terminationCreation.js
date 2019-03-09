@@ -35,13 +35,12 @@ Vue.component('termination-config', {
             {title: this.localisation.organiserTermination, value:'organiser'},
             {title: this.localisation.timeTermination, value: "time"},
             {title: this.localisation.roundsTermination, value: "rounds"}
-            ]
+            ];
     },
 
     computed: {
         componentName() {
-
-            return "termination-config-" + this.currentTermination
+            return 'termination-config-' + this.currentTermination;
         },
         currentTermination: {
             get() {
@@ -72,7 +71,7 @@ Vue.component('termination-config-composite', {
             terminations: [],
             currentTermination: {},
             terminationStrings: []
-        }
+        };
     },
     methods: {
         addTermination(term) {
@@ -116,10 +115,12 @@ Vue.component('termination-config-composite', {
             self.terminationStrings.forEach(function (value, index) {
                 let termination = {};
                 self.listOfPossibleTerminations.forEach(function (term) {
-                    if (term.value === value.split(':')[0]) termination = term;
+                    if (term.value === value.split(':')[0]) {
+                        termination = term;
+                    }
                 });
-                self.terminations.push(termination)
-            })
+                self.terminations.push(termination);
+            });
         }
     },
 
@@ -161,8 +162,12 @@ Vue.component('termination-config-rounds', {
     methods: {
         isValidConf(string) {
             const args = string.split(':');
-            if (args[0] !== 'rounds') return false;
-            if (args.length !== 2) return false;
+            if (args[0] !== 'rounds') {
+                return false;
+            }
+            if (args.length !== 2) {
+                return false;
+            }
         }
     },
     computed: {
@@ -199,8 +204,12 @@ Vue.component('termination-config-time', {
     methods: {
         isValidConf(string) {
             const args = string.split(':');
-            if (args[0] !== 'time') return false;
-            if (args.length !== 2) return false;
+            if (args[0] !== 'time') {
+                return false;
+            }
+            if (args.length !== 2) {
+                return false;
+            }
         }
     },
     computed: {
