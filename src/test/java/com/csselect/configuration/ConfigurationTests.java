@@ -77,7 +77,7 @@ public class ConfigurationTests extends TestClass {
 
     @Test
     public void testEmailHostname() {
-        testString("mail.gmx.net", config.getEmailHostname());
+        testString("smtp.gmail.com", config.getEmailHostname());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ConfigurationTests extends TestClass {
 
     @Test
     public void testEmailAddress() {
-        testString("csselect@gmx.de", config.getEmailAddress());
+        testString("bettercsselect@gmail.com", config.getEmailAddress());
     }
 
     @Test
