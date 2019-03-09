@@ -11,12 +11,17 @@ import com.csselect.user.management.safety.Encrypter;
 public final class PlayerManagement extends UserManagement {
 
     /**
+     * Error string if username is already in use
+     */
+    public static final String USERNAME_IN_USE = "Username is already in use";
+    /**
      * Register a player with parameters email, password and username
      * @param email players email
      * @param username players username
      * @return {@link Player} object
+     * @throws IllegalArgumentException if email or username were already in use
      */
-    public Player register(String email, String username) {
+    public Player register(String email, String username) throws IllegalArgumentException{
         String password = this.createTemporaryPassword();
         String salt = Encrypter.getRandomSalt();
         String encryptedPassword = Encrypter.encrypt(password, salt);

@@ -10,6 +10,7 @@ import com.csselect.game.Game;
 import com.csselect.inject.Injector;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import com.csselect.user.management.PlayerManagement;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 import org.pmw.tinylog.Logger;
@@ -248,8 +249,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public Player createPlayer(String email, String hash, String salt, String username) {
         try {
             ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS
-                            + " WHERE (" + ColumnNames.EMAIL + "=?);", new StringParam(email));
+                            + " WHERE (" + ColumnNames.EMAIL + "=?) OR (" + ColumnNames.USERNAME + "=?);",
+                    new StringParam(email), new StringParam(username));
             if (set.next()) {
+                if (set.getString(ColumnNames.EMAIL).equals(email)) {
+                    throw new IllegalArgumentException(PlayerManagement.EMAIL_IN_USE);
+                } else if (set.getString(ColumnNames.USERNAME).equals(username)) {
+                    throw new IllegalArgumentException(PlayerManagement.USERNAME_IN_USE);
+                }
                 return null;
             }
         } catch (SQLException e) {

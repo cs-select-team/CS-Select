@@ -15,6 +15,8 @@
                     <fmt:message key="noConfig"/></div>
                 <div class="alert alert-danger" v-bind:class="{ collapse: !missingDatabase }">
                     <fmt:message key="noDatabase"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !usernameInUse }">
+                    <fmt:message key="UsernameInUse"/></div>
                 <div class="alert alert-danger" v-bind:class="{ collapse: !emailInvalid }">
                     <fmt:message key="emailInvalid"/></div>
                 <div class="login-form">

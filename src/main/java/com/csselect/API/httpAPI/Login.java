@@ -1,9 +1,10 @@
 package com.csselect.API.httpAPI;
+
 import com.csselect.configuration.ConfigurationException;
 import com.csselect.database.DatabaseException;
-import org.pmw.tinylog.Logger;
 import com.csselect.user.management.OrganiserManagement;
 import com.csselect.user.management.PlayerManagement;
+import org.pmw.tinylog.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ public class Login extends Servlet {
 
         resp.sendError(HttpServletResponse.SC_ACCEPTED);
     }
+
     @Override
     public void post(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
         try {
@@ -63,23 +65,29 @@ public class Login extends Servlet {
         String email = getParameter("email", req);
         String second = getParameter("secondParam", req);
         boolean success = false;
-        if (isSet("organiser", req)) {
-            createOrganiser();
-            try {
+        try {
+            if (isSet("organiser", req)) {
+                createOrganiser();
                 success = getOrganiserFacade().register(email, second);
-            } catch (IllegalArgumentException e) {
-                if (e.getMessage().equals(OrganiserManagement.EMAIL_IN_USE)) {
+            } else {
+                createPlayer();
+                success = getPlayerFacade().register(email, second);
+            }
+        } catch (IllegalArgumentException e) {
+            switch (e.getMessage()) {
+                case OrganiserManagement.EMAIL_IN_USE:
                     resp.sendError(409, e.getMessage());
                     return;
-                } else if (e.getMessage().equals(OrganiserManagement.MASTER_PASSWORD_INCORRECT)) {
+                case OrganiserManagement.MASTER_PASSWORD_INCORRECT:
                     resp.sendError(401, e.getMessage());
                     return;
-                }
+                case PlayerManagement.USERNAME_IN_USE:
+                    resp.sendError(450, e.getMessage());
+                    return;
+                default:
+                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    return;
             }
-        } else {
-            createPlayer();
-            success = getPlayerFacade().register(email, second);
-        }
         if (success) {
             resp.sendError(HttpServletResponse.SC_OK);
         }
