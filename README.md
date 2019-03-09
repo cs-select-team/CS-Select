@@ -1,5 +1,5 @@
 # CS-Select
-
+[![Build Status](https://travis-ci.com/cs-select-team/CS-Select.svg?branch=master)](https://travis-ci.com/cs-select-team/CS-Select)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/95d15dc25a58451792797e54c2d60765)](https://www.codacy.com/app/cs-select-team/CS-Select?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cs-select-team/CS-Select&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Installation
