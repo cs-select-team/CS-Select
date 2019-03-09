@@ -21,6 +21,7 @@ import java.util.Map;
  */
 public final class FeatureSetUtils {
 
+    private static final String HOMEDIR = Injector.getInstance().getConfiguration().getHomeDirectory();
     private static final String SUMMARY_FILE_NAME = "summary.json";
     private static final String FEATURE_ID = "id";
     private static final String FEATURE_NAME = "name";
@@ -36,8 +37,6 @@ public final class FeatureSetUtils {
     private FeatureSetUtils() {
         //Utility classes shouldn't be instantiated
     }
-
-    private static final String HOMEDIR = Injector.getInstance().getConfiguration().getHomeDirectory();
 
     /**
      * Loads a {@link FeatureSet} from the disk
