@@ -5,6 +5,7 @@ Vue.component('active-games-display', {
             email: '',
             inviteString: '',
             showPatternModal: false,
+            showPatternOverwriteModal: false,
             patternTitle: '',
         };
     }
@@ -35,12 +36,27 @@ Vue.component('active-games-display', {
                         <button type="button"
                             slot="footer"
                             class="btn btn-primary"
-                            v-on:click="doCreatePattern(game.id)">{{localisation.submit}}
+                            v-on:click="tryCreatePattern(game.id)">{{localisation.submit}}
+                        </button>
+                    </modal-template>
+                     <modal-template v-if="showPatternOverwriteModal">
+                        <h3 slot="header">{{localisation.patternOverwriteWarning}}</h3>
+                        <a slot="body">{{localisation.patternOverwriteWarningText}}</a>
+                        <hr slot="body">
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-primary"
+                            v-on:click="createPatternFromGame(game.id)">{{localisation.submit}}
+                        </button>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-secondary"
+                            v-on:click="abortPatternCreation">{{localisation.patternFromGameAbort}}
                         </button>
                     </modal-template>
                     <div class="col">
                         <input type="button" class="btn btn-secondary float-right btn-space" :title="localisation.createPatternFromGameTooltip"
-                         :value="localisation.createPatternFromGame" v-on:click="createPattern(game.id)">
+                         :value="localisation.createPatternFromGame" v-on:click="askTitleForPattern">
                         <input type="button" :title="localisation.terminateGameHelp" class="btn btn-secondary float-right btn-space"
                             v-on:click="terminate(game.id)" :value="localisation.terminate">
                         <input type="button" class="btn btn-primary float-right btn-space" :value="localisation.invite"
@@ -108,13 +124,39 @@ Vue.component('active-games-display', {
         updateInviteString(newVal) {
             this.inviteString = newVal;
         },
-        createPattern(gameId) {
+        askTitleForPattern() {
             const self = this;
             self.showPatternModal = true;
         },
-        doCreatePattern(gameId) {
+        tryCreatePattern(gameId) {
             const self = this;
             self.showPatternModal = false;
+            axios({
+                method: 'get',
+                url: 'create/patterns',
+                params: {}
+            }).then(function(response) {
+                const patterns = response.data;
+                let isOverwriting = false;
+                patterns.forEach(function (pattern) {
+                    if (pattern.title === self.patternTitle) {
+                        isOverwriting = true;
+                    }
+                });
+                if(isOverwriting) {
+                    self.showPatternOverwriteModal = true;
+                } else {
+                    self.createPatternFromGame(gameId);
+                }
+            })
+        },
+        abortPatternCreation() {
+            const self = this;
+            self.showPatternOverwriteModal = false;
+        },
+        createPatternFromGame(gameId) {
+            const self = this;
+            self.showPatternOverwriteModal = false;
             axios({
                 method: 'post',
                 url: 'create/patternFromGame',
