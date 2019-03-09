@@ -148,7 +148,7 @@ Vue.component('active-games-display', {
                 } else {
                     self.createPatternFromGame(gameId);
                 }
-            })
+            });
         },
         abortPatternCreation() {
             const self = this;
