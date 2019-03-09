@@ -72,6 +72,10 @@ If you want to expand CS:Select with your own additions, use the following setup
  via Annotations to allow for syntax highlighting and auto-completion of different languages inside your java code
  (e.g. SQL).
  
+ ## JUnit
+ The test cases in the `mysql` and `mlserver` package only work with a correctly set up MySQL- or ML-Server respectively.
+ All other test cases work without external resources
+ 
  ## Configuration Values
  - organiserpassword: The password an organiser has to supply to be able to register a new account
  - mlserverurl: The URL the ML-Server is available under
