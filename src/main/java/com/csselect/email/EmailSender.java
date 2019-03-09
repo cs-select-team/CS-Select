@@ -4,7 +4,6 @@ import com.csselect.inject.Injector;
 import com.csselect.configuration.Configuration;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.pmw.tinylog.Logger;
