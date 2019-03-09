@@ -65,7 +65,7 @@ public class MysqlDatabaseAdapterTest extends MysqlTestClass {
 
     @Test
     public void testTimezoneOtherDatabase() throws SQLException {
-        ResultSet resultSet = mysqlDatabaseAdapter.executeMysqlQuery("SELECT @@global.time_zone, @@session.time_zone;", "ORGANISERS");
+        ResultSet resultSet = mysqlDatabaseAdapter.executeMysqlQuery("SELECT @@global.time_zone, @@session.time_zone;", "CS_Select");
         validateTimezone(resultSet);
     }
 
