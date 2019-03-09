@@ -35,7 +35,7 @@ Vue.component('active-games-display', {
                         <button type="button"
                             slot="footer"
                             class="btn btn-primary"
-                            v-on:click="doCreatePattern">{{localisation.submit}}
+                            v-on:click="doCreatePattern(game.id)">{{localisation.submit}}
                         </button>
                     </modal-template>
                     <div class="col">
