@@ -64,7 +64,7 @@ public final class MockConfiguration implements Configuration {
 
     @Override
     public String getEmailHostname() {
-        return "mail.gmx.net";
+        return "smtp.gmail.com";
     }
 
     @Override
@@ -74,7 +74,7 @@ public final class MockConfiguration implements Configuration {
 
     @Override
     public String getEmailAddress() {
-        return "csselect@gmx.de";
+        return "bettercsselect@gmail.com";
     }
 
     @Override
