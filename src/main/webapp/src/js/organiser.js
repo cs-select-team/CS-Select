@@ -36,7 +36,13 @@ Vue.component('active-games-display', {
                         <button type="button"
                             slot="footer"
                             class="btn btn-primary"
-                            v-on:click="tryCreatePattern(game.id)">{{localisation.submit}}
+                            v-on:click="tryCreatePattern(game.id)"
+                            :disabled="patternTitle==''">{{localisation.submit}}
+                        </button>
+                        <button type="button"
+                            slot="footer"
+                            class="btn btn-secondary"
+                            v-on:click="abortPatternCreation">{{localisation.patternFromGameAbort}}
                         </button>
                     </modal-template>
                      <modal-template v-if="showPatternOverwriteModal">
@@ -152,6 +158,7 @@ Vue.component('active-games-display', {
         },
         abortPatternCreation() {
             const self = this;
+            self.showPatternModal = false;
             self.patternTitle = '';
             self.showPatternOverwriteModal = false;
         },
