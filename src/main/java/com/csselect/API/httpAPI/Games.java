@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 public class Games extends Servlet {
 
     private static final String BASE_64_PNG_PREFIX = "data:image/png;base64,";
+    private static final String IMAGE_TYPE = "PNG";
 
 
     @Override
@@ -147,8 +148,8 @@ public class Games extends Servlet {
                 jsonFeature.addProperty("id", feature.getID());
                 jsonFeature.addProperty("desc", desc);
                 jsonFeature.addProperty("name", feature.getName(lang));
-                jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), "PNG"));
-                jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), "PNG"));
+                jsonFeature.addProperty("graph1", encodeToString(feature.getClassGraph(), IMAGE_TYPE));
+                jsonFeature.addProperty("graph2", encodeToString(feature.getTotalGraph(), IMAGE_TYPE));
                 featureList.add(jsonFeature);
             }
             jsonObject.add("listOfFeatures", featureList);
