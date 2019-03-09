@@ -65,5 +65,13 @@ public class StandardRoundTests extends TestClass {
         }
     }
 
+    @Test
+    public void getters() {
+        Assert.assertEquals(round.getNumberOfSelections(), 5);
+        Assert.assertEquals(round.getFeaturesPerSelection(), 3);
+        Assert.assertEquals(round.getMinSelect(), 2);
+        Assert.assertEquals(round.getMaxSelect(), 2);
+    }
+
 
 }

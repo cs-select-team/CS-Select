@@ -33,7 +33,38 @@ public class StandardRound extends Round {
         this.minSelect = minSelect;
         this.maxSelect = maxSelect;
     }
-    
+
+    /**
+     * Getter for the number of selections per round
+     * @return the number of selections
+     */
+    int getNumberOfSelections() {
+        return this.numberOfSelections;
+    }
+
+    /**
+     * Getter for the number of features {@link Feature} per selection
+     * @return the number of features {@link Feature} per selection
+     */
+    int getFeaturesPerSelection() {
+        return this.featuresPerSelection;
+    }
+
+    /**
+     * Getter for the minimum number of features {@link Feature} to be selected per selection
+     * @return the minimum number of features {@link Feature} to be selected per selection
+     */
+    int getMinSelect() {
+        return this.minSelect;
+    }
+
+    /**
+     * Getter for the maximum number of features {@link Feature} to be selected per selection
+     * @return the maximum number of features {@link Feature} to be selected per selection
+     */
+    int getMaxSelect() {
+        return this.maxSelect;
+    }
 
     @Override
     public List<Feature> provideFeatures() {
