@@ -29,14 +29,14 @@ public class TimeTerminationTests extends TestClass {
     public void notReachedTime() {
         TimeTermination timeTermination = new TimeTermination(LocalDateTime.now().plusSeconds(100));
         timeTermination.setGame(new Game(1));
-        Assert.assertTrue(!timeTermination.checkTermination());
+        Assert.assertFalse(timeTermination.checkTermination());
     }
 
     @Test
     public void exactTime() {
         TimeTermination timeTermination = new TimeTermination(LocalDateTime.now());
         timeTermination.setGame(new Game(1));
-        Assert.assertTrue(!timeTermination.checkTermination());
+        Assert.assertTrue(timeTermination.checkTermination());
     }
 
 
