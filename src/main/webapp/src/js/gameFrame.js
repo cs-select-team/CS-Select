@@ -54,7 +54,7 @@ const gameFrame = new Vue({
                 }).then(function (response) {
                     gameFrame.points = response.data;
                     gameFrame.getNextRound();
-                })
+                });
             }
         },
         skip() {
