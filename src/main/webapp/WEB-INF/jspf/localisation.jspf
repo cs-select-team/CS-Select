@@ -112,7 +112,10 @@ props -->
                             createPatternFromGameTooltip: '<fmt:message key="createPatternFromGameToolTip"/>',
                             creationAbort: '<fmt:message key="creationAbort"/>',
                             patternFromGameModalTitle: '<fmt:message key="patternFromGameModalTitle"/>',
-                            patternFromGameModalText: '<fmt:message key="patternFromGameModalText"/>'
+                            patternFromGameModalText: '<fmt:message key="patternFromGameModalText"/>',
+                            patternOverwriteWarning: '<fmt:message key="patternOverwriteWarning"/>',
+                            patternOverwriteWarningText: '<fmt:message key="patternOverwriteWarningText"/>',
+                            patternFromGameAbort : '<fmt:message key="abortPatternFromGame"/>'
                         }
                     }
                 }
