@@ -159,8 +159,8 @@ Vue.component('active-games-display', {
         abortPatternCreation() {
             const self = this;
             self.showPatternModal = false;
-            self.patternTitle = '';
             self.showPatternOverwriteModal = false;
+            self.patternTitle = '';
         },
         createPatternFromGame(gameId) {
             const self = this;
