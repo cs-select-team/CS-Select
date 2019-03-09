@@ -48,19 +48,20 @@ public class GameTests extends TestClass {
     @Test
     public void termination() {
         Assert.assertFalse(game.isTerminated());
-        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Player player = Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username");
+        Round round = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round);
-        Round round2 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round2 = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round2);
-        Round round3 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round3 = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round3);
-        Round round4 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round4 = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round4);
         Assert.assertFalse(game.isTerminated());
-        Round round5 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round5 = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round5);
         Assert.assertTrue(game.isTerminated());
-        Round round6 = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round6 = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round6);
         Assert.assertEquals(6, game.getNumberOfRounds());
     }
@@ -77,7 +78,9 @@ public class GameTests extends TestClass {
     @Test
     public void inviteSamePlayer() {
         invitePlayer1();
-        invitePlayer1();
+        Collection<String> emails = new ArrayList<>();
+        emails.add("email");
+        game.invitePlayers(emails);
         Assert.assertNotNull(game.getInvitedPlayers());
         Assert.assertEquals(1, game.getInvitedPlayers().size());
     }
@@ -117,7 +120,7 @@ public class GameTests extends TestClass {
     @Test
     public void addPlayerSameID() {
         this.addPlayer1();
-        this.addPlayer1();
+        game.acceptInvite(0, "email");
         Assert.assertNotNull(game.getPlayingPlayers());
         Assert.assertEquals(1, game.getPlayingPlayers().size());
     }
@@ -171,7 +174,7 @@ public class GameTests extends TestClass {
         game.startRound(player);
         game.startRound(player);
         Assert.assertEquals(0, game.getNumberOfRounds());
-        Round round = new StandardRound(Injector.getInstance().getDatabaseAdapter().createPlayer("email", "hash", "salt", "username"), 1, 2, 3, 4);
+        Round round = new StandardRound(player, 1, 2, 3, 4);
         game.addFinishedRound(round);
         Assert.assertEquals(1, game.getNumberOfRounds());
     }
