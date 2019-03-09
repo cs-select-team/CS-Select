@@ -130,7 +130,6 @@ Vue.component('active-games-display', {
         },
         tryCreatePattern(gameId) {
             const self = this;
-            self.patternTitle = '';
             self.showPatternModal = false;
             axios({
                 method: 'get',
@@ -153,6 +152,7 @@ Vue.component('active-games-display', {
         },
         abortPatternCreation() {
             const self = this;
+            self.patternTitle = '';
             self.showPatternOverwriteModal = false;
         },
         createPatternFromGame(gameId) {
@@ -165,6 +165,8 @@ Vue.component('active-games-display', {
                     gameId,
                     title: self.patternTitle,
                 }
+            }).then(function(){
+                self.patternTitle = '';
             });
         },
         removePlayerByIndex(index) {
