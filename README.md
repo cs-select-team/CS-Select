@@ -96,6 +96,7 @@ If you want to expand CS:Select with your own additions, use the following setup
  - email.port: **The port of the email server**
  - email.address: **The email address to use for sending invitations**
  - email.password: **The password to the email account**
+ - email.username: **The username of the email account for authorisation with the email server. In most cases equal to email.address**
  The bold values **must** be changed depending on your setup
  
  ## Logger Configuration
