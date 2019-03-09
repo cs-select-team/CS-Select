@@ -92,10 +92,11 @@ If you want to expand CS:Select with your own additions, use the following setup
  - database.port: The port of your database server
  - database.username: The username of your database user
  - database.password: The password of your database user
- - email.hostname: The hostname of the email server CS:Select uses for sending invitation mails
- - email.port: The port of the email server
- - email.address: The email address to use for sending invitations
- - email.password: The password to the email account
+ - email.hostname: **The hostname of the email server CS:Select uses for sending invitation mails**
+ - email.port: **The port of the email server**
+ - email.address: **The email address to use for sending invitations**
+ - email.password: **The password to the email account**
+ The bold values **must** be changed depending on your setup
  
  ## Logger Configuration
  The Logger used by CS:Select is the [tinylog-framework](https://tinylog.org/). Tinylog can be configured in a multitude
