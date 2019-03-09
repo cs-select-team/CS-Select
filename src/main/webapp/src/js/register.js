@@ -1,23 +1,22 @@
-var app1 = new Vue({
+const app1 = new Vue({
     el: '#registerForm',
-        data: {
-            email: '',
-            organiser: 'player', // so that the player is the default option for registering
-            secondParam: '',
-            emailInUse: false,
-            missingConfig: false,
-            wrongMasterPassword: false,
-            missingDatabase: false,
-            usernameInUse: false,
-            emailInvalid: false
-        },
-    watch:{
-        organiser: function () {
+    data: {
+        email: '',
+        organiser: 'player', // so that the player is the default option for registering
+        secondParam: '',
+        emailInUse: false,
+        missingConfig: false,
+        wrongMasterPassword: false,
+        missingDatabase: false,
+        usernameInUse: false,emailInvalid:false
+    },
+    watch: {
+        organiser() {
             this.secondParam = '';
         }
     },
         methods: {
-            submit: function(event) {
+            submit(event) {
                 event.preventDefault();
                 const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 if (!re.test(this.email)) {
@@ -33,7 +32,7 @@ var app1 = new Vue({
                             }
                 }).then(function () {
                     localStorage.setItem('checkEmail', true);
-                    window.open("index.jsp","_self")
+                    window.open('index.jsp','_self');
                 }).catch(function (error) {
                     if (error.response.status === 550) {
                         app1.missingConfig = true;
@@ -46,7 +45,7 @@ var app1 = new Vue({
                     } else if (error.response.status === 450) {
                         app1.usernameInUse = true;
                     }
-                })
+                });
             }
         }
     });

@@ -1,4 +1,4 @@
-var gameFrame = new Vue({
+const gameFrame = new Vue({
     el: '#gameFrame',
     data: {
         featureList: [],
@@ -10,39 +10,43 @@ var gameFrame = new Vue({
         points: undefined,
         alerts: [] // alerts are cleared on nextRound
     },
-    mounted: function () {
-      this.getNextRound();
+    mounted() {
+        this.getNextRound();
     },
     methods: {
-        addAlert: function(alert) {
-          this.alerts.push(alert);
+        addAlert(alert) {
+            this.alerts.push(alert);
         },
-        clearAlerts: function() {
-            this.alerts = []
+        clearAlerts() {
+            this.alerts = [];
         },
-        unlockButton: function (done) {
-            this.buttonState = !done
+        unlockButton(done) {
+            this.buttonState = !done;
         },
-        getSelectedFeaturesById: function() {
-            idList = [];
-            for (var i = 0; i < this.featureList.length; i++) {
-                if (this.featureList[i].toggled) idList.push(this.featureList[i].id)
+        getSelectedFeaturesById() {
+            let idList = [];
+            for (let i = 0; i < this.featureList.length; i++) {
+                if (this.featureList[i].toggled) {
+                    idList.push(this.featureList[i].id);
+                }
             }
             return idList;
         },
-        getUselessFeaturesById: function() {
-            idList = [];
-            for (var i = 0; i < this.featureList.length; i++) {
-                if (this.featureList[i].useless) idList.push(this.featureList[i].id)
+        getUselessFeaturesById() {
+            let idList = [];
+            for (let i = 0; i < this.featureList.length; i++) {
+                if (this.featureList[i].useless) {
+                    idList.push(this.featureList[i].id);
+                }
             }
             return idList;
         },
-        sendResults: function () {
+        sendResults() {
             if (!this.buttonState) { // truly only send if the game is finished
 
                 axios({
                     method: 'post',
-                    url: 'games/' + localStorage.getItem("gameId") + "/play",
+                    url: 'games/' + localStorage.getItem('gameId') + '/play',
                     data: {
                         useless: JSON.stringify(this.getUselessFeaturesById()),
                         selected: JSON.stringify(this.getSelectedFeaturesById())
@@ -50,32 +54,29 @@ var gameFrame = new Vue({
                 }).then(function (response) {
                     gameFrame.points = response.data;
                     gameFrame.getNextRound();
-                })
-
+                });
             }
         },
-        skip: function() {
+        skip() {
             axios({
                 method: 'post',
-                url: 'games/' + localStorage.getItem("gameId") + "/skip",
+                url: 'games/' + localStorage.getItem('gameId') + '/skip',
                 data: {
                     useless: JSON.stringify(this.getUselessFeaturesById())
                 }
             }).then(function (value) {
                 gameFrame.getNextRound();
-            })
-
+            });
         },
-        getNextRound: function() {
+        getNextRound() {
             this.clearAlerts();
-
             axios({
                 method: 'post',
-                url: 'games/' + localStorage.getItem("gameId") + "/start"
-            }).then (function (response) {
-                if (response.status == 204) {
-                    localStorage.setItem("gameTerminated", true);
-                    gameFrame.quit()
+                url: 'games/' + localStorage.getItem('gameId') + '/start'
+            }).then(function (response) {
+                if (response.status === 204) {
+                    localStorage.setItem('gameTerminated', true);
+                    gameFrame.quit();
                 }
                 $('.modal').modal('hide'); // close all open modals
                 gameFrame.featureList = response.data.listOfFeatures;
@@ -89,18 +90,12 @@ var gameFrame = new Vue({
                 gameFrame.forceUpdate++;
                 gameFrame.buttonState = true;
                 axios('users/streak').then(function (response) {
-                    gameFrame.counter = response.data
-                })
-            })
-
-
+                    gameFrame.counter = response.data;
+                });
+            });
         },
-        quit: function() {
-
-            window.location.href = 'player.jsp'
+        quit() {
+            window.location.href = 'player.jsp';
         },
-
     }
-
-
 });

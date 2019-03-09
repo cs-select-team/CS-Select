@@ -43,7 +43,7 @@ public class TerminationComposite extends Termination {
             return;
         }
 
-        if (!(this.game == null)) {
+        if (this.game != null) {
             termination.setGame(this.game);
         }
 

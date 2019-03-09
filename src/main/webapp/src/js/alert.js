@@ -4,14 +4,14 @@
 // 2    info
 Vue.component('alert-box', {
     props: ['alert-message', 'type'],
-    data: function() {
+    data() {
         return {
             alertClasses: [
-                "alert-danger",
-                "alert-success",
-                "alert-info"
+                'alert-danger',
+                'alert-success',
+                'alert-info'
             ]
-        }
+        };
     },
     template:
         `<div class="alert" v-bind:class="alertClasses[type]" role="alert">

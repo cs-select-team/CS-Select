@@ -1,6 +1,4 @@
-
-
-var app = new Vue({
+const app = new Vue({
     el: '#inputs',
     data: {
         email: '',
@@ -12,40 +10,49 @@ var app = new Vue({
         emailFalse: false
     },
     methods: {
-        setEmail: function () {
+        setEmail() {
             this.emailFalse = false;
-            if (this.email != '')
-            axios({
-                method: 'post',
-                url: 'users/setEmail',
-                params: {
-                    email: this.email
-                }
-            }).then(function () { app.alert = true }).catch(function (reason) {
-                if (reason.response.status == 409) { // Conflict has happend
-                    app.emailFalse = true;
-                }
-            })
+            if (this.email !== '') {
+                axios({
+                    method: 'post',
+                    url: 'users/setEmail',
+                    params: {
+                        email: this.email
+                    }
+                }).then(function () {
+                    app.alert = true;
+                }).catch(function (reason) {
+                    if (reason.response.status === 409) { // Conflict has happened
+                        app.emailFalse = true;
+                    }
+                });
+            }
         },
-        setPassword: function () {
-            if (this.password !== '' && this.password === this.repeatpassword)
+        setPassword() {
+            if (this.password !== '' && this.password === this.repeatpassword) {
                 axios({
                     method: 'post',
                     url: 'users/setPassword',
                     params: {
                         password: this.password
                     }
-                }).then(function () { app.alert = true })
+                }).then(function () {
+                    app.alert = true;
+                });
+            }
         },
-        setLanguage: function () {
-            if (this.language != '')
+        setLanguage() {
+            if (this.language !== '') {
                 axios({
                     method: 'post',
                     url: 'users/setLanguage',
                     params: {
                         lang: this.language
                     }
-                }).then(function () { app.alert = true })
+                }).then(function () {
+                    app.alert = true;
+                });
+            }
         }
     }
 });

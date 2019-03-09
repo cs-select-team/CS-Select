@@ -35,6 +35,6 @@ public final class LoggerConfigurator implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-
+        //We don't need to do anything here, this class is only used to setup the config
     }
 }

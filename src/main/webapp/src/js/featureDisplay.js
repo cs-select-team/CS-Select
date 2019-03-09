@@ -5,12 +5,12 @@
 Vue.component('feature-box', {
     props: ['feature'],
     watch: {
-        'feature.toggled': function (newVal, oldVal) {
+        'feature.toggled'(newVal, oldVal) {
 
         }
     },
     computed: {
-        desc: function () {
+        desc() {
             return this.feature.desc.replace(/(\\n)+/g, '<br>');
         }
     },
@@ -49,18 +49,19 @@ Vue.component('feature-box', {
             </div>
         </div>`,
     methods: {
-        toggleMarked: function () {
-            oldVal = this.feature.toggled;
-            if (!this.feature.useless) this.feature.toggled = !this.feature.toggled;
+        toggleMarked() {
+            const oldVal = this.feature.toggled;
+            if (!this.feature.useless) {
+                this.feature.toggled = !this.feature.toggled;
+            }
             this.$forceUpdate();
-            this.$emit("toggled", !oldVal, oldVal)
+            this.$emit('toggled', !oldVal, oldVal);
         },
-        toggleUseless: function () {
+        toggleUseless() {
             this.feature.useless = !this.feature.useless;
-            this.$emit("useless-toggle", this.feature.useless, this.feature.toggled);
+            this.$emit('useless-toggle', this.feature.useless, this.feature.toggled);
             this.feature.toggled = false;
-            this.$forceUpdate()
-
+            this.$forceUpdate();
         }
     }
 });

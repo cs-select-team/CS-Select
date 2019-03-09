@@ -1,12 +1,12 @@
 Vue.component('active-games-display', {
     props: ['game'],
-    data: function () {
+    data() {
         return {
             email: '',
             inviteString: '',
             showPatternModal: false,
             patternTitle: '',
-        }
+        };
     }
     ,
     template:
@@ -81,52 +81,53 @@ Vue.component('active-games-display', {
             <hr class="separator">
         </div>`,
     methods: {
-        terminate: function (gameId) {
+        terminate (gameId) {
             axios({
                 method: 'post',
                 url: 'create/terminate',
                 params: {
-                    gameId: gameId
+                    gameId
                 }
             });
-            this.$emit("terminate", gameId);
+            this.$emit('terminate', gameId);
         },
-        invitePlayers: function (gameId) {
+        invitePlayers (gameId) {
             this.inviteString.split(',').forEach(function (value) {
-                if (value != '') {
+                if (value !== '') {
                     axios({
                         method: 'post',
                         url: 'create/invite',
                         params: {
-                            gameId: gameId,
+                            gameId,
                             email: value
                         }
-                    })
+                    });
                 }
-            })
+            });
         },
-        updateInviteString: function (newVal) {
+        updateInviteString(newVal) {
             this.inviteString = newVal;
         },
-        createPattern: function(gameId) {
-            var self = this;
-            self.showPatternModal = true
+        createPattern(gameId) {
+            const self = this;
+            self.showPatternModal = true;
         },
-        doCreatePattern: function(gameId) {
-            var self = this;
+        doCreatePattern(gameId) {
+            const self = this;
             self.showPatternModal = false;
             axios({
                 method: 'post',
                 url: 'create/patternFromGame',
                 params: {
-                    gameId: gameId,
+                    gameId,
                     title: self.patternTitle,
                 }
-            }),
-        removePlayerByIndex: function(index) {
-            var playerArray = this.inviteString.split(',');
+            });
+        },
+        removePlayerByIndex(index) {
+            const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
-            this.inviteString = playerArray.join(',')
+            this.inviteString = playerArray.join(',');
         }
     }
 });
@@ -154,16 +155,18 @@ Vue.component('terminated-games-display', {
             </div>
         </div>`,
     methods: {
-        remove: function (gameId) {
+        remove(gameId) {
             axios({
                 method: 'post',
                 url: 'create/delete',
                 params: {
-                    gameId: gameId
+                    gameId
                 }
             });
             terminatedGames.listOfGames.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.id == gameId) terminatedGames.listOfGames.splice(index, 1);
+                if (value.id === gameId) {
+                    terminatedGames.listOfGames.splice(index, 1);
+                }
             });
         }
     }
@@ -174,49 +177,47 @@ Vue.component('stats-display', {
     template: ``
 });
 
-var activeGames = new Vue({
-    el: "#active",
+const activeGames = new Vue({
+    el: '#active',
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
-            url: "create/active"
+            url: 'create/active'
         }).then(function (response) {
-            activeGames.listOfGames = response.data
-        })
+            activeGames.listOfGames = response.data;
+        });
     },
     methods: {
-        gameWasTerminated: function (gameId) {
-            var self = this;
+        gameWasTerminated(gameId) {
+            const self = this;
             this.listOfGames.forEach(function (value, index) {
-                if (value.id == gameId) {
-                    var game = self.listOfGames.splice(index, 1);
+                if (value.id === gameId) {
+                    const game = self.listOfGames.splice(index, 1);
                     terminatedGames.listOfGames.push(game[0]);
                 }
-            })
-
+            });
         }
     }
-
 });
 
-var terminatedGames = new Vue({
-    el: "#terminated",
+const terminatedGames = new Vue({
+    el: '#terminated',
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
-            url: "create/terminated"
+            url: 'create/terminated'
         }).then(function (response) {
-            terminatedGames.listOfGames = response.data
-        })
+            terminatedGames.listOfGames = response.data;
+        });
     }
 });
 
-var stats = new Vue({
-    el: "#stats"
+const stats = new Vue({
+    el: '#stats'
 });

@@ -179,12 +179,9 @@ public class PlayerStats implements Gamification {
      */
     private int addDailyBonus(DailyChallenge dailyToCheck, int oldScore) {
         int newScore = oldScore;
-        if (!dailyToCheck.isCompleted()) {
-
-            if (dailyToCheck.checkFinished(this)) {
-                newScore += dailyToCheck.getReward();
-                playerStatsAdapter.completeDaily();
-            }
+        if (!dailyToCheck.isCompleted() && dailyToCheck.checkFinished(this)) {
+            newScore += dailyToCheck.getReward();
+            playerStatsAdapter.completeDaily();
         }
         return newScore;
     }

@@ -1,8 +1,8 @@
 Vue.component('player-invite-single', {
-    data: function () {
+    data() {
         return {
             email: ''
-        }
+        };
     },
 
     template:
@@ -15,24 +15,24 @@ Vue.component('player-invite-single', {
             </div>
         </div>`, 
     methods: {
-        newEmail: function () {
+        newEmail() {
             this.$emit('new-email', this.email);
-            this.email = "";
+            this.email = '';
         }
     },
     computed: {
-        validateEmail: function () {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        validateEmail() {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(this.email).toLowerCase());
         }
     }
 });
 Vue.component('player-invite-textarea', {
     props: ['invite-string'],
-    data: function () {
+    data() {
         return {
             rawText: this.inviteString
-            }
+            };
         },
     template:
         `<div class="input-group">
@@ -41,25 +41,24 @@ Vue.component('player-invite-textarea', {
             </textarea>
         </div>`,
     methods: {
-        validateEmail: function (email) {
-            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
         }
     },
     watch: {
-        rawText: function (newVal) {
-            var self = this;
-            var wrongEmail = false;
+        rawText(newVal) {
+            const self = this;
+            let wrongEmail = false;
             newVal = newVal.replace(/\s/g, '');
-            var array = newVal.split(',');
-            var newArray = [];
+            const array = newVal.split(',');
+            const newArray = [];
             array.forEach(function (value, index) {
-                if (value == '') {
-
-                    return
+                if (value === '') {
+                    return;
                 } // trailing comma will cause one empty string
                 else {
-                    newArray.push(value)
+                    newArray.push(value);
                 }
                 if (!self.validateEmail(value)) {
                     wrongEmail = true;
@@ -82,42 +81,42 @@ Vue.component('player-invite-nav-tab', {
 });
 Vue.component('player-invite-box', {
     props: ['invite-string'],
-    data: function () {
+    data() {
         return {
             playerInputType: [],
             currentTab: 'single'
-        }
+        };
     },
-    mounted: function () {
+    mounted() {
         this.playerInputType = [{title: this.localisation.invitePlayerSingle, value: 'single'},
-            {title: this.localisation.invitePlayerMass, value: 'textarea'}]
+            {title: this.localisation.invitePlayerMass, value: 'textarea'}];
     },
     computed:{
         invitedPlayers: {
-            get: function () {
-                var array = this.inviteString.split(',');
-                var newArray = [];
+            get() {
+                const array = this.inviteString.split(',');
+                const newArray = [];
                 array.forEach(function(value) { // removing empty strings
                    if (value !== '') {
-                       newArray.push(value)
+                       newArray.push(value);
                    }
                 });
                 return newArray;
             }
         },
-        currentTabComponent: function () {
-            return 'player-invite-' + this.currentTab
+        currentTabComponent() {
+            return 'player-invite-' + this.currentTab;
         },
     }, methods: {
-        addPlayer: function (email) {
-            var players = this.invitedPlayers;
+        addPlayer(email) {
+            const players = this.invitedPlayers;
             players.push(email);
-            this.$emit('update-invite-string', players.join(','))
+            this.$emit('update-invite-string', players.join(','));
         },
-        updateInviteString: function (newVal) {
-            this.$emit('update-invite-string', newVal)
+        updateInviteString(newVal) {
+            this.$emit('update-invite-string', newVal);
         },
-        updateTab: function(value) {
+        updateTab(value) {
             this.currentTab = value;
         }
     },

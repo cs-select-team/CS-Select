@@ -1,4 +1,4 @@
-var reset = new Vue({
+const reset = new Vue({
     el: '#resetForm',
     data: {
         alert: false,
@@ -8,9 +8,9 @@ var reset = new Vue({
         organiser: false
     },
     methods: {
-        submit: function (event) {
+        submit(event) {
             event.preventDefault();
-            var self = this;
+            const self = this;
             self.emailSent = false;
             self.alert = false;
             axios({
@@ -23,12 +23,12 @@ var reset = new Vue({
             }).then(function (response) {
                 self.emailSent = true;
             }).catch(function (error) {
-                if (error.response.status == 550) {
+                if (error.response.status === 550) {
                     self.missingConfig = true;
                 } else {
                     self.alert = true;
                 }
-            })
+            });
         }
     }
 });

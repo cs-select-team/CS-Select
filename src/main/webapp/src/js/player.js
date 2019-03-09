@@ -18,24 +18,26 @@ Vue.component('game-display', {
             </div>
         </div>`,
     methods: {
-        startGame: function(gameId) {
-            localStorage.setItem("gameId", gameId);
-            window.location.href = "game.jsp"
+        startGame(gameId) {
+            localStorage.setItem('gameId', gameId);
+            window.location.href = 'game.jsp';
         }
     },
     computed: {
-        terminationType: function () {
-            if (this.game.termination.split(',').length > 1) return 'composite';
+        terminationType() {
+            if (this.game.termination.split(',').length > 1) {
+                return 'composite';
+            }
             return this.game.termination.split(':')[0];
         },
-        terminationNotice: function () {
+        terminationNotice() {
             switch(this.terminationType) {
                 case 'composite':
                     return this.localisation.compositeTermination;
                 case 'organiser':
                     return this.localisation.organiserTermination;
                 case 'time':
-                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format("DD/MM/YYYY");
+                    return this.localisation.timeTermination + ' ' + moment.unix(this.game.termination.split(':')[1] / 1000).format('DD/MM/YYYY');
                 case 'rounds':
                     return this.localisation.roundsTermination + ' ' + this.game.termination.split(':')[1];
             }
@@ -94,119 +96,118 @@ Vue.component('invite-element', {
             </div>
         </div>`,
     methods: {
-        accept: function (gameId) {
+        accept(gameId) {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/accept'
             });
             invites.listOfInvites.forEach(function (value, index) { // remove from the list without reloading page
-                if (value.id == gameId){
+                if (value.id === gameId){
 
                     games.listOfGames.push(invites.listOfInvites.splice(index, 1)[0]);
                 }
             });
         },
-        decline: function (gameId) {
+        decline(gameId) {
             axios({
                 method: 'post',
                 url: 'games/' + gameId + '/decline'
             });
             invites.listOfInvites.forEach(function (value, index) {  // remove from the list without reloading page
-                if (value.id == gameId) invites.listOfInvites.splice(index, 1);
-            })
+                if (value.id === gameId) {
+                    invites.listOfInvites.splice(index, 1);
+                }
+            });
         }
     }
 });
 
-var invites = new Vue({
+const invites = new Vue({
     el: '#invites',
     data: {
         listOfInvites: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/notifications'
         }).then(function (response) {
-            invites.listOfInvites = response.data
-        })
-
+            invites.listOfInvites = response.data;
+        });
     }
 });
-var stats = new Vue({
+const stats = new Vue({
     el: '#stats',
     data: {
         username: '',
         points: 0
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users'
         }).then(function (response) {
             stats.points = response.data.points;
             stats.username = response.data.username;
-        })
-
+        });
     }
 });
 
-var games = new Vue({
+const games = new Vue({
     el: '#games',
     data: {
         listOfGames: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'games'
         }).then(function (response) {
-            games.listOfGames = response.data
-        })
+            games.listOfGames = response.data;
+        });
     }
 });
 
-var leaderboard = new Vue({
+const leaderboard = new Vue({
     el: '#leaderboard',
     data: {
         playerList: []
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/leaderboard'
         }).then(function (response) {
-            leaderboard.playerList = response.data
-        })
+            leaderboard.playerList = response.data;
+        });
     }
 });
 
 
-var daily = new Vue({
-    el: "#daily",
+const daily = new Vue({
+    el: '#daily',
     data: {
         daily: {}
     },
-    mounted: function () {
+    mounted() {
         axios({
             method: 'get',
             url: 'users/daily'
         }).then(function (response) {
-            daily.daily = response.data
-        })
+            daily.daily = response.data;
+        });
     }
 });
 
-var playerAlerts = new Vue({
+const playerAlerts = new Vue({
     el: '#playerAlerts',
     data: {
         gameTerminated: false
     },
-    mounted: function () {
-        if (localStorage.hasOwnProperty("gameTerminated")) {
-            this.gameTerminated = localStorage.getItem("gameTerminated") == "true";
+    mounted() {
+        if (localStorage.hasOwnProperty('gameTerminated')) {
+            this.gameTerminated = localStorage.getItem('gameTerminated') === 'true';
         }
-        localStorage.setItem("gameTerminated", false);
-
+        localStorage.setItem('gameTerminated', false);
     }
 });
