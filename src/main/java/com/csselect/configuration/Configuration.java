@@ -83,4 +83,10 @@ public interface Configuration {
      * @return password of the email account
      */
     String getEmailPassword();
+
+    /**
+     * Gets the username of the email account to use for sending emails
+     * @return email account username
+     */
+    String getEmailUsername();
 }

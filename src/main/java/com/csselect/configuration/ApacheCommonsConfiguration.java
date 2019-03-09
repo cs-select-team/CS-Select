@@ -109,4 +109,9 @@ public final class ApacheCommonsConfiguration implements Configuration {
     public String getEmailPassword() {
         return configuration.getString("email.password");
     }
+
+    @Override
+    public String getEmailUsername() {
+        return configuration.getString("email.username");
+    }
 }

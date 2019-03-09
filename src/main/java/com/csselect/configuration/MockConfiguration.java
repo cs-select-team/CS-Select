@@ -81,4 +81,9 @@ public final class MockConfiguration implements Configuration {
     public String getEmailPassword() {
         return "PSEWs2018/19";
     }
+
+    @Override
+    public String getEmailUsername() {
+        return this.getEmailAddress();
+    }
 }

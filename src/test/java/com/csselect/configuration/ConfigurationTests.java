@@ -95,6 +95,11 @@ public class ConfigurationTests extends TestClass {
         testString("PSEWs2018/19", config.getEmailPassword());
     }
 
+    @Test
+    public void testEmailUsername() {
+        testString("bettercsselect@gmail.com", config.getEmailUsername());
+    }
+
     private void testString(String expected, String actual) {
         Assert.assertEquals(expected, actual);
     }
