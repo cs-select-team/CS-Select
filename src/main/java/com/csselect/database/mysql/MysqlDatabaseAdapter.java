@@ -429,7 +429,7 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
         if (set.next()) {
             return set.getInt("AUTO_INCREMENT");
         } else {
-            throw new NullPointerException("Next table id couldn't be resolved!");
+            throw new DatabaseException("Next table id couldn't be resolved!");
         }
     }
 

@@ -4,7 +4,6 @@ package com.csselect.database;
  * Class indicating that the database is not reachable
  */
 public class DatabaseException extends RuntimeException {
-    private static final String MESSAGE = "An error occurred communicating with the database!";
 
     /**
      * Creates a new {@link DatabaseException} from another{@link Exception}
@@ -15,9 +14,10 @@ public class DatabaseException extends RuntimeException {
     }
 
     /**
-     * Creates a new {@link DatabaseException}
+     * Creates a new {@link DatabaseException} with the given cause
+     * @param cause cause of the DatabaseException
      */
-    public DatabaseException() {
-        super(MESSAGE);
+    public DatabaseException(String cause) {
+        super(cause);
     }
 }
