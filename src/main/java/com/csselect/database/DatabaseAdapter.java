@@ -108,9 +108,10 @@ public interface DatabaseAdapter {
      * @param hash players hashed password
      * @param salt salt used while hashing
      * @param username players username
-     * @return the created player, null if a player with the same email or password already exists
+     * @return the created player, null if a player with the same email or username already exists
+     * @throws IllegalArgumentException if email or username were already in use
      */
-    Player createPlayer(String email, String hash, String salt, String username);
+    Player createPlayer(String email, String hash, String salt, String username) throws IllegalArgumentException;
 
     /**
      * Creates a new {@link Organiser} in the database
@@ -118,7 +119,7 @@ public interface DatabaseAdapter {
      * @param email organisers email
      * @param hash organisers hashed password
      * @param salt salt used while hashing
-     * @return the created organiser, null if an organiser with the same email alredy exists
+     * @return the created organiser, null if an organiser with the same email already exists
      */
     Organiser createOrganiser(String email, String hash, String salt);
 

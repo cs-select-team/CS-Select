@@ -12,7 +12,7 @@ final class ColumnNames {
     static final String SALT = "salt";
     static final String LANGUAGE = "language";
     static final String USERNAME = "username";
-    static final String ORGANISER_ID = "organisedId";
+    static final String ORGANISER_ID = "organiserId";
     static final String TITLE = "title";
     static final String DESCRIPTION = "description";
     static final String DATABASE_NAME = "databaseName";

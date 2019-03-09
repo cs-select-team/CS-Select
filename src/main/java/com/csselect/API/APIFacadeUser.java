@@ -7,15 +7,6 @@ package com.csselect.API;
 
 public abstract class APIFacadeUser {
 
-    /** Registers a new user.
-     * This creates a new user in the database.
-     * Password and email are later required to log into the system with {@link APIFacadeUser#login(String, String)}
-     * @param args String array of arguments for registration
-     * @return true if registration successfull, false otherwise
-     */
-
-    public abstract boolean register(String[] args);
-
 
     /** logs in a user for this api. This is the first method that has to be called before any other methods start
      *  making sense.

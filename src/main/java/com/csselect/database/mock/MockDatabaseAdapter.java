@@ -8,6 +8,7 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import com.csselect.user.management.PlayerManagement;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -121,7 +122,11 @@ public class MockDatabaseAdapter implements DatabaseAdapter {
     @Override
     public Player createPlayer(String email, String hash, String salt, String username) {
         for (PlayerAdapter p : playerAdapterMap.values()) {
-            if (p.getEmail().equalsIgnoreCase(email) || p.getUsername().equalsIgnoreCase(username)) {
+            if (p.getEmail().equalsIgnoreCase(email)) {
+                throw new IllegalArgumentException(PlayerManagement.EMAIL_IN_USE);
+            } else if (p.getUsername().equalsIgnoreCase(username)) {
+                throw new IllegalArgumentException(PlayerManagement.USERNAME_IN_USE);
+            } else {
                 return null;
             }
         }

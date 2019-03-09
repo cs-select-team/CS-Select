@@ -313,7 +313,7 @@ public class MysqlGameAdapter extends MysqlAdapter implements GameAdapter {
     }
 
     @Override
-    ResultSet getRow() throws SQLException {
+    ResultSet getRow() {
         return DATABASE_ADAPTER.executeMysqlQuery("SELECT * FROM " + TableNames.GAMES
                 + " WHERE (" + ColumnNames.ID + "=?);", new IntParam(getID()));
     }

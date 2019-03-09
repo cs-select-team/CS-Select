@@ -15,6 +15,10 @@
                     <fmt:message key="noConfig"/></div>
                 <div class="alert alert-danger" v-bind:class="{ collapse: !missingDatabase }">
                     <fmt:message key="noDatabase"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !usernameInUse }">
+                    <fmt:message key="UsernameInUse"/></div>
+                <div class="alert alert-danger" v-bind:class="{ collapse: !emailInvalid }">
+                    <fmt:message key="emailInvalid"/></div>
                 <div class="login-form">
                     <img class="login-form-img" src="src/img/cs_select.svg" alt="CS:Select">
                     <div class="form-group login-form-div">
@@ -24,19 +28,6 @@
                                placeholder="<fmt:message key="emailAddress"/>" v-model="email">
                         <small id="login" class="form-text text-muted"><a href="index.jsp"><fmt:message
                                 key="loginPrompt"/></a></small>
-                    </div>
-                    <div class="form-group login-form-div">
-                        <label for="password"><fmt:message key="password"/></label>
-                        <input type="password" class="form-control" name="password" id="password"
-                               placeholder="<fmt:message key="password"/>" v-model="password">
-                    </div>
-                    <div class="form-group login-form-div">
-                        <label for="passwordRepeat"><fmt:message key="passwordRepeat"/></label>
-                        <input type="password" class="form-control" id="passwordRepeat"
-                               placeholder="<fmt:message key="passwordRepeat"/>" v-model="passwordRepeat">
-                    </div>
-                    <div class="alert alert-danger login-form-div" v-bind:class="{collapse: passwordRepeat == password }">
-                        <fmt:message key="passwordNoMatch"/>
                     </div>
                     <div class="login-form-div">
                         <div class="form-check" id="organiserCheck">
@@ -52,18 +43,18 @@
                     </div>
                     <div class="form-group fixed-height login-form-div">
                         <div class="position-absolute login-form-absolute" v-bind:class="{ invisible: organiser !='organiser' }">
-                            <label for="thirdParam"><fmt:message key="masterPassword"/></label>
-                            <input type="password" class="form-control" id="thirdParam"
-                                   placeholder="<fmt:message key="masterPassword"/>" v-model="thirdParam">
+                            <label for="secondParam"><fmt:message key="masterPassword"/></label>
+                            <input type="password" class="form-control" id="secondParam"
+                                   placeholder="<fmt:message key="masterPassword"/>" v-model="secondParam">
                         </div>
                         <div class="position-absolute login-form-absolute" v-bind:class="{ invisible: organiser =='organiser' }">
-                            <label for="thirdParam"><fmt:message key="username"/></label>
-                            <input type="text" class="form-control" id="thirdParam"
-                                   placeholder="<fmt:message key="username"/>" v-model="thirdParam">
+                            <label for="secondParam"><fmt:message key="username"/></label>
+                            <input type="text" class="form-control" id="secondParam"
+                                   placeholder="<fmt:message key="username"/>" v-model="secondParam">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary login-form-button" v-on:click="submit"
-                            :disabled="passwordRepeat != password || email == '' || password == '' || thirdParam == ''">
+                            :disabled="passwordRepeat != password || email == '' || password == '' || secondParam == ''">
                         <fmt:message key="register"/></button>
                 </div>
             </form>

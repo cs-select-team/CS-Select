@@ -10,6 +10,7 @@ import com.csselect.game.Game;
 import com.csselect.inject.Injector;
 import com.csselect.user.Organiser;
 import com.csselect.user.Player;
+import com.csselect.user.management.PlayerManagement;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.intellij.lang.annotations.Language;
 import org.pmw.tinylog.Logger;
@@ -248,8 +249,14 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
     public Player createPlayer(String email, String hash, String salt, String username) {
         try {
             ResultSet set = executeMysqlQuery("SELECT * FROM " + TableNames.PLAYERS
-                            + " WHERE (" + ColumnNames.EMAIL + "=?);", new StringParam(email));
+                            + " WHERE (" + ColumnNames.EMAIL + "=?) OR (" + ColumnNames.USERNAME + "=?);",
+                    new StringParam(email), new StringParam(username));
             if (set.next()) {
+                if (set.getString(ColumnNames.EMAIL).equals(email)) {
+                    throw new IllegalArgumentException(PlayerManagement.EMAIL_IN_USE);
+                } else if (set.getString(ColumnNames.USERNAME).equals(username)) {
+                    throw new IllegalArgumentException(PlayerManagement.USERNAME_IN_USE);
+                }
                 return null;
             }
         } catch (SQLException e) {
@@ -323,9 +330,8 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param query query to execute
      * @param params params to execute the query with
      * @return ResultSet of the operation
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, Param... params) throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, Param... params) {
         return executeMysqlQuery(query, PRODUCT_DATABASE_NAME, params);
     }
 
@@ -335,15 +341,18 @@ public class MysqlDatabaseAdapter implements DatabaseAdapter {
      * @param databaseName database to execute the query on
      * @param params parameters to execute the query with
      * @return ResultSet of the operation
-     * @throws SQLException Thrown when there is an error executing the given statement
      */
-    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params)
-            throws SQLException {
+    ResultSet executeMysqlQuery(@Language("sql") String query, String databaseName, Param... params) {
         if (!tablesCreated) {
             createTables();
         }
         MysqlDataSource dataSource = dataSources.getOrDefault(databaseName, createDataSource(databaseName));
-        CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
+        CachedRowSet rowSet;
+        try {
+            rowSet = RowSetProvider.newFactory().createCachedRowSet();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             applyParams(statement, params);

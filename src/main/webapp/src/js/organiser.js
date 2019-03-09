@@ -14,16 +14,16 @@ Vue.component('active-games-display', {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="word-wrap">
+                        <div :title="localisation.gameTitle" class="word-wrap">
                             {{ game.title }}
                         </div>
-                        <div>
+                        <div :title="localisation.gamemode">
                             {{ game.type }}
                         </div>
-                        <div class="word-wrap">
+                        <div :title="localisation.gameDescription" class="word-wrap">
                             {{game.desc}}
                         </div>
-                        <div>
+                        <div :title="localisation.roundsPlayedAll">
                             {{localisation.roundsPlayed + ": " + game.roundsPlayed}}
                         </div>
                     </div>
@@ -60,6 +60,16 @@ Vue.component('active-games-display', {
                             <player-invite-box v-bind:invite-string="inviteString"
                                                v-on:update-invite-string="updateInviteString">
                             </player-invite-box>
+                            <table class="table">
+                                <thead>
+                                    <th> {{localisation.playerEmails}} </th>
+                                    <th>  {{localisation.remove }}</th>
+                                </thead>
+                                <tr v-if="inviteString != ''" v-for="(email,index) in inviteString.split(',')">
+                                    <td>{{email}}</td>
+                                    <td  ><a href="#" v-on:click="removePlayerByIndex(index)" >{{localisation.remove }}</a></td>
+                                </tr>
+                            </table>
                             <button class="btn btn-primary" v-on:click="invitePlayers(game.id)">
                                 {{localisation.sendInvitations}}
                             </button>
@@ -68,9 +78,10 @@ Vue.component('active-games-display', {
                     </div>
                 </div>
             </div>
+            <hr class="separator">
         </div>`,
     methods: {
-        terminate: function(gameId) {
+        terminate: function (gameId) {
             axios({
                 method: 'post',
                 url: 'create/terminate',
@@ -80,7 +91,7 @@ Vue.component('active-games-display', {
             });
             this.$emit("terminate", gameId);
         },
-        invitePlayers: function(gameId) {
+        invitePlayers: function (gameId) {
             this.inviteString.split(',').forEach(function (value) {
                 if (value != '') {
                     axios({
@@ -111,7 +122,11 @@ Vue.component('active-games-display', {
                     gameId: gameId,
                     title: self.patternTitle,
                 }
-            })
+            }),
+        removePlayerByIndex: function(index) {
+            var playerArray = this.inviteString.split(',');
+            playerArray.splice(index, 1);
+            this.inviteString = playerArray.join(',')
         }
     }
 });
@@ -123,10 +138,10 @@ Vue.component('terminated-games-display', {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="word-wrap">
+                        <div :title="localisation.gameTitle" class="word-wrap">
                             {{ game.title }}
                         </div>
-                        <div>
+                        <div :title="localisation.gamemode">
                             {{ game.type }}
                         </div>
                     </div>
