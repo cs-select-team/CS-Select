@@ -130,6 +130,7 @@ Vue.component('active-games-display', {
         },
         tryCreatePattern(gameId) {
             const self = this;
+            self.patternTitle = '';
             self.showPatternModal = false;
             axios({
                 method: 'get',
