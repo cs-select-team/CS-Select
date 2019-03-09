@@ -1,5 +1,7 @@
 package com.csselect.game.gamecreation.patterns;
 
+import com.csselect.game.Game;
+
 /**
  * The Pattern class represents a memento which can store a {@link GameOptions} object for creating games.
  */
@@ -15,6 +17,16 @@ public class Pattern {
     public Pattern(GameOptions gameOptions, String title) {
         this.title = title;
         this.gameOptions = gameOptions;
+    }
+
+    /**
+     * Creates a new Pattern-Object from an existing {@link Game}
+     * @param game game whose settings the pattern represents
+     * @param title title of the pattern
+     */
+    public Pattern(Game game, String title) {
+        this.title = title;
+        this.gameOptions = new GameOptions(game);
     }
 
     /**

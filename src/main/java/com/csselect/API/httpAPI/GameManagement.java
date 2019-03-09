@@ -82,9 +82,17 @@ public class GameManagement extends Servlet {
             terminate(req, resp);
         } else if ("/delete".equals(s)) {
             delete(req, resp);
+        } else if ("/patternFromGame".equals(s)) {
+            createPatternFromGame(req, resp);
         } else {
             createGame(req, resp);
         }
+    }
+
+    private void createPatternFromGame(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
+        int gameId = Integer.parseInt(getParameter("gameId", req));
+        String title = getParameter("title", req);
+        getOrganiserFacade().createPatternFromGame(gameId, title);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws HttpError {

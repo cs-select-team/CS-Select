@@ -136,7 +136,7 @@ public class Game {
      * Getter for the feature set {@link FeatureSet} that includes the features {@link Feature} for the game
      * @return the feature set {@link FeatureSet}
      */
-    FeatureSet getFeatureSet() {
+    public FeatureSet getFeatureSet() {
         if (this.featureSet == null) {
             this.featureSet = this.database.getFeatures();
         }

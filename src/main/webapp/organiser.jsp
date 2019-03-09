@@ -12,7 +12,10 @@
                         <active-games-display
                                 v-for="game in listOfGames"
                                 v-bind:game="game"
-                                v-bind:key="game.gameId" v-on:terminate="gameWasTerminated"></active-games-display>
+                                v-bind:key="game.gameId"
+                                v-bind:patternModalTitle="localisation.submit"
+                                v-bind:patternModalText="localisation.submit"
+                                v-on:terminate="gameWasTerminated"></active-games-display>
                     </div>
                     <div class="container h-10 title">
                         <fmt:message key="terminatedGames"/>
@@ -34,6 +37,7 @@
             </div>
         </div>
     </div>
+    <script src="src/js/modal.js"></script>
     <script src="src/js/playerInvite.js"></script>
     <script src="src/js/organiser.js"></script>
 </fmt:bundle>

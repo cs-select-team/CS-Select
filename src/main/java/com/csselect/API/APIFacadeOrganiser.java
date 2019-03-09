@@ -124,6 +124,15 @@ public class APIFacadeOrganiser extends APIFacadeUser {
         organiser.savePattern(title);
     }
 
+    /**
+     * creates a pattern with the settings of the game given by gameId
+     * @param gameId id of the game from which to get the settings
+     * @param title title of the new pattern
+     */
+    public void createPatternFromGame(int gameId, String title) {
+        organiser.createPatternFromGame(gameId, title);
+    }
+
     /** loads the pattern parameter as setting for the current game
      *
      * @param pattern To be loaded

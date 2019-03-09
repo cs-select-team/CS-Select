@@ -79,6 +79,7 @@ props -->
                             compositeTermination: '<fmt:message key="compositeTermination"/>',
                             organiserTermination: '<fmt:message key="organiserTermination"/>',
                             organiserTerminationInfo: '<fmt:message key="organiserTerminationInfo"/>',
+                            createPatternFromGame: '<fmt:message key="createPatternFromGame"/>',
                             gameTitle: '<fmt:message key="gameTitle"/>',
                             gameDescription: '<fmt:message key="gameDescription"/>',
                             roundsPlayedAll: '<fmt:message key="roundsPlayedAll"/>',
@@ -108,7 +109,10 @@ props -->
                             confirmToolTip: '<fmt:message key="confirmToolTip"/>',
                             skipToolTip: '<fmt:message key="skipToolTip"/>',
                             quitToolTip: '<fmt:message key="quitToolTip"/>',
-                            creationAbort: '<fmt:message key="creationAbort"/>'
+                            createPatternFromGameTooltip: '<fmt:message key="createPatternFromGameToolTip"/>',
+                            creationAbort: '<fmt:message key="creationAbort"/>',
+                            patternFromGameModalTitle: '<fmt:message key="patternFromGameModalTitle"/>',
+                            patternFromGameModalText: '<fmt:message key="patternFromGameModalText"/>'
                         }
                     }
                 }
