@@ -55,13 +55,13 @@ Vue.component('feature-box', {
                 this.feature.toggled = !this.feature.toggled;
             }
             this.$forceUpdate();
-            this.$emit('toggled', !oldVal, oldVal)
+            this.$emit('toggled', !oldVal, oldVal);
         },
         toggleUseless() {
             this.feature.useless = !this.feature.useless;
             this.$emit('useless-toggle', this.feature.useless, this.feature.toggled);
             this.feature.toggled = false;
-            this.$forceUpdate()
+            this.$forceUpdate();
         }
     }
 });
