@@ -6,7 +6,6 @@ import com.csselect.game.Game;
 import com.csselect.game.Round;
 import com.csselect.gamification.Gamification;
 import com.csselect.gamification.Leaderboard;
-import com.csselect.gamification.PlayerStats;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

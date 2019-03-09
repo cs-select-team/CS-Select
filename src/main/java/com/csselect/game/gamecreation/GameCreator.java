@@ -4,7 +4,6 @@ import com.csselect.game.Gamemode;
 import com.csselect.game.Termination;
 import com.csselect.inject.Injector;
 import com.csselect.database.DatabaseAdapter;
-import com.csselect.email.EmailSender;
 import com.csselect.game.Game;
 import com.csselect.game.gamecreation.patterns.GameOptions;
 import com.csselect.game.gamecreation.patterns.Pattern;
