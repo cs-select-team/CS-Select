@@ -23,10 +23,9 @@ import java.io.UnsupportedEncodingException;
  *
  */
 public abstract  class Servlet extends HttpServlet {
-    private static final String PLAYERFACADE_ATTR_NAME = "playerFacade";
-    private static final String ORGANISERFACADE_ATTR_NAME = "organiserFacade";
+    private static final String PLAYER_FACADE_ATTR_NAME = "playerFacade";
+    private static final String ORGANISER_FACADE_ATTR_NAME = "organiserFacade";
     private static final String IS_PLAYER = "player";
-    private static final String DEFAULT_LANGUAGE = Languages.ENGLISH;
     HttpSession session;
     protected String lang;
 
@@ -75,8 +74,8 @@ public abstract  class Servlet extends HttpServlet {
     private void setup(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         session = req.getSession();
         req.setCharacterEncoding("UTF-8");
-        facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISERFACADE_ATTR_NAME);
-        facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYERFACADE_ATTR_NAME);
+        facadeOrganiser = (APIFacadeOrganiser) session.getAttribute(ORGANISER_FACADE_ATTR_NAME);
+        facadePlayer = (APIFacadePlayer) session.getAttribute(PLAYER_FACADE_ATTR_NAME);
         lang = (String) session.getAttribute("lang");
         if (session.getAttribute(IS_PLAYER) == null) {
             isPlayer = false;
@@ -185,7 +184,7 @@ public abstract  class Servlet extends HttpServlet {
      */
     void createOrganiser() {
         facadeOrganiser = new APIFacadeOrganiser();
-        session.setAttribute(ORGANISERFACADE_ATTR_NAME, facadeOrganiser);
+        session.setAttribute(ORGANISER_FACADE_ATTR_NAME, facadeOrganiser);
     }
     /**
      * creates a new PlayerFacade for this object
@@ -193,7 +192,7 @@ public abstract  class Servlet extends HttpServlet {
      */
     void createPlayer() {
         facadePlayer = new APIFacadePlayer();
-        session.setAttribute(PLAYERFACADE_ATTR_NAME, facadePlayer);
+        session.setAttribute(PLAYER_FACADE_ATTR_NAME, facadePlayer);
     }
 
     /** gets the body of an httpRequest

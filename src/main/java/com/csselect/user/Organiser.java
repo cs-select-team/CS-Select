@@ -78,7 +78,7 @@ public class Organiser extends User {
      * Therefore, the non-terminated games an organiser object is holding are searched for a game object
      * with according ID which will be noticed that new emails are invited.
      * Also, messages are sent to all invited email-addresses.
-     * If the emails are not registered yet, the organiser will determine weather the owner of said email-address
+     * If the emails are not registered yet, the organiser will determine whether the owner of said email-address
      * will be invited for registration (and to the game) in CS:Select.
      * @param playerEmails Emails invited to the game
      * @param gameId Unique ID of the game in our system the organiser modified

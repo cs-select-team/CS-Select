@@ -66,13 +66,6 @@ public class APIFacadePlayer extends APIFacadeUser {
         player.setLanguage(languageCode);
     }
 
-    @Override
-    public void recoverPassword(String email) {
-    }
-
-    @Override
-    public void validateEmail() {
-    }
 
     @Override
     public String getLanguage() {

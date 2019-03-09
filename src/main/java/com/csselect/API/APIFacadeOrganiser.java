@@ -21,7 +21,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
      *
      * @param email organisers email
      * @param masterPassword password needed for organiser registration
-     * @return true if registration successfull, false otherwise
+     * @return true if registration successful, false otherwise
      * @throws IllegalArgumentException if email is in use or the masterpassword is incorrect
      */
     public boolean register(String email, String masterPassword) throws IllegalArgumentException {
@@ -60,20 +60,11 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     }
 
     @Override
-    public void recoverPassword(String email) {
-    }
-
-    @Override
-    public void validateEmail() {
-
-    }
-
-    @Override
     public String getLanguage() {
         return organiser.getLanguage();
     }
 
-    /** returns the logged in organiser that is assoziated with this object
+    /** returns the logged in organiser that is associated with this object
      *
      * @return the organiser
      */
@@ -193,7 +184,7 @@ public class APIFacadeOrganiser extends APIFacadeUser {
     /** checks if a database with the given name exists
      *
      * @param name name of the database to look up
-     * @return true if the database does exist , false otherwise
+     * @return true if the database does exist, false otherwise
      */
     public boolean checkDatabase(String name) {
         return Injector.getInstance().getDatabaseAdapter().checkDuplicateDatabase(name);

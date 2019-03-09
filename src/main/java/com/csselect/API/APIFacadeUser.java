@@ -42,18 +42,6 @@ public abstract class APIFacadeUser {
      */
     public abstract void setLanguage(String languageCode);
 
-    /** sends an email to the email address of the user to recover the password
-     *
-     * @param email email of the user that wants their account recovered
-     */
-    public abstract void recoverPassword(String email);
-
-    /** validates the email of the currently logged in user. This means that the system can confirm that the
-     * user is in control of the email account they supplied during registration}
-     *
-     */
-    public abstract void validateEmail();
-
     /**
      * @return the language that the user selected
      */

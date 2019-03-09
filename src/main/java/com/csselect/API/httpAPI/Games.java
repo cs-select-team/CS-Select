@@ -89,7 +89,7 @@ public class Games extends Servlet {
 
     private int[] convertJsonPrimitiveToIntArray(JsonPrimitive primitive) {
         String p = primitive.getAsString();
-        p = p.replace("[", ""); // TODO find a more elegant way to do this
+        p = p.replace("[", "");
         p = p.replace("]", "");
         // if no integer was in the array to begin with
         if ("".equals(p)) {

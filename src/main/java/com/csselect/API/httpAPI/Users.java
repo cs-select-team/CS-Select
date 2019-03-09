@@ -50,10 +50,6 @@ public class Users extends Servlet {
             setPassword(req, resp);
         } else if (requestString.matches("/setLanguage")) {
             setLanguage(req, resp);
-        } else if (requestString.matches("/recoverPassword")) {
-            recoverPassword(req, resp);
-        } else if (requestString.matches("/validateEmail")) {
-            validateEmail(req, resp);
         }
     }
 
@@ -72,14 +68,6 @@ public class Users extends Servlet {
     private void setLanguage(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
         getUserFacade().setLanguage(getParameter("lang", req));
         updateLanguage();
-    }
-
-    private void recoverPassword(HttpServletRequest req, HttpServletResponse resp) throws HttpError {
-        getUserFacade().recoverPassword(getParameter("email", req));
-    }
-
-    private void validateEmail(HttpServletRequest req, HttpServletResponse resp) {
-        getUserFacade().validateEmail();
     }
 
     private void getNotifications(HttpServletRequest req, HttpServletResponse resp) throws IOException, HttpError {
