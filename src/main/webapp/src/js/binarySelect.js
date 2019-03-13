@@ -45,7 +45,7 @@ Vue.component('BinarySelect', {
     },
 
     template:
-        `<div class="row" :title="binarySelectHelp" v-bind:class="{'disabled-div': disabled}">
+        `<div class="row" id="binarySelect" v-bind:class="{'disabled-div': disabled}">
             <div class="col-sm">
                 <feature-box v-bind:feature="feature1" v-on:toggled="toggled" v-on:useless-toggle="uselessToggle"></feature-box>
             </div>
