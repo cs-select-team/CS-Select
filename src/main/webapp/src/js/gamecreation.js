@@ -71,6 +71,7 @@ const creation = new Vue({
             });
         },
         updateInviteString(newVal) {
+            nav.resetTimeout();
             const clearedString = newVal.split(',').filter(function (item, index, allItems) {
                 return index === allItems.indexOf(item);
             }).join(',');
@@ -78,14 +79,17 @@ const creation = new Vue({
             this.inviteString = clearedString;
         },
         removePlayerByIndex(index) {
+            nav.resetTimeout();
             const playerArray = this.inviteString.split(',');
             playerArray.splice(index, 1);
             this.inviteString = playerArray.join(',');
         },
         updateConfString(newVal) {
+            nav.resetTimeout();
             this.gameModeConfigString = newVal;
         },
         updateTerminationString(newVal) {
+            nav.resetTimeout();
             this.terminationConfigString = newVal;
         },
         loadPattern(newVal) {

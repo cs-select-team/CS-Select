@@ -69,6 +69,7 @@ const gameFrame = new Vue({
             });
         },
         getNextRound() {
+            nav.resetTimeout();
             this.clearAlerts();
             axios({
                 method: 'post',
